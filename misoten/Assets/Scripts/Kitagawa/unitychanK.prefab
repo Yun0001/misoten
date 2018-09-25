@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 114417020016267036}
   - component: {fileID: 114377030578581104}
   m_Layer: 0
-  m_Name: unitychan
+  m_Name: unitychanK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
