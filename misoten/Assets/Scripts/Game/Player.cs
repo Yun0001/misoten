@@ -5,6 +5,10 @@ using GamepadInput;
 
 public class Player : MonoBehaviour {
 
+    enum hitObjnName
+    {
+        MicroWave
+    }
     
     /// <summary>
     /// 移動スピード
@@ -18,6 +22,10 @@ public class Player : MonoBehaviour {
     private string InputYAxisName;
     GamepadState padState;
     GamePad.Index PlayerNumber;
+    bool[] hitFlg = { false, false, false, false };
+    GameObject[] hitObj = new GameObject[5];
+    [SerializeField]
+    private GameObject haveInHandFood;
 
     private int adjustmentSpeed = 10;
 
@@ -91,6 +99,31 @@ public class Player : MonoBehaviour {
                 break;
         }
         //
+
+        //　食材を電子レンジに入れる
+        if (hitFlg[(int)hitObjnName.MicroWave])
+        {
+            if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
+            {
+                switch (hitObj[(int)hitObjnName.MicroWave].gameObject.GetComponent<MicroWave>().GetStatus())
+                {
+                    case MicroWave.MWState.objectNone:
+                        //　食材が入っていなかったら自分が持っている食材をレンジに入れる
+                        hitObj[(int)hitObjnName.MicroWave].gameObject.GetComponent<MicroWave>().SetFood(haveInHandFood);
+                        break;
+
+                    case MicroWave.MWState.inObject:
+                        // 必要ならここに
+                        // レンジの食材が自分の食材か判定処理
+
+                        // レンジチンスタート
+                        hitObj[(int)hitObjnName.MicroWave].gameObject.GetComponent<MicroWave>().cookingStart(); 
+                        break;
+                }
+
+            }
+        }
+        Debug.Log(hitFlg[(int)hitObjnName.MicroWave]);
     }
 
     private void FixedUpdate()
@@ -128,5 +161,23 @@ public class Player : MonoBehaviour {
                 return true;
         }
         return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Microwave")
+        {
+            hitFlg[(int)hitObjnName.MicroWave] = true;
+            hitObj[(int)hitObjnName.MicroWave] = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Microwave")
+        {
+            hitFlg[(int)hitObjnName.MicroWave] = false;
+            hitObj[(int)hitObjnName.MicroWave] = null;
+        }
     }
 }
