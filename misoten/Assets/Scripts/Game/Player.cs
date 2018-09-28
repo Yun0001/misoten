@@ -10,23 +10,21 @@ public class Player : MonoBehaviour {
         MicroWave
     }
     
-    /// <summary>
-    /// 移動スピード
-    /// </summary>
-    private float speed { get; set; }
+    private float speed { get; set; }    // 移動スピード
     private float moveX = 0f;
     private float moveZ = 0f;
-    private Rigidbody rb;
     private string layerName;
     private string InputXAxisName;
     private string InputYAxisName;
-    GamepadState padState;
-    GamePad.Index PlayerNumber;
-    bool[] hitFlg = { false, false, false, false };
-    GameObject[] hitObj = new GameObject[5];
-    [SerializeField]
-    private GameObject haveInHandFood;
+    private GamepadState padState;
+    private GamePad.Index PlayerNumber;
+    private Rigidbody rb;
+    private GameObject hitObj;
 
+    [SerializeField]
+    private GameObject haveInHandFood;  // 持っている食材
+
+    //あとで消す
     private int adjustmentSpeed = 10;
 
     // Use this for initialization
@@ -35,15 +33,19 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         layerName = LayerMask.LayerToName(gameObject.layer);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector3(moveX * speed, 0, moveZ * speed);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         // 今だけ
         moveX = 0;
         moveZ = 0;
         //
-
 
         if (!PlayerNumberDecision())    return;
 
@@ -100,35 +102,10 @@ public class Player : MonoBehaviour {
         }
         //
 
-        //　食材を電子レンジに入れる
-        if (hitFlg[(int)hitObjnName.MicroWave])
-        {
-            if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
-            {
-                switch (hitObj[(int)hitObjnName.MicroWave].gameObject.GetComponent<MicroWave>().GetStatus())
-                {
-                    case MicroWave.MWState.objectNone:
-                        //　食材が入っていなかったら自分が持っている食材をレンジに入れる
-                        hitObj[(int)hitObjnName.MicroWave].gameObject.GetComponent<MicroWave>().SetFood(haveInHandFood);
-                        break;
+        InputButton();
 
-                    case MicroWave.MWState.inObject:
-                        // 必要ならここに
-                        // レンジの食材が自分の食材か判定処理
-
-                        // レンジチンスタート
-                        hitObj[(int)hitObjnName.MicroWave].gameObject.GetComponent<MicroWave>().cookingStart(); 
-                        break;
-                }
-
-            }
-        }
-        Debug.Log(hitFlg[(int)hitObjnName.MicroWave]);
-    }
-
-    private void FixedUpdate()
-    {
-        rb.velocity = new Vector3(moveX*speed, 0, moveZ * speed);
+        Debug.Log(hitObj);
+        Debug.Log(haveInHandFood);
     }
 
     /// <summary>
@@ -163,21 +140,94 @@ public class Player : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// 当たり判定
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Microwave")
         {
-            hitFlg[(int)hitObjnName.MicroWave] = true;
-            hitObj[(int)hitObjnName.MicroWave] = other.gameObject;
+            hitObj = other.gameObject;
         }
     }
 
+    /// <summary>
+    /// 当たり判定がなくなるとき
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Microwave")
         {
-            hitFlg[(int)hitObjnName.MicroWave] = false;
-            hitObj[(int)hitObjnName.MicroWave] = null;
+            hitObj = null;
         }
     }
+
+    /// <summary>
+    /// 入力処理
+    /// </summary>
+    void InputButton()
+    {
+        //　Aボタン入力
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
+        {
+            //　レンジの前にいるとき
+            FrontoftheMicrowave();
+        }
+    }
+
+    /// <summary>
+    /// レンジの前にいるとき
+    /// </summary>
+    private void FrontoftheMicrowave()
+    {
+        if (GetHitObj().tag == "Microwave")
+        {
+            //　レンジの状態判定
+            switch (GetHitObj().GetComponent<MicroWave>().GetStatus())
+            {
+                case MicroWave.MWState.objectNone:
+                    // 食材を入れる
+                    FoodInMicrowave();
+                    break;
+
+                case MicroWave.MWState.inObject:
+                    // 必要ならここに
+                    // レンジの食材が自分の食材か判定処理
+
+                    // レンチンスタート
+                    MicrowaveSwitchOn();
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 食材を入れる
+    /// </summary>
+    private void FoodInMicrowave()
+    {
+        // 何も持っていなかったらリターン
+        if (GetHitObj() == null) return;
+
+        //　食材が入っていなかったら自分が持っている食材をレンジに入れる
+        GetHitObj().GetComponent<MicroWave>().SetFood(haveInHandFood);
+        // 手に持っているオブジェクトをなくす
+        haveInHandFood = null;
+    }
+
+    /// <summary>
+    /// レンチンスタート
+    /// </summary>
+    private void MicrowaveSwitchOn()
+    {
+        GetHitObj().GetComponent<MicroWave>().cookingStart();
+    }
+
+    private GameObject GetHitObj()
+    {
+        return hitObj.gameObject;
+    }
+
 }
