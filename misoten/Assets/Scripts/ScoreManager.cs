@@ -10,6 +10,9 @@ public class ScoreManager : Singleton<ScoreManager>
     [SerializeField]
     private GameObject[] playerScore;
 
+    [SerializeField]
+    private GameObject[] player;
+
     private Text[] scoreText=new Text[playerNum];
 
     /// <summary>
@@ -37,35 +40,21 @@ public class ScoreManager : Singleton<ScoreManager>
             scoreText[i] = playerScore[i].GetComponent<Text>();
             playerRank[i] = 1;
             scoreText[i].text = "Score:"+ playerScore[i].gameObject.GetComponent<ScoreCount>().GetScore().ToString()+"/"+playerRank[i].ToString();
-
         }
     }
     
     public void AddScore(int pID, int score)
     {
         playerScore[pID].gameObject.GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
-        int oldRank = playerRank[pID];
         DecisionPlayerRank();
-        if (oldRank != playerRank[pID])
-        {
-           
-        }
-        else
-        {
-            scoreText[pID].text = "Score:" + playerScore[pID].gameObject.GetComponent<ScoreCount>().GetScore().ToString() + "/" + playerRank[pID].ToString();
-        }
-        for (int i = 0; i < playerNum; i++)
-        {
-            scoreText[i].text = "Score:" + playerScore[i].gameObject.GetComponent<ScoreCount>().GetScore().ToString() + "/" + playerRank[i].ToString();
-        }
-
+        UpdateScoreText();
     }
 
     public void SubScore(int pID, int score)
     {
         playerScore[pID].gameObject.GetComponent<ScoreCount>().SubScore(score);
         DecisionPlayerRank();
-        scoreText[pID].text = "Score:" + playerScore[pID].gameObject.GetComponent<ScoreCount>().GetScore().ToString() + "/" + playerRank[pID].ToString();
+        UpdateScoreText();
     }
 
     /// <summary>
@@ -133,6 +122,14 @@ public class ScoreManager : Singleton<ScoreManager>
     private int CalcAddScore(int pID, int score)
     {
         //　後で時間係数も計算に加える
-        return score * playerRank[pID];
+        return  (int)(score * playerRank[pID] * player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
+    }
+
+    private void UpdateScoreText()
+    {
+        for (int i = 0; i < playerNum; i++)
+        {
+            scoreText[i].text = "Score:" + playerScore[i].gameObject.GetComponent<ScoreCount>().GetScore().ToString() + "/" + playerRank[i].ToString();
+        }
     }
 }

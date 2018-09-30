@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
     private GamePad.Index PlayerNumber;
     private Rigidbody rb;
     private GameObject hitObj;
-    private bool hindranceflg = false; // 邪魔フラグ
+    private float hindrancePoint; // 邪魔フラグ
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
@@ -50,6 +50,7 @@ public class Player : MonoBehaviour {
                 playerID = 4;
                 break;
         }
+        hindrancePoint = 1f;
     }
 
     private void FixedUpdate()
@@ -198,8 +199,8 @@ public class Player : MonoBehaviour {
                     {
                         // 自分以外の食材なら中の食材を出す
                         GetHitObjConmponetMicroWave().PutOutInFood(playerID);
-                        // 邪魔フラグOn
-                        hindranceflg = true;
+                        // 邪魔ポイント加算
+                        AddHindrancePoint();
                     }
                     else
                     {
@@ -251,4 +252,18 @@ public class Player : MonoBehaviour {
         return GetHitObj().GetComponent<MicroWave>();
     }
 
+    public void ResetHindrancePoint()
+    {
+        hindrancePoint = 1f;
+    }
+
+    public float GetHindrancePoint()
+    {
+        return hindrancePoint;
+    }
+
+    private void AddHindrancePoint()
+    {
+        hindrancePoint += 0.25f;
+    }
 }

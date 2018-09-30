@@ -56,3 +56,10 @@ MonoBehaviour:
   - {fileID: 1633196244284282, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
   - {fileID: 1015595293577760, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
   - {fileID: 1823970681290774, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
+  player:
+  - {fileID: 1445322018032588, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
+  - {fileID: 1426306326497978, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
+  - {fileID: 1829534150752692, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
+  - {fileID: 1186775442034906, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
+  hindranceCoefficient: 0
+  timeCoefficient: 0
