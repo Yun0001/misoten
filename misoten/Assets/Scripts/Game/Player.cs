@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
     private GamePad.Index PlayerNumber;
     private Rigidbody rb;
     private GameObject hitObj;
-    private float hindrancePoint; // 邪魔フラグ
+    private int hindrancePoint; // 邪魔point
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
@@ -38,19 +38,19 @@ public class Player : MonoBehaviour {
         switch (layerName)
         {
             case "Player1":
-                playerID = 1;
+                playerID = 0;
                 break;
             case "Player2":
-                playerID = 2;
+                playerID = 1;
                 break;
             case "Player3":
-                playerID = 3;
+                playerID = 2;
                 break;
             case "Player4":
-                playerID = 4;
+                playerID = 3;
                 break;
         }
-        hindrancePoint = 1f;
+        hindrancePoint = 1;
     }
 
     private void FixedUpdate()
@@ -85,6 +85,7 @@ public class Player : MonoBehaviour {
                 if (Input.GetKey(KeyCode.W))    moveZ = speed / adjustmentSpeed;
                 if (Input.GetKey(KeyCode.S))     moveZ = -speed / adjustmentSpeed;
                 if (Input.GetKeyDown(KeyCode.Z))     FrontoftheMicrowave();
+                Debug.Log(hindrancePoint);
                 break;
             case "Player3":
                 if (Input.GetKey(KeyCode.LeftArrow))       moveX = -speed / adjustmentSpeed;
@@ -101,8 +102,8 @@ public class Player : MonoBehaviour {
 
         InputButton();
 
-        Debug.Log(hitObj);
-        Debug.Log(haveInHandFood);
+        //Debug.Log(hitObj);
+        //Debug.Log(haveInHandFood);
     }
 
     /// <summary>
@@ -254,16 +255,16 @@ public class Player : MonoBehaviour {
 
     public void ResetHindrancePoint()
     {
-        hindrancePoint = 1f;
+        hindrancePoint = 1;
     }
 
-    public float GetHindrancePoint()
+    public int GetHindrancePoint()
     {
-        return hindrancePoint;
+         return hindrancePoint;
     }
 
     private void AddHindrancePoint()
     {
-        hindrancePoint += 0.25f;
+        hindrancePoint += 1;
     }
 }

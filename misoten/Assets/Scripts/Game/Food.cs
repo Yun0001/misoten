@@ -15,7 +15,7 @@ public class Food : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //　テスト用
-        ownershipPlayerID = 2;
+        ownershipPlayerID = 1;
 	}
 	
 	// Update is called once per frame

@@ -47,7 +47,7 @@ public class MicroWave : MonoBehaviour {
 	
 	//更新処理
 	void Update () {
-        Debug.Log(status);
+       // Debug.Log(status);
         switch (status)
         {
             // 食材なし
@@ -148,6 +148,6 @@ public class MicroWave : MonoBehaviour {
     private void CountDownTimer()
     {
         timer -= Time.deltaTime;
-        Debug.Log(timer);
+        //Debug.Log(timer);
     }
 }
