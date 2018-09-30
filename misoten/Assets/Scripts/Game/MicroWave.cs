@@ -30,7 +30,7 @@ public class MicroWave : MonoBehaviour {
     /// スコア
     /// </summary>
     [SerializeField]
-    private ScoreCount scoreCount;
+    private ScoreManager scoreManager;
 
     /// <summary>
     /// 状態
@@ -70,7 +70,7 @@ public class MicroWave : MonoBehaviour {
                 if (0 >= timer)
                 {
                     // スコア加算
-                    scoreCount.AddScore(food.gameObject.GetComponent<Food>().GetOwnershipPlayerID(), (int)setTimer);
+                    scoreManager.AddScore(food.gameObject.GetComponent<Food>().GetOwnershipPlayerID(), (int)setTimer);
 
                     // 電子レンジ初期化
                     InitMicrowave();
