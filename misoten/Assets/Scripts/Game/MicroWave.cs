@@ -21,8 +21,16 @@ public class MicroWave : MonoBehaviour {
     [SerializeField]
     private float setTimer;
 
+    /// <summary>
+    /// タイマー
+    /// </summary>
     private float timer;
 
+    /// <summary>
+    /// スコア
+    /// </summary>
+    [SerializeField]
+    private ScoreCount scoreCount;
 
     /// <summary>
     /// 状態
@@ -37,15 +45,17 @@ public class MicroWave : MonoBehaviour {
         status = MWState.objectNone;
 	}
 	
-	// Update is called once per frame
+	//更新処理
 	void Update () {
         Debug.Log(status);
         switch (status)
         {
+            // 食材なし
             case MWState.objectNone:
                 if (Input.GetKeyDown(KeyCode.R)) status = MWState.inObject;
                 break;
 
+            // 食材あり
             case MWState.inObject:
                 if (Input.GetKeyDown(KeyCode.T))
                 {
@@ -54,14 +64,16 @@ public class MicroWave : MonoBehaviour {
                 } 
                 break;
 
+            // 調理中
             case MWState.cooking:
-                timer -= Time.deltaTime;
-                Debug.Log(timer);
+                CountDownTimer();
                 if (0 >= timer)
                 {
-                    status = MWState.objectNone;
-                    food = null;
-                    timer = 0f;
+                    // スコア加算
+                    scoreCount.AddScore(food.gameObject.GetComponent<Food>().GetOwnershipPlayerID(), (int)setTimer);
+
+                    // 電子レンジ初期化
+                    InitMicrowave();
                 }
                 break;
         }
@@ -90,8 +102,52 @@ public class MicroWave : MonoBehaviour {
         return true;
     }
 
+    /// <summary>
+    /// 中ｍにある食材を無くす
+    /// </summary>
+    /// <returns></returns>
+    public bool PutOutInFood(int playerID)
+    {
+        if (GetInFoodID() == playerID) return false;
+
+        InitMicrowave();
+        return true;
+    }
+
+    /// <summary>
+    /// 状態取得
+    /// </summary>
+    /// <returns>状態</returns>
     public MWState GetStatus()
     {
         return status;
+    }
+
+    /// <summary>
+    /// 中の食材のプレイヤーIDを取得
+    /// </summary>
+    /// <returns>食材のプレイヤーID</returns>
+    public int GetInFoodID()
+    {
+        return food.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
+    }
+
+    /// <summary>
+    /// 電子レンジ初期化
+    /// </summary>
+    private void InitMicrowave()
+    {
+        food = null;
+        status = MWState.objectNone;
+        timer = 0f;
+    }
+
+    /// <summary>
+    /// タイマーカウントダウン
+    /// </summary>
+    private void CountDownTimer()
+    {
+        timer -= Time.deltaTime;
+        Debug.Log(timer);
     }
 }
