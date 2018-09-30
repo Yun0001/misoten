@@ -267,4 +267,9 @@ public class Player : MonoBehaviour {
     {
         hindrancePoint += 1;
     }
+
+    public int GetPlayerID()
+    {
+        return playerID;
+    }
 }
