@@ -61,5 +61,9 @@ MonoBehaviour:
   - {fileID: 1426306326497978, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
   - {fileID: 1829534150752692, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
   - {fileID: 1186775442034906, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
-  hindranceCoefficient: 0
   timeCoefficient: 0
+  rankCoefficient:
+  - 1
+  - 2
+  - 3
+  - 4

@@ -16,12 +16,6 @@ public class ScoreManager : Singleton<ScoreManager>
     private Text[] scoreText=new Text[playerNum];
 
     /// <summary>
-    /// 邪魔係数
-    /// </summary>
-    [SerializeField]
-    private float hindranceCoefficient ;
-
-    /// <summary>
     /// 時間係数
     /// </summary>
     [SerializeField]
@@ -31,6 +25,12 @@ public class ScoreManager : Singleton<ScoreManager>
     /// 順位
     /// </summary>
     private int[] playerRank = new int[playerNum];
+
+    /// <summary>
+    /// 順位係数
+    /// </summary>
+    [SerializeField]
+    private float[] rankCoefficient;
 
     // Use this for initialization
     void Start()
@@ -122,7 +122,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private int CalcAddScore(int pID, int score)
     {
         //　後で時間係数も計算に加える
-        return  (int)(score * playerRank[pID] * player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
+        return  (int)(score * rankCoefficient[playerRank[pID]] * player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
     }
 
     private void UpdateScoreText()
