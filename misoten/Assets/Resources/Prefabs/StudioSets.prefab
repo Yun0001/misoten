@@ -464,3 +464,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setTimer: 0
+  scoreManager: {fileID: 114810963736383568, guid: db666771aa3ba294fb291619084f81bd,
+    type: 2}
