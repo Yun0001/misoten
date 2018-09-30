@@ -12,6 +12,19 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private Text[] scoreText=new Text[playerNum];
 
+    /// <summary>
+    /// 邪魔係数
+    /// </summary>
+    [SerializeField]
+    private float hindranceCoefficient;
+
+    /// <summary>
+    /// 時間係数
+    /// </summary>
+    [SerializeField]
+    private float timeCoefficient;
+
+
     // Use this for initialization
     void Start()
     {

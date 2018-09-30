@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
     private GamePad.Index PlayerNumber;
     private Rigidbody rb;
     private GameObject hitObj;
+    private bool hindranceflg = false; // 邪魔フラグ
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
@@ -197,6 +198,8 @@ public class Player : MonoBehaviour {
                     {
                         // 自分以外の食材なら中の食材を出す
                         GetHitObjConmponetMicroWave().PutOutInFood(playerID);
+                        // 邪魔フラグOn
+                        hindranceflg = true;
                     }
                     else
                     {
