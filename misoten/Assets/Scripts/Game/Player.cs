@@ -24,14 +24,31 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
 
+    private int playerID;
+
     //あとで消す
     private int adjustmentSpeed = 10;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         speed = 20f;
         rb = GetComponent<Rigidbody>();
         layerName = LayerMask.LayerToName(gameObject.layer);
+        switch (layerName)
+        {
+            case "Player1":
+                playerID = 1;
+                break;
+            case "Player2":
+                playerID = 2;
+                break;
+            case "Player3":
+                playerID = 3;
+                break;
+            case "Player4":
+                playerID = 4;
+                break;
+        }
     }
 
     private void FixedUpdate()
@@ -61,40 +78,18 @@ public class Player : MonoBehaviour {
 
                 break;
             case "Player2":
-                if (Input.GetKey(KeyCode.A))
-                {
-                    moveX = -speed/ adjustmentSpeed;
-                }
-                if (Input.GetKey(KeyCode.D))
-                {
-                    moveX = speed / adjustmentSpeed;
-                }
-                if (Input.GetKey(KeyCode.W))
-                {
-                    moveZ = speed / adjustmentSpeed;
-                }
-                if (Input.GetKey(KeyCode.S))
-                {
-                    moveZ = -speed / adjustmentSpeed;
-                }
+                if (Input.GetKey(KeyCode.A))     moveX = -speed/ adjustmentSpeed; 
+                if (Input.GetKey(KeyCode.D))     moveX = speed / adjustmentSpeed;
+                if (Input.GetKey(KeyCode.W))    moveZ = speed / adjustmentSpeed;
+                if (Input.GetKey(KeyCode.S))     moveZ = -speed / adjustmentSpeed;
+                if (Input.GetKeyDown(KeyCode.Z))     FrontoftheMicrowave();
                 break;
             case "Player3":
-                if (Input.GetKey(KeyCode.LeftArrow))
-                {
-                    moveX = -speed / adjustmentSpeed;
-                }
-                if (Input.GetKey(KeyCode.RightArrow))
-                {
-                    moveX = speed / adjustmentSpeed;
-                }
-                if (Input.GetKey(KeyCode.UpArrow))
-                {
-                    moveZ = speed / adjustmentSpeed;
-                }
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
-                    moveZ = -speed / adjustmentSpeed;
-                }
+                if (Input.GetKey(KeyCode.LeftArrow))       moveX = -speed / adjustmentSpeed;
+                if (Input.GetKey(KeyCode.RightArrow))     moveX = speed / adjustmentSpeed;
+                if (Input.GetKey(KeyCode.UpArrow))         moveZ = speed / adjustmentSpeed;
+                if (Input.GetKey(KeyCode.DownArrow))    moveZ = -speed / adjustmentSpeed;
+                if (Input.GetKeyDown(KeyCode.L))                   FrontoftheMicrowave();
                 break;
             case "Player4":
 
@@ -182,10 +177,13 @@ public class Player : MonoBehaviour {
     /// </summary>
     private void FrontoftheMicrowave()
     {
+        // ヒットオブジェクトがなければ関数を抜ける
+        if (hitObj == null) return;
+
         if (GetHitObj().tag == "Microwave")
         {
             //　レンジの状態判定
-            switch (GetHitObj().GetComponent<MicroWave>().GetStatus())
+            switch (GetHitObjConmponetMicroWave().GetStatus())
             {
                 case MicroWave.MWState.objectNone:
                     // 食材を入れる
@@ -195,9 +193,24 @@ public class Player : MonoBehaviour {
                 case MicroWave.MWState.inObject:
                     // 必要ならここに
                     // レンジの食材が自分の食材か判定処理
+                    if (GetHitObjConmponetMicroWave().GetInFoodID() != playerID)
+                    {
+                        // 自分以外の食材なら中の食材を出す
+                        GetHitObjConmponetMicroWave().PutOutInFood(playerID);
+                    }
+                    else
+                    {
+                        // 自分の食材ならレンチンスタート
+                        MicrowaveSwitchOn();
+                    }
+                    break;
 
-                    // レンチンスタート
-                    MicrowaveSwitchOn();
+                case MicroWave.MWState.cooking:
+                    if (GetHitObjConmponetMicroWave().GetInFoodID() != playerID)
+                    {
+                        GetHitObjConmponetMicroWave().PutOutInFood(playerID);
+                    }
+             
                     break;
             }
         }
@@ -212,7 +225,7 @@ public class Player : MonoBehaviour {
         if (GetHitObj() == null) return;
 
         //　食材が入っていなかったら自分が持っている食材をレンジに入れる
-        GetHitObj().GetComponent<MicroWave>().SetFood(haveInHandFood);
+        GetHitObjConmponetMicroWave().SetFood(haveInHandFood);
         // 手に持っているオブジェクトをなくす
         haveInHandFood = null;
     }
@@ -222,12 +235,17 @@ public class Player : MonoBehaviour {
     /// </summary>
     private void MicrowaveSwitchOn()
     {
-        GetHitObj().GetComponent<MicroWave>().cookingStart();
+        GetHitObjConmponetMicroWave().cookingStart();
     }
 
     private GameObject GetHitObj()
     {
         return hitObj.gameObject;
+    }
+
+    private MicroWave GetHitObjConmponetMicroWave()
+    {
+        return GetHitObj().GetComponent<MicroWave>();
     }
 
 }
