@@ -16,7 +16,7 @@ public class MicroWave : MonoBehaviour {
     private GameObject food;
 
     /// <summary>
-    /// セットタイマー
+    /// セットタイマー（これが基礎得点になる）
     /// </summary>
     [SerializeField]
     private float setTimer;
@@ -27,7 +27,7 @@ public class MicroWave : MonoBehaviour {
     private float timer;
 
     /// <summary>
-    /// スコア
+    /// スコアマネージャー
     /// </summary>
     [SerializeField]
     private ScoreManager scoreManager;

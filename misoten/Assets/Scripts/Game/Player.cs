@@ -11,16 +11,18 @@ public class Player : MonoBehaviour {
     }
     
     private float speed { get; set; }    // 移動スピード
-    private float moveX = 0f;
+    private float moveX = 0f;              //移動量
     private float moveZ = 0f;
-    private string layerName;
+    private string layerName;// レイヤーの名前
+ 
+    // 左スティックの入力を取る用
     private string InputXAxisName;
     private string InputYAxisName;
     private GamepadState padState;
     private GamePad.Index PlayerNumber;
     private Rigidbody rb;
     private GameObject hitObj;
-    private int hindrancePoint; // 邪魔point
+    private float hindrancePoint; // 邪魔point
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
@@ -255,17 +257,17 @@ public class Player : MonoBehaviour {
 
     public void ResetHindrancePoint()
     {
-        hindrancePoint = 1;
+        hindrancePoint = 1f;
     }
 
-    public int GetHindrancePoint()
+    public float GetHindrancePoint()
     {
          return hindrancePoint;
     }
 
     private void AddHindrancePoint()
     {
-        hindrancePoint += 1;
+        hindrancePoint += 0.25f;
     }
 
     public int GetPlayerID()

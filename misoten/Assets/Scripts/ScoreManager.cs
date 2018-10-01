@@ -41,7 +41,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddScore(int pID, int score)
     {
         // スコア加算
-        int b = player[pID].gameObject.GetComponent<Player>().GetHindrancePoint();
+        int b = (int)(player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
         playerScore[pID].gameObject.GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
         int a = playerScore[pID].gameObject.GetComponent<ScoreCount>().GetScore();
  
@@ -131,10 +131,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private int CalcAddScore(int pID, int score)
     {
         // 後で時間係数も計算に加える
-        // なぜかPlayerから邪魔係数を取得しようとすると戻り値が０になる
-        // とりあえず邪魔係数なしで計算
-        //return  (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
-        return  (int)(score * rankCoefficient[playerRank[pID] - 1]);
+        return  (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
     }
 
     /// <summary>
