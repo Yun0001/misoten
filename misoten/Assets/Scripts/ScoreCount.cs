@@ -7,11 +7,11 @@ public class ScoreCount : MonoBehaviour
 
 
     /// <summary>
-    /// 各プレイヤーのスコア
+    /// プレイヤーのスコア
     /// </summary>
     private int score;
 
-    void Start()
+    void Awake()
     {
         score = 0;
     }

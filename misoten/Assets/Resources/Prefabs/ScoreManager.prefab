@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1429843441845356}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -925.87115, y: -567.18835, z: 30.291563}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,18 +52,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScore:
-  - {fileID: 1663781885771204, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
-  - {fileID: 1633196244284282, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
-  - {fileID: 1015595293577760, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
-  - {fileID: 1823970681290774, guid: d721aa4f8c5596e489cd92d3e160a6df, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   player:
-  - {fileID: 1445322018032588, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
-  - {fileID: 1426306326497978, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
-  - {fileID: 1829534150752692, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
-  - {fileID: 1186775442034906, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
-  timeCoefficient: 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  timeCoefficient: 1.25
   rankCoefficient:
   - 1
   - 2
   - 3
   - 4
+  gameTimeManager: {fileID: 0}

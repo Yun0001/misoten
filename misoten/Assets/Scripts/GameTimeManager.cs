@@ -10,7 +10,7 @@ public class GameTimeManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        countTime = 90;
+        countTime = 60;
         timespeed = 1;
     }
 	
@@ -77,6 +77,12 @@ public class GameTimeManager : MonoBehaviour {
             countTime = 0;
         }        
     }
-    
+
+    public float GetCountTime()
+    {
+        return countTime;
+    }
+
+
 
 }

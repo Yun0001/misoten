@@ -103,7 +103,7 @@ public class MicroWave : MonoBehaviour {
     }
 
     /// <summary>
-    /// 中ｍにある食材を無くす
+    /// 中にある食材を無くす
     /// </summary>
     /// <returns></returns>
     public bool PutOutInFood(int playerID)

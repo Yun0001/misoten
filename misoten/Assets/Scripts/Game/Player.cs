@@ -9,8 +9,8 @@ public class Player : MonoBehaviour {
     {
         MicroWave
     }
-    
-    private float speed { get; set; }    // 移動スピード
+
+    private float speed { get; } = 20f;  // 移動スピード
     private float moveX = 0f;              //移動量
     private float moveZ = 0f;
     private string layerName;// レイヤーの名前
@@ -32,9 +32,9 @@ public class Player : MonoBehaviour {
     //あとで消す
     private int adjustmentSpeed = 10;
 
+
     // Use this for initialization
-    void Start() {
-        speed = 20f;
+    void Awake() {
         rb = GetComponent<Rigidbody>();
         layerName = LayerMask.LayerToName(gameObject.layer);
         switch (layerName)
@@ -196,12 +196,10 @@ public class Player : MonoBehaviour {
                     break;
 
                 case MicroWave.MWState.inObject:
-                    // 必要ならここに
                     // レンジの食材が自分の食材か判定処理
-                    if (GetHitObjConmponetMicroWave().GetInFoodID() != playerID)
+                    // 自分以外の食材なら中の食材を出す
+                    if (GetHitObjConmponetMicroWave().PutOutInFood(playerID))
                     {
-                        // 自分以外の食材なら中の食材を出す
-                        GetHitObjConmponetMicroWave().PutOutInFood(playerID);
                         // 邪魔ポイント加算
                         AddHindrancePoint();
                     }
@@ -213,11 +211,7 @@ public class Player : MonoBehaviour {
                     break;
 
                 case MicroWave.MWState.cooking:
-                    if (GetHitObjConmponetMicroWave().GetInFoodID() != playerID)
-                    {
                         GetHitObjConmponetMicroWave().PutOutInFood(playerID);
-                    }
-             
                     break;
             }
         }

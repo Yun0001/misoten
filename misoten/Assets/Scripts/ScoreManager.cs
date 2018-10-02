@@ -11,7 +11,10 @@ public class ScoreManager : Singleton<ScoreManager>
     private GameObject[] playerScore;       // 各プレイヤースコアの参照
 
     [SerializeField]
-    private GameObject[] player;            　// 各プレイヤーの参照
+    private GameObject[] player;             // 各プレイヤーの参照
+
+    [SerializeField]
+    private GameObject gameTimeManager; //タイムマネージャーの参照
 
     [SerializeField]
     private float timeCoefficient;                // 時間係数
@@ -22,14 +25,19 @@ public class ScoreManager : Singleton<ScoreManager>
     private int[] playerRank = new int[playerNum];     // プレイヤーの順位
     private Text[] scoreText = new Text[playerNum];   // スコア表示テキスト
 
-    // Use this for initialization
+
+
+
+    /// <summary>
+    /// 初期処理
+    /// </summary>
     void Start()
     {
-        for (int i = 0; i < playerNum; i++)
+        for (int pID = 0; pID < playerNum; pID++)
         {
-            scoreText[i] = playerScore[i].GetComponent<Text>();
-            playerRank[i] = 1;
-            scoreText[i].text = "Score:"+ GetPlayerScore(i).ToString()+"/"+playerRank[i].ToString();
+            scoreText[pID] = playerScore[pID].GetComponent<Text>();
+            playerRank[pID] = 1;
+            scoreText[pID].text = "Score:"+ GetPlayerScore(pID).ToString()+"/"+playerRank[pID].ToString();
         }
     }
     
@@ -41,9 +49,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddScore(int pID, int score)
     {
         // スコア加算
-        int b = (int)(player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
-        playerScore[pID].gameObject.GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
-        int a = playerScore[pID].gameObject.GetComponent<ScoreCount>().GetScore();
+        playerScore[pID].GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
  
         UpdatePlayerRank();     // 順位更新
         UpdateScoreText();       // 表示テキスト更新
@@ -56,7 +62,7 @@ public class ScoreManager : Singleton<ScoreManager>
     /// <param name="score">減算ポイント</param>
     public void SubScore(int pID, int score)
     {
-        playerScore[pID].gameObject.GetComponent<ScoreCount>().SubScore(score);
+        playerScore[pID].GetComponent<ScoreCount>().SubScore(score);
 
         UpdatePlayerRank();     // 順位更新
         UpdateScoreText();      // 表示テキスト更新
@@ -67,7 +73,8 @@ public class ScoreManager : Singleton<ScoreManager>
     /// </summary>
     private void UpdatePlayerRank()
     {
-        int[] workArray = new int[playerNum];
+        int[] workArray = new int[playerNum]; //作業用配列
+
         InitArray(workArray);       // 作業用配列初期化
         BubbleSort(workArray);   // バブルソート
         SetRank(workArray);      // 順位セット
@@ -79,8 +86,8 @@ public class ScoreManager : Singleton<ScoreManager>
     /// <param name="workarray">作業用配列</param>
     private void InitArray(int[] workarray)
     {
-        for (int i = 0; i < playerNum; i++)
-            workarray[i] = GetPlayerScore(i);
+        for (int pID = 0; pID < playerNum; pID++)
+            workarray[pID] = GetPlayerScore(pID);
     }
 
     /// <summary>
@@ -130,8 +137,11 @@ public class ScoreManager : Singleton<ScoreManager>
     /// <returns>係数を掛けた計算後のスコア</returns>
     private int CalcAddScore(int pID, int score)
     {
-        // 後で時間係数も計算に加える
-        return  (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].gameObject.GetComponent<Player>().GetHindrancePoint());
+        // スコア＊順位係数＊邪魔係数
+        // 残り時間が60秒未満ならさらに時間係数を掛ける
+        return gameTimeManager.GetComponent<GameTimeManager>().GetCountTime() < 60 ?
+                    (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].GetComponent<Player>().GetHindrancePoint() * timeCoefficient) :
+                    (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].GetComponent<Player>().GetHindrancePoint());
     }
 
     /// <summary>
@@ -150,6 +160,6 @@ public class ScoreManager : Singleton<ScoreManager>
     /// <returns>スコア</returns>
     private int GetPlayerScore(int pID)
     {
-        return playerScore[pID].gameObject.GetComponent<ScoreCount>().GetScore();
+        return playerScore[pID].GetComponent<ScoreCount>().GetScore();
     }
 }
