@@ -10,7 +10,8 @@ public class Player : MonoBehaviour {
         MicroWave
     }
 
-    private float speed { get; } = 20f;  // 移動スピード
+	[SerializeField] [Range(0.0f, 30.0f)]
+    private float speed;  // 移動スピード
     private float moveX = 0f;              //移動量
     private float moveZ = 0f;
     private string layerName;// レイヤーの名前
