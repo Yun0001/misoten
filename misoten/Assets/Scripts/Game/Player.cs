@@ -9,9 +9,12 @@ public class Player : MonoBehaviour {
     {
         MicroWave
     }
-    
-    private float speed { get; set; }    // 移動スピード
-    private float moveX = 0f;
+
+	[Range(0.0f, 30.0f)]
+	[SerializeField]
+	private float speed;    // 移動スピード
+
+	private float moveX = 0f;
     private float moveZ = 0f;
     private string layerName;
     private string InputXAxisName;
@@ -29,7 +32,6 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        speed = 20f;
         rb = GetComponent<Rigidbody>();
         layerName = LayerMask.LayerToName(gameObject.layer);
     }
@@ -104,8 +106,8 @@ public class Player : MonoBehaviour {
 
         InputButton();
 
-        Debug.Log(hitObj);
-        Debug.Log(haveInHandFood);
+        //Debug.Log(hitObj);
+        //Debug.Log(haveInHandFood);
     }
 
     /// <summary>
@@ -175,7 +177,7 @@ public class Player : MonoBehaviour {
             //　レンジの前にいるとき
             FrontoftheMicrowave();
         }
-    }
+	}
 
     /// <summary>
     /// レンジの前にいるとき

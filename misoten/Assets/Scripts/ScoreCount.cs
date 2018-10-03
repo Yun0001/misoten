@@ -45,6 +45,6 @@ public class ScoreCount : MonoBehaviour
                          //スコアを更新して表示
             scoreTextP2.text = "Score: " + score.ToString();
         }
-    }
+	}
 }
 

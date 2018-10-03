@@ -39,7 +39,7 @@ public class MicroWave : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(status);
+        //Debug.Log(status);
         switch (status)
         {
             case MWState.objectNone:

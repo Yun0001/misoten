@@ -51,7 +51,7 @@ public class CountDownTimer : MonoBehaviour
 			// タイマー表示用UIテキストに時間を表示する
 			if ((int)m_seconds != (int)m_oldSeconds)
 			{
-				m_timerText.text = m_minute.ToString("00") + ":" + ((int)m_seconds).ToString("00");
+				m_timerText.text = m_minute.ToString("残りタイム:00") + ":" + ((int)m_seconds).ToString("00");
 			}
 
 			// 前回の秒数の更新
