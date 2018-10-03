@@ -11,10 +11,7 @@ public class ScoreCount : MonoBehaviour
     /// </summary>
     private int score;
 
-    void Awake()
-    {
-        score = 0;
-    }
+    void Awake() => score = 0;
 
 
     /// <summary>
@@ -22,10 +19,7 @@ public class ScoreCount : MonoBehaviour
     /// </summary>
     /// <param name="pID">プレイヤーID</param>
     /// <param name="addscore">加算分スコア</param>
-    public void AddScore(int addscore)
-    {
-        score += addscore;
-    }
+    public void AddScore(int addscore) => score += addscore;
 
     /// <summary>
     /// スコア減算
@@ -39,9 +33,10 @@ public class ScoreCount : MonoBehaviour
         if (subscore < 0)   subscore = 0;
     }
 
-    public int GetScore()
-    {
-        return score;
-    }
+    /// <summary>
+    /// スコア取得’
+    /// </summary>
+    /// <returns>スコア</returns>
+    public int GetScore() => score;
 }
 

@@ -235,38 +235,17 @@ public class Player : MonoBehaviour {
     /// <summary>
     /// レンチンスタート
     /// </summary>
-    private void MicrowaveSwitchOn()
-    {
-        GetHitObjConmponetMicroWave().cookingStart();
-    }
+    private void MicrowaveSwitchOn() => GetHitObjConmponetMicroWave().cookingStart();
 
-    private GameObject GetHitObj()
-    {
-        return hitObj.gameObject;
-    }
+    private GameObject GetHitObj() => hitObj.gameObject;
 
-    private MicroWave GetHitObjConmponetMicroWave()
-    {
-        return GetHitObj().GetComponent<MicroWave>();
-    }
+    private MicroWave GetHitObjConmponetMicroWave() => GetHitObj().GetComponent<MicroWave>();
 
-    public void ResetHindrancePoint()
-    {
-        hindrancePoint = 1f;
-    }
+    public void ResetHindrancePoint() => hindrancePoint = 1f;
 
-    public float GetHindrancePoint()
-    {
-         return hindrancePoint;
-    }
+    public float GetHindrancePoint() => hindrancePoint;
 
-    private void AddHindrancePoint()
-    {
-        hindrancePoint += 0.25f;
-    }
+    private void AddHindrancePoint() => hindrancePoint += 0.25f;
 
-    public int GetPlayerID()
-    {
-        return playerID;
-    }
+    public int GetPlayerID() => playerID;
 }
