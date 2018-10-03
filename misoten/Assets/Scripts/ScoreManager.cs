@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    const int playerNum = 4;                     // プレイヤーの数
+    readonly static int playerNum = 4;                     // プレイヤーの数
 
     [SerializeField]
     private GameObject[] playerScore;       // 各プレイヤースコアの参照
@@ -73,7 +73,7 @@ public class ScoreManager : Singleton<ScoreManager>
     /// </summary>
     private void UpdatePlayerRank()
     {
-        int[] workArray = new int[playerNum]; //作業用配列
+        var workArray = new int[playerNum]; //作業用配列
 
         InitArray(workArray);       // 作業用配列初期化
         BubbleSort(workArray);   // バブルソート
