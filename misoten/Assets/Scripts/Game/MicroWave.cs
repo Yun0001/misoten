@@ -118,19 +118,13 @@ public class MicroWave : MonoBehaviour {
     /// 状態取得
     /// </summary>
     /// <returns>状態</returns>
-    public MWState GetStatus()
-    {
-        return status;
-    }
+    public MWState GetStatus()=> status;
 
     /// <summary>
     /// 中の食材のプレイヤーIDを取得
     /// </summary>
     /// <returns>食材のプレイヤーID</returns>
-    public int GetInFoodID()
-    {
-        return food.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
-    }
+    public int GetInFoodID() => food.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
 
     /// <summary>
     /// 電子レンジ初期化
@@ -145,9 +139,5 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     /// タイマーカウントダウン
     /// </summary>
-    private void CountDownTimer()
-    {
-        timer -= Time.deltaTime;
-        //Debug.Log(timer);
-    }
+    private void CountDownTimer() => timer -= Time.deltaTime;
 }

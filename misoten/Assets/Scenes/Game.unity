@@ -3318,6 +3318,16 @@ Prefab:
       propertyPath: haveInHandFood
       value: 
       objectReference: {fileID: 1862620323}
+    - target: {fileID: 114134376177611930, guid: fc24d2bfa8c20504694b25588b25ae9a,
+        type: 2}
+      propertyPath: speed
+      value: 19.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114403954903227584, guid: fc24d2bfa8c20504694b25588b25ae9a,
+        type: 2}
+      propertyPath: speed
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc24d2bfa8c20504694b25588b25ae9a, type: 2}
   m_IsPrefabParent: 0
