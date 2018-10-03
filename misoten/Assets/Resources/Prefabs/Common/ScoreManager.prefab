@@ -61,10 +61,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  gameTimeManager: {fileID: 0}
   timeCoefficient: 1.25
   rankCoefficient:
   - 1
   - 2
   - 3
   - 4
-  gameTimeManager: {fileID: 0}
