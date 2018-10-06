@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     private float moveX = 0f;              //移動量
     private float moveY = 0f;
     private string layerName;// レイヤーの名前
+    [SerializeField]
     private PlayerStatus playerStatus;
  
     // 左スティックの入力を取る用
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
     private string InputYAxisName;
     private GamepadState padState;
     private GamePad.Index PlayerNumber;
-    private Rigidbody rb;
+    private Rigidbody2D rb;
     private GameObject[] hitObj = new GameObject[9];
     private float hindrancePoint; // 邪魔point
 
@@ -49,11 +50,14 @@ public class Player : MonoBehaviour
     //あとで消す
     private int adjustmentSpeed = 10;
 
+    private readonly static float HINDRANCE_TIME = 5;
+    private float hindranceTime = 5; // 邪魔動作の時間
+
 
     // Use this for initialization
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         layerName = LayerMask.LayerToName(gameObject.layer);
         switch (layerName)
         {
@@ -70,7 +74,7 @@ public class Player : MonoBehaviour
                 playerID = 3;
                 break;
         }
-        playerStatus = PlayerStatus.Normal;
+        playerStatus = PlayerStatus.Catering;
         hindrancePoint = 1;
         for (int i = 0; i < 9; i++)
         {
@@ -80,12 +84,18 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(moveX * speed, moveY * speed, 0);
+        if (playerStatus == PlayerStatus.Catering)
+        {
+            moveX /= 2;
+            moveY /= 2;
+        }
+        rb.velocity = new Vector2(moveX * speed, moveY * speed);
     }
 
     // Update is called once per frame
     void Update ()
     {
+        Debug.Log(playerStatus);
         // 今だけ
         moveX = 0;
         moveY = 0;
@@ -94,38 +104,55 @@ public class Player : MonoBehaviour
         if (!PlayerNumberDecision())    return;
 
         padState = GamepadInput.GamePad.GetState(PlayerNumber);
-        moveX = Input.GetAxis(InputXAxisName)* adjustmentSpeed;
-        moveY = -(Input.GetAxis(InputYAxisName)* adjustmentSpeed);
 
-
-        // switch文は今だけ
-        switch (layerName)
+        if (playerStatus == PlayerStatus.Hindrance)
         {
-            case "Player1":
-
-                break;
-            case "Player2":
-                if (Input.GetKey(KeyCode.A))     moveX = -speed/ adjustmentSpeed; 
-                if (Input.GetKey(KeyCode.D))     moveX = speed / adjustmentSpeed;
-                if (Input.GetKey(KeyCode.W)) moveY = speed / adjustmentSpeed;
-                if (Input.GetKey(KeyCode.S)) moveY = -speed / adjustmentSpeed;
-                if (Input.GetKeyDown(KeyCode.Z))     FrontoftheMicrowave();
-                Debug.Log(hindrancePoint);
-                break;
-            case "Player3":
-                if (Input.GetKey(KeyCode.LeftArrow))       moveX = -speed / adjustmentSpeed;
-                if (Input.GetKey(KeyCode.RightArrow))     moveX = speed / adjustmentSpeed;
-                if (Input.GetKey(KeyCode.UpArrow)) moveY = speed / adjustmentSpeed;
-                if (Input.GetKey(KeyCode.DownArrow)) moveY = -speed / adjustmentSpeed;
-                if (Input.GetKeyDown(KeyCode.L))                   FrontoftheMicrowave();
-                break;
-            case "Player4":
-
-                break;
+            // 邪魔状態の時の処理
+            hindranceTime -= Time.deltaTime;
+            if (hindranceTime < 0)
+            {
+                hindranceTime = HINDRANCE_TIME;
+                playerStatus = PlayerStatus.Normal;
+            }
         }
-        //
+        else
+        {
+            //　邪魔状態以外の時の処理
+            moveX = Input.GetAxis(InputXAxisName) * 5;
+            moveY = -(Input.GetAxis(InputYAxisName) * 5);
 
-        InputButton();
+
+            // switch文は今だけ
+            switch (layerName)
+            {
+                case "Player1":
+
+                    break;
+                case "Player2":
+                    if (Input.GetKey(KeyCode.A)) moveX = -speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.D)) moveX = speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.W)) moveY = speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.S)) moveY = -speed / adjustmentSpeed;
+                    if (Input.GetKeyDown(KeyCode.Z)) FrontoftheMicrowave();
+                    Debug.Log(hindrancePoint);
+                    break;
+                case "Player3":
+                    if (Input.GetKey(KeyCode.LeftArrow)) moveX = -speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.RightArrow)) moveX = speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.UpArrow)) moveY = speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.DownArrow)) moveY = -speed / adjustmentSpeed;
+                    if (Input.GetKeyDown(KeyCode.L)) FrontoftheMicrowave();
+                    break;
+                case "Player4":
+
+                    break;
+            }
+            //
+
+            InputButton();
+        }
+      
+        Clamp();//移動範囲制限
 
         //Debug.Log(hitObj);
         //Debug.Log(haveInHandFood);
@@ -292,6 +319,29 @@ public class Player : MonoBehaviour
 
         // Bボタン入力
         // 他プレイヤーの邪魔（担当　贄田）
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerNumber))
+        {
+            //状態を邪魔に変更
+            playerStatus = PlayerStatus.Hindrance;
+        }
+    }
+
+
+    /// <summary>
+    /// 移動範囲の制限
+    /// </summary>
+    private void Clamp()
+    {
+        float width = 7f;
+        Vector2 min = new Vector2(-width, -4.5f);
+        Vector2 max = new Vector2(width, 0.9f);
+
+        Vector2 pos = transform.position;
+
+        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
+        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+
+        transform.position = pos;
     }
 
     /// <summary>
