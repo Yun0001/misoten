@@ -36,7 +36,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4438536013222734}
   - component: {fileID: 61908047755593104}
-  m_Layer: 0
+  - component: {fileID: 50128418122896840}
+  - component: {fileID: 114813568875691908}
+  m_Layer: 14
   m_Name: Microwave
   m_TagString: Microwave
   m_Icon: {fileID: 0}
@@ -83,7 +85,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4075794392429772}
   - component: {fileID: 61451491821596282}
-  m_Layer: 0
+  - component: {fileID: 50590535322788076}
+  - component: {fileID: 114308504385299792}
+  m_Layer: 14
   m_Name: Microwave2
   m_TagString: Microwave
   m_Icon: {fileID: 0}
@@ -219,6 +223,46 @@ Transform:
   m_Father: {fileID: 4506816803939022}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50128418122896840
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545895505478860}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!50 &50590535322788076
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646393205443142}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61336190511121792
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -369,3 +413,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.25, y: 2.25}
   m_EdgeRadius: 0
+--- !u!114 &114308504385299792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646393205443142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26de550aab40ba84aaf31fea9a9340ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  microwaveFoodPrefab: {fileID: 0}
+  scoreManager: {fileID: 0}
+--- !u!114 &114813568875691908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545895505478860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26de550aab40ba84aaf31fea9a9340ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  microwaveFoodPrefab: {fileID: 0}
+  scoreManager: {fileID: 0}

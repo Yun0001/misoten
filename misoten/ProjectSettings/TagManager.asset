@@ -8,6 +8,7 @@ TagManager:
   - Counter
   - Pot
   - GrilledTable
+  - Taste
   layers:
   - Default
   - TransparentFX
@@ -22,10 +23,10 @@ TagManager:
   - Player3
   - Player4
   - Counter
-  - 
-  - 
-  - 
-  - 
+  - taste
+  - Microwave
+  - Pot
+  - GrilledTable
   - 
   - 
   - 

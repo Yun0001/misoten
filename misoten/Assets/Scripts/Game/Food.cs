@@ -12,16 +12,17 @@ public class Food : MonoBehaviour {
     /// </summary>
     private int ownershipPlayerID;
 
-	// Use this for initialization
-	void Start () {
+    /// <summary>
+    /// 味の質
+    /// </summary>
+    private float qualityTaste;
+
+    // Use this for initialization
+    void Start() {
         //　テスト用
         ownershipPlayerID = 1;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        qualityTaste = 1;
+            }
 
     public void SetOwnershipPlayerID(int ID)
     {
@@ -32,4 +33,15 @@ public class Food : MonoBehaviour {
     {
         return ownershipPlayerID;
     }
+
+    public void SubQualityTaste()
+    {
+        qualityTaste -= Time.deltaTime/10;
+    }
+
+    /// <summary>
+    /// 旨味係数を計算
+    /// </summary>
+    /// <param name="coefficient"></param>
+    public void CalcTasteCoefficient(float coefficient) => qualityTaste -= coefficient;
 }

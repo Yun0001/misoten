@@ -9,8 +9,12 @@ public class Player : MonoBehaviour
     enum PlayerStatus
     {
         Normal,             //通常
+        Microwave,        //電子レンジ
+        Pot,                   //鍋
+        GrilledTable,       //焼き台
         Catering,           //配膳
-        Hindrance          //邪魔
+        Hindrance,          //邪魔
+        Replenishment // 補充
     }
 
     enum hitObjnName
@@ -39,6 +43,7 @@ public class Player : MonoBehaviour
     private GamepadState padState;
     private GamePad.Index PlayerNumber;
     private Rigidbody2D rb;
+    [SerializeField]
     private GameObject[] hitObj = new GameObject[9];
     private float hindrancePoint; // 邪魔point
 
@@ -52,6 +57,7 @@ public class Player : MonoBehaviour
 
     private readonly static float HINDRANCE_TIME = 5;
     private float hindranceTime = 5; // 邪魔動作の時間
+    private GameObject tastePrefab;//旨味成分
 
 
     // Use this for initialization
@@ -74,12 +80,13 @@ public class Player : MonoBehaviour
                 playerID = 3;
                 break;
         }
-        playerStatus = PlayerStatus.Catering;
+        playerStatus = PlayerStatus.Normal;
         hindrancePoint = 1;
         for (int i = 0; i < 9; i++)
         {
             hitObj[i] = null;
         }
+        tastePrefab = (GameObject)Resources.Load("Prefabs/Taste");
     }
 
     private void FixedUpdate()
@@ -129,19 +136,28 @@ public class Player : MonoBehaviour
 
                     break;
                 case "Player2":
-                    if (Input.GetKey(KeyCode.A)) moveX = -speed / adjustmentSpeed;
-                    if (Input.GetKey(KeyCode.D)) moveX = speed / adjustmentSpeed;
-                    if (Input.GetKey(KeyCode.W)) moveY = speed / adjustmentSpeed;
-                    if (Input.GetKey(KeyCode.S)) moveY = -speed / adjustmentSpeed;
+                    if (Input.GetKey(KeyCode.A)) moveX = -speed;
+                    if (Input.GetKey(KeyCode.D)) moveX = speed ;
+                    if (Input.GetKey(KeyCode.W)) moveY = speed;
+                    if (Input.GetKey(KeyCode.S)) moveY = -speed;
                     if (Input.GetKeyDown(KeyCode.Z)) FrontoftheMicrowave();
-                    Debug.Log(hindrancePoint);
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+                        playerStatus = PlayerStatus.Hindrance;
+                        Instantiate(tastePrefab, transform.position, Quaternion.identity);
+                    }
                     break;
                 case "Player3":
-                    if (Input.GetKey(KeyCode.LeftArrow)) moveX = -speed / adjustmentSpeed;
-                    if (Input.GetKey(KeyCode.RightArrow)) moveX = speed / adjustmentSpeed;
-                    if (Input.GetKey(KeyCode.UpArrow)) moveY = speed / adjustmentSpeed;
-                    if (Input.GetKey(KeyCode.DownArrow)) moveY = -speed / adjustmentSpeed;
-                    if (Input.GetKeyDown(KeyCode.L)) FrontoftheMicrowave();
+                    if (Input.GetKey(KeyCode.LeftArrow)) moveX = -speed;
+                    if (Input.GetKey(KeyCode.RightArrow)) moveX = speed;
+                    if (Input.GetKey(KeyCode.UpArrow)) moveY = speed;
+                    if (Input.GetKey(KeyCode.DownArrow)) moveY = -speed;
+                    if (Input.GetKeyDown(KeyCode.K)) FrontoftheMicrowave();
+                    if (Input.GetKeyDown(KeyCode.L))
+                    {
+                        playerStatus = PlayerStatus.Hindrance;
+                        Instantiate(tastePrefab, transform.position, Quaternion.identity);
+                    }
                     break;
                 case "Player4":
 
@@ -190,54 +206,58 @@ public class Player : MonoBehaviour
         return false;
     }
 
+
     /// <summary>
     /// 当たり判定
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch (other.gameObject.tag)
+        switch (collision.gameObject.tag)
         {
             //プレイヤー
             case "Player1":
-                hitObj[(int)hitObjnName.player1] = other.gameObject;
+                hitObj[(int)hitObjnName.player1] = collision.gameObject;
                 break;
 
             case "Player2":
-                hitObj[(int)hitObjnName.player2] = other.gameObject;
+                hitObj[(int)hitObjnName.player2] = collision.gameObject;
                 break;
 
             case "Player3":
-                hitObj[(int)hitObjnName.player3] = other.gameObject;
+                hitObj[(int)hitObjnName.player3] = collision.gameObject;
                 break;
 
             case "Player4":
-                hitObj[(int)hitObjnName.player4] = other.gameObject;
+                hitObj[(int)hitObjnName.player4] = collision.gameObject;
                 break;
-                // レンジ
+            // レンジ
             case "Microwave":
-                hitObj[(int)hitObjnName.Microwave] = other.gameObject;
+                hitObj[(int)hitObjnName.Microwave] = collision.gameObject;
                 break;
-                // 鍋
+            // 鍋
             case "Pot":
-                hitObj[(int)hitObjnName.Pot] = other.gameObject;
+                hitObj[(int)hitObjnName.Pot] = collision.gameObject;
                 break;
-                // 焼き台
+            // 焼き台
             case "GrilledTable":
-                hitObj[(int)hitObjnName.GrilledTable] = other.gameObject;
+                hitObj[(int)hitObjnName.GrilledTable] = collision.gameObject;
                 break;
-                // 補充マシーン
+            // 補充マシーン
             case "TasteMachine":
-                hitObj[(int)hitObjnName.TasteMachine] = other.gameObject;
+                hitObj[(int)hitObjnName.TasteMachine] = collision.gameObject;
                 break;
         }
     }
+
+
+
 
     /// <summary>
     /// 当たり判定がなくなるとき
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         switch (other.gameObject.tag)
         {
@@ -269,10 +289,6 @@ public class Player : MonoBehaviour
             case "TasteMachine":
                 hitObj[(int)hitObjnName.TasteMachine] = null;
                 break;
-        }
-        if (other.gameObject.tag == "Microwave")
-        {
-            hitObj = null;
         }
     }
 
@@ -307,15 +323,7 @@ public class Player : MonoBehaviour
                 // 焼き台の前にいるとき
             }
         }
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
-        {
-            //　レンジの前にいるとき
-            FrontoftheMicrowave();
 
-            //  鍋の前にいるとき
-
-        // 焼き台の前にいるとき
-        }
 
         // Bボタン入力
         // 他プレイヤーの邪魔（担当　贄田）
@@ -323,6 +331,9 @@ public class Player : MonoBehaviour
         {
             //状態を邪魔に変更
             playerStatus = PlayerStatus.Hindrance;
+            // 旨味成分を実体化
+            Instantiate(tastePrefab, transform.position, Quaternion.identity);
+
         }
     }
 
@@ -352,8 +363,23 @@ public class Player : MonoBehaviour
         // ヒットオブジェクトがなければ関数を抜ける
         if (GetHitObj((int)hitObjnName.Microwave) == null) return;
 
+        //スイッチがOFF
+        if (GetHitObjConmponetMicroWave().GetStatus() == MicroWave.MWState.switchOff)
+        {
+            // スイッチON
+            PresstheMicrowaveStartButton();
+        }
+        else
+        {
+            //スイッチをOFFにして料理をもつ
+            WithaCuisine(PresstheMicrowaveStopButton());
+        }
+
+        /*
         if (GetHitObj((int)hitObjnName.Microwave).tag == "Microwave")
         {
+   
+            
             //　レンジの状態判定
             switch (GetHitObjConmponetMicroWave().GetStatus())
             {
@@ -380,8 +406,9 @@ public class Player : MonoBehaviour
                 case MicroWave.MWState.cooking:
                         GetHitObjConmponetMicroWave().PutOutInFood(playerID);
                     break;
-            }
+            }      
         }
+        */
     }
 
     /// <summary>
@@ -393,7 +420,7 @@ public class Player : MonoBehaviour
         //if (GetHitObj() == null) return;
 
         //　食材が入っていなかったら自分が持っている食材をレンジに入れる
-        GetHitObjConmponetMicroWave().SetFood(haveInHandFood);
+        //GetHitObjConmponetMicroWave().SetFood(haveInHandFood);
         // 手に持っているオブジェクトをなくす
         haveInHandFood = null;
     }
@@ -401,7 +428,28 @@ public class Player : MonoBehaviour
     /// <summary>
     /// レンチンスタート
     /// </summary>
-    private void MicrowaveSwitchOn() => GetHitObjConmponetMicroWave().cookingStart();
+    //private void MicrowaveSwitchOn() => GetHitObjConmponetMicroWave().cookingStart();
+
+
+    private void PresstheMicrowaveStartButton()
+    {
+        GetHitObjConmponetMicroWave().StartCooking();
+    }
+
+    private GameObject PresstheMicrowaveStopButton()
+    {
+        return GetHitObjConmponetMicroWave().EndCooking();
+    }
+
+
+    /// <summary>
+    /// 料理を持つ
+    /// </summary>
+    private void WithaCuisine(GameObject Food)
+    {
+        haveInHandFood = Food;
+        playerStatus = PlayerStatus.Catering;
+    }
 
     private GameObject GetHitObj(int HitObjID)
     {

@@ -8,22 +8,24 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     /// 電子レンジの状態　列挙
     /// </summary>
-   public  enum MWState { objectNone,inObject, cooking }
+   public  enum MWState { switchOff,switchOn }
 
     /// <summary>
     /// レンジの中にあるオブジェクト
     /// </summary>
-    private GameObject food;
+    [SerializeField]
+    private GameObject microwaveFoodPrefab;
 
     /// <summary>
-    /// セットタイマー（これが基礎得点になる）
+    /// セットタイマ-
     /// </summary>
     [SerializeField]
-    private float setTimer;
+    private   float setTimer;
 
     /// <summary>
     /// タイマー
     /// </summary>
+    [SerializeField]
     private float timer;
 
     /// <summary>
@@ -35,14 +37,15 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     /// 状態
     /// </summary>
+    [SerializeField]
     MWState status;
 
 
 	// Use this for initialization
 	void Start () {
-        food = null;
+        microwaveFoodPrefab = (GameObject)Resources.Load("Prefabs/MicrowaveFood");
         timer = 0;
-        status = MWState.objectNone;
+        status = MWState.switchOff;
 	}
 	
 	//更新処理
@@ -50,6 +53,7 @@ public class MicroWave : MonoBehaviour {
        // Debug.Log(status);
         switch (status)
         {
+            /*
             // 食材なし
             case MWState.objectNone:
                 if (Input.GetKeyDown(KeyCode.R)) status = MWState.inObject;
@@ -76,9 +80,22 @@ public class MicroWave : MonoBehaviour {
                     InitMicrowave();
                 }
                 break;
+                */
+
+            //スイッチがオフ
+            case MWState.switchOff:
+                //現状とくになし
+                break;
+
+                //スイッチがオン
+            case MWState.switchOn:
+                //タイマーカウントダウン
+                CountDownTimer();
+                break;
         }
 	}
 
+    /*
     /// <summary>
     /// レンジ開始
     /// </summary>
@@ -87,7 +104,9 @@ public class MicroWave : MonoBehaviour {
         timer = setTimer;
         status = MWState.cooking;
     }
+    */
 
+        /*
     /// <summary>
     /// 電子レンジに食材をセット
     /// </summary>
@@ -101,6 +120,7 @@ public class MicroWave : MonoBehaviour {
         status = MWState.inObject;
         return true;
     }
+    */
 
     /// <summary>
     /// 中にある食材を無くす
@@ -124,20 +144,55 @@ public class MicroWave : MonoBehaviour {
     /// 中の食材のプレイヤーIDを取得
     /// </summary>
     /// <returns>食材のプレイヤーID</returns>
-    public int GetInFoodID() => food.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
+    public int GetInFoodID() => microwaveFoodPrefab.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
 
     /// <summary>
     /// 電子レンジ初期化
     /// </summary>
     private void InitMicrowave()
     {
-        food = null;
-        status = MWState.objectNone;
+        microwaveFoodPrefab = null;
+        //status = MWState.objectNone;
+        status = MWState.switchOn;
         timer = 0f;
     }
 
     /// <summary>
     /// タイマーカウントダウン
     /// </summary>
-    private void CountDownTimer() => timer -= Time.deltaTime;
+    private void CountDownTimer()
+    {
+        timer -= Time.deltaTime;
+    }
+
+    //電子レンジストップ
+    public GameObject EndCooking()
+    {
+        // 設定した時間との誤差を計算
+        float timeDifference = Mathf.Abs(timer);
+
+        // ここでtimeDifferenceを料理の変数にセットする
+        microwaveFoodPrefab.GetComponent<Food>().CalcTasteCoefficient(timeDifference);
+
+        // スイッチオフ
+        status = MWState.switchOff;
+
+        // 電子レンジからプレイヤーに料理を渡す
+        return microwaveFoodPrefab;
+    }
+    /// <summary>
+    ///  電子レンジスタート
+    /// </summary>
+    public bool StartCooking()
+    {
+        // 既にスイッチが入っていればリターン
+        if (status == MWState.switchOn) return false;
+
+        // スイッチオン
+        status = MWState.switchOn;
+        //タイマーセット
+        timer = setTimer;
+        return true;
+    }
+
 }
