@@ -51,7 +51,7 @@ public class CountDownTimer : MonoBehaviour
 			// タイマー表示用UIテキストに時間を表示する
 			if ((int)m_seconds != (int)m_oldSeconds)
 			{
-				m_timerText.text = m_minute.ToString("残りタイム:00") + ":" + ((int)m_seconds).ToString("00");
+				m_timerText.text = m_minute.ToString("Time:00") + ":" + ((int)m_seconds).ToString("00");
 			}
 
 			// 前回の秒数の更新
@@ -61,4 +61,17 @@ public class CountDownTimer : MonoBehaviour
 			if (m_totalTime <= 0.0f) { Debug.Log("制限時間終了"); }
 		}
 	}
+
+	/// <summary>
+	/// 制限時間(秒)の設定
+	/// </summary>
+	/// <param name="_m_seconds"></param>
+	/// <returns></returns>
+	public float SetSeconds(float _m_seconds) => m_seconds = _m_seconds;
+
+	/// <summary>
+	/// 制限時間(秒)の取得
+	/// </summary>
+	/// <returns></returns>
+	public float GetSeconds() => m_seconds;
 }

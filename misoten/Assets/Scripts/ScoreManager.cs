@@ -25,9 +25,6 @@ public class ScoreManager : Singleton<ScoreManager>
     private int[] playerRank = new int[playerNum];     // プレイヤーの順位
     private Text[] scoreText = new Text[playerNum];   // スコア表示テキスト
 
-
-
-
     /// <summary>
     /// 初期処理
     /// </summary>
@@ -37,7 +34,7 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             scoreText[pID] = playerScore[pID].GetComponent<Text>();
             playerRank[pID] = 1;
-            scoreText[pID].text = "Score:"+ GetPlayerScore(pID).ToString()+"/"+playerRank[pID].ToString();
+            scoreText[pID].text = "Chip:"+ GetPlayerScore(pID).ToString()+"/"+playerRank[pID].ToString();
         }
     }
     
@@ -150,7 +147,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private void UpdateScoreText()
     {
         for (int i = 0; i < playerNum; i++)
-            scoreText[i].text = "Score:" + GetPlayerScore(i).ToString() + "/" + playerRank[i].ToString();
+            scoreText[i].text = "Chip:" + GetPlayerScore(i).ToString() + "/" + playerRank[i].ToString();
     }
 
     /// <summary>
