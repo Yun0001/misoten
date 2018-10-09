@@ -26,13 +26,15 @@ public class Player : MonoBehaviour
         Microwave, //レンジ
         Pot,//鍋
         GrilledTable,//焼き台
-        TasteMachine//旨味成分補充マシーン
+        TasteMachine,//旨味成分補充マシーン
+        Alien,//宇宙人
+        Taste//旨味成分
     }
 
 	[SerializeField] [Range(0.0f, 30.0f)]
     private float speed;  // 移動スピード
-    private float moveX = 0f;              //移動量
-    private float moveY = 0f;
+    [SerializeField]
+    private Vector2 move;  //移動量
     private string layerName;// レイヤーの名前
     [SerializeField]
     private PlayerStatus playerStatus;
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField]
     private GameObject[] hitObj = new GameObject[9];
-    private float hindrancePoint; // 邪魔point
+    private float hindrancePoint; // 邪魔point（現在未使用）
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
@@ -91,12 +93,15 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerStatus == PlayerStatus.Pot) return; // 茹で料理を調理中ならばリターン
+
         if (playerStatus == PlayerStatus.Catering)
         {
-            moveX /= 2;
-            moveY /= 2;
+            // 配膳中ならば移動量半減
+            move.x /= 2;
+            move.y /= 2;
         }
-        rb.velocity = new Vector2(moveX * speed, moveY * speed);
+        rb.velocity = new Vector2(move.x * speed, move.y * speed);
     }
 
     // Update is called once per frame
@@ -104,8 +109,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log(playerStatus);
         // 今だけ
-        moveX = 0;
-        moveY = 0;
+        move = new Vector2(0f, 0f);
         //
 
         if (!PlayerNumberDecision())    return;
@@ -125,22 +129,26 @@ public class Player : MonoBehaviour
         else
         {
             //　邪魔状態以外の時の処理
-            moveX = Input.GetAxis(InputXAxisName) * 5;
-            moveY = -(Input.GetAxis(InputYAxisName) * 5);
-
+            move = new Vector2(Input.GetAxis(InputXAxisName) * 5, -(Input.GetAxis(InputYAxisName) * 5));
 
             // switch文は今だけ
             switch (layerName)
             {
                 case "Player1":
-
+                    Debug.Log(Input.GetAxis(InputXAxisName));
+                    Debug.Log(Input.GetAxis(InputYAxisName));
                     break;
                 case "Player2":
-                    if (Input.GetKey(KeyCode.A)) moveX = -speed;
-                    if (Input.GetKey(KeyCode.D)) moveX = speed ;
-                    if (Input.GetKey(KeyCode.W)) moveY = speed;
-                    if (Input.GetKey(KeyCode.S)) moveY = -speed;
-                    if (Input.GetKeyDown(KeyCode.Z)) FrontoftheMicrowave();
+                    if (Input.GetKey(KeyCode.A)) move.x = -speed;
+                    if (Input.GetKey(KeyCode.D)) move.x = speed;
+                    if (Input.GetKey(KeyCode.W)) move.y = speed;
+                    if (Input.GetKey(KeyCode.S)) move.y = -speed;
+                    if (Input.GetKeyDown(KeyCode.Z))
+                    {
+                        CookingMicrowave();
+                        CookingPot();
+                        //GetHitObj((int)hitObjnName.Microwave)?.gameObject.GetComponent<Player>().CookingMicrowave();
+                    }
                     if (Input.GetKeyDown(KeyCode.X))
                     {
                         playerStatus = PlayerStatus.Hindrance;
@@ -148,11 +156,11 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case "Player3":
-                    if (Input.GetKey(KeyCode.LeftArrow)) moveX = -speed;
-                    if (Input.GetKey(KeyCode.RightArrow)) moveX = speed;
-                    if (Input.GetKey(KeyCode.UpArrow)) moveY = speed;
-                    if (Input.GetKey(KeyCode.DownArrow)) moveY = -speed;
-                    if (Input.GetKeyDown(KeyCode.K)) FrontoftheMicrowave();
+                    if (Input.GetKey(KeyCode.LeftArrow)) move.x = -speed;
+                    if (Input.GetKey(KeyCode.RightArrow)) move.x = speed;
+                    if (Input.GetKey(KeyCode.UpArrow)) move.y = speed;
+                    if (Input.GetKey(KeyCode.DownArrow)) move.y = -speed;
+                    if (Input.GetKeyDown(KeyCode.K)) GetHitObj((int)hitObjnName.Microwave)?.GetComponent<Player>().CookingMicrowave();
                     if (Input.GetKeyDown(KeyCode.L))
                     {
                         playerStatus = PlayerStatus.Hindrance;
@@ -160,12 +168,25 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case "Player4":
-
                     break;
             }
             //
 
-            InputButton();
+            if (playerStatus == PlayerStatus.Pot)
+            {
+                //茹で料理を調理中の処理
+                Vector2 stickVec = new Vector2(Input.GetAxis(InputXAxisName) * 5, -(Input.GetAxis(InputYAxisName) * 5));
+                if (GetHitObjCommponetPot().UpdateCooking(stickVec))
+                {
+                    //調理終了の処理
+                    haveInHandFood = GetHitObjCommponetPot().GetPotFood();
+                    playerStatus = PlayerStatus.Catering;
+                }
+            }
+            else
+            {
+                InputButton();
+            }
         }
       
         Clamp();//移動範囲制限
@@ -205,7 +226,6 @@ public class Player : MonoBehaviour
         }
         return false;
     }
-
 
     /// <summary>
     /// 当たり判定
@@ -247,11 +267,11 @@ public class Player : MonoBehaviour
             case "TasteMachine":
                 hitObj[(int)hitObjnName.TasteMachine] = collision.gameObject;
                 break;
+            case "Alien":
+                hitObj[(int)hitObjnName.Alien] = collision.gameObject;
+                break;
         }
     }
-
-
-
 
     /// <summary>
     /// 当たり判定がなくなるとき
@@ -289,7 +309,16 @@ public class Player : MonoBehaviour
             case "TasteMachine":
                 hitObj[(int)hitObjnName.TasteMachine] = null;
                 break;
+
+            case "Alien":
+                hitObj[(int)hitObjnName.Alien] = null;
+                break;
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //ここに旨味成分に当たっているときの処理
     }
 
     /// <summary>
@@ -315,10 +344,12 @@ public class Player : MonoBehaviour
             // あたっていなかったらトリガーで取得
             if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
             {
+
                 //　レンジの前にいるとき
-                FrontoftheMicrowave();
+                CookingMicrowave();
 
                 //  鍋の前にいるとき
+                CookingPot();
 
                 // 焼き台の前にいるとき
             }
@@ -358,13 +389,14 @@ public class Player : MonoBehaviour
     /// <summary>
     /// レンジの前にいるとき
     /// </summary>
-    private void FrontoftheMicrowave()
+    private void CookingMicrowave()
     {
         // ヒットオブジェクトがなければ関数を抜ける
-        if (GetHitObj((int)hitObjnName.Microwave) == null) return;
+
+       if (GetHitObj((int)hitObjnName.Microwave) == null) return;
 
         //スイッチがOFF
-        if (GetHitObjConmponetMicroWave().GetStatus() == MicroWave.MWState.switchOff)
+        if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.MWState.switchOff)
         {
             // スイッチON
             PresstheMicrowaveStartButton();
@@ -411,6 +443,24 @@ public class Player : MonoBehaviour
         */
     }
 
+
+    private void CookingPot()
+    {
+        // 鍋に当たっていなければ抜ける
+        if (GetHitObj((int)hitObjnName.Pot) == null) return;
+
+        //鍋の料理スタート関数を呼ぶ
+        //プレイヤーの状態を鍋料理に変更
+        //プレイヤーの更新処理に鍋料理状態なら鍋の入力検知をするように追加する
+
+        // 鍋が未使用な自分が使用する
+        if (GetHitObjCommponetPot().GetStatus() == Pot.PotState.unused)
+        {
+            GetHitObjCommponetPot().StartCookingPot();  //調理開始
+            playerStatus = PlayerStatus.Pot;
+        }
+    }
+
     /// <summary>
     /// 食材を入れる
     /// </summary>
@@ -431,14 +481,23 @@ public class Player : MonoBehaviour
     //private void MicrowaveSwitchOn() => GetHitObjConmponetMicroWave().cookingStart();
 
 
+
+    /// <summary>
+    /// レンジのスタート
+    /// </summary>
+    /// <returns></returns>
     private void PresstheMicrowaveStartButton()
     {
-        GetHitObjConmponetMicroWave().StartCooking();
+        GetHitObjConmponentMicroWave().StartCooking();
     }
-
+    
+    /// <summary>
+    /// レンジのストップ
+    /// </summary>
+    /// <returns></returns>
     private GameObject PresstheMicrowaveStopButton()
     {
-        return GetHitObjConmponetMicroWave().EndCooking();
+        return GetHitObjConmponentMicroWave().EndCooking();
     }
 
 
@@ -455,10 +514,13 @@ public class Player : MonoBehaviour
     {
         if (hitObj[HitObjID] == null) return null;
 
-            return hitObj[HitObjID].gameObject;
+        return hitObj[HitObjID].gameObject;
     } 
 
-    private MicroWave GetHitObjConmponetMicroWave() => GetHitObj((int)hitObjnName.Microwave).GetComponent<MicroWave>();
+    private MicroWave GetHitObjConmponentMicroWave() => GetHitObj((int)hitObjnName.Microwave).GetComponent<MicroWave>();
+
+
+    private Pot GetHitObjCommponetPot() => GetHitObj((int)hitObjnName.Pot).GetComponent<Pot>();
 
     public void ResetHindrancePoint() => hindrancePoint = 1f;
 

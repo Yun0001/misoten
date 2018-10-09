@@ -152,14 +152,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114813568875691908, guid: d74c4e563de40844bab119963be50be8,
+    - target: {fileID: 114217336221195460, guid: d74c4e563de40844bab119963be50be8,
         type: 2}
-      propertyPath: timer
-      value: 0
+      propertyPath: cokingTime
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 114813568875691908, guid: d74c4e563de40844bab119963be50be8,
+    - target: {fileID: 114217336221195460, guid: d74c4e563de40844bab119963be50be8,
         type: 2}
-      propertyPath: setTimer
+      propertyPath: COOKING_TIME
       value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
