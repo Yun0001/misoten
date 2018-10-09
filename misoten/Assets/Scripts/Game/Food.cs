@@ -13,30 +13,23 @@ public class Food : MonoBehaviour {
     private int ownershipPlayerID;
 
     /// <summary>
-    /// 味の質
+    /// 宇宙人に料理を渡した時にもらえるチップ割合Max100%Min70%
     /// </summary>
     private float qualityTaste;
 
     // Use this for initialization
-    void Start() {
-        //　テスト用
-        ownershipPlayerID = 1;
-        qualityTaste = 1;
-            }
-
-    public void SetOwnershipPlayerID(int ID)
-    {
-        ownershipPlayerID = ID;
-    }
-
-    public int GetOwnershipPlayerID()
-    {
-        return ownershipPlayerID;
-    }
+    void Start() => qualityTaste = 1;
 
     public void SubQualityTaste()
     {
-        qualityTaste -= Time.deltaTime/10;
+        if (qualityTaste > 0.7f)
+        {
+            qualityTaste -= Time.deltaTime / 10;
+            if (qualityTaste < 0.7f)
+            {
+                qualityTaste = 0.7f;
+            }
+        }
     }
 
     /// <summary>
@@ -44,4 +37,8 @@ public class Food : MonoBehaviour {
     /// </summary>
     /// <param name="coefficient"></param>
     public void CalcTasteCoefficient(float coefficient) => qualityTaste -= coefficient;
+
+    public void SetOwnershipPlayerID(int ID) => ownershipPlayerID = ID;
+
+    public int GetOwnershipPlayerID() => ownershipPlayerID;
 }

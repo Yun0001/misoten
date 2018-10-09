@@ -8,20 +8,16 @@ public class Taste : MonoBehaviour
 
     [SerializeField]
     private float Duration; // 持続時間
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+
+    public int playerID { get; set; }
+
 	// Update is called once per frame
 	void Update ()
     {
         //持続時間を減らす
         Duration -= Time.deltaTime;
-        if (Duration <= 0)
-        {
-            // 持続時間が０以下になれば破壊
-            Destroy(gameObject);
-        }
+
+        // 持続時間が０以下になれば破壊
+        if (Duration <= 0) Destroy(gameObject);
 	}
 }

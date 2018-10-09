@@ -10,15 +10,6 @@ public class Pot : MonoBehaviour {
         inCcoking
     }
 
-    [SerializeField]
-    private float cookingTime;
-
-    [SerializeField]
-    private float COOKING_TIME;
-
-    [SerializeField]
-    private GameObject potFoodPrefab;
-
     private enum StickState
     {
         UpLeft,
@@ -27,19 +18,19 @@ public class Pot : MonoBehaviour {
         DownRight,
         None
     }
-
     [SerializeField]
+    private GameObject potFoodPrefab;
+    [SerializeField]
+    private float COOKING_TIME;
+    private float cookingTime;
+
     private PotState potStatus;
-
-    [SerializeField]
     private StickState stickStatus;
     private StickState oldStickStatus;
-    [SerializeField]
     private StickState startStatus;
 
     [SerializeField]
     private bool[] rotationFlg = new bool[4];
-    [SerializeField]
     private int rotationCount;
 
 
@@ -49,17 +40,18 @@ public class Pot : MonoBehaviour {
         Init();
     }
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     private void Init()
     {
-        potStatus = PotState.unused;
-        stickStatus = StickState.None;
-        oldStickStatus = StickState.None;
-        startStatus = StickState.None;
+        potStatus           = PotState.unused;
+        stickStatus         = StickState.None;
+        oldStickStatus    = StickState.None;
+        startStatus         = StickState.None;
+        rotationCount       = 0;
         for (int i = 0; i < rotationFlg.Length; i++)
-        {
             rotationFlg[i] = false;
-        }
-        rotationCount = 0;
     }
 
     /// <summary>
@@ -68,25 +60,23 @@ public class Pot : MonoBehaviour {
     public void StartCookingPot()
     {
         cookingTime = COOKING_TIME;
-        potStatus = PotState.inCcoking;
+        potStatus     = PotState.inCcoking;
     }
+
     /// <summary>
     /// 調理中の更新処理
     /// </summary>
-    /// <param name="stickVec"></param>
+    /// <param name="stickVec">スティックが倒れている方向</param>
     public bool UpdateCooking(Vector2 stickVec)
     {
         RotationDetectionStick(stickVec);
         cookingTime -= Time.deltaTime;
-        //調理終了
         if (cookingTime <= 0)
         {
-            //　初期化
-            Init();
-            //　茹で料理を返す
+            // 調理終了
+            Init();         // 初期化
             return true;
         }
-
         return false;
     }
 
@@ -170,29 +160,32 @@ public class Pot : MonoBehaviour {
         DetectionOneturn();
     }
 
-
     /// <summary>
     /// 1回転したか判定
     /// </summary>
     private void DetectionOneturn()
     {
         for (int i = 0; i < rotationFlg.Length; i++)
-        {
             if (!rotationFlg[i]) return;
-        }
 
         for (int i = 0; i < rotationFlg.Length; i++)
             rotationFlg[i] = false;
 
-        //rotationFlg[(int)startStatus] = true;
-        stickStatus = StickState.None;
-        oldStickStatus = StickState.None;
-        startStatus = StickState.None;
+        stickStatus       = StickState.None;
+        oldStickStatus  = StickState.None;
+        startStatus      = StickState.None;
         rotationCount++;
     }
 
-
+    /// <summary>
+    /// ステータス取得
+    /// </summary>
+    /// <returns>ステータス</returns>
     public PotState GetStatus() => potStatus;
 
+    /// <summary>
+    /// 茹で料理を返す
+    /// </summary>
+    /// <returns>茹で料理</returns>
     public GameObject GetPotFood() => potFoodPrefab;
 }

@@ -54,9 +54,6 @@ public class Player : MonoBehaviour
 
     private int playerID;
 
-    //あとで消す
-    private int adjustmentSpeed = 10;
-
     private readonly static float HINDRANCE_TIME = 5;
     private float hindranceTime = 5; // 邪魔動作の時間
     private GameObject tastePrefab;//旨味成分
@@ -95,13 +92,9 @@ public class Player : MonoBehaviour
     {
         if (playerStatus == PlayerStatus.Pot) return; // 茹で料理を調理中ならばリターン
 
-        if (playerStatus == PlayerStatus.Catering)
-        {
-            // 配膳中ならば移動量半減
-            move.x /= 2;
-            move.y /= 2;
-        }
-        rb.velocity = new Vector2(move.x * speed, move.y * speed);
+        if (playerStatus == PlayerStatus.Catering) move /= 2;// 配膳中ならば移動量半減
+
+        rb.velocity = move * speed;
     }
 
     // Update is called once per frame
@@ -152,7 +145,8 @@ public class Player : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.X))
                     {
                         playerStatus = PlayerStatus.Hindrance;
-                        Instantiate(tastePrefab, transform.position, Quaternion.identity);
+                        GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
+                        taste.GetComponent<Taste>().playerID = playerID;
                     }
                     break;
                 case "Player3":
@@ -164,7 +158,8 @@ public class Player : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.L))
                     {
                         playerStatus = PlayerStatus.Hindrance;
-                        Instantiate(tastePrefab, transform.position, Quaternion.identity);
+                        GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
+                        taste.GetComponent<Taste>().playerID = playerID;
                     }
                     break;
                 case "Player4":
@@ -319,6 +314,14 @@ public class Player : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         //ここに旨味成分に当たっているときの処理
+        if (collision.tag == "Taste")
+        {
+            if (collision.gameObject.GetComponent<Taste>().playerID != playerID)
+            {
+                // 配膳中の料理の旨味を向上させる
+                haveInHandFood.GetComponent<Food>().SubQualityTaste();
+            }
+        }
     }
 
     /// <summary>
@@ -363,8 +366,8 @@ public class Player : MonoBehaviour
             //状態を邪魔に変更
             playerStatus = PlayerStatus.Hindrance;
             // 旨味成分を実体化
-            Instantiate(tastePrefab, transform.position, Quaternion.identity);
-
+            GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
+            taste.GetComponent<Taste>().playerID = playerID;
         }
     }
 

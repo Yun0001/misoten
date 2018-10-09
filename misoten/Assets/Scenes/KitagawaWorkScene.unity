@@ -563,6 +563,21 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114572926095549010, guid: 0f676dc7c55d5544fb2ba0fa20e6d96d,
+        type: 2}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114558420420021180, guid: 0f676dc7c55d5544fb2ba0fa20e6d96d,
+        type: 2}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114470855620528380, guid: 0f676dc7c55d5544fb2ba0fa20e6d96d,
+        type: 2}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f676dc7c55d5544fb2ba0fa20e6d96d, type: 2}
   m_IsPrefabParent: 0
