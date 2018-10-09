@@ -30,12 +30,17 @@ public class Player : MonoBehaviour {
 
     private int playerID;
 
+    private int SetCountPlayer;
+    [SerializeField] private PowderSetManager PowderSetScript;
+
     //あとで消す
     private int adjustmentSpeed = 10;
 
 
     // Use this for initialization
     void Awake() {
+        PowderSetScript = GetComponent<PowderSetManager>();
+        SetCount();
         rb = GetComponent<Rigidbody>();
         layerName = LayerMask.LayerToName(gameObject.layer);
         switch (layerName)
@@ -58,7 +63,8 @@ public class Player : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(moveX * speed, 0, moveZ * speed);
+        //エラーの為とりあえずコメントアウト
+        //rb.velocity = new Vector3(moveX * speed, 0, moveZ * speed);
     }
 
     // Update is called once per frame
@@ -176,6 +182,19 @@ public class Player : MonoBehaviour {
             //　レンジの前にいるとき
             FrontoftheMicrowave();
         }
+
+        // Bボダン入力
+        if (GamePad.GetButton(GamePad.Button.B, PlayerNumber))
+        {
+            //ToDo：テーブル前にいるときの判定ない
+            PowderSetScript.PowderSet();
+        }
+        else
+        {//長押し時間初期化
+            PowderSetScript.InitSet();
+        }
+
+
     }
 
     /// <summary>
@@ -231,6 +250,7 @@ public class Player : MonoBehaviour {
         // 手に持っているオブジェクトをなくす
         haveInHandFood = null;
     }
+        
 
     /// <summary>
     /// レンチンスタート
@@ -248,4 +268,11 @@ public class Player : MonoBehaviour {
     private void AddHindrancePoint() => hindrancePoint += 0.25f;
 
     public int GetPlayerID() => playerID;
+
+    private void SetCount() => SetCountPlayer = PowderSetScript.GetSetCount();
+    //Powder1回分使う
+    private void SubSetCount() => PowderSetScript.SubSetCount();
+
+    public int GetSetCountPlayer() => SetCountPlayer;
+
 }
