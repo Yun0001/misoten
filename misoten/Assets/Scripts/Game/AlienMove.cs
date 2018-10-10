@@ -36,20 +36,23 @@ public class AlienMove : MonoBehaviour
 	[SerializeField]
 	private EEndPositionPattern endPositionPattern;
 
-	// エイリアンがその席に座っているかの判定用
-	private AlienOrSitting alienOrSitting;
+	//// エイリアンがその席に座っているかの判定用
+	//private static AlienOrSitting alienOrSitting;
 
 	// 移動状態の判定用
 	private bool isMove;
 
 	// 終点座標ID
-	private int setEndPositionID;
+	private static int setEndPositionID;
 
 	// 開始時間設定用
 	private float startTime;
 
 	// 開始座標設定用
 	private Vector3 startPosition;
+
+	//初期化成功か
+	private bool initSuccess = false;
 
 	/// <summary>
 	/// 開始関数
@@ -59,9 +62,6 @@ public class AlienMove : MonoBehaviour
 		// 移動状態の初期化
 		SetMoveStatus(true);
 
-		// コンポーネント取得
-		alienOrSitting = GameObject.Find("AlienOrSitting").GetComponent<AlienOrSitting>();
-
 		// エイリアンがどの席に向かうかの設定
 		if (endPositionPattern != EEndPositionPattern.RAND)
 		{
@@ -70,15 +70,18 @@ public class AlienMove : MonoBehaviour
 		}
 		else
 		{
-			// 座れる席になるまで、ループする
-			for (; ; )
-			{
-				// ランダムで席を決める
-				SetEndPositionsID(Random.Range((int)EEndPositionPattern.PATTERN_1, (int)EEndPositionPattern.RAND));
+			// ランダムで席を決める
+			SetEndPositionsID(Random.Range(0, 5));
 
-				// 席の状態が座られていない時、ループを抜ける
-				if (!AlienOrSitting.GetOrSitting(GetEndPositionsID())) { break; }
-			}
+			//// 座れる席になるまで、ループする
+			//for (; ; )
+			//{
+			//	// ランダムで席を決める
+			//	SetEndPositionsID(Random.Range(0, 5));
+
+			//	// 席の状態が座られていない時、ループを抜ける
+			//	if (!AlienOrSitting.GetOrSitting(GetEndPositionsID())) { initSuccess = true; break; }
+			//}
 		}
 	}
 
@@ -104,9 +107,12 @@ public class AlienMove : MonoBehaviour
 		transform.position = Vector3.Lerp(startPosition, endPosition[GetEndPositionsID()], curvePos);
 
 		// 下に行けば行くほど手前になる
-		if (transform.position.y >= 5.0f) { transform.position += new Vector3(0.0f, 0.0f, 0.1f); }
-		else if (transform.position.y >= 4.0f) { transform.position += new Vector3(0.0f, 0.0f, 0.2f); }
-		else if (transform.position.y >= 3.0f) { transform.position += new Vector3(0.0f, 0.0f, 0.3f); }
+		if (transform.position.y >= 5.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.1f); }
+		else if (transform.position.y >= 4.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.2f); }
+		else if (transform.position.y >= 3.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.3f); }
+
+		// Debug用
+		Debug.Log(GetEndPositionsID());
 	}
 
 	/// <summary>
@@ -160,11 +166,11 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public int SetEndPositionsID(int id) => setEndPositionID = id;
+	public static int SetEndPositionsID(int id) => setEndPositionID = id;
 
 	/// <summary>
 	/// 終点座標IDの取得
 	/// </summary>
 	/// <returns></returns>
-	public int GetEndPositionsID() => setEndPositionID;
+	public static int GetEndPositionsID() => setEndPositionID;
 }

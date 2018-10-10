@@ -119,7 +119,8 @@ public class AlienDisturbance : MonoBehaviour
 			// 注文して指定時間以上立つと怒り状態になる
 			if (latencyAdd >= moodChangeTime) { mood = EAlienMood.ANGER; }
 
-			Debug.Log("時間" + latencyAdd);
+			// Debug用
+			//Debug.Log("時間" + latencyAdd);
 		}
 	}
 
