@@ -49,8 +49,8 @@ public class MicroWave : MonoBehaviour {
 	}
 	
 	//更新処理
-	void Update () {
-       // Debug.Log(status);
+	void Update ()
+    {
         switch (status)
         {
             //スイッチがオフ
@@ -63,34 +63,6 @@ public class MicroWave : MonoBehaviour {
                 //タイマーカウントダウン
                 CountDownTimer();
                 break;
-                /*
-                // 食材なし
-                case MWState.objectNone:
-                    if (Input.GetKeyDown(KeyCode.R)) status = MWState.inObject;
-                    break;
-
-                // 食材あり
-                case MWState.inObject:
-                    if (Input.GetKeyDown(KeyCode.T))
-                    {
-                        cookingStart();
-                        status = MWState.cooking;
-                    } 
-                    break;
-
-                // 調理中
-                case MWState.cooking:
-                    CountDownTimer();
-                    if (0 >= timer)
-                    {
-                        // スコア加算
-                        scoreManager.AddScore(food.gameObject.GetComponent<Food>().GetOwnershipPlayerID(), (int)setTimer);
-
-                        // 電子レンジ初期化
-                        InitMicrowave();
-                    }
-                    break;
-                    */
         }
 	}
 
@@ -116,6 +88,7 @@ public class MicroWave : MonoBehaviour {
     {
         // 設定した時間との誤差を計算
         float timeDifference = Mathf.Abs(timer);
+        timeDifference *= 10;
 
         // ここでtimeDifferenceを料理の変数にセットする
         microwaveFoodPrefab.GetComponent<Food>().CalcTasteCoefficient(timeDifference);
@@ -137,62 +110,4 @@ public class MicroWave : MonoBehaviour {
     /// </summary>
     /// <returns>状態</returns>
     public MWState GetStatus() => status;
-
-    /*
-/// <summary>
-/// レンジ開始
-/// </summary>
-public void cookingStart()
-{
-    timer = setTimer;
-    status = MWState.cooking;
-}
-*/
-
-    /*
-/// <summary>
-/// 電子レンジに食材をセット
-/// </summary>
-/// <param name="obj">セットする食材</param>
-/// <returns></returns>
-public bool SetFood(GameObject obj)
-{
-    if (food != null) return false;
-
-    food = obj;
-    status = MWState.inObject;
-    return true;
-}
-*/
-
-    /*
-    /// <summary>
-    /// 中にある食材を無くす
-    /// </summary>
-    /// <returns></returns>
-    public bool PutOutInFood(int playerID)
-    {
-        if (GetInFoodID() == playerID) return false;
-
-        InitMicrowave();
-        return true;
-    }
-
-    /// <summary>
-    /// 中の食材のプレイヤーIDを取得
-    /// </summary>
-    /// <returns>食材のプレイヤーID</returns>
-    public int GetInFoodID() => microwaveFoodPrefab.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
-
-            /// <summary>
-    /// 電子レンジ初期化
-    /// </summary>
-    private void InitMicrowave()
-    {
-        microwaveFoodPrefab = null;
-        //status = MWState.objectNone;
-        status = MWState.switchOn;
-        timer = 0f;
-    }
-    */
 }

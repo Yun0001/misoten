@@ -10,6 +10,8 @@ public class Grilled : MonoBehaviour {
         inCcoking
     }
 
+    private GameObject grilledFoodPrefab;
+
     [SerializeField]
     private GameObject sideGagePrefab;
 
@@ -22,17 +24,20 @@ public class Grilled : MonoBehaviour {
 
     private GrilledState grilledStatus;
 
+    private float grilledFoodScore;
+
 	// Use this for initialization
 	void Awake () {
         sideGagePrefab = (GameObject)Resources.Load("Prefabs/UI/SideGage");
-        grilledStatus = GrilledState.unused;
-        cookingTime = 0;
         sideGage = Instantiate(sideGagePrefab, transform.position, Quaternion.identity);
         Vector3 pos = transform.position;
         Vector3 scale = new Vector3(0.1f, 0.3f, 1);
         sideGage.transform.position = pos;
         sideGage.transform.localScale = scale;
         sideGage.SetActive(false);
+        grilledStatus = GrilledState.unused;
+        cookingTime = 0;
+        grilledFoodScore = 0;
     }
 
     /// <summary>
@@ -43,5 +48,30 @@ public class Grilled : MonoBehaviour {
         grilledStatus = GrilledState.inCcoking;
         cookingTime = COOKING_TIME;
         sideGage.SetActive(true);
+    }
+
+    public bool UpdateGrilled()
+    {
+        cookingTime -= Time.deltaTime;
+        if (cookingTime <= 0) return true;
+        return false;
+    }
+
+    public void CalcGrilledFoodTasteCoefficient()=> sideGagePrefab.GetComponent<Food>().CalcTasteCoefficient(CalcDifference());
+
+    public void EndCooking()
+    {
+        grilledStatus = GrilledState.unused;
+        grilledFoodScore = 0;
+        sideGage.SetActive(false);
+    }
+
+    public GrilledState GetStatus() => grilledStatus;
+
+    public GameObject GetGrilledFood() => grilledFoodPrefab;
+
+    private float CalcDifference()
+    {
+        return sideGage.GetComponent<MicroWaveGage>().GetSliderVal() == 0 ? 0 : sideGage.GetComponent<MicroWaveGage>().GetSliderVal() / 100;
     }
 }
