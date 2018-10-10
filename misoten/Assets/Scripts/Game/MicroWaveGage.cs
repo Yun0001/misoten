@@ -87,4 +87,9 @@ public class MicroWaveGage : MonoBehaviour
 				break;
 		}
 	}
+
+    public int GetSliderVal()
+    {
+        return (int)slider.value;
+    }
 }

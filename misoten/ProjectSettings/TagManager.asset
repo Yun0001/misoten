@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Microwave
+  - Counter
+  - Pot
+  - GrilledTable
+  - Taste
   layers:
   - Default
   - TransparentFX
@@ -18,11 +22,11 @@ TagManager:
   - Player2
   - Player3
   - Player4
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Counter
+  - taste
+  - Microwave
+  - Pot
+  - GrilledTable
   - 
   - 
   - 
