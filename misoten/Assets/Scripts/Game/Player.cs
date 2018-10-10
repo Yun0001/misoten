@@ -58,10 +58,15 @@ public class Player : MonoBehaviour
     private float hindranceTime = 5; // 邪魔動作の時間
     private GameObject tastePrefab;//旨味成分
 
+    private int SetCountPlayer;
+    [SerializeField]
+    private PowderSetManager PowderSetScript;
 
     // Use this for initialization
     void Awake()
     {
+        PowderSetScript = GetComponent<PowderSetManager>();
+        SetCount();
         rb = GetComponent<Rigidbody2D>();
         layerName = LayerMask.LayerToName(gameObject.layer);
         switch (layerName)
@@ -325,6 +330,7 @@ public class Player : MonoBehaviour
             if (GamePad.GetButton(GamePad.Button.A, PlayerNumber))
             {
                 //　旨味成分補充処理（担当　贄田）
+                PowderSetScript.PowderSet();
             }
         }
         else
@@ -341,17 +347,19 @@ public class Player : MonoBehaviour
 
                 // 焼き台の前にいるとき
                 CookingGrilled();
+
+                PowderSetScript.InitSet();
             }
         }
 
 
         // Bボタン入力
-        // 他プレイヤーの邪魔（担当　贄田）
         if (GamePad.GetButtonDown(GamePad.Button.B, PlayerNumber))
         {
             //状態を邪魔に変更
             SetPlayerStatus(PlayerStatus.Hindrance);
             // 旨味成分を実体化
+            SubSetCount();
             GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
             taste.GetComponent<Taste>().playerID = playerID;
         }
@@ -475,6 +483,7 @@ public class Player : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.X))
                 {
                     SetPlayerStatus(PlayerStatus.Hindrance);
+                    SubSetCount();
                     GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
                     taste.GetComponent<Taste>().playerID = playerID;
                 }
@@ -493,6 +502,7 @@ public class Player : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.L))
                 {
                     SetPlayerStatus(PlayerStatus.Hindrance);
+                    SubSetCount();
                     GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
                     taste.GetComponent<Taste>().playerID = playerID;
                 }
@@ -525,4 +535,10 @@ public class Player : MonoBehaviour
     public int GetPlayerID() => playerID;
 
     private void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
+    private void SetCount() => SetCountPlayer = PowderSetScript.GetSetCount();
+    //Powder1回分使う
+    private void SubSetCount() => PowderSetScript.SubSetCount();
+
+    public int GetSetCountPlayer() => SetCountPlayer;
+
 }
