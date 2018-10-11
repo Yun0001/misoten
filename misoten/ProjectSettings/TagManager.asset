@@ -7,8 +7,9 @@ TagManager:
   - Microwave
   - Counter
   - Pot
-  - GrilledTable
   - Taste
+  - Fryingpan
+  - TasteMachine
   layers:
   - Default
   - TransparentFX

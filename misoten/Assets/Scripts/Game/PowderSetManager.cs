@@ -5,8 +5,10 @@ using UnityEngine;
 public class PowderSetManager : MonoBehaviour {
 
     //private bool Is;
+    [SerializeField]
     private float SetPressure;
     private int minSet;
+    [SerializeField]
     private int SetCount;
     private int maxSetCount;
     [SerializeField] private float maxSetPressureTime;

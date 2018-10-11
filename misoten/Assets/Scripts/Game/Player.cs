@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
     private float hindranceTime = 5; // 邪魔動作の時間
     private GameObject tastePrefab;//旨味成分
 
+    [SerializeField]
     private int SetCountPlayer;
     [SerializeField]
     private PowderSetManager PowderSetScript;
@@ -245,7 +246,7 @@ public class Player : MonoBehaviour
                 hitObj[(int)hitObjnName.Pot] = collision.gameObject;
                 break;
             // 焼き台
-            case "GrilledTable":
+            case "Fryingpan":
                 hitObj[(int)hitObjnName.GrilledTable] = collision.gameObject;
                 break;
             // 補充マシーン
@@ -287,7 +288,7 @@ public class Player : MonoBehaviour
             case "Pot":
                 hitObj[(int)hitObjnName.Pot] = null;
                 break;
-            case "GrilledTable":
+            case "Fryingpan":
                 hitObj[(int)hitObjnName.GrilledTable] = null;
                 break;
 
@@ -304,14 +305,13 @@ public class Player : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         //ここに旨味成分に当たっているときの処理
-        if (collision.tag == "Taste")
-        {
-            if (collision.gameObject.GetComponent<Taste>().playerID != playerID)
-            {
-                // 配膳中の料理の旨味を向上させる
-                haveInHandFood.GetComponent<Food>().SubQualityTaste();
-            }
-        }
+        if (playerStatus != PlayerStatus.Catering) return;
+        if (collision.tag != "Taste") return;
+        if (collision.gameObject.GetComponent<Taste>().playerID == playerID) return;
+
+        //配膳中かつ当たっているものが旨味成分かつ旨味成分が自分のものではないとき
+        // 配膳中の料理の旨味を向上させる
+        haveInHandFood.GetComponent<Food>().SubQualityTaste();        
     }
 
     /// <summary>
