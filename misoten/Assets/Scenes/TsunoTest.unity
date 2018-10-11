@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 236901472}
   - component: {fileID: 236901474}
   - component: {fileID: 236901473}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Aliens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,9 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   callTime: 1
   prefab: {fileID: 1219068803937026, guid: 5e21ae0cb9f0bd34797178b800d93ec0, type: 2}
-  obj:
-  - {fileID: 0}
-  - {fileID: 0}
+  obj: {fileID: 0}
 --- !u!1 &337034495
 GameObject:
   m_ObjectHideFlags: 0

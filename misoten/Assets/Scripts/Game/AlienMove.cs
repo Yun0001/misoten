@@ -20,9 +20,13 @@ public class AlienMove : MonoBehaviour
 		RAND			// ランダム
 	}
 
-	// 指定終点座標
+	// 指定終点座標(席に座る)
 	[SerializeField]
 	Vector3[] endPosition;
+
+	// 指定終点座標(店から出ていく)
+	[SerializeField]
+	Vector3[] endPosition2;
 
 	// アニメーションのカーブ進行率設定
 	[SerializeField]
@@ -36,17 +40,21 @@ public class AlienMove : MonoBehaviour
 	[SerializeField]
 	private EEndPositionPattern endPositionPattern;
 
-	//// エイリアンがその席に座っているかの判定用
-	//private static AlienOrSitting alienOrSitting;
+	// 待機時間設定
+	[SerializeField]
+	private float[] theWaitingTime = new float[3];
+
+	// エイリアンのチップ
+	private AlienChip alienChip;
 
 	// 移動状態の判定用
-	private bool isMove;
+	private static bool isMove;
 
 	// 終点座標ID
 	private static int setEndPositionID;
 
 	// 開始時間設定用
-	private float startTime;
+	private float[] startTime = new float[2];
 
 	// 開始座標設定用
 	private Vector3 startPosition;
@@ -54,13 +62,21 @@ public class AlienMove : MonoBehaviour
 	//初期化成功か
 	private bool initSuccess = false;
 
+	// 店を出ていくかの判定用
+	private bool withdrawal = false;
+
 	/// <summary>
 	/// 開始関数
 	/// </summary>
 	void Start()
 	{
+		// コンポーネント取得
+		alienChip = GetComponent<AlienChip>();
+
 		// 移動状態の初期化
 		SetMoveStatus(true);
+
+		startTime[0] = 0.0f;
 
 		// エイリアンがどの席に向かうかの設定
 		if (endPositionPattern != EEndPositionPattern.RAND)
@@ -90,29 +106,68 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// 実際の経過時間を求める
-		var diff = Time.timeSinceLevelLoad - startTime;
-		if (diff > endPositionTime)
+		if(!withdrawal)
 		{
-			transform.position = endPosition[GetEndPositionsID()];
-			enabled = false;
-			SetMoveStatus(false);
+			if (!AlienOrSitting.GetOrSitting(AlienMove.GetEndPositionsID()))
+			{
+				// 実際の経過時間を求める
+				var diff = Time.timeSinceLevelLoad - startTime[0];
+				if (diff > endPositionTime)
+				{
+					transform.position = endPosition[GetEndPositionsID()];
+					withdrawal = true;
+					// enabled = false;
+					SetMoveStatus(false);
+				}
+
+				// 予定時間を割る
+				var rate = diff / endPositionTime;
+				var curvePos = curve.Evaluate(rate);
+
+				// カーブの位置を照らし合わせる
+				transform.position = Vector3.Lerp(startPosition, endPosition[GetEndPositionsID()], curvePos);
+
+				// 下に行けば行くほど手前になる
+				if (transform.position.y >= 5.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.1f); }
+				else if (transform.position.y >= 4.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.2f); }
+				else if (transform.position.y >= 3.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.3f); }
+			}
+		}
+		else
+		{
+			// 待機時間を超えると入る
+			//if (startTime[1] >= theWaitingTime[alienChip.GetRichDegree()])
+			//{
+			//	Debug.Log("haitta");
+			//	SetMoveStatus(true);
+
+			//	// 実際の経過時間を求める
+			//	var diff = Time.timeSinceLevelLoad - startTime[1];
+			//	if (diff > endPositionTime)
+			//	{
+			//		transform.position = endPosition2[GetEndPositionsID()];
+			//		//enabled = false;
+			//		SetMoveStatus(false);
+			//	}
+
+			//	// 予定時間を割る
+			//	var rate = diff / endPositionTime;
+			//	var curvePos = curve.Evaluate(rate);
+
+			//	// カーブの位置を照らし合わせる
+			//	transform.position = Vector3.Lerp(startPosition, endPosition2[GetEndPositionsID()], curvePos);
+
+			//	// 下に行けば行くほど手前になる
+			//	if (transform.position.y >= 5.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.1f); }
+			//	else if (transform.position.y >= 4.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.2f); }
+			//	else if (transform.position.y >= 3.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.3f); }
+			//}
 		}
 
-		// 予定時間を割る
-		var rate = diff / endPositionTime;
-		var curvePos = curve.Evaluate(rate);
-
-		// カーブの位置を照らし合わせる
-		transform.position = Vector3.Lerp(startPosition, endPosition[GetEndPositionsID()], curvePos);
-
-		// 下に行けば行くほど手前になる
-		if (transform.position.y >= 5.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.1f); }
-		else if (transform.position.y >= 4.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.2f); }
-		else if (transform.position.y >= 3.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.3f); }
-
 		// Debug用
-		Debug.Log(GetEndPositionsID());
+		//Debug.Log(theWaitingTime[alienChip.GetRichDegree()]);
+		//Debug.Log(startTime[1] );
+		//Debug.Log(GetEndPositionsID());
 	}
 
 	/// <summary>
@@ -121,7 +176,8 @@ public class AlienMove : MonoBehaviour
 	void OnEnable()
 	{
 		// 処理の開始時間を記録
-		startTime = Time.timeSinceLevelLoad;
+		if (!withdrawal) { startTime[0] = Time.timeSinceLevelLoad;  }
+		//startTime[1] = Time.timeSinceLevelLoad;
 		startPosition = transform.position;
 	}
 
@@ -153,13 +209,13 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	/// <param name="_isMove"></param>
 	/// <returns></returns>
-	public bool SetMoveStatus(bool _isMove) => isMove = _isMove;
+	public static bool SetMoveStatus(bool _isMove) => isMove = _isMove;
 
 	/// <summary>
 	/// 移動状態を取得
 	/// </summary>
 	/// <returns></returns>
-	public bool GetMoveStatus() => isMove;
+	public static bool GetMoveStatus() => isMove;
 
 	/// <summary>
 	/// 終点座標IDの格納

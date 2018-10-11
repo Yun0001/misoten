@@ -8,22 +8,24 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     /// 電子レンジの状態　列挙
     /// </summary>
-   public  enum MWState { objectNone,inObject, cooking }
+   public  enum MWState { switchOff,switchOn }
 
     /// <summary>
     /// レンジの中にあるオブジェクト
     /// </summary>
-    private GameObject food;
+    [SerializeField]
+    private GameObject microwaveFoodPrefab;
 
     /// <summary>
-    /// セットタイマー（これが基礎得点になる）
+    /// セットタイマ-
     /// </summary>
     [SerializeField]
-    private float setTimer;
+    private   float setTimer;
 
     /// <summary>
     /// タイマー
     /// </summary>
+    [SerializeField]
     private float timer;
 
     /// <summary>
@@ -35,109 +37,77 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     /// 状態
     /// </summary>
+    [SerializeField]
     MWState status;
 
 
 	// Use this for initialization
 	void Start () {
-        food = null;
+        microwaveFoodPrefab = (GameObject)Resources.Load("Prefabs/MicrowaveFood");
         timer = 0;
-        status = MWState.objectNone;
+        status = MWState.switchOff;
 	}
 	
 	//更新処理
-	void Update () {
-       // Debug.Log(status);
+	void Update ()
+    {
         switch (status)
         {
-            // 食材なし
-            case MWState.objectNone:
-                if (Input.GetKeyDown(KeyCode.R)) status = MWState.inObject;
+            //スイッチがオフ
+            case MWState.switchOff:
+                //現状とくになし
                 break;
 
-            // 食材あり
-            case MWState.inObject:
-                if (Input.GetKeyDown(KeyCode.T))
-                {
-                    cookingStart();
-                    status = MWState.cooking;
-                } 
-                break;
-
-            // 調理中
-            case MWState.cooking:
+            //スイッチがオン
+            case MWState.switchOn:
+                //タイマーカウントダウン
                 CountDownTimer();
-                if (0 >= timer)
-                {
-                    // スコア加算
-                    scoreManager.AddScore(food.gameObject.GetComponent<Food>().GetOwnershipPlayerID(), (int)setTimer);
-
-                    // 電子レンジ初期化
-                    InitMicrowave();
-                }
                 break;
         }
 	}
 
     /// <summary>
-    /// レンジ開始
+    ///  電子レンジスタート
     /// </summary>
-    public void cookingStart()
+    public bool StartCooking()
     {
+        // 既にスイッチが入っていればリターン
+        if (status == MWState.switchOn) return false;
+
+        // スイッチオン
+        status = MWState.switchOn;
+        //タイマーセット
         timer = setTimer;
-        status = MWState.cooking;
-    }
-
-    /// <summary>
-    /// 電子レンジに食材をセット
-    /// </summary>
-    /// <param name="obj">セットする食材</param>
-    /// <returns></returns>
-    public bool SetFood(GameObject obj)
-    {
-        if (food != null) return false;
-
-        food = obj;
-        status = MWState.inObject;
         return true;
     }
 
     /// <summary>
-    /// 中にある食材を無くす
+    ///  電子レンジストップ
     /// </summary>
-    /// <returns></returns>
-    public bool PutOutInFood(int playerID)
+    public GameObject EndCooking()
     {
-        if (GetInFoodID() == playerID) return false;
+        // 設定した時間との誤差を計算
+        float timeDifference = Mathf.Abs(timer);
+        timeDifference *= 10;
 
-        InitMicrowave();
-        return true;
-    }
+        // ここでtimeDifferenceを料理の変数にセットする
+        microwaveFoodPrefab.GetComponent<Food>().CalcTasteCoefficient(timeDifference);
 
-    /// <summary>
-    /// 状態取得
-    /// </summary>
-    /// <returns>状態</returns>
-    public MWState GetStatus()=> status;
+        // スイッチオフ
+        status = MWState.switchOff;
 
-    /// <summary>
-    /// 中の食材のプレイヤーIDを取得
-    /// </summary>
-    /// <returns>食材のプレイヤーID</returns>
-    public int GetInFoodID() => food.gameObject.GetComponent<Food>().GetOwnershipPlayerID();
-
-    /// <summary>
-    /// 電子レンジ初期化
-    /// </summary>
-    private void InitMicrowave()
-    {
-        food = null;
-        status = MWState.objectNone;
-        timer = 0f;
+        // 電子レンジからプレイヤーに料理を渡す
+        return microwaveFoodPrefab;
     }
 
     /// <summary>
     /// タイマーカウントダウン
     /// </summary>
     private void CountDownTimer() => timer -= Time.deltaTime;
+
+    /// <summary>
+    /// 状態取得
+    /// </summary>
+    /// <returns>状態</returns>
+    public MWState GetStatus() => status;
 }

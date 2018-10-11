@@ -27,9 +27,13 @@ public class AlienOrSitting : MonoBehaviour
 		// IDを取得して、その席が座られている状態にする
 		if (!GetOrSitting(AlienMove.GetEndPositionsID()))
 		{
-			SetOrSitting(true, AlienMove.GetEndPositionsID());
+			if (!AlienMove.GetMoveStatus()) { SetOrSitting(true, AlienMove.GetEndPositionsID()); }
 		}
-
+		Debug.Log(GetOrSitting(0));
+		Debug.Log(GetOrSitting(1));
+		Debug.Log(GetOrSitting(2));
+		Debug.Log(GetOrSitting(3));
+		Debug.Log(GetOrSitting(4));
 		//if (Input.GetKey(KeyCode.A))
 		//{
 		//	Debug.Log(GetOrSitting(0));

@@ -33,9 +33,6 @@ public class AlienOrder : MonoBehaviour
 	// 注文するまでの時間を測る
 	private float timeAdd = 0.0f;
 
-	// エイリアン移動状態の取得の為に必要
-	private AlienMove alienMove;
-
 	// オーダー中かの判定
 	private bool isOrder = false;
 
@@ -47,8 +44,7 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Start ()
 	{
-		// コンポーネント取得
-		alienMove = GetComponent<AlienMove>();
+
 	}
 
 	/// <summary>
@@ -57,7 +53,7 @@ public class AlienOrder : MonoBehaviour
 	void Update ()
 	{
 		// エイリアンが席に座っている状態の時
-		if (!alienMove.GetMoveStatus())
+		if (!AlienMove.GetMoveStatus())
 		{
 			// エイリアンが席に座って、注文するまでの時間
 			if (timeAdd >= orderTime)

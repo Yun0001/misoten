@@ -131,14 +131,14 @@ public class AlienDisturbance : MonoBehaviour
 	{
 		// Debug用
 		// 10個ランダムな場所にcubeを生成する
-		for (int i = 0; i < 10; i++)
-		{
-			// Instantiateの引数にPrefabを渡すことでインスタンスを生成する
-			GameObject ball = Instantiate(prefab) as GameObject;
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	// Instantiateの引数にPrefabを渡すことでインスタンスを生成する
+		//	GameObject ball = Instantiate(prefab) as GameObject;
 
-			// ランダムな場所に配置する
-			ball.transform.position = new Vector3(Random.Range(-7.0f, 7.0f), Random.Range(-4.0f, 4.0f), 0.0f);
-		}
+		//	// ランダムな場所に配置する
+		//	ball.transform.position = new Vector3(Random.Range(-7.0f, 7.0f), Random.Range(-4.0f, 4.0f), 0.0f);
+		//}
 	}
 
 	/// <summary>
