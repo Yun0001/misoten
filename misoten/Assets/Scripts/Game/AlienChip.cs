@@ -8,7 +8,7 @@ using UnityEngine;
 public class AlienChip : MonoBehaviour
 {
 	/// <summary>
-	/// エイリアンがチッププレイヤーに渡す種類
+	/// エイリアンがチップをプレイヤーに渡す種類
 	/// </summary>
 	private enum EChipPattern
 	{
@@ -17,9 +17,24 @@ public class AlienChip : MonoBehaviour
 		MAX			// 最大
 	}
 
+	/// <summary>
+	/// エイリアンがお金を多く持っているかの種類
+	/// </summary>
+	private enum ERichDegree
+	{
+		Poverty = 0,	// 貧乏
+		NORMAL,			// 普通
+		RICHMAN,		// 金持ち
+		RAND			// ランダム
+	}
+
 	// チップの渡し方
 	[SerializeField]
 	private EChipPattern chipPattern;
+
+	// 金持ち度
+	[SerializeField]
+	private ERichDegree richDegree;
 
 	// エイリアンのオーダー
 	private AlienOrder alienOrder;
@@ -37,6 +52,9 @@ public class AlienChip : MonoBehaviour
 	{
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
+
+		// エイリアンの金持ち度をランダムで設定
+		if(richDegree == ERichDegree.RAND) { richDegree = (ERichDegree)Random.Range((int)ERichDegree.Poverty, (int)ERichDegree.RAND); }
 	}
 	
 	/// <summary>
@@ -78,6 +96,12 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public bool GetCuisineCame() => isCuisineCame;
+
+	/// <summary>
+	/// エイリアンの金持ち度を取得
+	/// </summary>
+	/// <returns></returns>
+	public int GetRichDegree() => (int)richDegree;
 
 	/// <summary>
 	/// チップの値を格納
