@@ -7,55 +7,63 @@ using UnityEngine;
 /// </summary>
 public class AlienChip : MonoBehaviour
 {
-	/// <summary>
-	/// エイリアンがチップをプレイヤーに渡す種類
-	/// </summary>
-	private enum EChipPattern
-	{
-		PUT = 0,	// チップを置いていく
-		HANDOVER,	// チップを直接渡す
-		MAX			// 最大
-	}
+    /// <summary>
+    /// エイリアンがチップをプレイヤーに渡す種類
+    /// </summary>
+    private enum EChipPattern
+    {
+        PUT = 0,    // チップを置いていく
+        HANDOVER,   // チップを直接渡す
+        MAX         // 最大
+    }
 
-	/// <summary>
-	/// エイリアンがお金を多く持っているかの種類
-	/// </summary>
-	private enum ERichDegree
-	{
-		Poverty = 0,	// 貧乏
-		NORMAL,			// 普通
-		RICHMAN,		// 金持ち
-		RAND			// ランダム
-	}
+    /// <summary>
+    /// エイリアンがお金を多く持っているかの種類
+    /// </summary>
+    private enum ERichDegree
+    {
+        Poverty = 0,    // 貧乏
+        NORMAL,         // 普通
+        RICHMAN,        // 金持ち
+        RAND            // ランダム
+    }
 
-	// チップの渡し方
-	[SerializeField]
-	private EChipPattern chipPattern;
+    // チップの渡し方
+    [SerializeField]
+    private EChipPattern chipPattern;
 
-	// 金持ち度
-	[SerializeField]
-	private ERichDegree richDegree;
+    // 金持ち度
+    [SerializeField]
+    private ERichDegree richDegree;
 
-	// エイリアンのオーダー
-	private AlienOrder alienOrder;
+    // エイリアンのオーダー
+    private AlienOrder alienOrder;
 
-	// 料理が来たかの判定用
-	private bool isCuisineCame = false;
+    // 料理が来たかの判定用
+    private bool isCuisineCame = false;
 
-	// チップの値
-	private float chipVal = 0.0f;
+    // チップの値
+    private float chipVal = 0.0f;
 
-	/// <summary>
-	/// 開始関数
-	/// </summary>
-	void Start ()
+    private int[] baseChip = { 100, 200, 300 };
+
+    // 料理の旨味係数
+    private float cisineTasteCoefficient = 0f;
+
+    /// <summary>
+    /// 開始関数
+    /// </summary>
+    void Start ()
 	{
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
 
 		// エイリアンの金持ち度をランダムで設定
 		if(richDegree == ERichDegree.RAND) { richDegree = (ERichDegree)Random.Range((int)ERichDegree.Poverty, (int)ERichDegree.RAND); }
-	}
+
+        // ベースチップをセット
+        SetChipValue(baseChip[(int)richDegree]);
+    }
 	
 	/// <summary>
 	/// 更新関数
@@ -67,20 +75,26 @@ public class AlienChip : MonoBehaviour
 		{
 			// 料理が来た判定
 			SetCuisineCame(true);
+            if (isCuisineCame)
+            {
+                // 渡すor置くチップの計算
+                SetChipValue(CalcChipValue());
 
-			// チップの渡し方の管理
-			switch (chipPattern)
-			{
-				case EChipPattern.PUT:		// チップを置いていく
+                // チップの渡し方の管理
+                switch (chipPattern)
+                {
+                    case EChipPattern.PUT:      // チップを置いていく
 
-					break;
-				case EChipPattern.HANDOVER: // チップを直接渡す
+                        break;
+                    case EChipPattern.HANDOVER: // チップを直接渡す
 
-					break;
-				default:
-					// 例外処理
-					break;
-			}
+                        break;
+                    default:
+                        // 例外処理
+                        break;
+                }
+            }
+		
 		}
 	}
 
@@ -115,4 +129,16 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public float GetChipValue() => chipVal;
+
+    /// <summary>
+    /// ベースチップに掛ける旨味係数セット
+    /// </summary>
+    /// <param name="coefficient">料理の旨味係数</param>
+    public void SetCuisineCoefficient(float coefficient) => cisineTasteCoefficient = coefficient;
+
+    /// <summary>
+    /// 渡すor置くチップの計算
+    /// </summary>
+    /// <returns>渡すor置くチップの値</returns>
+    public int CalcChipValue() => (int)(chipVal * cisineTasteCoefficient);
 }
