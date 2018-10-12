@@ -41,18 +41,18 @@ public class GameTimeManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.P))
         {
             timespeed += 0.5f;
-            GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードアップ:"+ timespeed.ToString();
+            //GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードアップ:"+ timespeed.ToString();
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
             timespeed -= 0.5f;
-            GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードダウン:"+ timespeed.ToString();
+           // GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードダウン:"+ timespeed.ToString();
         }
 
         //通常スピード
         if (timespeed == 1.0f)
         {
-            GameObject.Find("SpeedUpText").GetComponent<Text>().text = " 通常スピード :" +timespeed.ToString();
+           // GameObject.Find("SpeedUpText").GetComponent<Text>().text = " 通常スピード :" +timespeed.ToString();
         }
 
 
@@ -60,12 +60,12 @@ public class GameTimeManager : MonoBehaviour {
         if (timespeed <= 0.5f)
         {
             timespeed = 0.5f;
-            GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードダウン:" + timespeed.ToString();
+           // GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードダウン:" + timespeed.ToString();
         }
         if (timespeed >= 10.0f)
         {
             timespeed = 10.0f;
-            GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードアップ:" + timespeed.ToString();
+           // GameObject.Find("SpeedUpText").GetComponent<Text>().text = "スピードアップ:" + timespeed.ToString();
         }
     }
 

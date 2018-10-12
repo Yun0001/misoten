@@ -91,7 +91,7 @@ public class AlienDisturbance : MonoBehaviour
 						case EAlienPattern.MARTIAN: // 火星人の場合
 
 							// 火星人特有の邪魔行為
-							MartianDisturbance();
+							//MartianDisturbance();
 							break;
 						case EAlienPattern.MERCURY: // 水星人の場合
 

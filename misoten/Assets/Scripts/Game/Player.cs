@@ -154,8 +154,16 @@ public class Player : MonoBehaviour
                             }
                             break;
                         case 1:
+                            if (Input.GetKeyDown(KeyCode.Z))
+                            {
+                                GetHitObjCommponentGrilled().CalcGrilledFoodTasteCoefficient();
+                            }
                             break;
                         case 2:
+                            if (Input.GetKeyDown(KeyCode.K))
+                            {
+                                GetHitObjCommponentGrilled().CalcGrilledFoodTasteCoefficient();
+                            }
                             break;
                         case 3:
                             if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
@@ -329,8 +337,12 @@ public class Player : MonoBehaviour
             // 当たっていればホールドで取得
             if (GamePad.GetButton(GamePad.Button.A, PlayerNumber))
             {
-                //　旨味成分補充処理（担当　贄田）
+                //　旨味成分補充処理
                 PowderSetScript.PowderSet();
+            }
+            else if (GamePad.GetButtonUp(GamePad.Button.A, PlayerNumber))
+            {
+                PowderSetScript.InitSet();
             }
         }
         else
@@ -348,7 +360,8 @@ public class Player : MonoBehaviour
                 // 焼き台の前にいるとき
                 CookingGrilled();
 
-                PowderSetScript.InitSet();
+                //　宇宙人の前にいるとき
+                OfferCuisine();
             }
         }
 
@@ -432,6 +445,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OfferCuisine()
+    {
+        if (playerStatus != PlayerStatus.Catering) return;
+        if (GetHitObj((int)hitObjnName.Alien) == null) return;
+        
+
+        // エイリアンのスクリプトを取得して料理を渡す
+    }
+
     /// <summary>
     /// レンジのスタート
     /// </summary>
@@ -478,7 +500,6 @@ public class Player : MonoBehaviour
                     CookingMicrowave();
                     CookingPot();
                     CookingGrilled();
-                    //GetHitObj((int)hitObjnName.Microwave)?.gameObject.GetComponent<Player>().CookingMicrowave();
                 }
                 if (Input.GetKeyDown(KeyCode.X))
                 {
