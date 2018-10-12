@@ -445,13 +445,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 料理を渡す
+    /// </summary>
     private void OfferCuisine()
     {
         if (playerStatus != PlayerStatus.Catering) return;
         if (GetHitObj((int)hitObjnName.Alien) == null) return;
-        
+
 
         // エイリアンのスクリプトを取得して料理を渡す
+        GetHitObj((int)hitObjnName.Alien).GetComponent<AlienChip>().SetCuisineCoefficient(haveInHandFood.GetComponent<Food>().GetQualityTaste());
+        GetHitObj((int)hitObjnName.Alien).GetComponent<AlienChip>().SetOpponentID(playerID);
+        GetHitObj((int)hitObjnName.Alien).GetComponent<AlienChip>().SetCuisineCame(true);
+        FoodManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+        haveInHandFood = null;
+        playerStatus = PlayerStatus.Normal;
+        
     }
 
     /// <summary>
@@ -500,6 +510,7 @@ public class Player : MonoBehaviour
                     CookingMicrowave();
                     CookingPot();
                     CookingGrilled();
+                    OfferCuisine();
                 }
                 if (Input.GetKeyDown(KeyCode.X))
                 {
@@ -519,6 +530,7 @@ public class Player : MonoBehaviour
                     CookingMicrowave();
                     CookingPot();
                     CookingGrilled();
+                    OfferCuisine();
                 }
                 if (Input.GetKeyDown(KeyCode.L))
                 {

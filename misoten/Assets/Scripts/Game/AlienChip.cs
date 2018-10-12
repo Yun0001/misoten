@@ -50,6 +50,9 @@ public class AlienChip : MonoBehaviour
     // 料理の旨味係数
     private float cisineTasteCoefficient = 0f;
 
+    //料理を持ってきた相手のID
+    private int opponentID;
+
     /// <summary>
     /// 開始関数
     /// </summary>
@@ -61,20 +64,24 @@ public class AlienChip : MonoBehaviour
 		// エイリアンの金持ち度をランダムで設定
 		if(richDegree == ERichDegree.RAND) { richDegree = (ERichDegree)Random.Range((int)ERichDegree.Poverty, (int)ERichDegree.RAND); }
 
+        // プロトでは手渡し
+        chipPattern = EChipPattern.HANDOVER;
         // ベースチップをセット
         SetChipValue(baseChip[(int)richDegree]);
     }
-	
-	/// <summary>
-	/// 更新関数
-	/// </summary>
-	void Update ()
-	{
-		// エイリアンが注文している時
-		if (alienOrder.GetIsOrder() && Input.GetKey(KeyCode.Space))
-		{
-			// 料理が来た判定
-			SetCuisineCame(true);
+
+    /// <summary>
+    /// 更新関数
+    /// </summary>
+    void Update()
+    {
+        // エイリアンが注文している時
+        if (alienOrder.GetIsOrder())
+        {
+            //デバッグ用
+            //if (Input.GetKey(KeyCode.Space))
+            //{
+            // 料理が来た判定
             if (isCuisineCame)
             {
                 // 渡すor置くチップの計算
@@ -87,16 +94,19 @@ public class AlienChip : MonoBehaviour
 
                         break;
                     case EChipPattern.HANDOVER: // チップを直接渡す
-
+                        ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, (int)GetChipValue());
+                        SetCuisineCame(false);
                         break;
                     default:
                         // 例外処理
                         break;
                 }
+                //}
+
             }
-		
-		}
-	}
+
+        }
+    }
 
 	/// <summary>
 	/// 料理が来たかの判定を格納
@@ -134,11 +144,16 @@ public class AlienChip : MonoBehaviour
     /// ベースチップに掛ける旨味係数セット
     /// </summary>
     /// <param name="coefficient">料理の旨味係数</param>
-    public void SetCuisineCoefficient(float coefficient) => cisineTasteCoefficient = coefficient;
+    public void SetCuisineCoefficient(float coefficient)
+    {
+        cisineTasteCoefficient = coefficient;
+    }
 
     /// <summary>
     /// 渡すor置くチップの計算
     /// </summary>
     /// <returns>渡すor置くチップの値</returns>
     public int CalcChipValue() => (int)(chipVal * cisineTasteCoefficient);
+
+    public void SetOpponentID(int ID) => opponentID = ID;
 }
