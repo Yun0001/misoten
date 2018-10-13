@@ -16,7 +16,7 @@ public class GrilledFoodController : MonoBehaviour {
         {
             grilledtFood[i] = Instantiate(grilledFoodPrefab, transform.position, Quaternion.identity);
             grilledtFood[i].GetComponent<Food>().SetFoodID(i);
-            grilledtFood[i].GetComponent<Food>().SetCategory(Food.Category.Microwave);
+            grilledtFood[i].GetComponent<Food>().SetCategory(Food.Category.Grilled);
             OutputFlg[i] = false;
         }
     }

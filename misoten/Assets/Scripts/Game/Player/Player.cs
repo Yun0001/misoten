@@ -365,13 +365,24 @@ public class Player : MonoBehaviour
 
 
         // エイリアンのスクリプトを取得して料理を渡す
-        GetHitObj((int)hitObjName.Alien).GetComponent<AlienChip>().SetCuisineCoefficient(haveInHandFood.GetComponent<Food>().GetQualityTaste());
-        GetHitObj((int)hitObjName.Alien).GetComponent<AlienChip>().SetOpponentID(playerID);
-        GetHitObj((int)hitObjName.Alien).GetComponent<AlienChip>().SetCuisineCame(true);
-        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+        GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandFood);
+        switch (haveInHandFood.GetComponent<Food>().GetCategory())
+        {
+            case 0:
+                CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+
+                break;
+            case 1:
+                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+                break;
+
+            case 2:
+                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+                break;
+        }
+       
         haveInHandFood = null;
         playerStatus = PlayerStatus.Normal;
-        
     }
 
     

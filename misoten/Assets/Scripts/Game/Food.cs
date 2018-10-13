@@ -9,9 +9,9 @@ public class Food : MonoBehaviour {
 
     public enum Category
     {
+        Grilled,
         Microwave,
         Pot,
-        Grilled
     }
 
     /// <summary>
@@ -77,5 +77,5 @@ public class Food : MonoBehaviour {
 
     public void SetCategory(Category _category) => category = _category;
 
-    public Category GetCategory() => category;
+    public int GetCategory() => (int)category;
 }

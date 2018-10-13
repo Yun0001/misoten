@@ -11,6 +11,8 @@ TagManager:
   - Fryingpan
   - TasteMachine
   - Alien
+  - GrilledTable
+  - SuccessArea
   layers:
   - Default
   - TransparentFX
