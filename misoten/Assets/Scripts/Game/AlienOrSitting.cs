@@ -8,7 +8,7 @@ using UnityEngine;
 public class AlienOrSitting : MonoBehaviour
 {
 	// 座っているかの判定
-	private static bool[] orSitting = new bool[5];
+	private static bool[] orSitting = { false, false , false , false , false };
 
 	/// <summary>
 	/// 開始関数
@@ -24,24 +24,18 @@ public class AlienOrSitting : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// IDを取得して、その席が座られている状態にする
-		if (!GetOrSitting(AlienMove.GetEndPositionsID()))
+		GetComponent<AlienCall>().AlienForm();
+
+		// 席が空いている場合
+		if (!AlienCall.GetSeat(AlienCall.GetAddId()))
 		{
-			if (!AlienMove.GetMoveStatus()) { SetOrSitting(true, AlienMove.GetEndPositionsID()); }
+			// IDを取得して、その席が座られている状態にする
+			//if (!GetOrSitting(AlienCall.GetSeat()))
+			//{
+			//	SetOrSitting(true, AlienCall.GetSeat());
+			//}
+			SetOrSitting(true, AlienCall.GetAddId());
 		}
-		Debug.Log(GetOrSitting(0));
-		Debug.Log(GetOrSitting(1));
-		Debug.Log(GetOrSitting(2));
-		Debug.Log(GetOrSitting(3));
-		Debug.Log(GetOrSitting(4));
-		//if (Input.GetKey(KeyCode.A))
-		//{
-		//	Debug.Log(GetOrSitting(0));
-		//	Debug.Log(GetOrSitting(1));
-		//	Debug.Log(GetOrSitting(2));
-		//	Debug.Log(GetOrSitting(3));
-		//	Debug.Log(GetOrSitting(4));
-		//}
 	}
 
 	/// <summary>
