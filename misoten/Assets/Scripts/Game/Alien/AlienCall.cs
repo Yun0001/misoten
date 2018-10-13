@@ -10,7 +10,7 @@ public class AlienCall : MonoBehaviour
 	/// <summary>
 	/// エイリアンがお金を多く持っているかの種類
 	/// </summary>
-	private enum ERichDegree
+	 enum ERichDegree
 	{
 		POVERTY = 0,	// 貧乏
 		NORMAL,			// 普通
@@ -62,10 +62,12 @@ public class AlienCall : MonoBehaviour
 	// 席管理用ID
 	private static int addId = 0;
 
-	/// <summary>
-	/// エイリアン生成関数
-	/// </summary>
-	public void AlienForm()
+
+
+    /// <summary>
+    /// エイリアン生成関数
+    /// </summary>
+    public void AlienForm()
 	{
 		// 席が空いている場合
 		if (!GetSeat(GetAddId()))
@@ -171,4 +173,5 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public float GetOrderLatencyAdd(int id) => orderLatencyAdd[id];
+
 }
