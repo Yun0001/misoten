@@ -102,4 +102,20 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static int GetOrderType() => orderType;
+
+    public void EatCuisine(GameObject cuisine)
+    {
+        if (orderType == cuisine.GetComponent<Food>().GetCategory())
+        {
+            GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
+            GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+            GetComponent<AlienChip>().SetCuisineCame(true);
+        }
+        else
+        {
+            GetComponent<AlienChip>().SetCuisineCoefficient(0.1f);
+            GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+            GetComponent<AlienChip>().SetCuisineCame(true);
+        }
+    }
 }

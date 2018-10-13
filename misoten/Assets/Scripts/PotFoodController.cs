@@ -16,7 +16,7 @@ public class PotFoodController : MonoBehaviour
         {
             potFood[i] = Instantiate(potFoodPrefab, transform.position, Quaternion.identity);
             potFood[i].GetComponent<Food>().SetFoodID(i);
-            potFood[i].GetComponent<Food>().SetCategory(Food.Category.Microwave);
+            potFood[i].GetComponent<Food>().SetCategory(Food.Category.Pot);
             OutputFlg[i] = false;
         }
     }
