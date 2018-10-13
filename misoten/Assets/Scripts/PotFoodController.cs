@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PotFoodController : MonoBehaviour
 {
-    private GameObject[] potFood = new GameObject[FoodManager.MaxCuisine];
+    private GameObject[] potFood = new GameObject[CuisineManager.MaxCuisine];
     private GameObject potFoodPrefab;
-    private bool[] OutputFlg = new bool[FoodManager.MaxCuisine];
+    private bool[] OutputFlg = new bool[CuisineManager.MaxCuisine];
 
     // Use this for initialization
     void Awake()

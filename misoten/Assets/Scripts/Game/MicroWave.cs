@@ -10,7 +10,7 @@ public class MicroWave : MonoBehaviour {
     /// </summary>
    public  enum MWState { switchOff,switchOn }
 
-    private GameObject microwaveFood;
+    private GameObject microwaveCuisine;
 
     /// <summary>
     /// セットタイマ-
@@ -68,7 +68,7 @@ public class MicroWave : MonoBehaviour {
         //タイマーセット
         timer = setTimer;
 
-        microwaveFood = FoodManager.GetInstance().GetMicrowaveController().OutputCuisine();
+        microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
 
       
         return true;
@@ -85,13 +85,13 @@ public class MicroWave : MonoBehaviour {
 
 
         // ここでtimeDifferenceを料理の変数にセットする
-        microwaveFood.GetComponent<Food>().CalcTasteCoefficient(timeDifference);
+        microwaveCuisine.GetComponent<Food>().CalcTasteCoefficient(timeDifference);
 
         // スイッチオフ
         status = MWState.switchOff;
 
         // 電子レンジからプレイヤーに料理を渡す
-        return microwaveFood;
+        return microwaveCuisine;
     }
 
     /// <summary>

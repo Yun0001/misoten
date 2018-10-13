@@ -6,7 +6,7 @@ using GamepadInput;
 public class Player : MonoBehaviour
 {
 
-    enum PlayerStatus
+    public enum PlayerStatus
     {
         Normal,             //通常
         Microwave,        //電子レンジ
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
         Replenishment // 補充
     }
 
-    enum hitObjnName
+    public enum hitObjName
     {
         player1, //プレイヤー
         player2,
@@ -63,6 +63,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PowderSetManager PowderSetScript;
 
+    private CookingMicrowave cookingMicrowave_cs;
+    private CookingPot cookingPot_cs;
+    private CookingGrilled cookingGrilled_cs;
+    
+
     // Use this for initialization
     void Awake()
     {
@@ -92,6 +97,9 @@ public class Player : MonoBehaviour
             hitObj[i] = null;
         }
         tastePrefab = (GameObject)Resources.Load("Prefabs/Taste");
+        cookingMicrowave_cs = GetComponent<CookingMicrowave>();
+        cookingPot_cs=GetComponent<CookingPot>();
+        cookingGrilled_cs = GetComponent<CookingGrilled>();
     }
 
     private void FixedUpdate()
@@ -137,49 +145,10 @@ public class Player : MonoBehaviour
                 case PlayerStatus.Pot:
                     //茹で料理を調理中の処理
                     Vector2 stickVec = new Vector2(Input.GetAxis(InputXAxisName) * 5, -(Input.GetAxis(InputYAxisName) * 5));
-                    if (GetHitObjCommponetPot().UpdateCooking(stickVec))
-                    {
-                        //調理終了の処理
-                        WithaCuisine(GetHitObjCommponetPot().GetPotFood());
-                    }
+                    GameObject cuisine = null;
+                    cuisine = cookingPot_cs.Mix(stickVec);
+                    if (cuisine != null) WithaCuisine(cuisine);
                     break;
-
-                case PlayerStatus.GrilledTable:
-                    switch (playerID)
-                    {
-                        case 0:
-                            if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
-                            {
-                                GetHitObjCommponentGrilled().CalcGrilledFoodTasteCoefficient();
-                            }
-                            break;
-                        case 1:
-                            if (Input.GetKeyDown(KeyCode.Z))
-                            {
-                                GetHitObjCommponentGrilled().CalcGrilledFoodTasteCoefficient();
-                            }
-                            break;
-                        case 2:
-                            if (Input.GetKeyDown(KeyCode.K))
-                            {
-                                GetHitObjCommponentGrilled().CalcGrilledFoodTasteCoefficient();
-                            }
-                            break;
-                        case 3:
-                            if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
-                            {
-                                GetHitObjCommponentGrilled().CalcGrilledFoodTasteCoefficient();
-                            }
-                            break;
-                    }
-               
-                    if (GetHitObjCommponentGrilled().UpdateGrilled())
-                    {
-                        // 調理終了の処理
-                        WithaCuisine(GetHitObjCommponentGrilled().GetGrilledFood());
-                    }
-                    break;
-
                 default:
                     InputButton();
                     break;
@@ -231,38 +200,38 @@ public class Player : MonoBehaviour
         {
             //プレイヤー
             case "Player1":
-                hitObj[(int)hitObjnName.player1] = collision.gameObject;
+                hitObj[(int)hitObjName.player1] = collision.gameObject;
                 break;
 
             case "Player2":
-                hitObj[(int)hitObjnName.player2] = collision.gameObject;
+                hitObj[(int)hitObjName.player2] = collision.gameObject;
                 break;
 
             case "Player3":
-                hitObj[(int)hitObjnName.player3] = collision.gameObject;
+                hitObj[(int)hitObjName.player3] = collision.gameObject;
                 break;
 
             case "Player4":
-                hitObj[(int)hitObjnName.player4] = collision.gameObject;
+                hitObj[(int)hitObjName.player4] = collision.gameObject;
                 break;
             // レンジ
             case "Microwave":
-                hitObj[(int)hitObjnName.Microwave] = collision.gameObject;
+                hitObj[(int)hitObjName.Microwave] = collision.gameObject;
                 break;
             // 鍋
             case "Pot":
-                hitObj[(int)hitObjnName.Pot] = collision.gameObject;
+                hitObj[(int)hitObjName.Pot] = collision.gameObject;
                 break;
             // 焼き台
             case "Fryingpan":
-                hitObj[(int)hitObjnName.GrilledTable] = collision.gameObject;
+                hitObj[(int)hitObjName.GrilledTable] = collision.gameObject;
                 break;
             // 補充マシーン
             case "TasteMachine":
-                hitObj[(int)hitObjnName.TasteMachine] = collision.gameObject;
+                hitObj[(int)hitObjName.TasteMachine] = collision.gameObject;
                 break;
             case "Alien":
-                hitObj[(int)hitObjnName.Alien] = collision.gameObject;
+                hitObj[(int)hitObjName.Alien] = collision.gameObject;
                 break;
         }
     }
@@ -276,36 +245,36 @@ public class Player : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Player1":
-                hitObj[(int)hitObjnName.player1] = null;
+                hitObj[(int)hitObjName.player1] = null;
                 break;
 
             case "Player2":
-                hitObj[(int)hitObjnName.player2] = null;
+                hitObj[(int)hitObjName.player2] = null;
                 break;
 
             case "Player3":
-                hitObj[(int)hitObjnName.player3] = null;
+                hitObj[(int)hitObjName.player3] = null;
                 break;
 
             case "Player4":
-                hitObj[(int)hitObjnName.player4] = null;
+                hitObj[(int)hitObjName.player4] = null;
                 break;
             case "Microwave":
-                hitObj[(int)hitObjnName.Microwave] = null;
+                hitObj[(int)hitObjName.Microwave] = null;
                 break;
             case "Pot":
-                hitObj[(int)hitObjnName.Pot] = null;
+                hitObj[(int)hitObjName.Pot] = null;
                 break;
             case "Fryingpan":
-                hitObj[(int)hitObjnName.GrilledTable] = null;
+                hitObj[(int)hitObjName.GrilledTable] = null;
                 break;
 
             case "TasteMachine":
-                hitObj[(int)hitObjnName.TasteMachine] = null;
+                hitObj[(int)hitObjName.TasteMachine] = null;
                 break;
 
             case "Alien":
-                hitObj[(int)hitObjnName.Alien] = null;
+                hitObj[(int)hitObjName.Alien] = null;
                 break;
         }
     }
@@ -327,47 +296,31 @@ public class Player : MonoBehaviour
     /// </summary>
     void InputButton()
     {
-        //　Aボタン入力
-        // 調理器具があれば調理モード
-        // 補充マシーンがあれば補充
-
         // 補充マシーンとの当たり判定を取得
-        if (GetHitObj((int)hitObjnName.TasteMachine) != null)
+        if (GetHitObj((int)hitObjName.TasteMachine) != null)
         {
             // 当たっていればホールドで取得
-            if (GamePad.GetButton(GamePad.Button.A, PlayerNumber))
+            if (GamePad.GetButton(GamePad.Button.LeftShoulder, PlayerNumber))
             {
                 //　旨味成分補充処理
                 PowderSetScript.PowderSet();
             }
-            else if (GamePad.GetButtonUp(GamePad.Button.A, PlayerNumber))
+            else if (GamePad.GetButtonUp(GamePad.Button.LeftShoulder, PlayerNumber))
             {
+                // Aボタンを離せば初期化
                 PowderSetScript.InitSet();
             }
         }
-        else
-        {
-            // あたっていなかったらトリガーで取得
-            if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber))
-            {
-
-                //　レンジの前にいるとき
-                CookingMicrowave();
-
-                //  鍋の前にいるとき
-                CookingPot();
-
-                // 焼き台の前にいるとき
-                CookingGrilled();
-
-                //　宇宙人の前にいるとき
-                OfferCuisine();
-            }
-        }
 
 
-        // Bボタン入力
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerNumber))
+        // Aボタン入力（電子レンジ）
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber)) ActionMicrowave();
+        // Xボタン入力（鍋）
+        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerNumber)) ActionPot();
+        // Bボタン入力（フライパン）
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerNumber)) ActionGrilled();
+        // Yボタン入力（邪魔）
+        if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerNumber))
         {
             //状態を邪魔に変更
             SetPlayerStatus(PlayerStatus.Hindrance);
@@ -375,6 +328,12 @@ public class Player : MonoBehaviour
             SubSetCount();
             GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
             taste.GetComponent<Taste>().playerID = playerID;
+        }
+
+        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, PlayerNumber))
+        {
+            //　宇宙人の前にいるとき
+            OfferCuisine();
         }
     }
 
@@ -397,95 +356,29 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// レンジの前にいるとき
-    /// </summary>
-    private void CookingMicrowave()
-    {
-        // ヒットオブジェクトがなければ関数を抜ける
-
-       if (GetHitObj((int)hitObjnName.Microwave) == null) return;
-
-        //スイッチがOFF
-        if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.MWState.switchOff)
-        {
-            // スイッチON
-            PresstheMicrowaveStartButton();
-            SetPlayerStatus(PlayerStatus.Microwave);
-        }
-        else
-        {
-            //スイッチをOFFにして料理をもつ
-            WithaCuisine(PresstheMicrowaveStopButton());
-        }
-    }
-
-
-    private void CookingPot()
-    {
-        // 鍋に当たっていなければ抜ける
-        if (GetHitObj((int)hitObjnName.Pot) == null) return;
-
-        // 鍋が未使用な自分が使用する
-        if (GetHitObjCommponetPot().GetStatus() == Pot.PotState.unused)
-        {
-            GetHitObjCommponetPot().StartCookingPot();  //調理開始
-            SetPlayerStatus(PlayerStatus.Pot);
-        }
-    }
-
-    private void CookingGrilled()
-    {
-        if (GetHitObj((int)hitObjnName.GrilledTable) == null) return;
-
-        //未使用ならば調理する
-        if (GetHitObjCommponentGrilled().GetStatus() == Grilled.GrilledState.unused)
-        {
-            GetHitObjCommponentGrilled().StartCooking(); // 調理開始
-            SetPlayerStatus(PlayerStatus.GrilledTable);
-        }
-    }
-
-    /// <summary>
     /// 料理を渡す
     /// </summary>
     private void OfferCuisine()
     {
         if (playerStatus != PlayerStatus.Catering) return;
-        if (GetHitObj((int)hitObjnName.Alien) == null) return;
+        if (GetHitObj((int)hitObjName.Alien) == null) return;
 
 
         // エイリアンのスクリプトを取得して料理を渡す
-        GetHitObj((int)hitObjnName.Alien).GetComponent<AlienChip>().SetCuisineCoefficient(haveInHandFood.GetComponent<Food>().GetQualityTaste());
-        GetHitObj((int)hitObjnName.Alien).GetComponent<AlienChip>().SetOpponentID(playerID);
-        GetHitObj((int)hitObjnName.Alien).GetComponent<AlienChip>().SetCuisineCame(true);
-        FoodManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+        GetHitObj((int)hitObjName.Alien).GetComponent<AlienChip>().SetCuisineCoefficient(haveInHandFood.GetComponent<Food>().GetQualityTaste());
+        GetHitObj((int)hitObjName.Alien).GetComponent<AlienChip>().SetOpponentID(playerID);
+        GetHitObj((int)hitObjName.Alien).GetComponent<AlienChip>().SetCuisineCame(true);
+        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
         haveInHandFood = null;
         playerStatus = PlayerStatus.Normal;
         
     }
 
-    /// <summary>
-    /// レンジのスタート
-    /// </summary>
-    /// <returns></returns>
-    private void PresstheMicrowaveStartButton()
-    {
-        GetHitObjConmponentMicroWave().StartCooking();
-    }
-    
-    /// <summary>
-    /// レンジのストップ
-    /// </summary>
-    /// <returns></returns>
-    private GameObject PresstheMicrowaveStopButton()
-    {
-        return GetHitObjConmponentMicroWave().EndCooking();
-    }
     
     /// <summary>
     /// 料理を持つ
     /// </summary>
-    private void WithaCuisine(GameObject Food)
+    public void WithaCuisine(GameObject Food)
     {
         haveInHandFood = Food;
         SetPlayerStatus(PlayerStatus.Catering);
@@ -507,9 +400,9 @@ public class Player : MonoBehaviour
                 if (Input.GetKey(KeyCode.S)) move.y = -speed;
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
-                    CookingMicrowave();
-                    CookingPot();
-                    CookingGrilled();
+                    ActionMicrowave();
+                    ActionPot();
+                    ActionGrilled();
                     OfferCuisine();
                 }
                 if (Input.GetKeyDown(KeyCode.X))
@@ -527,9 +420,9 @@ public class Player : MonoBehaviour
                 if (Input.GetKey(KeyCode.DownArrow)) move.y = -speed;
                 if (Input.GetKeyDown(KeyCode.K))
                 {
-                    CookingMicrowave();
-                    CookingPot();
-                    CookingGrilled();
+                    ActionMicrowave();
+                    ActionPot();
+                    ActionGrilled();
                     OfferCuisine();
                 }
                 if (Input.GetKeyDown(KeyCode.L))
@@ -546,32 +439,77 @@ public class Player : MonoBehaviour
         //
     }
     
-    private GameObject GetHitObj(int HitObjID)
+    public GameObject GetHitObj(int HitObjID)
     {
         if (hitObj[HitObjID] == null) return null;
 
         return hitObj[HitObjID].gameObject;
     } 
 
-    private MicroWave GetHitObjConmponentMicroWave() => GetHitObj((int)hitObjnName.Microwave).GetComponent<MicroWave>();
+    private MicroWave GetHitObjConmponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<MicroWave>();
     
-    private Pot GetHitObjCommponetPot() => GetHitObj((int)hitObjnName.Pot).GetComponent<Pot>();
+    private Pot GetHitObjCommponetPot() => GetHitObj((int)hitObjName.Pot).GetComponent<Pot>();
 
-    private Grilled GetHitObjCommponentGrilled() => GetHitObj((int)hitObjnName.GrilledTable).GetComponent<Grilled>();
-
-    public void ResetHindrancePoint() => hindrancePoint = 1f;
-
-    public float GetHindrancePoint() => hindrancePoint;
-
-    private void AddHindrancePoint() => hindrancePoint += 0.25f;
+    private Grilled GetHitObjCommponentGrilled() => GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>();
 
     public int GetPlayerID() => playerID;
 
-    private void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
+    public  void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
     private void SetCount() => SetCountPlayer = PowderSetScript.GetSetCount();
     //Powder1回分使う
     private void SubSetCount() => PowderSetScript.SubSetCount();
 
     public int GetSetCountPlayer() => SetCountPlayer;
 
+    /// <summary>
+    /// 電子レンジへのアクション
+    /// </summary>
+    private void ActionMicrowave()
+    {
+        // 電子レンジに当たっていなければ関数を抜ける
+        if (GetHitObj((int)hitObjName.Microwave) == null) return;
+
+        switch (GetHitObjConmponentMicroWave().GetStatus())
+        {
+            case MicroWave.MWState.switchOff:
+                // 電子レンジを動かす
+                cookingMicrowave_cs.PresstheMicrowaveStartButton();
+                break;
+
+            case MicroWave.MWState.switchOn:
+                // 電子レンジを停止させる
+                WithaCuisine(cookingMicrowave_cs.PresstheMicrowaveStopButton());
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void ActionPot()
+    {
+        // 鍋に当たっていなければ抜ける
+        if (GetHitObj((int)hitObjName.Pot) == null) return;
+
+        cookingPot_cs.CookingStart();
+    }
+
+    private void ActionGrilled()
+    {
+        if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
+
+        switch (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GetStatus())
+        {
+            case Grilled.GrilledState.unused:
+                cookingGrilled_cs.OnFire();
+                break;
+
+            case Grilled.GrilledState.inCcoking:
+                cookingGrilled_cs.ShaketheFryingpan();
+                break;
+            default:
+                break;
+        }
+
+    }
 }

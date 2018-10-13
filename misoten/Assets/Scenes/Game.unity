@@ -213,6 +213,9 @@ GameObject:
   - component: {fileID: 70778754}
   - component: {fileID: 70778755}
   - component: {fileID: 70778753}
+  - component: {fileID: 70778756}
+  - component: {fileID: 70778757}
+  - component: {fileID: 70778758}
   m_Layer: 8
   m_Name: Player1
   m_TagString: Player
@@ -364,6 +367,39 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &70778756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70778749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096d024c8bca45c4d964b377a2c3b3ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &70778757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70778749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae25e9defc59d934b86c998544f03816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &70778758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70778749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb12da61c974a0d46a0e40212d4b266e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &140626659 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1532636343995584, guid: cbbfce1ff3680ce4ba579e12db9fb352,
@@ -381,7 +417,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sideGagePrefab: {fileID: 0}
-  COOKING_TIME: 3
 --- !u!1 &229748427
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +536,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sideGagePrefab: {fileID: 0}
-  COOKING_TIME: 3
 --- !u!1 &402735988
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,8 +983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c97f1dec2d3c84489842d92ece30b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potFoodPrefab: {fileID: 0}
-  COOKING_TIME: 0
+  potCuisine: {fileID: 0}
   rotationFlg: 00000000
 --- !u!224 &860269178 stripped
 RectTransform:
@@ -970,6 +1003,7 @@ GameObject:
   - component: {fileID: 929682418}
   - component: {fileID: 929682421}
   - component: {fileID: 929682423}
+  - component: {fileID: 929682424}
   m_Layer: 9
   m_Name: Player2
   m_TagString: Player
@@ -1121,6 +1155,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &929682424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 929682417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae25e9defc59d934b86c998544f03816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1088042444
 Prefab:
   m_ObjectHideFlags: 0
@@ -2129,6 +2174,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c97f1dec2d3c84489842d92ece30b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potFoodPrefab: {fileID: 0}
-  COOKING_TIME: 0
+  potCuisine: {fileID: 0}
   rotationFlg: 00000000

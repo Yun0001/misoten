@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GrilledFoodController : MonoBehaviour {
 
-    private GameObject[] grilledtFood = new GameObject[FoodManager.MaxCuisine];
+    private GameObject[] grilledtFood = new GameObject[CuisineManager.MaxCuisine];
     private GameObject grilledFoodPrefab;
-    private bool[] OutputFlg = new bool[FoodManager.MaxCuisine];
+    private bool[] OutputFlg = new bool[CuisineManager.MaxCuisine];
 
     // Use this for initialization
     void Awake()

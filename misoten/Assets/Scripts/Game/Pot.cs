@@ -19,15 +19,14 @@ public class Pot : MonoBehaviour {
         None
     }
     [SerializeField]
-    private GameObject potFoodPrefab;
-    [SerializeField]
-    private float COOKING_TIME;
-    private float cookingTime;
+    private GameObject potCuisine;
+
 
     private PotState potStatus;
     private StickState stickStatus;
     private StickState oldStickStatus;
     private StickState startStatus;
+    bool isOneturn;
 
     [SerializeField]
     private bool[] rotationFlg = new bool[4];
@@ -36,7 +35,6 @@ public class Pot : MonoBehaviour {
 
     private void Awake()
     {
-        potFoodPrefab = (GameObject)Resources.Load("Prefabs/PotFood");
         Init();
     }
 
@@ -50,6 +48,7 @@ public class Pot : MonoBehaviour {
         oldStickStatus    = StickState.None;
         startStatus         = StickState.None;
         rotationCount       = 0;
+        isOneturn = false;
         for (int i = 0; i < rotationFlg.Length; i++)
             rotationFlg[i] = false;
     }
@@ -59,8 +58,8 @@ public class Pot : MonoBehaviour {
     /// </summary>
     public void StartCookingPot()
     {
-        cookingTime = COOKING_TIME;
         potStatus     = PotState.inCcoking;
+        potCuisine = CuisineManager.GetInstance().GetPotController().OutputCuisine();
     }
 
     /// <summary>
@@ -70,8 +69,7 @@ public class Pot : MonoBehaviour {
     public bool UpdateCooking(Vector2 stickVec)
     {
         RotationDetectionStick(stickVec);
-        cookingTime -= Time.deltaTime;
-        if (cookingTime <= 0)
+        if (isOneturn)
         {
             // 調理終了
             Init();         // 初期化
@@ -168,13 +166,7 @@ public class Pot : MonoBehaviour {
         for (int i = 0; i < rotationFlg.Length; i++)
             if (!rotationFlg[i]) return;
 
-        for (int i = 0; i < rotationFlg.Length; i++)
-            rotationFlg[i] = false;
-
-        stickStatus       = StickState.None;
-        oldStickStatus  = StickState.None;
-        startStatus      = StickState.None;
-        rotationCount++;
+        isOneturn = true;
     }
 
     /// <summary>
@@ -187,5 +179,5 @@ public class Pot : MonoBehaviour {
     /// 茹で料理を返す
     /// </summary>
     /// <returns>茹で料理</returns>
-    public GameObject GetPotFood() => potFoodPrefab;
+    public GameObject GetPotCuisine() => potCuisine;
 }

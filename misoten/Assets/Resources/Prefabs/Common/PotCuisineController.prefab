@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4879098706039322}
   - component: {fileID: 114488950367164874}
   m_Layer: 0
-  m_Name: PotFoodController
+  m_Name: PotCuisineController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,17 +10,12 @@ public class Grilled : MonoBehaviour {
         inCcoking
     }
 
-    private GameObject grilledFoodPrefab;
+    private GameObject grilledCuisine;
 
     [SerializeField]
     private GameObject sideGagePrefab;
 
     private GameObject sideGage;
-
-    [SerializeField]
-    private float COOKING_TIME;
-
-    private float cookingTime;
 
     private GrilledState grilledStatus;
 
@@ -36,8 +31,8 @@ public class Grilled : MonoBehaviour {
         sideGage.transform.localScale = scale;
         sideGage.SetActive(false);
         grilledStatus = GrilledState.unused;
-        cookingTime = 0;
         grilledFoodScore = 0;
+        sideGage.GetComponent<Canvas>().sortingOrder = 2;
     }
 
     /// <summary>
@@ -46,14 +41,12 @@ public class Grilled : MonoBehaviour {
     public void StartCooking()
     {
         grilledStatus = GrilledState.inCcoking;
-        cookingTime = COOKING_TIME;
         sideGage.SetActive(true);
+        grilledCuisine = CuisineManager.GetInstance().GetGrilledController().OutputCuisine();
     }
 
     public bool UpdateGrilled()
     {
-        cookingTime -= Time.deltaTime;
-        if (cookingTime <= 0) return true;
         return false;
     }
 
@@ -68,7 +61,7 @@ public class Grilled : MonoBehaviour {
 
     public GrilledState GetStatus() => grilledStatus;
 
-    public GameObject GetGrilledFood() => grilledFoodPrefab;
+    public GameObject GetGrilledCuisine() => grilledCuisine;
 
     private float CalcDifference()
     {

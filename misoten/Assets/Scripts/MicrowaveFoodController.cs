@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MicrowaveFoodController : MonoBehaviour
 {
-    private GameObject[] microwaveFood = new GameObject[FoodManager.MaxCuisine];
+    private GameObject[] microwaveFood = new GameObject[CuisineManager.MaxCuisine];
     private GameObject microwaveFoodPrefab;
-    private bool[] OutputFlg = new bool[FoodManager.MaxCuisine]; 
+    private bool[] OutputFlg = new bool[CuisineManager.MaxCuisine]; 
 
 	// Use this for initialization
 	void Awake ()
