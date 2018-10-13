@@ -12,15 +12,11 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	private enum EOrderType
 	{
-		MICROWAVE = 0,	// 電子レンジ
-		BOIL,			// ゆでる
-		GRILLED,		// 焼き
+		GRILLED = 0,	// 焼き
+		SIMMER,			// 煮る
+		MICROWAVE,		// 電子レンジ
 		MAX				// 最大
 	}
-
-	// 待ち時間設定
-	[SerializeField, Range(7.0f, 15.0f)]
-	float latency;
 
 	// オーダー内容描画用
 	[SerializeField]
@@ -33,11 +29,14 @@ public class AlienOrder : MonoBehaviour
 	// 注文するまでの時間を測る
 	private float timeAdd = 0.0f;
 
+	// オーダー待ち時間の加算
+	private float orderLatencyAdd = 0.0f;
+
 	// オーダー中かの判定
 	private bool isOrder = false;
 
-	// 注文結果格納用
-	private int orderType;
+	// 注文結果格納・取得用
+	private static int orderType = 0;
 
 	/// <summary>
 	/// 開始関数
@@ -52,30 +51,29 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// エイリアンが席に座っている状態の時
-		if (!AlienMove.GetMoveStatus())
+		// エイリアンが席に座って、注文するまでの時間
+		if (timeAdd >= orderTime)
 		{
-			// エイリアンが席に座って、注文するまでの時間
-			if (timeAdd >= orderTime)
+			// エイリアンが注文していない時
+			if (!GetIsOrder())
 			{
-				// エイリアンが注文していない時
-				if (!GetIsOrder())
-				{
-					// エイリアンの注文結果を出す
-					SetOrderType(Random.Range((int)EOrderType.MICROWAVE, (int)EOrderType.MAX));
+				// 注文したものをアクティブにする(吹き出し)
+				orderBalloon[GetOrderType()].SetActive(true);
 
-					// 注文したものをアクティブにする(吹き出し)
-					orderBalloon[GetOrderType()].SetActive(true);
+				// オーダー完了
+				SetIsOrder(true);
 
-					// オーダー完了
-					SetIsOrder(true);
-				}
+				// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
+				SetOrderType(GetOrderType() + 1);
+
+				// 注文をループさせる為に「0」で初期化
+				if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
 			}
-			else
-			{
-				// 毎フレームの時間を加算
-				timeAdd += Time.deltaTime;
-			}
+		}
+		else
+		{
+			// 毎フレームの時間を加算
+			timeAdd += Time.deltaTime;
 		}
 	}
 
@@ -97,11 +95,11 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	/// <param name="_orderType"></param>
 	/// <returns></returns>
-	public int SetOrderType(int _orderType) => orderType = _orderType;
+	public static int SetOrderType(int _orderType) => orderType = _orderType;
 
 	/// <summary>
 	/// 注文の種類を取得
 	/// </summary>
 	/// <returns></returns>
-	public int GetOrderType() => orderType;
+	public static int GetOrderType() => orderType;
 }
