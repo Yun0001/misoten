@@ -38,19 +38,25 @@ public class AlienChip : MonoBehaviour
 
     private int[] baseChip = { 100, 200, 300 };
 
-    /// <summary>
-    /// 開始関数
-    /// </summary>
-    void Start ()
+	private static int richDegreeId = 0;
+
+	/// <summary>
+	/// 開始関数
+	/// </summary>
+	void Start ()
 	{
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
         // プロトでは手渡し
         chipPattern = EChipPattern.HANDOVER;
         // ベースチップをセット
-        //SetChipValue(baseChip[GetComponent<AlienCall>().GetRichDegree()]);
-    }
-	
+        SetChipValue(baseChip[GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>().GetRichDegree(richDegreeId)]);
+
+		// エイリアンの種類IDを更新
+		if (richDegreeId < 4) { richDegreeId++; }
+		else { richDegreeId = 0; };
+	}
+
 	/// <summary>
 	/// 更新関数
 	/// </summary>
@@ -74,6 +80,8 @@ public class AlienChip : MonoBehaviour
                     case EChipPattern.HANDOVER: // チップを直接渡す
                         ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, (int)GetChipValue());
                         SetCuisineCame(false);
+
+						Debug.Log("入った");
                         break;
                     default:
                         // 例外処理

@@ -42,7 +42,7 @@ public class AlienCall : MonoBehaviour
 	private GameObject[] obj;
 
 	// 金持ち度
-	private ERichDegree richDegree;
+	private ERichDegree[] richDegree = new ERichDegree[5];
 
 	// エイリアンの種類設定
 	private EAlienPattern[] alienPattern = new EAlienPattern[5];
@@ -62,12 +62,13 @@ public class AlienCall : MonoBehaviour
 	// 席管理用ID
 	private static int addId = 0;
 
+	// エイリアンの種類ID
+	private static int richDegreeId = 0;
 
-
-    /// <summary>
-    /// エイリアン生成関数
-    /// </summary>
-    public void AlienForm()
+	/// <summary>
+	/// エイリアン生成関数
+	/// </summary>
+	public void AlienForm()
 	{
 		// 席が空いている場合
 		if (!GetSeat(GetAddId()))
@@ -79,7 +80,7 @@ public class AlienCall : MonoBehaviour
 			if (latencyAdd > inTime)
 			{
 				// エイリアンの金持ち度をランダムで設定
-				richDegree = (ERichDegree)Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND);
+				richDegree[richDegreeId] = (ERichDegree)Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND);
 
 				// エイリアンの種類設定
 				alienPattern[patternId] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
@@ -116,6 +117,10 @@ public class AlienCall : MonoBehaviour
 				if (patternId < 4) { patternId++; }
 				else { patternId = 0; }
 
+				// エイリアンの種類IDを更新
+				if (richDegreeId < 4) { richDegreeId++; }
+				else { richDegreeId = 0; };
+
 				// 時間初期化
 				latencyAdd = 0.0f;
 
@@ -135,7 +140,7 @@ public class AlienCall : MonoBehaviour
 	/// エイリアンの金持ち度を取得
 	/// </summary>
 	/// <returns></returns>
-	public int GetRichDegree() => (int)richDegree;
+	public int GetRichDegree(int id) => (int)richDegree[id];
 
 	/// <summary>
 	/// エイリアンの種類設定の取得
@@ -174,4 +179,9 @@ public class AlienCall : MonoBehaviour
 	/// <returns></returns>
 	public float GetOrderLatencyAdd(int id) => orderLatencyAdd[id];
 
+	/// <summary>
+	/// エイリアンの種類IDを取得
+	/// </summary>
+	/// <returns></returns>
+	public static int GetRichDegreeId() => richDegreeId;
 }

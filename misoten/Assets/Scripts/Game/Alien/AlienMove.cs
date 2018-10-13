@@ -119,6 +119,12 @@ public class AlienMove : MonoBehaviour
 			else if (transform.position.y >= 4.0f) { transform.position += new Vector3(0.0f, 0.0f, -0.2f); }
 			else if (transform.position.y >= 3.5f) { transform.position += new Vector3(0.0f, 0.0f, -0.3f); }
 		}
+
+		// 移動終了
+		if(!GetMoveStatus())
+		{
+			GetComponent<BoxCollider2D>().enabled = true;
+		}
 	}
 
 	/// <summary>
