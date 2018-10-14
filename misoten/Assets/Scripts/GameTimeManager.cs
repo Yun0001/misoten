@@ -16,7 +16,7 @@ public class GameTimeManager : MonoBehaviour {
         timespeed = 1;
 
         TimeText = GameObject.Find("TimeText");
-        SpeedUpText = GameObject.Find("SpeedUpText");
+     //   SpeedUpText = GameObject.Find("SpeedUpText");
     }
 	
 	// Update is called once per frame
@@ -29,7 +29,7 @@ public class GameTimeManager : MonoBehaviour {
     //時間管理
     private void GameTimer()
     {
-        //countTime -= Time.deltaTime; //スタートしてからの秒数を格納
+        countTime -= Time.deltaTime; //スタートしてからの秒数を格納
         TimeText.GetComponent<Text>().text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
     }
 
@@ -46,18 +46,18 @@ public class GameTimeManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.P))
         {
             timespeed += 0.5f;
-            SpeedUpText.GetComponent<Text>().text = "スピードアップ:"+ timespeed.ToString();
+            //SpeedUpText.GetComponent<Text>().text = "スピードアップ:"+ timespeed.ToString();
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
             timespeed -= 0.5f;
-            SpeedUpText.GetComponent<Text>().text = "スピードダウン:"+ timespeed.ToString();
+            //SpeedUpText.GetComponent<Text>().text = "スピードダウン:"+ timespeed.ToString();
         }
 
         //通常スピード
         if (timespeed == 1.0f)
         {
-            SpeedUpText.GetComponent<Text>().text = " 通常スピード :" +timespeed.ToString();
+           // SpeedUpText.GetComponent<Text>().text = " 通常スピード :" +timespeed.ToString();
         }
 
 
@@ -65,12 +65,12 @@ public class GameTimeManager : MonoBehaviour {
         if (timespeed <= 0.5f)
         {
             timespeed = 0.5f;
-            SpeedUpText.GetComponent<Text>().text = "スピードダウン:" + timespeed.ToString();
+           // SpeedUpText.GetComponent<Text>().text = "スピードダウン:" + timespeed.ToString();
         }
         if (timespeed >= 10.0f)
         {
             timespeed = 10.0f;
-            SpeedUpText.GetComponent<Text>().text = "スピードアップ:" + timespeed.ToString();
+           // SpeedUpText.GetComponent<Text>().text = "スピードアップ:" + timespeed.ToString();
         }
     }
 
@@ -80,7 +80,7 @@ public class GameTimeManager : MonoBehaviour {
         if (countTime<=0)
         {
             countTime = 0;
-            SpeedUpText.GetComponent<Text>().text = "Time Up" ;
+           // SpeedUpText.GetComponent<Text>().text = "Time Up" ;
         }
     }
 
