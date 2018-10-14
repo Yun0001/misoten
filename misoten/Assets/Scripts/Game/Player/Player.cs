@@ -401,8 +401,8 @@ public class Player : MonoBehaviour
         switch (layerName)
         {
             case "Player1":
-                Debug.Log(Input.GetAxis(InputXAxisName));
-                Debug.Log(Input.GetAxis(InputYAxisName));
+                //Debug.Log(Input.GetAxis(InputXAxisName));
+                //Debug.Log(Input.GetAxis(InputYAxisName));
                 break;
             case "Player2":
                 if (Input.GetKey(KeyCode.A)) move.x = -speed;
