@@ -46,8 +46,8 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddScore(int pID, int score)
     {
         // スコア加算
-        playerScore[pID].GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
- 
+        //playerScore[pID].GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
+        playerScore[pID].GetComponent<ScoreCount>().AddScore(score);
         UpdatePlayerRank();     // 順位更新
         UpdateScoreText();       // 表示テキスト更新
     }
@@ -126,6 +126,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
+    /*
     /// <summary>
     /// 加算スコアの計算
     /// </summary>
@@ -134,12 +135,14 @@ public class ScoreManager : Singleton<ScoreManager>
     /// <returns>係数を掛けた計算後のスコア</returns>
     private int CalcAddScore(int pID, int score)
     {
+        
         // スコア＊順位係数＊邪魔係数
         // 残り時間が60秒未満ならさらに時間係数を掛ける
         return gameTimeManager.GetComponent<GameTimeManager>().GetCountTime() < 60 ?
                     (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].GetComponent<Player>().GetHindrancePoint() * timeCoefficient) :
                     (int)(score * rankCoefficient[playerRank[pID] - 1] * player[pID].GetComponent<Player>().GetHindrancePoint());
     }
+    */
 
     /// <summary>
     ///  表示テキスト更新
@@ -147,7 +150,8 @@ public class ScoreManager : Singleton<ScoreManager>
     private void UpdateScoreText()
     {
         for (int i = 0; i < playerNum; i++)
-            scoreText[i].text = "Chip:" + GetPlayerScore(i).ToString() + "/" + playerRank[i].ToString();
+            scoreText[i].text = "Chip:" + GetPlayerScore(i).ToString();
+       // scoreText[i].text = "Chip:" + GetPlayerScore(i).ToString() + "/" + playerRank[i].ToString();
     }
 
     /// <summary>

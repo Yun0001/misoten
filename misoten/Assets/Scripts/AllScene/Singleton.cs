@@ -46,4 +46,19 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         Destroy(this);
         return false;
     }
+
+    public static T GetInstance()
+    {
+        if (instance == null)
+        {
+            Type t = typeof(T);
+
+            instance = (T)FindObjectOfType(t);
+            if (instance == null)
+            {
+                Debug.LogError(t + " をアタッチしているGameObjectはありません");
+            }
+        }
+        return instance;
+    }
 }
