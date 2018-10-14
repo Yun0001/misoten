@@ -11,7 +11,7 @@ public class GrilledFoodController : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        grilledFoodPrefab = (GameObject)Resources.Load("Prefabs/PotFood");
+        grilledFoodPrefab = (GameObject)Resources.Load("Prefabs/grilledFood");
         for (int i = 0; i < grilledtFood.Length; i++)
         {
             grilledtFood[i] = Instantiate(grilledFoodPrefab, transform.position, Quaternion.identity);

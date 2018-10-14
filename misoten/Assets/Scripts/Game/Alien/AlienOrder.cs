@@ -38,6 +38,9 @@ public class AlienOrder : MonoBehaviour
 	// 注文結果格納・取得用
 	private static int orderType = 0;
 
+    [SerializeField]
+    private int individualOrderType;
+
 	/// <summary>
 	/// 開始関数
 	/// </summary>
@@ -63,11 +66,12 @@ public class AlienOrder : MonoBehaviour
 				// オーダー完了
 				SetIsOrder(true);
 
-				// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
-				SetOrderType(GetOrderType() + 1);
-
-				// 注文をループさせる為に「0」で初期化
-				if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+                individualOrderType = GetOrderType();
+                // エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
+                SetOrderType(GetOrderType() + 1);
+            
+                // 注文をループさせる為に「0」で初期化
+                if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
 			}
 		}
 		else
@@ -105,15 +109,16 @@ public class AlienOrder : MonoBehaviour
 
     public void EatCuisine(GameObject cuisine)
     {
-        if (orderType == cuisine.GetComponent<Food>().GetCategory())
+        if (individualOrderType == cuisine.GetComponent<Food>().GetCategory())
         {
-            GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
+            GetComponent<AlienChip>().SetCuisineCoefficient(1f);
+            //GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
             GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
             GetComponent<AlienChip>().SetCuisineCame(true);
         }
         else
         {
-            GetComponent<AlienChip>().SetCuisineCoefficient(0.1f);
+            GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
             GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
             GetComponent<AlienChip>().SetCuisineCame(true);
         }

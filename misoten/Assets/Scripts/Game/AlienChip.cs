@@ -28,6 +28,7 @@ public class AlienChip : MonoBehaviour
 	private bool isCuisineCame = false;
 
 	// チップの値
+    [SerializeField]
 	private float chipVal = 0.0f;
 
     // 料理の旨味係数
@@ -71,6 +72,7 @@ public class AlienChip : MonoBehaviour
                 //SetCuisineCame(true);
             if (isCuisineCame)
             {
+                //SetChipValue(CalcChipValue());
                 // チップの渡し方の管理
                 switch (chipPattern)
                 {
@@ -78,7 +80,7 @@ public class AlienChip : MonoBehaviour
 
                         break;
                     case EChipPattern.HANDOVER: // チップを直接渡す
-                        ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, (int)GetChipValue());
+                        ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
                         SetCuisineCame(false);
 
 						Debug.Log("入った");
@@ -133,7 +135,10 @@ public class AlienChip : MonoBehaviour
     /// 渡すor置くチップの計算
     /// </summary>
     /// <returns>渡すor置くチップの値</returns>
-    public int CalcChipValue() => (int)(chipVal * cisineTasteCoefficient);
+    public int CalcChipValue()
+    {
+        return (int)(chipVal * cisineTasteCoefficient);
+    } 
 
     public void SetOpponentID(int ID) => opponentID = ID;
 }

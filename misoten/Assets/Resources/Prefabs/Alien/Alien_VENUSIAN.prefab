@@ -404,7 +404,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 5}
+  m_Size: {x: 0.1, y: 5}
   m_EdgeRadius: 0
 --- !u!114 &114096816944630346
 MonoBehaviour:
@@ -422,6 +422,7 @@ MonoBehaviour:
   - {fileID: 1031997951893068}
   - {fileID: 1539980158528836}
   orderTime: 1
+  individualOrderType: 0
 --- !u!114 &114324923458388082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -492,6 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chipPattern: 0
+  chipVal: 0
 --- !u!114 &114658495070265358
 MonoBehaviour:
   m_ObjectHideFlags: 1
