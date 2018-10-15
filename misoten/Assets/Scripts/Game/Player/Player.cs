@@ -289,6 +289,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void OfferCuisine()
     {
+        if (haveInHandFood == null) return;
         if (playerStatus != PlayerStatus.Catering) return;
         if (GetHitObj((int)hitObjName.Alien) == null) return;
 

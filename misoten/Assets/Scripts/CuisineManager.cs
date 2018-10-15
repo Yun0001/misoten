@@ -2,51 +2,61 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CuisineManager : Singleton<CuisineManager> {
-
-    public readonly static int MaxCuisine = 4;
-    private GameObject microwaveControllerPrefab;
-    private GameObject microwaveController;
-    private MicrowaveFoodController microwaveController_cs;
-    private GameObject potControllerPrefab;
-    private GameObject potController;
-    private PotFoodController potController_cs;
-    private GameObject grilledControllerPrefab;
-    private GameObject grilledController;
-    private GrilledFoodController grilledController_cs;
-    // Use this for initialization
-     void Awake () {
-        InstantiateMicrowaveController();
-        InstantiatePotController();
-        InstantiateGrilledController();  
+/// <summary>
+/// 料理コントローラーを管理するクラス（シングルトン）
+/// </summary>
+public class CuisineManager : Singleton<CuisineManager>
+{
+    private enum ECuisineController
+    {
+        MicrowaveCuisineController,
+        PotCuisineController,
+        GrilledCuisineController,
+        MaxController
     }
 
     /// <summary>
-    /// 電子レンジ料理のコントローラー
+    /// Prefabが保存されている階層へのパス
     /// </summary>
-    private void InstantiateMicrowaveController()
+    private string[] prefabPass = 
     {
-        microwaveControllerPrefab = (GameObject)Resources.Load("Prefabs/Common/MicrowaveCuisineController");
-        microwaveController = Instantiate(microwaveControllerPrefab, transform.position, Quaternion.identity);
-        microwaveController_cs = microwaveController.GetComponent<MicrowaveFoodController>();
+        "Prefabs/Common/MicrowaveCuisineController",
+        "Prefabs/Common/PotCuisineController",
+        "Prefabs/Common/GrilledCuisineController"
+    };
+
+    /// <summary>
+    /// 料理コントローラーのPrefab
+    /// </summary>
+    private GameObject[] cuisineControllerPrefab = new GameObject[(int)ECuisineController.MaxController];
+
+    /// <summary>
+    /// 料理コントローラー
+    /// </summary>
+    private GameObject[] cuisineController = new GameObject[(int)ECuisineController.MaxController];
+
+    // 各料理コントローラースクリプト
+    private MicrowaveCuisineController microwaveController_cs;
+    private PotCuisineController potController_cs;
+    private GrilledCuisineController grilledController_cs;
+
+    // 初期処理
+     private void Awake ()
+    {
+        for (int i = 0; i < (int)ECuisineController.MaxController; i++)
+        {
+            cuisineControllerPrefab[i] = Resources.Load(prefabPass[i]) as GameObject;
+            cuisineController[i]= Instantiate(cuisineControllerPrefab[i], transform.position, Quaternion.identity);
+        }
+
+        microwaveController_cs = cuisineController[(int)ECuisineController.MicrowaveCuisineController].GetComponent<MicrowaveCuisineController>();
+        potController_cs            = cuisineController[(int)ECuisineController.PotCuisineController].          GetComponent<PotCuisineController>();
+        grilledController_cs        = cuisineController[(int)ECuisineController.GrilledCuisineController].     GetComponent<GrilledCuisineController>();
     }
 
-    private void InstantiatePotController()
-    {
-        potControllerPrefab = (GameObject)Resources.Load("Prefabs/Common/PotCuisineController");
-        potController = Instantiate(potControllerPrefab, transform.position, Quaternion.identity);
-        potController_cs = potController.GetComponent<PotFoodController>();
-    }
-
-    private void InstantiateGrilledController()
-    {
-        grilledControllerPrefab = (GameObject)Resources.Load("Prefabs/Common/GrilledCuisineController");
-        grilledController = Instantiate(grilledControllerPrefab, transform.position, Quaternion.identity);
-        grilledController_cs = grilledController.GetComponent<GrilledFoodController>();
-    }
-
-    public MicrowaveFoodController GetMicrowaveController() => microwaveController_cs;
-    public PotFoodController GetPotController() => potController_cs;
-    public GrilledFoodController GetGrilledController() => grilledController_cs;
+    // 料理コントローラースクリプト取得
+    public MicrowaveCuisineController GetMicrowaveController() => microwaveController_cs;
+    public PotCuisineController GetPotController() => potController_cs;
+    public GrilledCuisineController GetGrilledController() => grilledController_cs;
 
 }

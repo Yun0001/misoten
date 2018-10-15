@@ -39,10 +39,12 @@ public class PlayerInput : MonoBehaviour
                 break;
 
             case 2:
+                InputGamepad();
                 InputKeyBoard_Player3();
                     break;
 
             case 3:
+                InputGamepad();
                 InputKeyBoard_Player2();
                 break;
         }

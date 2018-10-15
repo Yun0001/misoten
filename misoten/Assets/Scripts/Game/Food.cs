@@ -30,21 +30,22 @@ public class Food : MonoBehaviour {
     private Category category;
 
 
-    // Use this for initialization
-    void Start()
-    {
-        qualityTaste = 1;
-    }
+    /// <summary>
+    /// 初期処理
+    /// </summary>
+    void Awake() => Init();
+
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    public void Init() => qualityTaste = 1;
 
     public void SubQualityTaste()
     {
         if (qualityTaste > 0.7f)
         {
             qualityTaste -= Time.deltaTime / 10;
-            if (qualityTaste < 0.7f)
-            {
-                qualityTaste = 0.7f;
-            }
+            if (qualityTaste < 0.7f) qualityTaste = 0.7f;
         }
     }
 
@@ -52,30 +53,47 @@ public class Food : MonoBehaviour {
     /// 旨味係数を計算
     /// </summary>
     /// <param name="coefficient"></param>
-    public void CalcTasteCoefficient(float coefficient)
-    {
-        qualityTaste -= coefficient;
-    }
-
+    public void CalcTasteCoefficient(float coefficient) => qualityTaste -= coefficient;
+    
+    /// <summary>
+    /// 所有プレイヤーIDセット
+    /// </summary>
+    /// <param name="ID">プレイヤーID</param>
     public void SetOwnershipPlayerID(int ID) => ownershipPlayerID = ID;
 
+    /// <summary>
+    /// 所有プレイヤー取得
+    /// </summary>
+    /// <returns>所有プレイヤーID</returns>
     public int GetOwnershipPlayerID() => ownershipPlayerID;
 
-    public float GetQualityTaste()
-    {
-        return qualityTaste;
-    }
+    /// <summary>
+    /// 旨味係数取得
+    /// </summary>
+    /// <returns>旨味係数</returns>
+    public float GetQualityTaste() => qualityTaste;
 
+    /// <summary>
+    /// 料理IDセット
+    /// </summary>
+    /// <param name="ID">料理ID</param>
     public void SetFoodID(int ID) => foodID = ID;
 
+    /// <summary>
+    /// 料理ID取得
+    /// </summary>
+    /// <returns>料理ID</returns>
     public int GetFoodID() => foodID;
 
-    public void Init()
-    {
-        qualityTaste = 1;
-    }
-
+   /// <summary>
+   /// 料理の種類セット
+   /// </summary>
+   /// <param name="_category"></param>
     public void SetCategory(Category _category) => category = _category;
 
+    /// <summary>
+    /// 料理の種類取得
+    /// </summary>
+    /// <returns>料理の種類</returns>
     public int GetCategory() => (int)category;
 }

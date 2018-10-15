@@ -62,13 +62,14 @@ public class MicroWave : MonoBehaviour {
     {
         // 既にスイッチが入っていればリターン
         if (status == MWState.switchOn) return false;
-
+        microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
+        if (microwaveCuisine == null) return false;
         // スイッチオン
         status = MWState.switchOn;
         //タイマーセット
         timer = setTimer;
 
-        microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
+      
 
       
         return true;
