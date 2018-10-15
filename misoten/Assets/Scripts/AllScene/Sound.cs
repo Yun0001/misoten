@@ -33,6 +33,9 @@ public class Sound
     // SEにアクセスするためのテーブル 
     Dictionary<string, _Data> _poolSe = new Dictionary<string, _Data>();
 
+    // BGMのフェードフラグ(多重化防止)
+    bool isFadingBgm = false;
+
     /// 保持するデータ
     class _Data
     {
