@@ -6,6 +6,7 @@ public class MicrowaveFoodController : MonoBehaviour
 {
     private GameObject[] microwaveFood = new GameObject[CuisineManager.MaxCuisine];
     private GameObject microwaveFoodPrefab;
+    [SerializeField]
     private bool[] OutputFlg = new bool[CuisineManager.MaxCuisine]; 
 
 	// Use this for initialization

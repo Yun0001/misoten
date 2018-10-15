@@ -34,7 +34,8 @@ public class PlayerInput : MonoBehaviour
                 break;
 
             case 1:
-                InputKeyBoard_Player2();
+                InputGamepad();
+              
                 break;
 
             case 2:
@@ -42,7 +43,7 @@ public class PlayerInput : MonoBehaviour
                     break;
 
             case 3:
-                InputGamepad();
+                InputKeyBoard_Player2();
                 break;
         }
     }
