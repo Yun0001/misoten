@@ -22,7 +22,7 @@ public class DebugManager : MonoBehaviour {
     {        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Exit");
+            //Debug.Log("Exit");
             Application.Quit();
         }
     }
