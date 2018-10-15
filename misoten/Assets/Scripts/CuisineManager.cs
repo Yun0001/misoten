@@ -41,17 +41,17 @@ public class CuisineManager : Singleton<CuisineManager>
     private GrilledCuisineController grilledController_cs;
 
     // 初期処理
-     private void Awake ()
+    private new void Awake()
     {
         for (int i = 0; i < (int)ECuisineController.MaxController; i++)
         {
             cuisineControllerPrefab[i] = Resources.Load(prefabPass[i]) as GameObject;
-            cuisineController[i]= Instantiate(cuisineControllerPrefab[i], transform.position, Quaternion.identity);
+            cuisineController[i] = Instantiate(cuisineControllerPrefab[i], transform.position, Quaternion.identity);
         }
 
         microwaveController_cs = cuisineController[(int)ECuisineController.MicrowaveCuisineController].GetComponent<MicrowaveCuisineController>();
-        potController_cs            = cuisineController[(int)ECuisineController.PotCuisineController].          GetComponent<PotCuisineController>();
-        grilledController_cs        = cuisineController[(int)ECuisineController.GrilledCuisineController].     GetComponent<GrilledCuisineController>();
+        potController_cs = cuisineController[(int)ECuisineController.PotCuisineController].GetComponent<PotCuisineController>();
+        grilledController_cs = cuisineController[(int)ECuisineController.GrilledCuisineController].GetComponent<GrilledCuisineController>();
     }
 
     // 料理コントローラースクリプト取得

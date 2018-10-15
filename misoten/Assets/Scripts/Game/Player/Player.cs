@@ -31,10 +31,6 @@ public class Player : MonoBehaviour
         Taste//旨味成分
     }
 
-
-
-	[SerializeField] [Range(0.0f, 30.0f)]
-    private float speed;  // 移動スピード
     [SerializeField]
     private Vector2 move;  //移動量
     private string layerName;// レイヤーの名前
@@ -44,11 +40,9 @@ public class Player : MonoBehaviour
     // 左スティックの入力を取る用
     private string inputXAxisName;
     private string inputYAxisName;
-    private GamepadState padState;
     private GamePad.Index PlayerNumber;
     [SerializeField]
     private GameObject[] hitObj = new GameObject[9];
-    private float hindrancePoint; // 邪魔point（現在未使用）
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
@@ -104,7 +98,6 @@ public class Player : MonoBehaviour
                 break;
         }
         playerStatus = PlayerStatus.Normal;
-        hindrancePoint = 1;
         for (int i = 0; i < hitObj.Length; i++)
         {
             hitObj[i] = null;
@@ -128,10 +121,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-
-
-        padState = GamepadInput.GamePad.GetState(PlayerNumber);
-
         if (playerStatus == PlayerStatus.Hindrance)
         {
             // 邪魔状態の時の処理

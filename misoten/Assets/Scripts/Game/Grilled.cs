@@ -19,7 +19,6 @@ public class Grilled : MonoBehaviour {
 
     private GrilledState grilledStatus;
 
-    private float grilledFoodScore;
 
 	// Use this for initialization
 	void Awake () {
@@ -31,7 +30,6 @@ public class Grilled : MonoBehaviour {
         sideGage.transform.localScale = scale;
         sideGage.SetActive(false);
         grilledStatus = GrilledState.unused;
-        grilledFoodScore = 0;
         sideGage.GetComponent<Canvas>().sortingOrder = 2;
     }
 
@@ -55,7 +53,6 @@ public class Grilled : MonoBehaviour {
     public void EndCooking()
     {
         grilledStatus = GrilledState.unused;
-        grilledFoodScore = 0;
         sideGage.SetActive(false);
     }
 
