@@ -42,13 +42,10 @@ public class AlienChip : MonoBehaviour
 
     private int[] baseChip = { 100, 200, 300 };
 
-	private static int[] seatID = { 0, 1, 2, 3, 4 };
-
-	private static int richDegreeId = 0;
-
 	// チップをプレイヤーに渡したかのフラグ
 	private static bool[] chipOnFlag = { false, false, false, false, false };
 
+	// チップID(各エイリアン事に持っている)
 	private int chipId;
 
 	/// <summary>
@@ -175,8 +172,6 @@ public class AlienChip : MonoBehaviour
 	/// <param name="id"></param>
 	/// <returns></returns>
 	public static bool GetChipOnFlag(int id) => chipOnFlag[id];
-
-	public static int GetRichDegreeId() => richDegreeId;
 
 	public void SetOpponentID(int ID) => opponentID = ID;
 }

@@ -13,41 +13,65 @@ public class AlienStatus : MonoBehaviour
 	/// </summary>
 	public enum EStatus
 	{
-		STAND = 0,		// 待機
-		WALK,			// 入店時
-		GETON,			// 着席
-		ORDER,			// 注文
-		STAY,			// 待つ(注文待機)
-		CLAIM,			// クレーム
-		EAT,			// 食べる
-		RETURN_GOOD,	// 帰る(良)
-		RETURN_BAD,		// 帰る(悪)
-		SCREEN_OUT,		// 画面外
-		MAX				// 最大
+		STAND = 0,      // 待機
+		WALK,           // 入店時
+		GETON,          // 着席
+		ORDER,          // 注文
+		STAY,           // 待つ(注文待機)
+		CLAIM,          // クレーム
+		EAT,            // 食べる
+		RETURN_GOOD,    // 帰る(良)
+		RETURN_BAD,     // 帰る(悪)
+		SCREEN_OUT,     // 画面外
+		MAX             // 最大
 	}
 
+	// 初期化フラグ
+	private bool initFlag = false;
+
 	// 状態遷移フラグ
-	private bool[] statusChangeFlag = new bool[(int)EStatus.MAX];
+	private static bool[] statusChangeFlag = new bool[(int)EStatus.MAX];
 
 	/// <summary>
-	/// 開始関数
+	/// 更新関数
 	/// </summary>
-	void Start ()
+	void Update()
+	{
+		// 初期化
+		if (!initFlag) { Init(); initFlag = true; }
+
+		// 各エイリアンの状態チェックを行う
+		StatusCheck();
+
+		// Debug用
+		DebugText();
+	}
+
+	/// <summary>
+	/// 初期化関数
+	/// </summary>
+	void Init()
 	{
 		// 状態管理の初期化
-		for(int i = 0; i < (int)EStatus.MAX; i++) { statusChangeFlag[i] = false;}
+		for (int i = 0; i < (int)EStatus.MAX; i++) { statusChangeFlag[i] = false; }
 
 		// 待機状態にする
 		statusChangeFlag[(int)EStatus.STAND] = true;
 	}
-	
+
 	/// <summary>
-	/// 更新関数
+	/// 状態チェック関数
 	/// </summary>
-	void Update ()
+	void StatusCheck()
 	{
-		// Debug用
-		//DebugText();
+		// 待機状態終了の合図が出ると、OFFにする
+		if (AlienCall.GetStand(AlienCall.GetAddId())) { SetStatusFlag(false, (int)EStatus.STAND); }
+
+		// 入店時状態へ移行の合図が出ると、ONにする
+		if (GetComponent<AlienMove>().GetWalk()) { SetStatusFlag(true, (int)EStatus.WALK); }
+
+		// 入店時状態終了の合図が出ると、OFFにする
+		else { SetStatusFlag(false, (int)EStatus.WALK); }
 	}
 
 	/// <summary>
@@ -55,7 +79,7 @@ public class AlienStatus : MonoBehaviour
 	/// </summary>
 	void DebugText()
 	{
-		Debug.Log("待機状態は"+GetStatusFlag((int)EStatus.STAND));
+		Debug.Log("待機状態は" + GetStatusFlag((int)EStatus.STAND));
 		Debug.Log("入店時状態は" + GetStatusFlag((int)EStatus.WALK));
 		Debug.Log("着席状態は" + GetStatusFlag((int)EStatus.GETON));
 		Debug.Log("注文状態は" + GetStatusFlag((int)EStatus.ORDER));
@@ -73,12 +97,12 @@ public class AlienStatus : MonoBehaviour
 	/// <param name="_status"></param>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public bool SetStatusFlag(bool _status, int id) => statusChangeFlag[id] = _status;
+	public static bool SetStatusFlag(bool _status, int id) => statusChangeFlag[id] = _status;
 
 	/// <summary>
 	/// 状態管理の取得
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public bool GetStatusFlag(int id) => statusChangeFlag[id];
+	public static bool GetStatusFlag(int id) => statusChangeFlag[id];
 }

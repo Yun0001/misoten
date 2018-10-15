@@ -58,11 +58,12 @@ public class AlienCall : MonoBehaviour
 
 	// 座っているかの判定用
 	private static bool[] seatID = { false, false, false, false, false };
-	private static int[] seatID2 = { 0, 1, 2, 3, 4 };
+
+	// 待機状態取得用
+	private static bool[] stand = { false, false, false, false, false };
 
 	// 席管理用ID
 	private static int addId = 0;
-	private int addId2 = 0;
 
 	// エイリアンの種類ID
 	private static int richDegreeId = 0;
@@ -83,7 +84,7 @@ public class AlienCall : MonoBehaviour
 			{
 				// エイリアンの金持ち度をランダムで設定
 				richDegree[richDegreeId] = (ERichDegree)Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND);
-				Debug.Log("入った");
+
 				// エイリアンの種類設定
 				alienPattern[GetAddId()] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
 				//alienPattern[patternId] = (EAlienPattern)richDegree;
@@ -91,6 +92,9 @@ public class AlienCall : MonoBehaviour
 				// エイリアン生成
 				obj[GetAddId()] = Instantiate(prefab[(int)alienPattern[GetAddId()]], transform.position, Quaternion.identity) as GameObject;
 				obj[GetAddId()].transform.SetParent(transform);
+
+				// 待機状態終了
+				stand[GetAddId()] = true;
 
 				// 待機状態終了
 				//GetComponent<AlienStatus>().SetStatusFlag(false, (int)AlienStatus.EStatus.STAND);
@@ -115,8 +119,8 @@ public class AlienCall : MonoBehaviour
 				//		break;
 				//}
 
-				// エイリアンの種類IDをチェック
-				patternId++;
+				//// エイリアンの種類IDをチェック
+				//patternId++;
 
 				// エイリアンの種類IDを更新
 				richDegreeId++;
@@ -129,18 +133,28 @@ public class AlienCall : MonoBehaviour
 			}
 		}
 
+		// 席が埋まっている場合
+		else
+		{
+			// 席のIDを更新
+			if (GetAddId() < 4) { SetAddId(GetAddId() + 1); }
+			else { SetAddId(0); }
+		}
+
+		// 席の数分ループする
 		for (int i = 0; i < 5; i++)
 		{
 			//条件：座っている、チップをプレイヤーに渡したエイリアン
 			if (GetSeat(i) && AlienChip.GetChipOnFlag(i))
 			{
+				// ちょっと力技
 				switch (i)
 				{
-					case 0: Destroy(obj[4]); SetSeat(false, 4); AlienChip.SetChipOnFlag(false, 0); addId = 4; break;
-					case 1: Destroy(obj[0]); SetSeat(false, 0); AlienChip.SetChipOnFlag(false, 1); addId = 0; break;
-					case 2: Destroy(obj[1]); SetSeat(false, 1); AlienChip.SetChipOnFlag(false, 2); addId = 1; break;
-					case 3: Destroy(obj[2]); SetSeat(false, 2); AlienChip.SetChipOnFlag(false, 3); addId = 2; break;
-					case 4: Destroy(obj[3]); SetSeat(false, 3); AlienChip.SetChipOnFlag(false, 4); addId = 3; break;
+					case 0: Destroy(obj[4]); SetSeat(false, 4); AlienChip.SetChipOnFlag(false, 0); break;
+					case 1: Destroy(obj[0]); SetSeat(false, 0); AlienChip.SetChipOnFlag(false, 1); break;
+					case 2: Destroy(obj[1]); SetSeat(false, 1); AlienChip.SetChipOnFlag(false, 2); break;
+					case 3: Destroy(obj[2]); SetSeat(false, 2); AlienChip.SetChipOnFlag(false, 3); break;
+					case 4: Destroy(obj[3]); SetSeat(false, 3); AlienChip.SetChipOnFlag(false, 4); break;
 					default:break;
 				}
 
@@ -180,7 +194,6 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static bool GetSeat(int id) => seatID[id];
-	public static int GetSeat2(int id) => seatID2[id];
 
 	/// <summary>
 	/// 席管理用IDの格納
@@ -205,4 +218,10 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static int GetRichDegreeId() => richDegreeId;
+
+	/// <summary>
+	/// 待機状態の取得
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetStand(int id) => stand[id];
 }
