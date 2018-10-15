@@ -62,14 +62,14 @@ public class AlienMove : MonoBehaviour
 	// 店を出ていくかの判定用
 	private bool withdrawal = false;
 
+	// 入店時状態取得用
+	private bool walk = false;
+
 	/// <summary>
 	/// 開始関数
 	/// </summary>
 	void Start()
 	{
-		// 移動状態の初期化
-		SetMoveStatus(true);
-
 		// エイリアンがどの席に向かうかの設定
 		if (endPositionPattern != EEndPositionPattern.THEORDER)
 		{
@@ -80,10 +80,6 @@ public class AlienMove : MonoBehaviour
 		{
 			// 左から順番に座る
 			SetEndPositionsID(AlienCall.GetAddId());
-
-			// 席のIDを更新
-			if (AlienCall.GetAddId() < 4) { AlienCall.SetAddId(AlienCall.GetAddId() + 1); }
-			else { AlienCall.SetAddId(0); }
 		}
 	}
 
@@ -101,10 +97,14 @@ public class AlienMove : MonoBehaviour
 			var diff = Time.timeSinceLevelLoad - startTime[0];
 			if (diff > endPositionTime)
 			{
-				transform.position = endPosition[GetEndPositionsID()];
-				withdrawal = true;
+				//transform.position = endPosition[GetEndPositionsID()];
+				//withdrawal = true;
+
+				// AlienMoveのスクリプトを切る
 				enabled = false;
-				SetMoveStatus(false);
+
+				// 入店時の移動状態「OFF」
+				walk = false;
 			}
 
 			// 予定時間を割る
@@ -174,13 +174,6 @@ public class AlienMove : MonoBehaviour
 	public bool GetWithdrawal() => withdrawal;
 
 	/// <summary>
-	/// 移動状態を格納
-	/// </summary>
-	/// <param name="_isMove"></param>
-	/// <returns></returns>
-	public static bool SetMoveStatus(bool _isMove) => isMove = _isMove;
-
-	/// <summary>
 	/// 移動状態を取得
 	/// </summary>
 	/// <returns></returns>
@@ -198,4 +191,10 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static int GetEndPositionsID() => setEndPositionID;
+
+	/// <summary>
+	/// 入店時状態の取得
+	/// </summary>
+	/// <returns></returns>
+	public bool GetWalk() => walk;
 }
