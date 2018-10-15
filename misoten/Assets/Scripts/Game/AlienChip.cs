@@ -37,44 +37,45 @@ public class AlienChip : MonoBehaviour
     //料理を持ってきた相手のID
     private int opponentID;
 
+	// 初期化フラグ
+	private bool initFlag = false;
+
     private int[] baseChip = { 100, 200, 300 };
+
+	private static int[] seatID = { 0, 1, 2, 3, 4 };
 
 	private static int richDegreeId = 0;
 
-	/// <summary>
-	/// 開始関数
-	/// </summary>
-	void Start ()
-	{
-		// コンポーネント取得
-		alienOrder = GetComponent<AlienOrder>();
-        // プロトでは手渡し
-        chipPattern = EChipPattern.HANDOVER;
-        // ベースチップをセット
-        SetChipValue(baseChip[GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>().GetRichDegree(richDegreeId)]);
+	// チップをプレイヤーに渡したかのフラグ
+	private static bool[] chipOnFlag = { false, false, false, false, false };
 
-		// エイリアンの種類IDを更新
-		if (richDegreeId < 4) { richDegreeId++; }
-		else { richDegreeId = 0; };
-	}
+	private int chipId;
 
 	/// <summary>
 	/// 更新関数
 	/// </summary>
 	void Update ()
 	{
+		// 一度だけ初期化
+		if (!initFlag)
+		{
+			Init();
+			initFlag = true;
+		}
+
 		// エイリアンが注文している時
 		if (alienOrder.GetIsOrder())
 		{
-           // if (Input.GetKey(KeyCode.Space))
-          //  {
-                // 料理が来た判定
-                //SetCuisineCame(true);
-            if (isCuisineCame)
+			// if (Input.GetKey(KeyCode.Space))
+			//  {
+			// 料理が来た判定
+			//SetCuisineCame(true);
+			if (isCuisineCame)
             {
-                //SetChipValue(CalcChipValue());
-                // チップの渡し方の管理
-                switch (chipPattern)
+
+				//SetChipValue(CalcChipValue());
+				// チップの渡し方の管理
+				switch (chipPattern)
                 {
                     case EChipPattern.PUT:      // チップを置いていく
 
@@ -83,8 +84,10 @@ public class AlienChip : MonoBehaviour
                         ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
                         SetCuisineCame(false);
 
-						Debug.Log("入った");
-                        break;
+						// チップをプレイヤーに渡した
+						chipOnFlag[chipId] = true;
+
+						break;
                     default:
                         // 例外処理
                         break;
@@ -94,6 +97,24 @@ public class AlienChip : MonoBehaviour
           //  }
 		
 		}
+	}
+
+	/// <summary>
+	/// 初期化関数
+	/// </summary>
+	void Init()
+	{
+		chipId = AlienCall.GetAddId();
+
+		// コンポーネント取得
+		alienOrder = GetComponent<AlienOrder>();
+		// プロトでは手渡し
+		chipPattern = EChipPattern.HANDOVER;
+		// ベースチップをセット
+		SetChipValue(baseChip[GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>().GetRichDegree(chipId)]);
+
+		//richDegreeId++;
+		//if (richDegreeId > 5) { richDegreeId = 0; }
 	}
 
 	/// <summary>
@@ -138,7 +159,24 @@ public class AlienChip : MonoBehaviour
     public int CalcChipValue()
     {
         return (int)(chipVal * cisineTasteCoefficient);
-    } 
+    }
 
-    public void SetOpponentID(int ID) => opponentID = ID;
+	/// <summary>
+	/// チップをプレイヤーに渡したかのフラグの格納
+	/// </summary>
+	/// <param name="_chipOnFlag"></param>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public static bool SetChipOnFlag(bool _chipOnFlag, int id) => chipOnFlag[id] = _chipOnFlag;
+
+	/// <summary>
+	/// チップをプレイヤーに渡したかのフラグの取得
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public static bool GetChipOnFlag(int id) => chipOnFlag[id];
+
+	public static int GetRichDegreeId() => richDegreeId;
+
+	public void SetOpponentID(int ID) => opponentID = ID;
 }

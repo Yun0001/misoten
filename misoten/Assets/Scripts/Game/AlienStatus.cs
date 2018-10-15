@@ -47,7 +47,7 @@ public class AlienStatus : MonoBehaviour
 	void Update ()
 	{
 		// Debug用
-		DebugText();
+		//DebugText();
 	}
 
 	/// <summary>
