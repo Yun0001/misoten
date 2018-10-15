@@ -201,5 +201,320 @@ public class Sound
 
         return true;
     }
+
+    /// SEの停止
+    public static bool StopSe(string key, int channel)
+    {
+        return GetInstance()._StopSe(key, channel);
+    }
+    bool _StopSe(string key, int channel)
+    {
+        if (_poolSe.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolSe[key];
+
+        if (0 <= channel && channel < SE_CHANNEL)
+        {
+            // チャンネル指定
+            var source = _GetAudioSource(eType.Se, channel);
+            source.Stop();
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    // BGMのボリュームの変更
+    public static bool SetVolumeBgm(string key, float vol)
+    {
+        return GetInstance()._SetVolumeBgm(key, vol);
+    }
+    bool _SetVolumeBgm(string key, float vol)
+    {
+        if (_poolBgm.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolBgm[key];
+
+        // ボリューム変更
+        var source = _GetAudioSource(eType.Bgm);
+        source.volume = vol;
+
+        return true;
+    }
+
+    // SEのボリューム変更
+    public static bool SetVolumeSe(string key, float vol, int channel)
+    {
+        return GetInstance()._SetVolumeSe(key, vol, channel);
+    }
+    bool _SetVolumeSe(string key, float vol, int channel)
+    {
+        if (_poolSe.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolSe[key];
+
+        if (0 <= channel && channel < SE_CHANNEL)
+        {
+            // チャンネル指定
+            var source = _GetAudioSource(eType.Se, channel);
+            source.volume = vol;
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    // BGMのフェード
+    public static IEnumerator FadeBgm(string key, float startVol, float endVol, float fadeTime)
+    {
+        return GetInstance()._FadeBgm(key, startVol, endVol, fadeTime);
+    }
+    IEnumerator _FadeBgm(string key, float startVol, float endVol, float fadeTime)
+    {
+        if (isFadingBgm)
+        {
+            yield break;
+        }
+
+        isFadingBgm = true;
+
+        if (_poolBgm.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            isFadingBgm = false;
+            yield break;
+        }
+
+        // リソースの取得
+        var _data = _poolBgm[key];
+
+        // 一時停止
+        var source = _GetAudioSource(eType.Bgm);
+
+        // フェードのインかアウトかを決める
+        bool fadeInFlg = false, fadeOutFlg = false;
+        if (startVol == endVol)
+        {
+            isFadingBgm = false;
+            yield break;
+        }
+        else if (startVol > endVol)
+        {
+            fadeOutFlg = true;
+        }
+        else
+        {
+            fadeInFlg = true;
+        }
+
+        // 再生開始時のボリュームセット
+        source.volume = startVol;
+
+        // 再生されていない場合再生
+        if (!source.isPlaying)
+        {
+            source.Play();
+        }
+
+        // フェードの処理
+        float nowTime = 0.0f;           // 割合計算用 時間
+        float nowVolume = startVol;     // フェードの割合で計算した大きさ
+
+        // フェードイン処理
+        if (fadeInFlg)
+        {
+            nowTime = 0.0f;
+            while (nowTime <= fadeTime)
+            {
+                nowTime += Time.deltaTime;
+                nowVolume = nowTime / fadeTime * endVol;
+                source.volume = nowVolume;
+                yield return true;
+            }
+            source.volume = endVol;
+        }
+        // フェードアウト処理
+        else if (fadeOutFlg)
+        {
+            nowTime = fadeTime;
+            while (nowTime >= 0)
+            {
+                nowTime -= Time.deltaTime;
+                nowVolume = nowTime / fadeTime * startVol;
+                source.volume = nowVolume;
+                yield return true;
+            }
+            source.volume = endVol;
+
+            // 再生する意味がないので停止
+            if (source.volume == 0.0f)
+            {
+                source.Stop();
+            }
+        }
+
+        isFadingBgm = false;
+
+    }
+
+    // BGMの一時停止
+    public static bool PauseBgm(string key)
+    {
+        return GetInstance()._PauseBgm(key);
+    }
+    bool _PauseBgm(string key)
+    {
+        if (_poolBgm.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolBgm[key];
+
+        // 一時停止
+        var source = _GetAudioSource(eType.Bgm);
+        source.Pause();
+
+        return true;
+    }
+
+    // BGMの一時停止解除
+    public static bool UnPauseBgm(string key)
+    {
+        return GetInstance()._UnPauseBgm(key);
+    }
+    bool _UnPauseBgm(string key)
+    {
+        if (_poolBgm.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolBgm[key];
+
+        // 一時停止解除
+        var source = _GetAudioSource(eType.Bgm);
+        source.UnPause();
+
+        return true;
+    }
+
+    // SEの一時停止
+    public static bool PauseSe(string key, int channel)
+    {
+        return GetInstance()._PauseSe(key, channel);
+    }
+    bool _PauseSe(string key, int channel)
+    {
+        if (_poolSe.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolSe[key];
+
+        if (0 <= channel && channel < SE_CHANNEL)
+        {
+            // チャンネル指定
+            var source = _GetAudioSource(eType.Se, channel);
+            source.Pause();
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    // SEの一時停止解除
+    public static bool UnPauseSe(string key, int channel)
+    {
+        return GetInstance()._UnPauseSe(key, channel);
+    }
+    bool _UnPauseSe(string key, int channel)
+    {
+        if (_poolSe.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolSe[key];
+
+        if (0 <= channel && channel < SE_CHANNEL)
+        {
+            // チャンネル指定
+            var source = _GetAudioSource(eType.Se, channel);
+            source.UnPause();
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    // SEのループ設定
+    public static bool SetLoopFlgSe(string key, bool flg, int channel)
+    {
+        return GetInstance()._SetLoopFlgSe(key, flg, channel);
+    }
+    bool _SetLoopFlgSe(string key, bool flg, int channel)
+    {
+        if (_poolSe.ContainsKey(key) == false)
+        {
+            // 対応するキーがない
+            return false;
+        }
+
+        // リソースの取得
+        var _data = _poolSe[key];
+
+        if (0 <= channel && channel < SE_CHANNEL)
+        {
+            // チャンネル指定
+            var source = _GetAudioSource(eType.Se, channel);
+            source.loop = flg;
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+
+    }
+
 }
 
