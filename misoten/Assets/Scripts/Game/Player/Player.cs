@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
         Taste//旨味成分
     }
 
+
+
 	[SerializeField] [Range(0.0f, 30.0f)]
     private float speed;  // 移動スピード
     [SerializeField]
@@ -40,11 +42,10 @@ public class Player : MonoBehaviour
     private PlayerStatus playerStatus;
  
     // 左スティックの入力を取る用
-    private string InputXAxisName;
-    private string InputYAxisName;
+    private string inputXAxisName;
+    private string inputYAxisName;
     private GamepadState padState;
     private GamePad.Index PlayerNumber;
-    private Rigidbody2D rb;
     [SerializeField]
     private GameObject[] hitObj = new GameObject[9];
     private float hindrancePoint; // 邪魔point（現在未使用）
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
     private CookingMicrowave cookingMicrowave_cs;
     private CookingPot cookingPot_cs;
     private CookingGrilled cookingGrilled_cs;
+    private PlayerMove playerMove_cs;
     
 
     // Use this for initialization
@@ -73,26 +75,37 @@ public class Player : MonoBehaviour
     {
         PowderSetScript = GetComponent<PowderSetManager>();
         SetCount();
-        rb = GetComponent<Rigidbody2D>();
         layerName = LayerMask.LayerToName(gameObject.layer);
         switch (layerName)
         {
             case "Player1":
                 playerID = 0;
+                PlayerNumber = GamePad.Index.One;
+                inputXAxisName = "L_XAxis_1";
+                inputYAxisName = "L_YAxis_1";
                 break;
             case "Player2":
                 playerID = 1;
+                PlayerNumber = GamePad.Index.Two;
+                inputXAxisName = "L_XAxis_2";
+                inputYAxisName = "L_YAxis_2";
                 break;
             case "Player3":
                 playerID = 2;
+                PlayerNumber = GamePad.Index.Three;
+                inputXAxisName = "L_XAxis_3";
+                inputYAxisName = "L_YAxis_3";
                 break;
             case "Player4":
                 playerID = 3;
+                PlayerNumber = GamePad.Index.Four;
+                inputXAxisName = "L_XAxis_4";
+                inputYAxisName = "L_YAxis_4";
                 break;
         }
         playerStatus = PlayerStatus.Normal;
         hindrancePoint = 1;
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < hitObj.Length; i++)
         {
             hitObj[i] = null;
         }
@@ -100,25 +113,22 @@ public class Player : MonoBehaviour
         cookingMicrowave_cs = GetComponent<CookingMicrowave>();
         cookingPot_cs=GetComponent<CookingPot>();
         cookingGrilled_cs = GetComponent<CookingGrilled>();
+        GetComponent<PlayerInput>().Init(inputXAxisName, inputYAxisName);
+        playerMove_cs = GetComponent<PlayerMove>();
+        playerMove_cs.Init();
     }
 
     private void FixedUpdate()
     {
         if (playerStatus == PlayerStatus.Pot) return; // 茹で料理を調理中ならばリターン
 
-        if (playerStatus == PlayerStatus.Catering) move /= 2;// 配膳中ならば移動量半減
-
-        rb.velocity = move * speed;
+        playerMove_cs.Move();
     }
 
     // Update is called once per frame
     void Update ()
     {
-        // 今だけ
-        move = new Vector2(0f, 0f);
-        //
 
-        if (!PlayerNumberDecision())    return;
 
         padState = GamepadInput.GamePad.GetState(PlayerNumber);
 
@@ -135,60 +145,24 @@ public class Player : MonoBehaviour
         else
         {
             //　邪魔状態以外の時の処理
-            move = new Vector2(Input.GetAxis(InputXAxisName) * 5, -(Input.GetAxis(InputYAxisName) * 5));
-
-
-            InputKeyboard();  //　コントローラー４つでプレイするなら不要
 
             switch (playerStatus)
             {
                 case PlayerStatus.Pot:
                     //茹で料理を調理中の処理
-                    Vector2 stickVec = new Vector2(Input.GetAxis(InputXAxisName) * 5, -(Input.GetAxis(InputYAxisName) * 5));
+                    Vector2 stickVec = new Vector2(Input.GetAxis(inputXAxisName) * 5, -(Input.GetAxis(inputYAxisName) * 5));
                     GameObject cuisine = null;
                     cuisine = cookingPot_cs.Mix(stickVec);
                     if (cuisine != null) WithaCuisine(cuisine);
                     break;
                 default:
-                    InputButton();
                     break;
             }
         }
       
-        Clamp();//移動範囲制限
+        //Clamp();//移動範囲制限
     }
 
-    /// <summary>
-    /// プレイヤー番号を判定
-    /// </summary>
-    /// <returns>取得の成否</returns>
-    private bool PlayerNumberDecision()
-    {
-        switch (layerName)
-        {
-            case "Player1":
-                PlayerNumber = GamePad.Index.One;
-                InputXAxisName = "L_XAxis_1";
-                InputYAxisName = "L_YAxis_1";
-                return true;
-            case "Player2":
-                PlayerNumber = GamePad.Index.Two;
-                InputXAxisName = "L_XAxis_2";
-                InputYAxisName = "L_YAxis_2";
-                return true;
-            case "Player3":
-                PlayerNumber = GamePad.Index.Three;
-                InputXAxisName = "L_XAxis_3";
-                InputYAxisName = "L_YAxis_3";
-                return true;
-            case "Player4":
-                PlayerNumber = GamePad.Index.Four;
-                InputXAxisName = "L_XAxis_4";
-                InputYAxisName = "L_YAxis_4";
-                return true;
-        }
-        return false;
-    }
 
     /// <summary>
     /// 当たり判定
@@ -291,51 +265,6 @@ public class Player : MonoBehaviour
         haveInHandFood.GetComponent<Food>().SubQualityTaste();        
     }
 
-    /// <summary>
-    /// 入力処理
-    /// </summary>
-    void InputButton()
-    {
-        // 補充マシーンとの当たり判定を取得
-        if (GetHitObj((int)hitObjName.TasteMachine) != null)
-        {
-            // 当たっていればホールドで取得
-            if (GamePad.GetButton(GamePad.Button.LeftShoulder, PlayerNumber))
-            {
-                //　旨味成分補充処理
-                PowderSetScript.PowderSet();
-            }
-            else if (GamePad.GetButtonUp(GamePad.Button.LeftShoulder, PlayerNumber))
-            {
-                // Aボタンを離せば初期化
-                PowderSetScript.InitSet();
-            }
-        }
-
-
-        // Aボタン入力（電子レンジ）
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerNumber)) ActionMicrowave();
-        // Xボタン入力（鍋）
-        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerNumber)) ActionPot();
-        // Bボタン入力（フライパン）
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerNumber)) ActionGrilled();
-        // Yボタン入力（邪魔）
-        if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerNumber))
-        {
-            //状態を邪魔に変更
-            SetPlayerStatus(PlayerStatus.Hindrance);
-            // 旨味成分を実体化
-            SubSetCount();
-            GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
-            taste.GetComponent<Taste>().playerID = playerID;
-        }
-
-        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, PlayerNumber))
-        {
-            //　宇宙人の前にいるとき
-            OfferCuisine();
-        }
-    }
 
 
     /// <summary>
@@ -358,7 +287,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 料理を渡す
     /// </summary>
-    private void OfferCuisine()
+    public void OfferCuisine()
     {
         if (playerStatus != PlayerStatus.Catering) return;
         if (GetHitObj((int)hitObjName.Alien) == null) return;
@@ -394,61 +323,6 @@ public class Player : MonoBehaviour
         haveInHandFood = Food;
         SetPlayerStatus(PlayerStatus.Catering);
     }
-
-    private void InputKeyboard()
-    {
-        // switch文は今だけ
-        switch (layerName)
-        {
-            case "Player1":
-                Debug.Log(Input.GetAxis(InputXAxisName));
-                Debug.Log(Input.GetAxis(InputYAxisName));
-                break;
-            case "Player2":
-                if (Input.GetKey(KeyCode.A)) move.x = -speed;
-                if (Input.GetKey(KeyCode.D)) move.x = speed;
-                if (Input.GetKey(KeyCode.W)) move.y = speed;
-                if (Input.GetKey(KeyCode.S)) move.y = -speed;
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    ActionMicrowave();
-                    ActionPot();
-                    ActionGrilled();
-                    OfferCuisine();
-                }
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    SetPlayerStatus(PlayerStatus.Hindrance);
-                    SubSetCount();
-                    GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
-                    taste.GetComponent<Taste>().playerID = playerID;
-                }
-                break;
-            case "Player3":
-                if (Input.GetKey(KeyCode.LeftArrow)) move.x = -speed;
-                if (Input.GetKey(KeyCode.RightArrow)) move.x = speed;
-                if (Input.GetKey(KeyCode.UpArrow)) move.y = speed;
-                if (Input.GetKey(KeyCode.DownArrow)) move.y = -speed;
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    ActionMicrowave();
-                    ActionPot();
-                    ActionGrilled();
-                    OfferCuisine();
-                }
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    SetPlayerStatus(PlayerStatus.Hindrance);
-                    SubSetCount();
-                    GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
-                    taste.GetComponent<Taste>().playerID = playerID;
-                }
-                break;
-            case "Player4":
-                break;
-        }
-        //
-    }
     
     public GameObject GetHitObj(int HitObjID)
     {
@@ -472,10 +346,12 @@ public class Player : MonoBehaviour
 
     public int GetSetCountPlayer() => SetCountPlayer;
 
+    public GamePad.Index GetPlayerNumber() => PlayerNumber;
+
     /// <summary>
     /// 電子レンジへのアクション
     /// </summary>
-    private void ActionMicrowave()
+    public void ActionMicrowave()
     {
         // 電子レンジに当たっていなければ関数を抜ける
         if (GetHitObj((int)hitObjName.Microwave) == null) return;
@@ -497,7 +373,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ActionPot()
+    public void ActionPot()
     {
         // 鍋に当たっていなければ抜ける
         if (GetHitObj((int)hitObjName.Pot) == null) return;
@@ -505,7 +381,7 @@ public class Player : MonoBehaviour
         cookingPot_cs.CookingStart();
     }
 
-    private void ActionGrilled()
+    public void ActionGrilled()
     {
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
 
@@ -523,4 +399,19 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    public void ActionHindrance()
+    {
+        //状態を邪魔に変更
+        SetPlayerStatus(PlayerStatus.Hindrance);
+        // 旨味成分を実体化
+        SubSetCount();
+        GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
+        taste.GetComponent<Taste>().playerID = playerID;
+    }
+
+    public PowderSetManager GetPowderSetScript() => PowderSetScript;
+
+    public PlayerStatus GetPlayerStatus() => playerStatus;
+
 }
