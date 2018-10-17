@@ -29,9 +29,6 @@ public class AlienOrder : MonoBehaviour
 	// 注文するまでの時間を測る
 	private float timeAdd = 0.0f;
 
-	// オーダー待ち時間の加算
-	private float orderLatencyAdd = 0.0f;
-
 	// オーダー中かの判定
 	private bool isOrder = false;
 

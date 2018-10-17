@@ -47,8 +47,8 @@ public class AlienCall : MonoBehaviour
 	// エイリアンの種類設定
 	private EAlienPattern[] alienPattern = new EAlienPattern[5];
 
-	// 種類のID
-	private int patternId = 0;
+	//// 種類のID
+	//private int patternId = 0;
 
 	// 待ち時間の加算
 	private float latencyAdd = 0.0f;

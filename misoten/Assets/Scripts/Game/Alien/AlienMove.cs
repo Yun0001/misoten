@@ -24,10 +24,6 @@ public class AlienMove : MonoBehaviour
 	[SerializeField]
 	Vector3[] endPosition;
 
-	// 指定終点座標(店から出ていく)
-	[SerializeField]
-	Vector3[] endPosition2;
-
 	// アニメーションのカーブ進行率設定
 	[SerializeField]
 	AnimationCurve curve;
@@ -40,12 +36,10 @@ public class AlienMove : MonoBehaviour
 	[SerializeField]
 	private EEndPositionPattern endPositionPattern;
 
-	// 待機時間設定
-	[SerializeField]
-	private float[] theWaitingTime = new float[3];
+	private Vector3[,] endPosition2 = new Vector3[5, 5];
 
 	// 移動状態の判定用
-	private static bool isMove;
+	private static bool isMove = false;
 
 	// 終点座標ID
 	private static int setEndPositionID;
@@ -55,9 +49,6 @@ public class AlienMove : MonoBehaviour
 
 	// 開始座標設定用
 	private Vector3 startPosition;
-
-	//初期化成功か
-	private bool initSuccess = false;
 
 	// 店を出ていくかの判定用
 	private bool withdrawal = false;
@@ -70,6 +61,9 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
+		//endPosition2[0, 0] = new Vector3(0.0f, 4.0f, 0.0f);
+		//endPosition2[0, 1] = new Vector3(6.0f, 4.0f, 0.0f);
+
 		// エイリアンがどの席に向かうかの設定
 		if (endPositionPattern != EEndPositionPattern.THEORDER)
 		{
@@ -90,9 +84,6 @@ public class AlienMove : MonoBehaviour
 	{
 		if (!withdrawal)
 		{
-			// 入店時の移動状態
-			//GetComponent<AlienStatus>().SetStatusFlag(true, (int)AlienStatus.EStatus.WALK);
-
 			// 実際の経過時間を求める
 			var diff = Time.timeSinceLevelLoad - startTime[0];
 			if (diff > endPositionTime)
@@ -105,6 +96,8 @@ public class AlienMove : MonoBehaviour
 
 				// 入店時の移動状態「OFF」
 				walk = false;
+
+				isMove = true;
 			}
 
 			// 予定時間を割る
@@ -121,7 +114,7 @@ public class AlienMove : MonoBehaviour
 		}
 
 		// 移動終了
-		if(!GetMoveStatus())
+		if(GetMoveStatus())
 		{
 			GetComponent<BoxCollider2D>().enabled = true;
 		}

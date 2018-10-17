@@ -72,11 +72,11 @@ GameObject:
   - component: {fileID: 4482575551097490}
   - component: {fileID: 33561329265481082}
   - component: {fileID: 23355052593662864}
-  - component: {fileID: 114048870203970924}
   - component: {fileID: 114622511940499312}
   - component: {fileID: 114609962523926720}
   - component: {fileID: 114063759326850306}
   - component: {fileID: 114768130676998840}
+  - component: {fileID: 114337813588424648}
   - component: {fileID: 61503845696458392}
   m_Layer: 0
   m_Name: Alien_MERCURY
@@ -406,7 +406,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 5}
   m_EdgeRadius: 0
---- !u!114 &114048870203970924
+--- !u!114 &114063759326850306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1580258239935740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157fbf0f8dde7ff4b93e99b778db04dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114337813588424648
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -423,12 +434,6 @@ MonoBehaviour:
   - {x: 0, y: 3.5, z: 0}
   - {x: 3, y: 3.5, z: 0}
   - {x: 6, y: 3.5, z: 0}
-  endPosition2:
-  - {x: -10, y: 4, z: 0}
-  - {x: -10, y: 4, z: 0}
-  - {x: -10, y: 4, z: 0}
-  - {x: 10, y: 4, z: 0}
-  - {x: 10, y: 4, z: 0}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -449,21 +454,6 @@ MonoBehaviour:
     m_RotationOrder: 0
   endPositionTime: 1
   endPositionPattern: 5
-  theWaitingTime:
-  - 0
-  - 0
-  - 0
---- !u!114 &114063759326850306
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1580258239935740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 157fbf0f8dde7ff4b93e99b778db04dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114609962523926720
 MonoBehaviour:
   m_ObjectHideFlags: 1

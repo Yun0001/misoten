@@ -90,11 +90,11 @@ GameObject:
   - component: {fileID: 4089380796648666}
   - component: {fileID: 33777337245981840}
   - component: {fileID: 23915703522087906}
-  - component: {fileID: 114550598980144410}
   - component: {fileID: 114096816944630346}
   - component: {fileID: 114658495070265358}
   - component: {fileID: 114324923458388082}
   - component: {fileID: 114637287833256898}
+  - component: {fileID: 114609518517273668}
   - component: {fileID: 61332626954091158}
   m_Layer: 0
   m_Name: Alien_VENUSIAN
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 157fbf0f8dde7ff4b93e99b778db04dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114550598980144410
+--- !u!114 &114609518517273668
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -451,12 +451,6 @@ MonoBehaviour:
   - {x: 0, y: 3.5, z: 0}
   - {x: 3, y: 3.5, z: 0}
   - {x: 6, y: 3.5, z: 0}
-  endPosition2:
-  - {x: -10, y: 4, z: 0}
-  - {x: -10, y: 4, z: 0}
-  - {x: -10, y: 4, z: 0}
-  - {x: 10, y: 4, z: 0}
-  - {x: 10, y: 4, z: 0}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -477,10 +471,6 @@ MonoBehaviour:
     m_RotationOrder: 0
   endPositionTime: 1
   endPositionPattern: 5
-  theWaitingTime:
-  - 0
-  - 0
-  - 0
 --- !u!114 &114637287833256898
 MonoBehaviour:
   m_ObjectHideFlags: 1
