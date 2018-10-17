@@ -5,7 +5,6 @@ using UnityEngine;
 //旨味成分クラス
 public class Taste : MonoBehaviour
 {
-
     [SerializeField]
     private float Duration; // 持続時間
 

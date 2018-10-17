@@ -21,7 +21,7 @@ public class PowderSetManager : MonoBehaviour {
         maxSetPressureTime = 10f;
         maxSetCount =3;
         playerScript = GetComponent<Player>();
-        SetCount = playerScript.GetSetCountPlayer();
+        //SetCount = playerScript.GetSetCountPlayer();
     }
 
 

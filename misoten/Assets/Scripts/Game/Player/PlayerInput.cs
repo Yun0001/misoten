@@ -5,19 +5,21 @@ using GamepadInput;
 
 public class PlayerInput : MonoBehaviour
 {
-
-    private Player player_cs;
-    private PlayerMove playerMove_cs;
     private int playerID;
     private GamePad.Index playerNumber;
     private string inputXAxisName;
     private string inputYAxisName;
+    private Player player_cs;
+    private PlayerMove playerMove_cs;
+    private HindranceItem hindrance_cs;
+
 
     // Use this for initialization
     public void Init(string xaxisname,string yaxisdname)
     {
         player_cs = GetComponent<Player>();
         playerMove_cs = GetComponent<PlayerMove>();
+        hindrance_cs = GetComponent<HindranceItem>();
         playerID = player_cs.GetPlayerID();
         playerNumber = player_cs.GetPlayerNumber();
         inputXAxisName = xaxisname;
@@ -35,13 +37,12 @@ public class PlayerInput : MonoBehaviour
 
             case 1:
                 InputGamepad();
-              
                 break;
 
             case 2:
                 InputGamepad();
                 InputKeyBoard_Player3();
-                    break;
+                break;
 
             case 3:
                 InputGamepad();
@@ -52,14 +53,6 @@ public class PlayerInput : MonoBehaviour
 
     private void InputGamepad()
     {
-        // 補充マシーンとの当たり判定を取得
-        if (player_cs.GetHitObj((int)Player.hitObjName.TasteMachine) != null)
-        {
-            // 当たっていればホールドで取得
-            // ボタンを離すと初期化
-            if (GamePad.GetButton(GamePad.Button.LeftShoulder, playerNumber)) player_cs.GetPowderSetScript().PowderSet();
-            else if (GamePad.GetButtonUp(GamePad.Button.LeftShoulder, playerNumber)) player_cs.GetPowderSetScript().InitSet();
-        }
         // Aボタン入力（電子レンジ）
         if (GamePad.GetButtonDown(GamePad.Button.A, playerNumber)) player_cs.ActionMicrowave();
         // Xボタン入力（鍋）
@@ -67,12 +60,15 @@ public class PlayerInput : MonoBehaviour
         // Bボタン入力（フライパン）
         if (GamePad.GetButtonDown(GamePad.Button.B, playerNumber)) player_cs.ActionGrilled();
         // Yボタン入力（邪魔）
-        if (GamePad.GetButtonDown(GamePad.Button.Y, playerNumber)) player_cs.ActionHindrance();
-        // Rトリガー入力（配膳）
-        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, playerNumber)) player_cs.OfferCuisine();
-
-        playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName) * 5, -(Input.GetAxis(inputYAxisName) * 5)));
-
+        //if (GamePad.GetButtonDown(GamePad.Button.Y, playerNumber)) player_cs.ActionHindrance();
+        // Lトリガー入力（配膳）
+        if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, playerNumber)) player_cs.OfferCuisine();
+        //Rトリガー入力（味の素）
+        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, playerNumber)) hindrance_cs.DisplayTasteGage();
+        else if (GamePad.GetButton(GamePad.Button.RightShoulder, playerNumber)) hindrance_cs.UpgateTasteGage();
+        else if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, playerNumber)) hindrance_cs.SprinkleTaste();
+        
+        playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName), -(Input.GetAxis(inputYAxisName))));
     }
 
 
@@ -89,7 +85,9 @@ public class PlayerInput : MonoBehaviour
             player_cs.ActionGrilled();
             player_cs.OfferCuisine();
         }
-        if (Input.GetKeyDown(KeyCode.X)) player_cs.ActionHindrance();
+        if (Input.GetKeyDown(KeyCode.X)) hindrance_cs.DisplayTasteGage();
+        else if (Input.GetKey(KeyCode.X)) hindrance_cs.UpgateTasteGage();
+        else if (Input.GetKeyUp(KeyCode.X)) hindrance_cs.SprinkleTaste();
     }
 
     private void InputKeyBoard_Player3()
@@ -105,7 +103,9 @@ public class PlayerInput : MonoBehaviour
             player_cs.ActionGrilled();
             player_cs.OfferCuisine();
         }
-        if (Input.GetKeyDown(KeyCode.L)) player_cs.ActionHindrance();
+        if (Input.GetKeyDown(KeyCode.L)) hindrance_cs.DisplayTasteGage();
+        else if (Input.GetKey(KeyCode.L)) hindrance_cs.UpgateTasteGage();
+        else if (Input.GetKeyUp(KeyCode.L)) hindrance_cs.SprinkleTaste();
     }
 }
 

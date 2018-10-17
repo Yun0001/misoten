@@ -14,22 +14,21 @@ public class Player : MonoBehaviour
         GrilledTable,       //焼き台
         Catering,           //配膳
         Hindrance,          //邪魔
-        Replenishment // 補充
+        Replenishment, // 補充
+        TasteCharge
     }
 
     public enum hitObjName
     {
-        player1, //プレイヤー
-        player2,
-        player3,
-        player4,
         Microwave, //レンジ
         Pot,//鍋
         GrilledTable,//焼き台
         TasteMachine,//旨味成分補充マシーン
         Alien,//宇宙人
-        Taste//旨味成分
+        Taste,//旨味成分
+        HitObjMax
     }
+
 
     [SerializeField]
     private Vector2 move;  //移動量
@@ -49,26 +48,20 @@ public class Player : MonoBehaviour
 
     private int playerID;
 
-    private readonly static float HINDRANCE_TIME = 5;
-    private float hindranceTime = 5; // 邪魔動作の時間
+    private readonly static float HINDRANCE_TIME = 3;
+    private float hindranceTime = HINDRANCE_TIME; // 邪魔動作の時間
     private GameObject tastePrefab;//旨味成分
-
-    [SerializeField]
-    private int SetCountPlayer;
-    [SerializeField]
-    private PowderSetManager PowderSetScript;
 
     private CookingMicrowave cookingMicrowave_cs;
     private CookingPot cookingPot_cs;
     private CookingGrilled cookingGrilled_cs;
     private PlayerMove playerMove_cs;
+    private HindranceItem hindrance_cs;
     
 
     // Use this for initialization
     void Awake()
     {
-        PowderSetScript = GetComponent<PowderSetManager>();
-        SetCount();
         layerName = LayerMask.LayerToName(gameObject.layer);
         switch (layerName)
         {
@@ -109,6 +102,7 @@ public class Player : MonoBehaviour
         GetComponent<PlayerInput>().Init(inputXAxisName, inputYAxisName);
         playerMove_cs = GetComponent<PlayerMove>();
         playerMove_cs.Init();
+        hindrance_cs=GetComponent<HindranceItem>();
     }
 
     private void FixedUpdate()
@@ -148,8 +142,6 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-      
-        //Clamp();//移動範囲制限
     }
 
 
@@ -161,22 +153,6 @@ public class Player : MonoBehaviour
     {
         switch (collision.gameObject.tag)
         {
-            //プレイヤー
-            case "Player1":
-                hitObj[(int)hitObjName.player1] = collision.gameObject;
-                break;
-
-            case "Player2":
-                hitObj[(int)hitObjName.player2] = collision.gameObject;
-                break;
-
-            case "Player3":
-                hitObj[(int)hitObjName.player3] = collision.gameObject;
-                break;
-
-            case "Player4":
-                hitObj[(int)hitObjName.player4] = collision.gameObject;
-                break;
             // レンジ
             case "Microwave":
                 hitObj[(int)hitObjName.Microwave] = collision.gameObject;
@@ -191,6 +167,8 @@ public class Player : MonoBehaviour
                 break;
             // 補充マシーン
             case "TasteMachine":
+                // 味の素補充
+                hindrance_cs.ReplenishmentTaste();
                 hitObj[(int)hitObjName.TasteMachine] = collision.gameObject;
                 break;
             case "Alien":
@@ -207,21 +185,6 @@ public class Player : MonoBehaviour
     {
         switch (other.gameObject.tag)
         {
-            case "Player1":
-                hitObj[(int)hitObjName.player1] = null;
-                break;
-
-            case "Player2":
-                hitObj[(int)hitObjName.player2] = null;
-                break;
-
-            case "Player3":
-                hitObj[(int)hitObjName.player3] = null;
-                break;
-
-            case "Player4":
-                hitObj[(int)hitObjName.player4] = null;
-                break;
             case "Microwave":
                 hitObj[(int)hitObjName.Microwave] = null;
                 break;
@@ -254,24 +217,6 @@ public class Player : MonoBehaviour
         haveInHandFood.GetComponent<Food>().SubQualityTaste();        
     }
 
-
-
-    /// <summary>
-    /// 移動範囲の制限
-    /// </summary>
-    private void Clamp()
-    {
-        float width = 7f;
-        Vector2 min = new Vector2(-width, -4.5f);
-        Vector2 max = new Vector2(width, 0.9f);
-
-        Vector2 pos = transform.position;
-
-        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
-        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
-
-        transform.position = pos;
-    }
 
     /// <summary>
     /// 料理を渡す
@@ -330,11 +275,6 @@ public class Player : MonoBehaviour
     public int GetPlayerID() => playerID;
 
     public  void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
-    private void SetCount() => SetCountPlayer = PowderSetScript.GetSetCount();
-    //Powder1回分使う
-    private void SubSetCount() => PowderSetScript.SubSetCount();
-
-    public int GetSetCountPlayer() => SetCountPlayer;
 
     public GamePad.Index GetPlayerNumber() => PlayerNumber;
 
@@ -390,18 +330,5 @@ public class Player : MonoBehaviour
 
     }
 
-    public void ActionHindrance()
-    {
-        //状態を邪魔に変更
-        SetPlayerStatus(PlayerStatus.Hindrance);
-        // 旨味成分を実体化
-        SubSetCount();
-        GameObject taste = Instantiate(tastePrefab, transform.position, Quaternion.identity);
-        taste.GetComponent<Taste>().playerID = playerID;
-    }
-
-    public PowderSetManager GetPowderSetScript() => PowderSetScript;
-
     public PlayerStatus GetPlayerStatus() => playerStatus;
-
 }

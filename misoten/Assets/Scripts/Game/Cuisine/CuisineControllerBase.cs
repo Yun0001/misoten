@@ -54,7 +54,7 @@ public class CuisineControllerBase : MonoBehaviour
             }
         }
         // 料理がすでに４つ配膳中であらばnullを返却
-        Debug.Log("これ以上料理を出せません");
+        Debug.LogError("これ以上料理を出せません");
         return null;
     }
 
@@ -66,7 +66,7 @@ public class CuisineControllerBase : MonoBehaviour
     {
         if (id < 0 || id > 3)
         {
-            Debug.Log("不正な料理ID");
+            Debug.LogError("不正な料理ID");
             return;
         }
 
