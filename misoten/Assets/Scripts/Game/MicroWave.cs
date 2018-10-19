@@ -60,40 +60,12 @@ public class MicroWave : MonoBehaviour
         if (status == EMWState.SwitchOff) return;
 
         float OneScond = Mathf.Ceil(timer);
+
+        // タイマーカウントアップ
         CountUpTimer();
-        switch (status)
-        {
-            case EMWState.Standby:
-                if (timer >= 1)
-                {
-                    SetStatus(EMWState.SwitchOn);
-                    ResetTimer();
-                }
-                break;
 
-            //スイッチがオン
-            case EMWState.SwitchOn:
-                if (IsElapsedOneSecond(OneScond)) microwaveTimerImage_cs.SetNextSprite();
-                break;
-
-            case EMWState.Failure:
-                if (IsElapsedOneSecond(OneScond)) RestartCooking();
-                break;
-
-            case EMWState.Explostion:
-                // 爆発状態かつ3秒経過
-                if (timer >= 3) InterruptionCooking();
-                break;
-
-            case EMWState.Success:
-                // 成功状態かつ0.5秒経過
-                if (timer >= 0.5f)
-                {
-                    SetStatus(EMWState.SwitchOff);
-                    microwaveTimerImage_cs.HiddenTimer();
-                }
-                break;
-        }
+        //ステータスにより分岐
+        BranchStatus(OneScond);
     }
 
     /// <summary>
@@ -253,4 +225,41 @@ public class MicroWave : MonoBehaviour
     private void SetStatus(EMWState state) => status = state;
 
     private void ResetTimer() => timer = 0;
+
+    private void BranchStatus(float onesecond)
+    {
+        switch (status)
+        {
+            case EMWState.Standby:
+                if (timer >= 1)
+                {
+                    SetStatus(EMWState.SwitchOn);
+                    ResetTimer();
+                }
+                break;
+
+            //スイッチがオン
+            case EMWState.SwitchOn:
+                if (IsElapsedOneSecond(onesecond)) microwaveTimerImage_cs.SetNextSprite();
+                break;
+
+            case EMWState.Failure:
+                if (IsElapsedOneSecond(onesecond)) RestartCooking();
+                break;
+
+            case EMWState.Explostion:
+                // 爆発状態かつ3秒経過
+                if (timer >= 3) InterruptionCooking();
+                break;
+
+            case EMWState.Success:
+                // 成功状態かつ0.5秒経過
+                if (timer >= 0.5f)
+                {
+                    SetStatus(EMWState.SwitchOff);
+                    microwaveTimerImage_cs.HiddenTimer();
+                }
+                break;
+        }
+    }
 }
