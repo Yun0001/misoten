@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
 
     private readonly static float HINDRANCE_TIME = 3;
     private float hindranceTime = HINDRANCE_TIME; // 邪魔動作の時間
-    private GameObject tastePrefab;//旨味成分
 
     private CookingMicrowave cookingMicrowave_cs;
     private CookingPot cookingPot_cs;
@@ -96,7 +95,6 @@ public class Player : MonoBehaviour
         {
             hitObj[i] = null;
         }
-        tastePrefab = (GameObject)Resources.Load("Prefabs/Taste");
         cookingMicrowave_cs = GetComponent<CookingMicrowave>();
         cookingPot_cs=GetComponent<CookingPot>();
         cookingGrilled_cs = GetComponent<CookingGrilled>();
@@ -142,7 +140,7 @@ public class Player : MonoBehaviour
 
                     //電子レンジの爆発状態
                 case PlayerStatus.Microwave:
-                    if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.EMWState.explostion)
+                    if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.EMWState.Explostion)
                     {
                         SetPlayerStatus(PlayerStatus.Explosion);
                     }

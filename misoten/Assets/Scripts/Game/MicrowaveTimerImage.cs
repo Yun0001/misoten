@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MicrowaveTimerImage : MonoBehaviour
-{
-
-    public enum EMicrowaveTimerTex
+{ 
+    public enum EMicrowaveTimerSprite
     {
         Start,
         ThreeSeconds,
@@ -17,9 +16,21 @@ public class MicrowaveTimerImage : MonoBehaviour
         Max
     }
 
-    private Sprite[] textures=new Sprite[(int)EMicrowaveTimerTex.Max];
+    private EMicrowaveTimerSprite spriteID;
 
-    private string[] texturePass = {
+    /// <summary>
+    /// レンチンで使用する各テクスチャ
+    /// </summary>
+    private Sprite[] textures=new Sprite[(int)EMicrowaveTimerSprite.Max];
+
+    private string folderPass = "Textures/Microwave/";
+
+    /// <summary>
+    /// テクスチャファイル名
+    /// 順番はenumと同じにする
+    /// </summary>
+    private string[] textureName = 
+    {
         "Timer_Go_Prototype",
         "Timer_3_Prototype",
         "Timer_2_Prototype",
@@ -29,46 +40,71 @@ public class MicrowaveTimerImage : MonoBehaviour
         "Timer_Explosion_Prototype"
     };
 
-    EMicrowaveTimerTex microwaveTimerTex;
-    [SerializeField]
-    private GameObject timerSprite;
+   // [SerializeField]
+   // private GameObject timerSprite;
 
+    /// <summary>
+    /// 初期処理
+    /// </summary>
     private void Awake()
     {
-
         for (int i = 0; i < textures.Length; i++)
-        {
-            textures[i] = Resources.Load<Sprite>("Textures/Microwave/" + texturePass[i]);
-        }
-        Vector3 pos = transform.position;
-        pos.x += 3;
-        transform.position = pos;
+            textures[i] = Resources.Load<Sprite>(folderPass + textureName[i]);
+
         gameObject.SetActive(false);
     }
 
-    // Use this for initialization
-    public void Init ()
+    /// <summary>
+    /// タイマーを画面に表示
+    /// </summary>
+    public void Display(Vector3 pPos)
     {
         gameObject.SetActive(true);
-        microwaveTimerTex = EMicrowaveTimerTex.Start;
-        timerSprite.GetComponent<SpriteRenderer>().sprite = textures[(int)microwaveTimerTex];
+        SetPosition(pPos);
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 10;        //手前に描画する
+        spriteID = EMicrowaveTimerSprite.Start;
+        ChangeSprite();
     }
 
-    public void UnInit()
-    {
-        gameObject.SetActive(false);
-    }
+    /// <summary>
+    /// タイマー非表示
+    /// </summary>
+    public void HiddenTimer() => gameObject.SetActive(false);
+   
 	
-	public void ChangeSprite ()
+    /// <summary>
+    /// 次のスプライトに切り替え
+    /// </summary>
+	public void SetNextSprite ()
     {
-        microwaveTimerTex++;
-        if (microwaveTimerTex >= EMicrowaveTimerTex.Max) return;
-        timerSprite.GetComponent<SpriteRenderer>().sprite = textures[(int)microwaveTimerTex];
+        spriteID++;
+        if (spriteID >= EMicrowaveTimerSprite.Max)
+        {
+            Debug.LogError("不正なspriteID");
+            return;
+        } 
+        ChangeSprite();
     }
 
-    public void ChangeSprite(EMicrowaveTimerTex texid)
+    /// <summary>
+    /// 指定したスプライトに切り替え
+    /// </summary>
+    /// <param name="texid"></param>
+    public void SetSprite(EMicrowaveTimerSprite texid)
     {
-        microwaveTimerTex = texid;
-        timerSprite.GetComponent<SpriteRenderer>().sprite = textures[(int)microwaveTimerTex];
+        spriteID = texid;
+        ChangeSprite();
+    }
+
+    /// <summary>
+    /// スプライト切り替え
+    /// </summary>
+    private void ChangeSprite() => GetComponent<SpriteRenderer>().sprite = textures[(int)spriteID];
+
+    private void SetPosition(Vector3 pPos)
+    {
+        Vector3 pos = pPos;
+        pos.y += 1.5f;
+        transform.position = pos;
     }
 }

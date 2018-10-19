@@ -9,7 +9,7 @@ public class MicroWave : MonoBehaviour
     /// <summary>
     /// 電子レンジの状態　列挙
     /// </summary>
-    public enum EMWState { SwitchOff, Standby, SwitchOn, End, explostion }
+    public enum EMWState { SwitchOff, Standby, SwitchOn, Explostion, Failure, Success }
 
     private GameObject microwaveCuisine;
 
@@ -17,6 +17,7 @@ public class MicroWave : MonoBehaviour
     private GameObject microwaveTimerImage;
 
     private MicrowaveTimerImage microwaveTimerImage_cs;
+
     /// <summary>
     /// セットタイマ-
     /// </summary>
@@ -42,67 +43,79 @@ public class MicroWave : MonoBehaviour
 
     private int playerID;
 
-    bool successFlg = false;
+    private Vector3 playerPos;
 
-	// Use this for initialization
-	private void Awake ()
+    // Use this for initialization
+    private void Awake()
     {
         microwaveTimerImage_cs = microwaveTimerImage.GetComponent<MicrowaveTimerImage>();
-        timer = 0;
-        status = EMWState.SwitchOff;
-	}
-	
-	//更新処理
-	void Update ()
+        ResetTimer();
+        SetStatus(EMWState.SwitchOff);
+    }
+
+    //更新処理
+    void Update()
     {
+        // スイッチオフならリターン
+        if (status == EMWState.SwitchOff) return;
+
+        float OneScond = Mathf.Ceil(timer);
+        CountUpTimer();
         switch (status)
         {
-            //スイッチがオフ
-            case EMWState.SwitchOff:
-                //現状とくになし
-                break;
-
             case EMWState.Standby:
-                CountUpTimer();
                 if (timer >= 1)
                 {
-                    status = EMWState.SwitchOn;
-                    timer = 0;
+                    SetStatus(EMWState.SwitchOn);
+                    ResetTimer();
                 }
                 break;
 
             //スイッチがオン
             case EMWState.SwitchOn:
-                //タイマーカウントアップ
-                CountUpTimer();
+                if (IsElapsedOneSecond(OneScond)) microwaveTimerImage_cs.SetNextSprite();
                 break;
 
-            case EMWState.End:
-                CountUpTimer();
+            case EMWState.Failure:
+                if (IsElapsedOneSecond(OneScond)) RestartCooking();
                 break;
 
-            case EMWState.explostion:
-                CountUpTimer();
+            case EMWState.Explostion:
+                // 爆発状態かつ3秒経過
+                if (timer >= 3) InterruptionCooking();
+                break;
+
+            case EMWState.Success:
+                // 成功状態かつ0.5秒経過
+                if (timer >= 0.5f)
+                {
+                    SetStatus(EMWState.SwitchOff);
+                    microwaveTimerImage_cs.HiddenTimer();
+                }
                 break;
         }
-	}
+    }
 
     /// <summary>
     ///  電子レンジスタート
     /// </summary>
-    public bool StartCooking(int pID)
+    public bool StartCooking(int pID, Vector3 pPos)
     {
         // 既にスイッチが入っていればリターン
         if (status != EMWState.SwitchOff) return false;
-        microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
-        
-        if (microwaveCuisine == null) return false;
-        // 待機状態
-        status = EMWState.Standby;
-        //タイマーセット
-        timer = 0;
 
-        microwaveTimerImage_cs.Init();
+        microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
+        if (microwaveCuisine == null) return false;
+
+        // 待機状態
+        SetStatus(EMWState.Standby);
+
+        //タイマーセット
+        ResetTimer();
+
+        // タイマー表示
+        playerPos = pPos;
+        microwaveTimerImage_cs.Display(playerPos);
 
         playerID = pID;
         return true;
@@ -116,73 +129,37 @@ public class MicroWave : MonoBehaviour
         //  小数点第２位以下切り捨て
         timer = Mathf.Floor(timer * 10) / 10;
 
-        int playerRank = ScoreManager.GetInstance().GetPlayerRank(playerID);
-        if (timer <= successRangeMax[playerRank - 1] && timer >= successRangeMin[playerRank - 1])
+        // 順位に応じた範囲で判定
+        if (IsInSuccessRange())
         {
             //成功
-            // ここでtimeDifferenceを料理の変数にセットする
-            microwaveCuisine.GetComponent<Food>().CalcTasteCoefficient(1);
-            microwaveTimerImage_cs.ChangeSprite(MicrowaveTimerImage.EMicrowaveTimerTex.Success);
+            ProcessSucccess();
         }
         else
         {
             // 失敗
-            // もう一度
-            microwaveTimerImage_cs.ChangeSprite(MicrowaveTimerImage.EMicrowaveTimerTex.Failure);
-            timer = 0;
-            status = EMWState.End;
+            ProcessFailure();
             return null;
         }
 
         // スイッチオフ
-        status = EMWState.SwitchOff;
+        SetStatus(EMWState.Success);
 
         // 電子レンジからプレイヤーに料理を渡す
         return microwaveCuisine;
     }
 
     /// <summary>
-    /// タイマーカウントダウン
+    /// タイマーカウントアップ
     /// </summary>
     private void CountUpTimer()
     {
-        float OneScond = Mathf.Ceil(timer);
         timer += Time.deltaTime;
 
-
-        if (status == EMWState.explostion)
-        {
-            // 爆発状態かつ3秒経過
-            if (timer >= 3)
-            {
-                InterruptionCooking();
-            }
-        }
-        else
-        {
-            if (OneScond <= 0) return;
-            // タイマーが３以下かつ一秒経過毎
-            if (timer >= OneScond && timer <= 3)
-            {
-                if (status == EMWState.End)
-                {
-                    RestartCooking();
-                }
-                else
-                {
-                    microwaveTimerImage_cs.ChangeSprite();
-                }
-            }
-            if (timer >= explosionTime)
-            {
-                // 爆発処理
-                microwaveTimerImage_cs.ChangeSprite(MicrowaveTimerImage.EMicrowaveTimerTex.Explosion);
-                timer = 0;
-                status = EMWState.explostion;
-            }
-        }
-        
+        // 爆発判定　　　　　　　　爆発
+        if (IsOverExplosionTime()) ProcessExplosion();
     }
+
     /// <summary>
     /// 状態取得
     /// </summary>
@@ -192,11 +169,11 @@ public class MicroWave : MonoBehaviour
     private void RestartCooking()
     {
         // 待機状態
-        status = EMWState.Standby;
+        SetStatus(EMWState.Standby);
         //タイマーセット
-        timer = 0;
+        ResetTimer();
 
-        microwaveTimerImage_cs.Init();
+        microwaveTimerImage_cs.Display(playerPos);
     }
 
     /// <summary>
@@ -204,10 +181,76 @@ public class MicroWave : MonoBehaviour
     /// </summary>
     public void InterruptionCooking()
     {
-        timer = 0;
-        status = EMWState.SwitchOff;
+        // タイマーゼロ
+        ResetTimer();
+
+        // スイッチオフ
+        SetStatus(EMWState.SwitchOff);
+
+        // 中の料理をnull
         CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(microwaveCuisine.GetComponent<Food>().GetFoodID());
         microwaveCuisine = null;
-        microwaveTimerImage_cs.UnInit();
+
+        // タイマ非表示
+        microwaveTimerImage_cs.HiddenTimer();
     }
+
+    /// <summary>
+    /// 成功処理
+    /// </summary>
+    private void ProcessSucccess()
+    {
+        // ここでtimeDifferenceを料理の変数にセットする
+        microwaveCuisine.GetComponent<Food>().CalcTasteCoefficient(1);
+        microwaveTimerImage_cs.SetSprite(MicrowaveTimerImage.EMicrowaveTimerSprite.Success);
+        ResetTimer();
+    }
+
+    /// <summary>
+    /// 失敗処理
+    /// </summary>
+    private void ProcessFailure()
+    {
+        microwaveTimerImage_cs.SetSprite(MicrowaveTimerImage.EMicrowaveTimerSprite.Failure);
+        // もう一度
+        ResetTimer();
+        SetStatus(EMWState.Failure);
+    }
+
+    /// <summary>
+    /// 爆発処理
+    /// </summary>
+    private void ProcessExplosion()
+    {
+        microwaveTimerImage_cs.SetSprite(MicrowaveTimerImage.EMicrowaveTimerSprite.Explosion);
+        ResetTimer();
+        SetStatus(EMWState.Explostion);
+    }
+
+    /// <summary>
+    /// 爆発したか
+    /// </summary>
+    /// <returns></returns>
+    private bool IsOverExplosionTime() => timer >= explosionTime;
+
+    /// <summary>
+    /// 一秒経過したか
+    /// </summary>
+    /// <param name="onesecond"></param>
+    /// <returns></returns>
+    private bool IsElapsedOneSecond(float onesecond) => timer >= onesecond && (timer <= 4 && onesecond > 0);
+
+    /// <summary>
+    /// 順位に応じた範囲で判定
+    /// </summary>
+    /// <returns>成否</returns>
+    private bool IsInSuccessRange()
+    {
+        int playerRank = ScoreManager.GetInstance().GetPlayerRank(playerID);
+        return timer <= successRangeMax[playerRank - 1] && timer >= successRangeMin[playerRank - 1];
+    }
+
+    private void SetStatus(EMWState state) => status = state;
+
+    private void ResetTimer() => timer = 0;
 }
