@@ -18,7 +18,7 @@ public class CookingMicrowave : MonoBehaviour {
     public void PresstheMicrowaveStartButton()
     {
         // 電子レンジ調理開始
-        if (!player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().StartCooking()) return;
+        if (!player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().StartCooking(player_cs.GetPlayerID())) return;
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
     }
@@ -31,5 +31,13 @@ public class CookingMicrowave : MonoBehaviour {
     {
         // 電子レンジ調理終了
         return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().EndCooking();
+    }
+
+    /// <summary>
+    /// 調理中断
+    /// </summary>
+    public void CancelCooking()
+    {
+        player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().InterruptionCooking();
     }
 }

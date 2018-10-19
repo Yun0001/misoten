@@ -37,8 +37,15 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
+        Player.PlayerStatus pStatus = player_cs.GetPlayerStatus();
+        if (pStatus == Player.PlayerStatus.Microwave) return;
+        if (pStatus == Player.PlayerStatus.Pot) return;
+        if (pStatus == Player.PlayerStatus.GrilledTable) return;
+        if (pStatus == Player.PlayerStatus.Explosion) return;
+
+
         // 配膳中または味の素チャージ中ならば移動量減少
-        switch (player_cs.GetPlayerStatus())
+        switch (pStatus)
         {
             case Player.PlayerStatus.Catering:
                 move *= CateringCoefficient;

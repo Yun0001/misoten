@@ -59,8 +59,8 @@ public class PlayerInput : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.X, playerNumber)) player_cs.ActionPot();
         // Bボタン入力（フライパン）
         if (GamePad.GetButtonDown(GamePad.Button.B, playerNumber)) player_cs.ActionGrilled();
-        // Yボタン入力（邪魔）
-        //if (GamePad.GetButtonDown(GamePad.Button.Y, playerNumber)) player_cs.ActionHindrance();
+        // Yボタン入力（キャンセル）
+        if (GamePad.GetButtonDown(GamePad.Button.Y, playerNumber)) player_cs.CookingCancel();
         // Lトリガー入力（配膳）
         if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, playerNumber)) player_cs.OfferCuisine();
         //Rトリガー入力（味の素）

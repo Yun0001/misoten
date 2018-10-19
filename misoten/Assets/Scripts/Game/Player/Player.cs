@@ -15,7 +15,8 @@ public class Player : MonoBehaviour
         Catering,           //配膳
         Hindrance,          //邪魔
         Replenishment, // 補充
-        TasteCharge
+        TasteCharge,//Burstチャージ中
+        Explosion//爆発
     }
 
     public enum hitObjName
@@ -138,7 +139,22 @@ public class Player : MonoBehaviour
                     cuisine = cookingPot_cs.Mix(stickVec);
                     if (cuisine != null) WithaCuisine(cuisine);
                     break;
+
+                    //電子レンジの爆発状態
+                case PlayerStatus.Microwave:
+                    if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.EMWState.explostion)
+                    {
+                        SetPlayerStatus(PlayerStatus.Explosion);
+                    }
+                    break;
+                case PlayerStatus.Explosion:
+                    if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.EMWState.SwitchOff)
+                    {
+                        SetPlayerStatus(PlayerStatus.Normal);
+                    }
+                    break;
                 default:
+                    
                     break;
             }
         }
@@ -234,7 +250,6 @@ public class Player : MonoBehaviour
         {
             case 0:
                 CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
-
                 break;
             case 1:
                 CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
@@ -288,14 +303,23 @@ public class Player : MonoBehaviour
 
         switch (GetHitObjConmponentMicroWave().GetStatus())
         {
-            case MicroWave.MWState.switchOff:
+            case MicroWave.EMWState.SwitchOff:
                 // 電子レンジを動かす
                 cookingMicrowave_cs.PresstheMicrowaveStartButton();
                 break;
 
-            case MicroWave.MWState.switchOn:
+            case MicroWave.EMWState.SwitchOn:
                 // 電子レンジを停止させる
-                WithaCuisine(cookingMicrowave_cs.PresstheMicrowaveStopButton());
+                GameObject cuisine = cookingMicrowave_cs.PresstheMicrowaveStopButton();
+                if (cuisine == null)
+                {
+                    SetPlayerStatus(PlayerStatus.Microwave);
+                }
+                else
+                {
+                    WithaCuisine(cuisine);
+                }
+
                 break;
 
             default:
@@ -331,4 +355,20 @@ public class Player : MonoBehaviour
     }
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
+
+
+    /// <summary>
+    /// 調理中断
+    /// </summary>
+    public void CookingCancel()
+    {
+        switch (playerStatus)
+        {
+            case PlayerStatus.Microwave:
+                cookingMicrowave_cs.CancelCooking();
+                SetPlayerStatus(PlayerStatus.Normal);
+                break;
+
+        }
+    }
 }

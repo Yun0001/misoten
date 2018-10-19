@@ -1,40 +1,55 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // 電子レンジ
-public class MicroWave : MonoBehaviour {
-
+public class MicroWave : MonoBehaviour
+{
     /// <summary>
     /// 電子レンジの状態　列挙
     /// </summary>
-   public  enum MWState { switchOff,switchOn }
+    public enum EMWState { SwitchOff, Standby, SwitchOn, End, explostion }
 
     private GameObject microwaveCuisine;
 
+    [SerializeField]
+    private GameObject microwaveTimerImage;
+
+    private MicrowaveTimerImage microwaveTimerImage_cs;
     /// <summary>
     /// セットタイマ-
     /// </summary>
     [SerializeField]
-    private   float setTimer;
+    private float explosionTime;
 
     /// <summary>
     /// タイマー
     /// </summary>
-    [SerializeField]
     private float timer;
 
     /// <summary>
     /// 状態
     /// </summary>
     [SerializeField]
-    MWState status;
+    EMWState status;
 
+    [SerializeField]
+    private float[] successRangeMin;
+
+    [SerializeField]
+    private float[] successRangeMax;
+
+    private int playerID;
+
+    bool successFlg = false;
 
 	// Use this for initialization
-	void Start () {
+	private void Awake ()
+    {
+        microwaveTimerImage_cs = microwaveTimerImage.GetComponent<MicrowaveTimerImage>();
         timer = 0;
-        status = MWState.switchOff;
+        status = EMWState.SwitchOff;
 	}
 	
 	//更新処理
@@ -43,14 +58,31 @@ public class MicroWave : MonoBehaviour {
         switch (status)
         {
             //スイッチがオフ
-            case MWState.switchOff:
+            case EMWState.SwitchOff:
                 //現状とくになし
                 break;
 
+            case EMWState.Standby:
+                CountUpTimer();
+                if (timer >= 1)
+                {
+                    status = EMWState.SwitchOn;
+                    timer = 0;
+                }
+                break;
+
             //スイッチがオン
-            case MWState.switchOn:
-                //タイマーカウントダウン
-                CountDownTimer();
+            case EMWState.SwitchOn:
+                //タイマーカウントアップ
+                CountUpTimer();
+                break;
+
+            case EMWState.End:
+                CountUpTimer();
+                break;
+
+            case EMWState.explostion:
+                CountUpTimer();
                 break;
         }
 	}
@@ -58,20 +90,21 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     ///  電子レンジスタート
     /// </summary>
-    public bool StartCooking()
+    public bool StartCooking(int pID)
     {
         // 既にスイッチが入っていればリターン
-        if (status == MWState.switchOn) return false;
+        if (status != EMWState.SwitchOff) return false;
         microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
+        
         if (microwaveCuisine == null) return false;
-        // スイッチオン
-        status = MWState.switchOn;
+        // 待機状態
+        status = EMWState.Standby;
         //タイマーセット
-        timer = setTimer;
+        timer = 0;
 
-      
+        microwaveTimerImage_cs.Init();
 
-      
+        playerID = pID;
         return true;
     }
 
@@ -80,16 +113,29 @@ public class MicroWave : MonoBehaviour {
     /// </summary>
     public GameObject EndCooking()
     {
-        // 設定した時間との誤差を計算
-        float timeDifference = Mathf.Abs(timer);
-        timeDifference /= 10;
+        //  小数点第２位以下切り捨て
+        timer = Mathf.Floor(timer * 10) / 10;
 
-
-        // ここでtimeDifferenceを料理の変数にセットする
-        microwaveCuisine.GetComponent<Food>().CalcTasteCoefficient(timeDifference);
+        int playerRank = ScoreManager.GetInstance().GetPlayerRank(playerID);
+        if (timer <= successRangeMax[playerRank - 1] && timer >= successRangeMin[playerRank - 1])
+        {
+            //成功
+            // ここでtimeDifferenceを料理の変数にセットする
+            microwaveCuisine.GetComponent<Food>().CalcTasteCoefficient(1);
+            microwaveTimerImage_cs.ChangeSprite(MicrowaveTimerImage.EMicrowaveTimerTex.Success);
+        }
+        else
+        {
+            // 失敗
+            // もう一度
+            microwaveTimerImage_cs.ChangeSprite(MicrowaveTimerImage.EMicrowaveTimerTex.Failure);
+            timer = 0;
+            status = EMWState.End;
+            return null;
+        }
 
         // スイッチオフ
-        status = MWState.switchOff;
+        status = EMWState.SwitchOff;
 
         // 電子レンジからプレイヤーに料理を渡す
         return microwaveCuisine;
@@ -98,11 +144,70 @@ public class MicroWave : MonoBehaviour {
     /// <summary>
     /// タイマーカウントダウン
     /// </summary>
-    private void CountDownTimer() => timer -= Time.deltaTime;
+    private void CountUpTimer()
+    {
+        float OneScond = Mathf.Ceil(timer);
+        timer += Time.deltaTime;
 
+
+        if (status == EMWState.explostion)
+        {
+            // 爆発状態かつ3秒経過
+            if (timer >= 3)
+            {
+                InterruptionCooking();
+            }
+        }
+        else
+        {
+            if (OneScond <= 0) return;
+            // タイマーが３以下かつ一秒経過毎
+            if (timer >= OneScond && timer <= 3)
+            {
+                if (status == EMWState.End)
+                {
+                    RestartCooking();
+                }
+                else
+                {
+                    microwaveTimerImage_cs.ChangeSprite();
+                }
+            }
+            if (timer >= explosionTime)
+            {
+                // 爆発処理
+                microwaveTimerImage_cs.ChangeSprite(MicrowaveTimerImage.EMicrowaveTimerTex.Explosion);
+                timer = 0;
+                status = EMWState.explostion;
+            }
+        }
+        
+    }
     /// <summary>
     /// 状態取得
     /// </summary>
     /// <returns>状態</returns>
-    public MWState GetStatus() => status;
+    public EMWState GetStatus() => status;
+
+    private void RestartCooking()
+    {
+        // 待機状態
+        status = EMWState.Standby;
+        //タイマーセット
+        timer = 0;
+
+        microwaveTimerImage_cs.Init();
+    }
+
+    /// <summary>
+    /// 中断
+    /// </summary>
+    public void InterruptionCooking()
+    {
+        timer = 0;
+        status = EMWState.SwitchOff;
+        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(microwaveCuisine.GetComponent<Food>().GetFoodID());
+        microwaveCuisine = null;
+        microwaveTimerImage_cs.UnInit();
+    }
 }

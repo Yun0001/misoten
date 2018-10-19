@@ -73,4 +73,13 @@ public class CuisineControllerBase : MonoBehaviour
         isCateringCuisine[id] = false;
         cuisine[id].GetComponent<Food>().Init();
     }
+
+    public bool isOutputCuisine()
+    {
+        for (int i = 0; i < isCateringCuisine.Length; i++)
+        {
+            if (isCateringCuisine[i]) return true; 
+        }
+        return false;
+    }
 }
