@@ -124,7 +124,6 @@ public class Player : MonoBehaviour
         else
         {
             //　邪魔状態以外の時の処理
-
             switch (playerStatus)
             {
                 case PlayerStatus.Pot:
@@ -145,13 +144,13 @@ public class Player : MonoBehaviour
 
                     //電子レンジの爆発状態
                 case PlayerStatus.Microwave:
-                    if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.EMWState.Explostion)
+                    if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.Explostion)
                     {
                         SetPlayerStatus(PlayerStatus.Explosion);
                     }
                     break;
                 case PlayerStatus.Explosion:
-                    if (GetHitObjConmponentMicroWave().GetStatus() == MicroWave.EMWState.SwitchOff)
+                    if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.SwitchOff)
                     {
                         SetPlayerStatus(PlayerStatus.Normal);
                     }
@@ -284,11 +283,11 @@ public class Player : MonoBehaviour
         return hitObj[HitObjID].gameObject;
     } 
 
-    private MicroWave GetHitObjConmponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<MicroWave>();
+    private MicroWave GetHitObjComponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<MicroWave>();
     
-    private Pot GetHitObjCommponetPot() => GetHitObj((int)hitObjName.Pot).GetComponent<Pot>();
+    private Pot GetHitObjComponetPot() => GetHitObj((int)hitObjName.Pot).GetComponent<Pot>();
 
-    private Grilled GetHitObjCommponentGrilled() => GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>();
+    private Grilled GetHitObjComponentGrilled() => GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>();
 
     public int GetPlayerID() => playerID;
 
@@ -304,7 +303,7 @@ public class Player : MonoBehaviour
         // 電子レンジに当たっていなければ関数を抜ける
         if (GetHitObj((int)hitObjName.Microwave) == null) return;
 
-        switch (GetHitObjConmponentMicroWave().GetStatus())
+        switch (GetHitObjComponentMicroWave().GetStatus())
         {
             case MicroWave.EMWState.SwitchOff:
                 // 電子レンジを動かす
@@ -341,20 +340,9 @@ public class Player : MonoBehaviour
     public void ActionGrilled()
     {
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
+        if (GetHitObjComponentGrilled().GetStatus() == Grilled.GrilledState.inCcoking) return;
 
-        switch (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GetStatus())
-        {
-            case Grilled.GrilledState.unused:
-                cookingGrilled_cs.OnFire();
-                break;
-
-            case Grilled.GrilledState.inCcoking:
-                //cookingGrilled_cs.ShaketheFryingpan();
-                break;
-            default:
-                break;
-        }
-
+        cookingGrilled_cs.OnFire();
     }
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
@@ -373,6 +361,7 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerStatus.GrilledTable:
+                cookingGrilled_cs.CancelCooking();
                 SetPlayerStatus(PlayerStatus.Normal);
                 break;
 

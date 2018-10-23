@@ -10,19 +10,24 @@ public class Grilled : MonoBehaviour {
         inCcoking
     }
 
-    private GameObject grilledCuisine;
-
-    private GameObject grilledGagePrefab;
-
-    private GameObject grilledGage;
-
+    // 状態
     private GrilledState grilledStatus;
 
-    private Vector3 pPos;
+    // 焼き料理
+    private GameObject grilledCuisine;
+
+    // 焼きゲージのプレハブ
+    private GameObject grilledGagePrefab;
+
+    // 焼きゲージ
+    private GameObject grilledGage;
+
+    // 焼きゲージプレハブのパス
+    private string grilledGagePass = "Prefabs/GrilledGage/GrilledGage";
 
 
-	// Use this for initialization
-	void Awake ()
+    // 初期処理
+    void Awake ()
     {
         GrilledGageInstance(); // ゲージ作成
         grilledStatus = GrilledState.unused;
@@ -45,34 +50,32 @@ public class Grilled : MonoBehaviour {
         grilledGage.transform.Find("TimingPoint").GetComponent<TimingPoint>().SetPlayerNumber(pNumber);
     }
 
+    /// <summary>
+    /// ゲージの状態がENDかどうか
+    /// </summary>
+    /// <returns></returns>
     public bool IsEndCooking() => grilledGage.GetComponent<GrilledGage>().GetStatus() == GrilledGage.EGrilledGageStatus.End;
-
-    public void CalcGrilledFoodTasteCoefficient()=> grilledGage.GetComponent<Food>().CalcTasteCoefficient(CalcDifference());
-
-    public void EndCooking()
-    {
-        grilledStatus = GrilledState.unused;
-        grilledGage.SetActive(false);
-    }
 
     public GrilledState GetStatus() => grilledStatus;
 
     public GameObject GetGrilledCuisine() => grilledCuisine;
 
-    private float CalcDifference()
-    {
-        return grilledGage.GetComponent<MicroWaveGage>().GetSliderVal() == 0 ? 0 : grilledGage.GetComponent<MicroWaveGage>().GetSliderVal() / 100;
-    }
-
+    /// <summary>
+    /// 焼きゲージ生成
+    /// </summary>
     private void GrilledGageInstance()
     {
-        grilledGagePrefab = (GameObject)Resources.Load("Prefabs/GrilledGage/GrilledGage");
+        grilledGagePrefab = Resources.Load(grilledGagePass) as GameObject;
         grilledGage = Instantiate(grilledGagePrefab, transform.position, Quaternion.identity);
         grilledGage.SetActive(false);
         
         grilledGage.transform.Find("TimingPoint").GetComponent<TimingPoint>().Init(GetComponent<Grilled>());
     }
 
+    /// <summary>
+    /// 調理終了
+    /// </summary>
+    /// <returns></returns>
     public GameObject GrilledCookingEnd()
     {
         grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
@@ -81,4 +84,16 @@ public class Grilled : MonoBehaviour {
         return grilledCuisine;
     }
 
+    /// <summary>
+    /// キャンセル
+    /// </summary>
+    public void InterruptionCooking()
+    {
+        grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
+        grilledGage.GetComponent<GrilledGage>().ResetPosition();
+        grilledGage.gameObject.SetActive(false);
+
+        CuisineManager.GetInstance().GetGrilledController().OfferCuisine(grilledCuisine.GetComponent<Food>().GetFoodID());
+        grilledCuisine = null;
+    }
 }

@@ -17,9 +17,8 @@ public class CookingGrilled : MonoBehaviour {
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
     }
 
-    public void ShaketheFryingpan()
+    public void CancelCooking()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().EndCooking();
-        player_cs.WithaCuisine(player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().GetGrilledCuisine());
+        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().InterruptionCooking();
     }
 }
