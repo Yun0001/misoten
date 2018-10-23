@@ -10,8 +10,8 @@ public class Food : MonoBehaviour {
     public enum Category
     {
         Grilled,
+      Pot,
         Microwave,
-        Pot,
     }
 
     /// <summary>
