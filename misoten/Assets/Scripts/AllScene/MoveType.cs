@@ -27,7 +27,7 @@ public class MoveType : MonoBehaviour
 
 	[SerializeField] Transform m_target;							// ターゲット設定用
 	[Range(0, 1.0f)] [SerializeField] private float m_attenuation;	// 減衰
-	[Range(0, 100.0f)] [SerializeField] private float m_speed;		// 移動速度
+	[Range(-100, 100.0f)] [SerializeField] private float m_speed;	// 移動速度
 	[SerializeField] private EMoveType m_moveType;					// 移動の種類を格納する為の変数
 	[SerializeField] private Vector3 m_moveRange;					// 移動範囲(幅、高さ、奥行き)
 

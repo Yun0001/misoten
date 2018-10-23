@@ -13,6 +13,7 @@ TagManager:
   - Alien
   - GrilledTable
   - SuccessArea
+  - SecondHand
   layers:
   - Default
   - TransparentFX

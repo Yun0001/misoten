@@ -414,4 +414,7 @@ public class Player : MonoBehaviour
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
 
+	public string GetInputXAxisName() => inputXAxisName;
+
+	public string GetInputYAxisName() => inputYAxisName;
 }
