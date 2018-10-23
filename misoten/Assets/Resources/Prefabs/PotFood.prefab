@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4360217561315840}
-  - component: {fileID: 114946044742413932}
+  - component: {fileID: 114258913780366174}
   m_Layer: 0
   m_Name: PotFood
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114946044742413932
+--- !u!114 &114258913780366174
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1045829002860298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28776bb2e1b087946855f503df8adbe9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f1e8cfdf20542946bdbc7524431eef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qualityTaste: 0

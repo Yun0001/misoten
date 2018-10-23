@@ -367,4 +367,8 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    public string GetInputXAxisName() => inputXAxisName;
+
+    public string GetInputYAxisName() => inputYAxisName;
 }
