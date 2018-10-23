@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class AlienDisturbance : MonoBehaviour
 {
+	// エイリアン管理用列挙型
+	// ---------------------------------------------
+
 	/// <summary>
 	/// エイリアンの機嫌
 	/// </summary>
@@ -18,16 +21,10 @@ public class AlienDisturbance : MonoBehaviour
 		MAX			// 最大
 	}
 
-	/// <summary>
-	/// エイリアンの種類設定
-	/// </summary>
-	private enum EAlienPattern
-	{
-		MARTIAN,    // 火星人
-		MERCURY,    // 水星人
-		VENUSIAN,   // 金星人
-		MAX         // 最大
-	}
+	// ---------------------------------------------
+
+	// インスペクター上で設定可能
+	// ---------------------------------------------
 
 	// Prefabを指定して、そのPrefabを生成する為の物
 	[SerializeField]
@@ -36,6 +33,11 @@ public class AlienDisturbance : MonoBehaviour
 	// エイリアンの機嫌が変わるまでの時間を設定
 	[SerializeField]
 	private float moodChangeTime;
+
+	// ---------------------------------------------
+
+	// ローカル変数
+	// ---------------------------------------------
 
 	// エイリアンのオーダー
 	private AlienOrder alienOrder;
@@ -46,14 +48,13 @@ public class AlienDisturbance : MonoBehaviour
 	// エイリアンの呼び出し
 	private AlienCall alienCall;
 
-	// 種類のID
-	private int patternId = 0;
-
 	// 待ち時間の加算
 	private float latencyAdd = 0.0f;
 
 	// エイリアンの機嫌
 	private EAlienMood mood = EAlienMood.NORMAL;
+
+	// ---------------------------------------------
 
 	/// <summary>
 	/// 開始関数
@@ -63,7 +64,6 @@ public class AlienDisturbance : MonoBehaviour
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
 		alienChip = GetComponent<AlienChip>();
-
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 	}
 
@@ -87,9 +87,9 @@ public class AlienDisturbance : MonoBehaviour
 						latencyAdd += Time.deltaTime;
 					}
 					break;
-				case EAlienMood.ANGER:  // 怒り状態
+				case EAlienMood.ANGER:	// 怒り状態
 					// エイリアンの種類管理
-					switch (alienCall.GetAlienPattern(patternId))
+					switch (alienCall.GetAlienPattern(AlienCall.GetIdSave()))
 					{
 						case 0: // 火星人の場合
 
@@ -99,22 +99,17 @@ public class AlienDisturbance : MonoBehaviour
 						case 1: // 水星人の場合
 
 							// 水星人特有の邪魔行為
-							MercuryDisturbance();
+							//MercuryDisturbance();
 							break;
 						case 2:// 金星人の場合
 
 							// 金星人特有の邪魔行為
-							VenusianDisturbance();
+							//VenusianDisturbance();
 							break;
 						default:
 							// 例外処理
 							break;
 					}
-
-					// エイリアンの種類IDをチェック
-					if (patternId < 4) { patternId++; }
-					else { patternId = 0; }
-
 					break;
 				case EAlienMood.FAVORABLE:  // 良好状態
 
@@ -125,10 +120,7 @@ public class AlienDisturbance : MonoBehaviour
 			}
 
 			// 注文して指定時間以上立つと怒り状態になる
-			if (latencyAdd >= alienCall.GetOrderLatencyAdd(patternId)) { mood = EAlienMood.ANGER; }
-
-			// Debug用
-			//Debug.Log("オーダー待ち時間" + alienCall.GetOrderLatencyAdd(patternId));
+			if (latencyAdd >= AlienCall.GetOrderLatencyAdd(AlienCall.GetRichDegreeId())) { mood = EAlienMood.ANGER; }
 		}
 	}
 
@@ -138,7 +130,7 @@ public class AlienDisturbance : MonoBehaviour
 	void MartianDisturbance()
 	{
 		// Debug用
-		//Debug.Log("火星人の邪魔行動");
+		Debug.Log("火星人の邪魔行動");
 
 		// 5個ランダムな場所にcubeを生成する
 		//for (int i = 0; i < 5; i++)
@@ -157,7 +149,7 @@ public class AlienDisturbance : MonoBehaviour
 	void MercuryDisturbance()
 	{
 		// Debug用
-		//Debug.Log("水星人の邪魔行動");
+		Debug.Log("水星人の邪魔行動");
 	}
 
 	/// <summary>
@@ -166,6 +158,6 @@ public class AlienDisturbance : MonoBehaviour
 	void VenusianDisturbance()
 	{
 		// Debug用
-		//Debug.Log("金星人の邪魔行動");
+		Debug.Log("金星人の邪魔行動");
 	}
 }

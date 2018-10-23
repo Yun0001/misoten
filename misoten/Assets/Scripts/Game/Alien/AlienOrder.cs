@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class AlienOrder : MonoBehaviour
 {
+	// エイリアン管理用列挙型
+	// ---------------------------------------------
+
 	/// <summary>
 	/// 注文の種類
 	/// </summary>
@@ -18,6 +21,11 @@ public class AlienOrder : MonoBehaviour
 		MAX				// 最大
 	}
 
+	// ---------------------------------------------
+
+	// インスペクター上で設定可能
+	// ---------------------------------------------
+
 	// オーダー内容描画用
 	[SerializeField]
 	GameObject[] orderBalloon;
@@ -26,24 +34,50 @@ public class AlienOrder : MonoBehaviour
 	[SerializeField]
 	private float orderTime;
 
-	// 注文するまでの時間を測る
-	private float timeAdd = 0.0f;
+	[SerializeField]
+	private int individualOrderType;
 
-	// オーダー中かの判定
-	private bool isOrder = false;
+	// ---------------------------------------------
+
+	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
+	// ---------------------------------------------
+
+	// オーダーフラグ
+	private static bool orderFlag = false;
 
 	// 注文結果格納・取得用
 	private static int orderType = 0;
 
-    [SerializeField]
-    private int individualOrderType;
+	// ---------------------------------------------
+
+	// ローカル変数
+	// ---------------------------------------------
+
+	// エイリアンの移動
+	private AlienMove alienMove;
+
+	// エイリアンの呼び出し
+	private AlienCall alienCall;
+
+	// オーダー中かの判定
+	private bool isOrder = false;
+
+	// オーダー内容をセーブ
+	private int orderSave = 0;
+
+	// 注文するまでの時間を測る
+	private float orderTimeAdd = 0.0f;
+
+	// ---------------------------------------------
 
 	/// <summary>
 	/// 開始関数
 	/// </summary>
-	void Start ()
+	void Start()
 	{
-
+		// コンポーネント取得
+		alienMove = GetComponent<AlienMove>();
+		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 	}
 
 	/// <summary>
@@ -51,30 +85,61 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
+		// エイリアンが注文していて、他のエイリアンがクレームを出している場合
+		// エイリアンの注文内容が見えなくなる。
+		if (GetIsOrder() && AlienClaim.GetClaimFlag()
+			|| GetIsOrder() && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+		{
+			// 注文したものを非アクティブにする(吹き出し)
+			orderBalloon[orderSave].SetActive(false);
+		}
+
+		// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
+		// 再び見えるようにする
+		if (GetIsOrder() && !AlienClaim.GetClaimFlag()
+			&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+		{
+			// 注文したものをアクティブにする(吹き出し)
+			orderBalloon[orderSave].SetActive(true);
+		}
+
 		// エイリアンが席に座って、注文するまでの時間
-		if (timeAdd >= orderTime)
+		if (orderTimeAdd >= orderTime)
 		{
 			// エイリアンが注文していない時
-			if (!GetIsOrder())
+			if (!GetIsOrder() && !AlienClaim.GetClaimFlag())
 			{
+				// オーダー内容を保存
+				orderSave = GetOrderType();
+
 				// 注文したものをアクティブにする(吹き出し)
 				orderBalloon[GetOrderType()].SetActive(true);
+
+				// 注文状態「ON」
+				AlienStatus.SetStatusFlag(true, AlienCall.GetIdSave(), (int)AlienStatus.EStatus.ORDER);
+
+				//// 席のIDを更新
+				//AlienCall.SetAddId(AlienCall.GetAddId() + 1);
+
+				//// 席のIDが席最大数を超えた場合「0」に初期化
+				//if (AlienCall.GetAddId() >= alienCall.GetSeatMax()) { AlienCall.SetAddId(0); }
 
 				// オーダー完了
 				SetIsOrder(true);
 
-                individualOrderType = GetOrderType();
-                // エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
-                SetOrderType(GetOrderType() + 1);
-            
-                // 注文をループさせる為に「0」で初期化
-                if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+				individualOrderType = GetOrderType();
+
+				// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
+				SetOrderType(GetOrderType() + 1);
+
+				// 注文をループさせる為に「0」で初期化
+				if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
 			}
 		}
 		else
 		{
 			// 毎フレームの時間を加算
-			timeAdd += Time.deltaTime;
+			orderTimeAdd += Time.deltaTime;
 		}
 	}
 
@@ -92,6 +157,12 @@ public class AlienOrder : MonoBehaviour
 	public bool GetIsOrder() => isOrder;
 
 	/// <summary>
+	/// オーダーフラグの取得
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetOrderFlag() => orderFlag;
+
+	/// <summary>
 	///  注文の種類を格納
 	/// </summary>
 	/// <param name="_orderType"></param>
@@ -104,20 +175,41 @@ public class AlienOrder : MonoBehaviour
 	/// <returns></returns>
 	public static int GetOrderType() => orderType;
 
-    public void EatCuisine(GameObject cuisine)
-    {
-        if (individualOrderType == cuisine.GetComponent<Food>().GetCategory())
-        {
-            GetComponent<AlienChip>().SetCuisineCoefficient(1f);
-            //GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
-            GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-            GetComponent<AlienChip>().SetCuisineCame(true);
-        }
-        else
-        {
-            GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
-            GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-            GetComponent<AlienChip>().SetCuisineCame(true);
-        }
-    }
+	/// <summary>
+	/// エイリアンが注文した料理が来たかの判定関数
+	/// </summary>
+	/// <param name="cuisine"></param>
+	public void EatCuisine(GameObject cuisine)
+	{
+		if (individualOrderType == cuisine.GetComponent<Food>().GetCategory())
+		{
+			GetComponent<AlienChip>().SetCuisineCoefficient(1f);
+			//GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
+			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+			GetComponent<AlienChip>().SetCuisineCame(true);
+
+			//AlienCall.SetClaimId(AlienCall.GetAddId());
+			Debug.Log("注文内容が合ってる");
+
+			GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
+		}
+		else
+		{
+			GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
+			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+			GetComponent<AlienChip>().SetCuisineCame(true);
+
+			// クレームフラグが立つ
+			//AlienCall.SetClaimFlag(true, AlienCall.GetClaimId());
+
+			//AlienCall.SetClaimId(AlienCall.GetAddId());
+
+			// クレーム状態「ON」
+			//AlienStatus.SetStatusFlag(true, 1, (int)AlienStatus.EStatus.CLAIM);
+
+			Debug.Log("注文内容が合ってない");
+
+			GetComponent<AlienClaim>().SetIsClaim(true);
+		}
+	}
 }

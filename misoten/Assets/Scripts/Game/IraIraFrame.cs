@@ -9,40 +9,89 @@ using UnityEngine.UI;
 /// </summary>
 public class IraIraFrame : MonoBehaviour
 {
+	// インスペクター上で設定可能
+	// ---------------------------------------------
+
 	// 指定されたオブジェクトの位置を取得
 	[SerializeField]
 	private GameObject targetObj;
 
 	// 移動速度
-	[SerializeField, Range(-100, 100.0f)]
+	[SerializeField, Range(0, 100.0f)]
 	private float speed;
 
-	// 移動範囲(幅、高さ、奥行き)
-	[SerializeField]
-	private Vector3 moveRange;
+	// ---------------------------------------------
+
+	// ローカル変数
+	// ---------------------------------------------
+
+	// 拡縮設定
+	private Vector3 scale;
+
+	// 判回転したかのフラグ
+	private bool halfRotationFlag = false;
+
+	// 一回転したかのフラグ
+	private bool oneRotationFlag = false;
+
+	// ---------------------------------------------
 
 	/// <summary>
-	/// 開始関数
+	/// 衝突していない時
 	/// </summary>
-	void Start ()
+	/// <param name="collision"></param>
+	private void OnTriggerExit2D(Collider2D collision)
 	{
+		// Tagが「SecondHand」に設定されているオブジェクトのみ
+		if (collision.tag == "SecondHand")
+		{
+			// 初期位置に戻してやる
+			transform.localPosition = new Vector3(0.0f, 48.0f, 0.0f);
 
+			// 初期角度に戻してやる
+			transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+
+			// 判回転したかのフラグ初期化
+			halfRotationFlag = false;
+
+			// 一回転したかのフラグ初期化
+			oneRotationFlag = false;
+		}
 	}
-	
+
 	/// <summary>
-	/// 更新関数
+	/// 衝突している間
 	/// </summary>
-	void Update ()
+	/// <param name="collision"></param>
+	private void OnTriggerStay2D(Collider2D collision)
 	{
-		//// 指定したオブジェクトが円運動(X,Y軸)に行う
-		//transform.position = targetObj.transform.position + new Vector3(
-		//	Mathf.Cos(Time.time * speed) * moveRange.x,
-		//	Mathf.Sin(Time.time * speed) * moveRange.y, 0.0f);
+		// Tagが「SecondHand」に設定されているオブジェクトのみ
+		if (collision.tag == "SecondHand")
+		{
+			// 回転中(一回転をしていない場合)
+			if (!oneRotationFlag)
+			{
+				// イライラフレームの回転
+				transform.RotateAround(targetObj.transform.position, new Vector3(0.0f, 0.0f, -1.0f), speed * Time.deltaTime);
 
-		//var aim = this.targetObj.transform.position - this.transform.position;
-		//var look = Quaternion.LookRotation(aim);
-		//transform.rotation = new Quaternion(0.0f, 0.0f, look.z, look.w);
+				// 半回転判定
+				if (!halfRotationFlag && transform.rotation.z >= 0.9f) { halfRotationFlag = true; Debug.Log("半回転した!"); }
 
-		transform.RotateAround(targetObj.transform.position, new Vector3(0.0f, 0.0f, -1.0f), 30.0f * Time.deltaTime);
+				// 一回転判定
+				if (halfRotationFlag && transform.rotation.z <= 0.0f) { oneRotationFlag = true; Debug.Log("一回転した!"); }
+			}
+		}
 	}
+
+	/// <summary>
+	/// 拡縮の格納
+	/// </summary>
+	/// <param name="_scale"></param>
+	public void SetScale(Vector3 _scale) => scale = _scale;
+
+	/// <summary>
+	/// 拡縮の取得
+	/// </summary>
+	/// <returns></returns>
+	public Vector3 GetScale() => scale;
 }

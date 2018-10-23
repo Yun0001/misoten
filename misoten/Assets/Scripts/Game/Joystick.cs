@@ -9,6 +9,9 @@ using GamepadInput;
 /// </summary>
 public class Joystick : MonoBehaviour
 {
+	// インスペクター上で設定可能
+	// ---------------------------------------------
+
 	//実際に動くスティック部分
 	[SerializeField]
 	private GameObject stickObj;
@@ -21,8 +24,10 @@ public class Joystick : MonoBehaviour
 	[SerializeField]
 	private int playerId;
 
-	// プレイヤー
-	private Player player;
+	// ---------------------------------------------
+
+	// ローカル変数
+	// ---------------------------------------------
 
 	// プレイヤーへの参照の為
 	private string[] nameObj = { "char/Player1", "char/Player2", "char/Player3", "char/Player4" };
@@ -30,8 +35,13 @@ public class Joystick : MonoBehaviour
 	// 画像の位置
 	private Vector2 imagePos = Vector2.zero;
 
+	// プレイヤー
+	private Player player;
+
 	// ラジアン
-	private float radian;
+	private float radian = 0.0f;
+
+	// ---------------------------------------------
 
 	/// <summary>
 	/// 開始関数
@@ -43,20 +53,6 @@ public class Joystick : MonoBehaviour
 
 		// コンポーネント取得
 		player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
-
-		//スティックのImage取得(なければ追加)、タッチ判定を取られないようにraycastTargetをfalseに
-		//Image stickImage = stickObj.GetComponent<Image>();
-		//if (stickImage == null)
-		//{
-		//	stickImage = stickObj.AddComponent<Image>();
-		//}
-		//stickImage.raycastTarget = false;
-
-		////タッチ判定を受け取れるようにRaycastTargetをTrueに
-		//raycastTarget = true;
-
-		////タッチ判定をとる範囲は表示されないように透明に
-		//color = new Color(0, 0, 0, 0);
 	}
 
 	/// <summary>
@@ -64,7 +60,7 @@ public class Joystick : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// タップ位置を画面内の座標に変換し、スティックを移動
+		// スティックを動かすと座標変換される
 		RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
 			new Vector2(Input.GetAxis(player.GetInputXAxisName()), -Input.GetAxis(player.GetInputYAxisName())), null, out imagePos);
 
@@ -78,45 +74,7 @@ public class Joystick : MonoBehaviour
 			float radian = Mathf.Atan2(stickObj.transform.localPosition.y, stickObj.transform.localPosition.x);
 
 			// 円上にXとYを設定
-			Vector3 limitedPosition = Vector3.zero;
-			limitedPosition.x = radius * Mathf.Cos(radian);
-			limitedPosition.y = radius * Mathf.Sin(radian);
-
-			stickObj.transform.localPosition = limitedPosition;
+			stickObj.transform.localPosition = new Vector3(radius * Mathf.Cos(radian), radius * Mathf.Sin(radian), 0.0f);
 		}
-
-		//// 角度計算
-		//float radian = Mathf.Atan2(Input.GetAxis(player.GetInputYAxisName()), Input.GetAxis(player.GetInputXAxisName()));
-		//Vector3 limitedPosition = Vector3.zero;
-
-		//if (Vector3.Distance(Vector3.zero, new Vector3(Input.GetAxis(player.GetInputYAxisName()) + 45.0f, Input.GetAxis(player.GetInputXAxisName()), 0.0f)) < radius)
-		//{
-		//	// 円上にXとYを設定
-		//	limitedPosition.x = radius * Mathf.Sin(radian);
-		//	limitedPosition.y = radius * Mathf.Cos(radian);
-
-		//	stickObj.transform.localPosition = limitedPosition;
-		//}
-
-		//// 角度計算
-		//radian = Mathf.Atan2(-Input.GetAxis(player.GetInputYAxisName()), Input.GetAxis(player.GetInputXAxisName()));
-		//Debug.Log(radian);
-
-		//if()
-		//{
-
-		//}
-		//// 円上にXとYを設定
-		//Vector3 limitedPosition = Vector3.zero;
-		//limitedPosition.x = radius * Mathf.Sin(radian);
-		//limitedPosition.y = radius * Mathf.Cos(radian);
-
-		//stickObj.transform.localPosition = limitedPosition;
-	}
-
-		//オブジェクトと衝突している間に呼ばれ続けます
-	void OnCollisionStay(Collision collision)
-	{
-		Debug.Log("Stay" + collision.collider.name);
 	}
 }

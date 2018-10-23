@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class AlienChip : MonoBehaviour
 {
+	// エイリアン管理用列挙型
+	// ---------------------------------------------
+
 	/// <summary>
 	/// エイリアンがチップをプレイヤーに渡す種類
 	/// </summary>
@@ -17,9 +20,31 @@ public class AlienChip : MonoBehaviour
 		MAX			// 最大
 	}
 
+	// ---------------------------------------------
+
+	// インスペクター上で設定可能
+	// ---------------------------------------------
+
 	// チップの渡し方
 	[SerializeField]
 	private EChipPattern chipPattern;
+
+	// チップの値
+	[SerializeField]
+	private float chipVal = 0.0f;
+
+	// ---------------------------------------------
+
+	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
+	// ---------------------------------------------
+
+	// チップをプレイヤーに渡したかのフラグ
+	private static bool[] chipOnFlag = { false, false, false, false, false };
+
+	// ---------------------------------------------
+
+	// ローカル変数
+	// ---------------------------------------------
 
 	// エイリアンのオーダー
 	private AlienOrder alienOrder;
@@ -27,91 +52,68 @@ public class AlienChip : MonoBehaviour
 	// 料理が来たかの判定用
 	private bool isCuisineCame = false;
 
-	// チップの値
-    [SerializeField]
-	private float chipVal = 0.0f;
+	//料理を持ってきた相手のID
+	private int opponentID = 0;
 
-    // 料理の旨味係数
-    private float cisineTasteCoefficient = 0f;
-
-    //料理を持ってきた相手のID
-    private int opponentID;
-
-	// 初期化フラグ
-	private bool initFlag = false;
-
-    private int[] baseChip = { 100, 200, 300 };
-
-	// チップをプレイヤーに渡したかのフラグ
-	private static bool[] chipOnFlag = { false, false, false, false, false };
+	// ベースチップ
+	private int[] baseChip = { 100, 200, 300 };
 
 	// チップID(各エイリアン事に持っている)
-	private int chipId;
+	private int chipId = 0;
+
+	// 料理の旨味係数
+	private float cisineTasteCoefficient = 0f;
+
+	// ---------------------------------------------
+
+	/// <summary>
+	/// 開始関数
+	/// </summary>
+	void Start()
+	{
+		// チップIDへの受け渡し
+		chipId = AlienCall.GetIdSave();
+
+		// コンポーネント取得
+		alienOrder = GetComponent<AlienOrder>();
+
+		// プロトでは手渡し
+		chipPattern = EChipPattern.HANDOVER;
+
+		// ベースチップをセット
+		SetChipValue(baseChip[GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>().GetRichDegree(chipId)]);
+	}
 
 	/// <summary>
 	/// 更新関数
 	/// </summary>
 	void Update ()
 	{
-		// 一度だけ初期化
-		if (!initFlag)
-		{
-			Init();
-			initFlag = true;
-		}
-
 		// エイリアンが注文している時
 		if (alienOrder.GetIsOrder())
 		{
-			// if (Input.GetKey(KeyCode.Space))
-			//  {
-			// 料理が来た判定
-			//SetCuisineCame(true);
 			if (isCuisineCame)
-            {
-
-				//SetChipValue(CalcChipValue());
+			{
 				// チップの渡し方の管理
 				switch (chipPattern)
-                {
-                    case EChipPattern.PUT:      // チップを置いていく
+				{
+					case EChipPattern.PUT:		// チップを置いていく
 
-                        break;
-                    case EChipPattern.HANDOVER: // チップを直接渡す
-                        ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
-                        SetCuisineCame(false);
+						break;
+					case EChipPattern.HANDOVER: // チップを直接渡す
+						ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
+						SetCuisineCame(false);
 
 						// チップをプレイヤーに渡した
 						chipOnFlag[chipId] = true;
 
 						break;
-                    default:
-                        // 例外処理
-                        break;
-                }
-            }
-            
-          //  }
-		
+					default:
+						// 例外処理
+						break;
+				}
+			}
 		}
-	}
-
-	/// <summary>
-	/// 初期化関数
-	/// </summary>
-	void Init()
-	{
-		chipId = AlienCall.GetAddId();
-
-		// コンポーネント取得
-		alienOrder = GetComponent<AlienOrder>();
-		// プロトでは手渡し
-		chipPattern = EChipPattern.HANDOVER;
-		// ベースチップをセット
-		SetChipValue(baseChip[GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>().GetRichDegree(chipId)]);
-
-		//richDegreeId++;
-		//if (richDegreeId > 5) { richDegreeId = 0; }
 	}
 
 	/// <summary>
