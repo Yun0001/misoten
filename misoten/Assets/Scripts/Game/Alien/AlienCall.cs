@@ -296,7 +296,6 @@ public class AlienCall : MonoBehaviour
 	/// <returns></returns>
 	public static int GetIdSave() => idSave;
 
-
 	/// <summary>
 	/// オーダー待ち時間を取得
 	/// </summary>

@@ -74,6 +74,8 @@ public class AlienChip : MonoBehaviour
 		// チップIDへの受け渡し
 		chipId = AlienCall.GetIdSave();
 
+		//Debug.Log(chipId + "初期化");
+
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
 
@@ -106,6 +108,8 @@ public class AlienChip : MonoBehaviour
 
 						// チップをプレイヤーに渡した
 						chipOnFlag[chipId] = true;
+
+						//Debug.Log(chipId);
 
 						break;
 					default:

@@ -65,6 +65,9 @@ public class AlienOrder : MonoBehaviour
 	// オーダー内容をセーブ
 	private int orderSave = 0;
 
+	// エイリアン毎のID
+	private int setId = 0;
+
 	// 注文するまでの時間を測る
 	private float orderTimeAdd = 0.0f;
 
@@ -78,6 +81,9 @@ public class AlienOrder : MonoBehaviour
 		// コンポーネント取得
 		alienMove = GetComponent<AlienMove>();
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
+
+		// IDの保存
+		setId = AlienCall.GetIdSave();
 	}
 
 	/// <summary>
@@ -116,7 +122,7 @@ public class AlienOrder : MonoBehaviour
 				orderBalloon[GetOrderType()].SetActive(true);
 
 				// 注文状態「ON」
-				AlienStatus.SetStatusFlag(true, AlienCall.GetIdSave(), (int)AlienStatus.EStatus.ORDER);
+				AlienStatus.SetStatusFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
 
 				//// 席のIDを更新
 				//AlienCall.SetAddId(AlienCall.GetAddId() + 1);

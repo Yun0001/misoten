@@ -48,6 +48,9 @@ public class AlienDisturbance : MonoBehaviour
 	// エイリアンの呼び出し
 	private AlienCall alienCall;
 
+	// エイリアン毎のID
+	private int setId = 0;
+
 	// 待ち時間の加算
 	private float latencyAdd = 0.0f;
 
@@ -65,6 +68,9 @@ public class AlienDisturbance : MonoBehaviour
 		alienOrder = GetComponent<AlienOrder>();
 		alienChip = GetComponent<AlienChip>();
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
+
+		// IDの保存
+		setId = AlienCall.GetIdSave();
 	}
 
 	/// <summary>
@@ -89,7 +95,7 @@ public class AlienDisturbance : MonoBehaviour
 					break;
 				case EAlienMood.ANGER:	// 怒り状態
 					// エイリアンの種類管理
-					switch (alienCall.GetAlienPattern(AlienCall.GetIdSave()))
+					switch (alienCall.GetAlienPattern(setId))
 					{
 						case 0: // 火星人の場合
 

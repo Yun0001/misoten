@@ -46,16 +46,11 @@ public class AlienMove : MonoBehaviour
 
 	// ---------------------------------------------
 
-	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
-	// ---------------------------------------------
-
-	//// 終点座標ID
-	//private static int setEndPositionID = 0;
-
-	// ---------------------------------------------
-
 	// ローカル変数
 	// ---------------------------------------------
+
+	// エイリアンの呼び出し
+	private AlienCall alienCall;
 
 	// 開始座標設定用
 	private Vector3 startPosition;
@@ -70,8 +65,10 @@ public class AlienMove : MonoBehaviour
 	private int setEndPositionId_1 = 0;
 	private int setEndPositionId_2 = 0;
 
-	private float[] diff = { 0.0f, 0.0f, 0.0f };
+	// 時間更新用
+	private float[] timeAdd = { 0.0f, 0.0f, 0.0f };
 
+	// 予定時間を割る用
 	private float rate = 0.0f;
 
 	// ---------------------------------------------
@@ -81,19 +78,8 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		for(int i = 0; i < 5; i++) { endPosition[i, 0] = new Vector3(0.0f, 4.5f, -0.1f); }
-
-		endPosition[0, 1] = new Vector3(-6.0f, 4.5f, -0.1f);
-		endPosition[1, 1] = new Vector3(-3.0f, 4.5f, -0.1f);
-		endPosition[2, 1] = new Vector3(0.0f, 4.5f, -0.1f);
-		endPosition[3, 1] = new Vector3(3.0f, 4.5f, -0.1f);
-		endPosition[4, 1] = new Vector3(6.0f, 4.5f, -0.1f);
-
-		endPosition[0, 2] = new Vector3(-6.0f, 3.5f, -0.2f);
-		endPosition[1, 2] = new Vector3(-3.0f, 3.5f, -0.2f);
-		endPosition[2, 2] = new Vector3(0.0f, 3.5f, -0.2f);
-		endPosition[3, 2] = new Vector3(3.0f, 3.5f, -0.2f);
-		endPosition[4, 2] = new Vector3(6.0f, 3.5f, -0.2f);
+		// 終点座標設定
+		EndPositionInit();
 
 		// エイリアンがどの席に向かうかの設定
 		if (endPositionPattern != EEndPositionPattern.THEORDER)
@@ -107,12 +93,7 @@ public class AlienMove : MonoBehaviour
 			// 空いている席に座る
 			//SetEndPositionsID(AlienCall.GetAddId());
 			setEndPositionId_1 = AlienCall.GetIdSave();
-			Debug.Log(AlienCall.GetIdSave() + "い");
 		}
-
-		isMove = false;
-
-		enabled = true;
 	}
 
 	/// <summary>
@@ -224,43 +205,34 @@ public class AlienMove : MonoBehaviour
 			//				transform.position += new Vector3(0.1f * Mathf.Cos(rad), 0.1f * Mathf.Sin(rad), 0.0f);
 			//			}
 
-			diff[setEndPositionId_2] += Time.deltaTime;
+			// 時間更新
+			timeAdd[setEndPositionId_2] += Time.deltaTime;
 
-			rate = diff[setEndPositionId_2] / endPositionTime[setEndPositionId_2];
+			// 予定時間を割る
+			rate = timeAdd[setEndPositionId_2] / endPositionTime[setEndPositionId_2];
 
+			// カウンター席に着席する管理
 			switch (setEndPositionId_2)
 			{
 				case 0:
-
-					if (diff[0] > endPositionTime[0])
-					{
-						transform.position = endPosition[setEndPositionId_1, 0];
-						setEndPositionId_2 = 1;
-					}
+					// 一つ目の終点座標に到着
+					if (timeAdd[0] > endPositionTime[0]) { setEndPositionId_2 = 1; }
 					transform.position = Vector3.Lerp(new Vector3(0.0f, 5.0f, 0.0f), endPosition[setEndPositionId_1, 0], rate);
 					break;
-
 				case 1:
-
-					if (diff[1] > endPositionTime[1])
-					{
-						transform.position = endPosition[setEndPositionId_1, 1];
-						setEndPositionId_2 = 2;
-					}
+					// 二つ目の終点座標に到着
+					if (timeAdd[1] > endPositionTime[1]) { setEndPositionId_2 = 2; }
 					transform.position = Vector3.Lerp(endPosition[setEndPositionId_1, 0], endPosition[setEndPositionId_1, 1], rate);
 					break;
 				case 2:
-					if (diff[2] > endPositionTime[2])
+					// 三つ目の終点座標に到着
+					if (timeAdd[2] > endPositionTime[2])
 					{
-						transform.position = endPosition[setEndPositionId_1, 2];
-
 						// 入店時の移動状態「OFF」
-						AlienStatus.SetStatusFlag(false, AlienCall.GetIdSave(), (int)AlienStatus.EStatus.WALK);
+						AlienStatus.SetStatusFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK);
 
 						// 着席状態「ON」
-						AlienStatus.SetStatusFlag(true, AlienCall.GetIdSave(), (int)AlienStatus.EStatus.GETON);
-
-						Debug.Log(AlienCall.GetIdSave());
+						AlienStatus.SetStatusFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.GETON);
 
 						// 移動状態終了する
 						isMove = true;
@@ -268,57 +240,42 @@ public class AlienMove : MonoBehaviour
 						// スクリプトを切る
 						enabled = false;
 					}
-
 					transform.position = Vector3.Lerp(endPosition[setEndPositionId_1, 1], endPosition[setEndPositionId_1, 2], rate);
 					break;
 			}
 		}
 
-		// 移動終了
-		if (GetMoveStatus())
-		{
-			GetComponent<BoxCollider2D>().enabled = true;
-		}
+		// 移動終了時、BoxCollider2Dを「ON」にする
+		if (GetMoveStatus()) { GetComponent<BoxCollider2D>().enabled = true; }
 	}
 
 	/// <summary>
-	/// アクティブな状態の時に呼び出される
+	/// 移動時の終点座標初期化関数
 	/// </summary>
-	void OnEnable()
+	void EndPositionInit()
 	{
-		//switch (setEndPositionId_2)
-		//{
-		//	case 0:
+		// コンポーネント取得
+		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
-		//		if (endPositionTime[0] <= 0.0f)
-		//		{
-		//			transform.position = endPosition[setEndPositionId_1, 0];
-		//			return;
-		//		}
-		//		break;
-		//	case 1:
+		// 一つ目の終点座標の設定
+		for (int i = 0; i < alienCall.GetSeatMax(); i++) { endPosition[i, 0] = new Vector3(0.0f, 4.5f, -0.1f); }
 
-		//		if (endPositionTime[1] <= 0.0f)
-		//		{
-		//			transform.position = endPosition[setEndPositionId_1, 1];
-		//			return;
-		//		}
-		//		break;
-		//	case 2:
+		// 二つ目の終点座標の設定
+		endPosition[0, 1] = new Vector3(-6.0f, 4.5f, -0.1f);
+		endPosition[1, 1] = new Vector3(-3.0f, 4.5f, -0.1f);
+		endPosition[2, 1] = new Vector3(0.0f, 4.5f, -0.1f);
+		endPosition[3, 1] = new Vector3(3.0f, 4.5f, -0.1f);
+		endPosition[4, 1] = new Vector3(6.0f, 4.5f, -0.1f);
 
-		//		if (endPositionTime[2] <= 0.0f)
-		//		{
-		//			transform.position = endPosition[setEndPositionId_1, 2];
-		//			return;
-		//		}
-		//		break;
-		//}
+		// 三つ目の終点座標の設定
+		endPosition[0, 2] = new Vector3(-6.0f, 3.5f, -0.2f);
+		endPosition[1, 2] = new Vector3(-3.0f, 3.5f, -0.2f);
+		endPosition[2, 2] = new Vector3(0.0f, 3.5f, -0.2f);
+		endPosition[3, 2] = new Vector3(3.0f, 3.5f, -0.2f);
+		endPosition[4, 2] = new Vector3(6.0f, 3.5f, -0.2f);
 
-		if (endPositionTime[setEndPositionId_2] <= 0.0f)
-		{
-			transform.position = endPosition[setEndPositionId_1, setEndPositionId_2];
-			return;
-		}
+		// 移動状態の初期化
+		isMove = false;
 	}
 
 	/// <summary>
@@ -362,23 +319,4 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public bool GetMoveStatus() => isMove;
-
-	///// <summary>
-	///// 終点座標IDの格納
-	///// </summary>
-	///// <param name="id"></param>
-	///// <returns></returns>
-	//public static int SetEndPositionsID(int id) => setEndPositionID = id;
-
-	///// <summary>
-	///// 終点座標IDの取得
-	///// </summary>
-	///// <returns></returns>
-	//public static int GetEndPositionsID() => setEndPositionID;
-
-	///// <summary>
-	///// 入店時状態の取得
-	///// </summary>
-	///// <returns></returns>
-	//public bool GetWalk() => walk;
 }
