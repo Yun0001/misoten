@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 58135241614223528}
   - component: {fileID: 114178347106610492}
   m_Layer: 13
-  m_Name: Taste
+  m_Name: Taste3
   m_TagString: Taste
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
