@@ -27,6 +27,7 @@ public class MicroWave : MonoBehaviour
     /// <summary>
     /// タイマー
     /// </summary>
+    [SerializeField]
     private float timer;
 
     /// <summary>
@@ -40,7 +41,6 @@ public class MicroWave : MonoBehaviour
 
     [SerializeField]
     private float[] successRangeMax;
-
     private int playerID;
 
     private Vector3 playerPos;
@@ -234,6 +234,7 @@ public class MicroWave : MonoBehaviour
                 if (timer >= 1)
                 {
                     SetStatus(EMWState.SwitchOn);
+                    microwaveTimerImage_cs.SetNextSprite();
                     ResetTimer();
                 }
                 break;

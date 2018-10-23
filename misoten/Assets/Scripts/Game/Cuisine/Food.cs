@@ -96,4 +96,6 @@ public class Food : MonoBehaviour {
     /// </summary>
     /// <returns>料理の種類</returns>
     public int GetCategory() => (int)category;
+
+    public void AddQualityTaste(int point) => qualityTaste += point;
 }

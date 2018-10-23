@@ -13,7 +13,7 @@ public class CookingGrilled : MonoBehaviour {
 
     public void OnFire()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().StartCooking();
+        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().StartCooking(player_cs.GetPlayerControllerNumber(),ScoreManager.GetInstance().GetPlayerRank(player_cs.GetPlayerID()),transform.position);
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
     }
 

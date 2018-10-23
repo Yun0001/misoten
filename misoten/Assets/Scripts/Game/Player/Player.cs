@@ -30,9 +30,6 @@ public class Player : MonoBehaviour
         HitObjMax
     }
 
-
-    [SerializeField]
-    private Vector2 move;  //移動量
     private string layerName;// レイヤーの名前
     [SerializeField]
     private PlayerStatus playerStatus;
@@ -40,14 +37,14 @@ public class Player : MonoBehaviour
     // 左スティックの入力を取る用
     private string inputXAxisName;
     private string inputYAxisName;
-    private GamePad.Index PlayerNumber;
+
+    private GamePad.Index PlayerControllerNumber;// コントローラーナンバー
+    private int playerID;//プレイヤーID
     [SerializeField]
-    private GameObject[] hitObj = new GameObject[9];
+    private GameObject[] hitObj = new GameObject[(int)hitObjName.HitObjMax];// 現在プレイヤーと当たっているオブジェクト
 
     [SerializeField]
     private GameObject haveInHandFood;  // 持っている食材
-
-    private int playerID;
 
     private readonly static float HINDRANCE_TIME = 3;
     private float hindranceTime = HINDRANCE_TIME; // 邪魔動作の時間
@@ -67,25 +64,25 @@ public class Player : MonoBehaviour
         {
             case "Player1":
                 playerID = 0;
-                PlayerNumber = GamePad.Index.One;
+                PlayerControllerNumber = GamePad.Index.One;
                 inputXAxisName = "L_XAxis_1";
                 inputYAxisName = "L_YAxis_1";
                 break;
             case "Player2":
                 playerID = 1;
-                PlayerNumber = GamePad.Index.Two;
+                PlayerControllerNumber = GamePad.Index.Two;
                 inputXAxisName = "L_XAxis_2";
                 inputYAxisName = "L_YAxis_2";
                 break;
             case "Player3":
                 playerID = 2;
-                PlayerNumber = GamePad.Index.Three;
+                PlayerControllerNumber = GamePad.Index.Three;
                 inputXAxisName = "L_XAxis_3";
                 inputYAxisName = "L_YAxis_3";
                 break;
             case "Player4":
                 playerID = 3;
-                PlayerNumber = GamePad.Index.Four;
+                PlayerControllerNumber = GamePad.Index.Four;
                 inputXAxisName = "L_XAxis_4";
                 inputYAxisName = "L_YAxis_4";
                 break;
@@ -136,6 +133,14 @@ public class Player : MonoBehaviour
                     GameObject cuisine = null;
                     cuisine = cookingPot_cs.Mix(stickVec);
                     if (cuisine != null) WithaCuisine(cuisine);
+                    break;
+
+                case PlayerStatus.GrilledTable:
+                    if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().IsEndCooking())
+                    {
+                        // 焼く調理終了の処理
+                        WithaCuisine(GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GrilledCookingEnd());
+                    }
                     break;
 
                     //電子レンジの爆発状態
@@ -289,7 +294,7 @@ public class Player : MonoBehaviour
 
     public  void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
-    public GamePad.Index GetPlayerNumber() => PlayerNumber;
+    public GamePad.Index GetPlayerControllerNumber() => PlayerControllerNumber;
 
     /// <summary>
     /// 電子レンジへのアクション
@@ -344,7 +349,7 @@ public class Player : MonoBehaviour
                 break;
 
             case Grilled.GrilledState.inCcoking:
-                cookingGrilled_cs.ShaketheFryingpan();
+                //cookingGrilled_cs.ShaketheFryingpan();
                 break;
             default:
                 break;
@@ -364,6 +369,10 @@ public class Player : MonoBehaviour
         {
             case PlayerStatus.Microwave:
                 cookingMicrowave_cs.CancelCooking();
+                SetPlayerStatus(PlayerStatus.Normal);
+                break;
+
+            case PlayerStatus.GrilledTable:
                 SetPlayerStatus(PlayerStatus.Normal);
                 break;
 

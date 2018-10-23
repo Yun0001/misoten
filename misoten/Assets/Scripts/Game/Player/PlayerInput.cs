@@ -6,7 +6,7 @@ using GamepadInput;
 public class PlayerInput : MonoBehaviour
 {
     private int playerID;
-    private GamePad.Index playerNumber;
+    private GamePad.Index PlayerControllerNumber;
     private string inputXAxisName;
     private string inputYAxisName;
     private Player player_cs;
@@ -21,7 +21,7 @@ public class PlayerInput : MonoBehaviour
         playerMove_cs = GetComponent<PlayerMove>();
         hindrance_cs = GetComponent<HindranceItem>();
         playerID = player_cs.GetPlayerID();
-        playerNumber = player_cs.GetPlayerNumber();
+        PlayerControllerNumber = player_cs.GetPlayerControllerNumber();
         inputXAxisName = xaxisname;
         inputYAxisName = yaxisdname;
     }
@@ -54,19 +54,19 @@ public class PlayerInput : MonoBehaviour
     private void InputGamepad()
     {
         // Aボタン入力（電子レンジ）
-        if (GamePad.GetButtonDown(GamePad.Button.A, playerNumber)) player_cs.ActionMicrowave();
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.ActionMicrowave();
         // Xボタン入力（鍋）
-        if (GamePad.GetButtonDown(GamePad.Button.X, playerNumber)) player_cs.ActionPot();
+        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.ActionPot();
         // Bボタン入力（フライパン）
-        if (GamePad.GetButtonDown(GamePad.Button.B, playerNumber)) player_cs.ActionGrilled();
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionGrilled();
         // Yボタン入力（キャンセル）
-        if (GamePad.GetButtonDown(GamePad.Button.Y, playerNumber)) player_cs.CookingCancel();
+        if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerControllerNumber)) player_cs.CookingCancel();
         // Lトリガー入力（配膳）
-        if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, playerNumber)) player_cs.OfferCuisine();
+        if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, PlayerControllerNumber)) player_cs.OfferCuisine();
         //Rトリガー入力（味の素）
-        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, playerNumber)) hindrance_cs.DisplayTasteGage();
-        else if (GamePad.GetButton(GamePad.Button.RightShoulder, playerNumber)) hindrance_cs.UpgateTasteGage();
-        else if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, playerNumber)) hindrance_cs.SprinkleTaste();
+        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.DisplayTasteGage();
+        else if (GamePad.GetButton(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.UpgateTasteGage();
+        else if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.SprinkleTaste();
         
         playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName), -(Input.GetAxis(inputYAxisName))));
     }
