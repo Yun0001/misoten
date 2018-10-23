@@ -13,7 +13,9 @@ TagManager:
   - Alien
   - GrilledTable
   - SuccessArea
-  - SecondHand
+  - GrilledGage
+  - SuccessAreaChild
+  - OutsideGrilledGage
   layers:
   - Default
   - TransparentFX

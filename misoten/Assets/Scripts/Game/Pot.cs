@@ -24,13 +24,10 @@ public class Pot : MonoBehaviour {
 
     private PotState potStatus;
     private StickState stickStatus;
-    private StickState oldStickStatus;
-    private StickState startStatus;
     bool isOneturn;
 
     [SerializeField]
     private bool[] rotationFlg = new bool[4];
-    private int rotationCount;
 
 
     private void Awake()
@@ -45,9 +42,6 @@ public class Pot : MonoBehaviour {
     {
         potStatus           = PotState.unused;
         stickStatus         = StickState.None;
-        oldStickStatus    = StickState.None;
-        startStatus         = StickState.None;
-        rotationCount       = 0;
         isOneturn = false;
         for (int i = 0; i < rotationFlg.Length; i++)
             rotationFlg[i] = false;
@@ -89,12 +83,10 @@ public class Pot : MonoBehaviour {
             case StickState.UpRight:
                 if (stickVec.x < 0 && stickVec.y < 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.UpLeft;
                 }
                 else if (stickVec.x < 0 && stickVec.y > 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.DownRight;
                 }
 
@@ -103,12 +95,10 @@ public class Pot : MonoBehaviour {
             case StickState.UpLeft:
                 if (stickVec.x > 0 && stickVec.y < 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.UpRight;
                 }
                 else if (stickVec.x < 0 && stickVec.y > 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.DownLeft;
                 }
                 break;
@@ -116,12 +106,10 @@ public class Pot : MonoBehaviour {
             case StickState.DownLeft:
                 if (stickVec.x > 0 && stickVec.y > 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.DownRight;
                 }
                 else if (stickVec.x > 0 && stickVec.y < 0 )
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.UpRight;
                 }
                 break;
@@ -129,12 +117,10 @@ public class Pot : MonoBehaviour {
             case StickState.DownRight:
                 if (stickVec.x < 0 && stickVec.y > 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.DownLeft;
                 }
                 else if (stickVec.y < 0 && stickVec.x > 0)
                 {
-                    oldStickStatus = stickStatus;
                     stickStatus = StickState.UpRight;
                 }
                 break;
@@ -150,7 +136,6 @@ public class Pot : MonoBehaviour {
                     if (stickVec.y < 0) stickStatus = StickState.UpRight;
                     else if (stickVec.y > 0) stickStatus = StickState.DownRight;
                 }
-                startStatus = stickStatus;
                 break;
         }
         if (stickStatus == StickState.None) return;

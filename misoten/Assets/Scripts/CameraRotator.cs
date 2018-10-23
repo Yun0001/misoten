@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraRotator : MonoBehaviour
 {
+
     public Transform target;
     public float spinSpeed = 1f;
     float distance = 3f;
