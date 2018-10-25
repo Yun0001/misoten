@@ -17,7 +17,7 @@ public class Joystick : MonoBehaviour
 	private GameObject stickObj;
 
 	//スティックが動く範囲の半径
-	[SerializeField, Range(0.0f, 1000.0f)]
+	[SerializeField, Range(0.0f, 100.0f)]
 	private float radius;
 
 	// プレイヤーID
@@ -38,13 +38,6 @@ public class Joystick : MonoBehaviour
 	// プレイヤー
 	private Player player;
 
-    Vector2 imagePOS;
-
-	// ラジアン
-	private float radian = 0.0f;
-
-
-
     // ---------------------------------------------
 
     /// <summary>
@@ -56,16 +49,19 @@ public class Joystick : MonoBehaviour
 		stickObj.transform.localPosition = Vector3.zero;
 
 		// コンポーネント取得
-		player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
-
-
-
+		//player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
     }
 
-	/// <summary>
-	/// 更新関数
-	/// </summary>
-	void Update()
+
+    public void Init(int playerID)
+    {
+        player = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<Player>();
+    }
+
+    /// <summary>
+    /// 更新関数
+    /// </summary>
+    void Update()
 	{
         //プレイヤーの上に表示
         Vector3 pos = player.transform.position;

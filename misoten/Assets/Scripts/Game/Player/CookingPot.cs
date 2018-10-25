@@ -15,7 +15,7 @@ public class CookingPot : MonoBehaviour {
     {
         if (player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().GetStatus() == Pot.PotState.unused)
         {
-            player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().StartCookingPot();
+            player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().StartCookingPot(player_cs.GetPlayerID());
             player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
         }
     }
@@ -24,9 +24,9 @@ public class CookingPot : MonoBehaviour {
     /// 調理
     /// </summary>
     /// <param name="stickVec"></param>
-    public GameObject Mix(Vector2 stickVec)
+    public GameObject Mix()
     {
-        if (player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateCooking(stickVec))
+        if (player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateCooking())
         {
             return player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().GetPotCuisine();
         }

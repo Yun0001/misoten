@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
                 inputYAxisName = "L_YAxis_4";
                 break;
         }
+
         playerStatus = PlayerStatus.Normal;
         for (int i = 0; i < hitObj.Length; i++)
         {
@@ -128,9 +129,8 @@ public class Player : MonoBehaviour
             {
                 case PlayerStatus.Pot:
                     //茹で料理を調理中の処理
-                    Vector2 stickVec = new Vector2(Input.GetAxis(inputXAxisName) * 5, -(Input.GetAxis(inputYAxisName) * 5));
                     GameObject cuisine = null;
-                    cuisine = cookingPot_cs.Mix(stickVec);
+                    cuisine = cookingPot_cs.Mix();
                     if (cuisine != null) WithaCuisine(cuisine);
                     break;
 
