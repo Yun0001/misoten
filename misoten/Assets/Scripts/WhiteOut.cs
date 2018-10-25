@@ -51,7 +51,8 @@ public class WhiteOut : MonoBehaviour {
 
     void NextScene()
     {
-        SceneManager.LoadScene("Scenes/3dNewScene");
+        //SceneManager.LoadScene("Scenes/3dNewScene");
+        SceneManagerScript.GetInstance().LoadNextScene();
     }
 
     public void OnWhiteOut()

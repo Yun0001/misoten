@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManagerScript : MonoBehaviour {
+public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     private bool IsLoadScene = false;
     private bool IsKeyEnter = false;
@@ -11,6 +11,8 @@ public class SceneManagerScript : MonoBehaviour {
     private bool IsKey2 = false;
     private bool IsKey3 = false;
     private bool IsKey4 = false;
+
+    private string ScenesFolderPass = "Scenes/";
 
     private enum SceneName
     {
@@ -29,11 +31,13 @@ public class SceneManagerScript : MonoBehaviour {
         { SceneName.Result,"Result" }       //"Aseets/Scenes/Result.unity"
     };
 
+    
+
     // これを呼んでシーン遷移を行う
     void LoadScene(SceneName sceneID)
     {
         //Debug.Log("sceneID"+ sceneID);
-        SceneManager.LoadScene(m_sceneNameDictionary[sceneID]);
+        SceneManager.LoadScene(ScenesFolderPass + m_sceneNameDictionary[sceneID]);
     }
 
     // Use this for initialization
@@ -70,13 +74,14 @@ public class SceneManagerScript : MonoBehaviour {
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
 
-    private void LoadNextScene()
+    public void LoadNextScene()
     {
 
         switch ((SceneName)SceneManager.GetActiveScene().buildIndex)
         {
             case SceneName.Title:
-                LoadScene(SceneName.Tutorial);
+                //LoadScene(SceneName.Tutorial); チュートリアルができたらコッチ
+                LoadScene(SceneName.Game); // 今だけ
                 break;
 
             case SceneName.Tutorial:
@@ -90,8 +95,11 @@ public class SceneManagerScript : MonoBehaviour {
             case SceneName.Result:
                 LoadScene(SceneName.Title);
                 break;
-        }
 
+            default:
+                Debug.LogError("不正なシーン");
+                break;
+        }
     }
 
     private void LoadSceneFlg()
