@@ -67,6 +67,10 @@ public class Joystick : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
+        //プレイヤーの上に表示
+        Vector3 pos = player.transform.position;
+        pos.y += 2;
+        gameObject.transform.position = pos;
 
         // 現在のワールド座標をスクリーン座標に変換
         Vector3 Position;
@@ -90,12 +94,5 @@ public class Joystick : MonoBehaviour
 			// 円上にXとYを設定
 			stickObj.transform.localPosition = new Vector3(radius * Mathf.Cos(radian), radius * Mathf.Sin(radian), 0.0f);
 		}
-
-        //プレイヤーの上に表示
-        Vector3 pos = player.transform.position;
-        pos.y += 2;
-        gameObject.transform.position = pos;
-
-        stickObj.transform.localPosition += player.gameObject.transform.position;
     }
 }
