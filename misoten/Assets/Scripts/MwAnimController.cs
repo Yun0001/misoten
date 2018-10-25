@@ -21,6 +21,7 @@ public class MwAnimController : MonoBehaviour {
         }
 
         _animator.SetBool("isOpen", isOpen);
+
     }
 
 }

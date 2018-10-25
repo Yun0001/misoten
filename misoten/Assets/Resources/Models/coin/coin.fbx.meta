@@ -1,39 +1,17 @@
 fileFormatVersion: 2
-guid: 66118748d18096949aed0b0a40042108
-timeCreated: 1539334665
+guid: 05951db7b2ec15344962ca5b801f30de
+timeCreated: 1540181868
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Armature
-    100002: cosmo
-    100004: door1
-    100006: door2
-    100008: //RootNode
-    100010: shop
-    400000: Armature
-    400002: cosmo
-    400004: door1
-    400006: door2
-    400008: //RootNode
-    400010: shop
-    2100000: shop
-    2100002: door1
-    2100004: door2
-    2100006: cosmo
-    2300000: cosmo
-    2300002: door1
-    2300004: door2
-    2300006: shop
-    3300000: cosmo
-    3300002: door1
-    3300004: door2
-    3300006: shop
-    4300000: shop
-    4300002: door1
-    4300004: door2
-    4300006: cosmo
-    7400000: door1|open
+    100000: //RootNode
+    400000: //RootNode
+    2100000: coin
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder
+    7400000: Cylinder|spin
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -61,42 +39,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: door1|open
-      takeName: door1|open
-      firstFrame: 0
-      lastFrame: 40
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 1
-        functionName: IsOpened
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
