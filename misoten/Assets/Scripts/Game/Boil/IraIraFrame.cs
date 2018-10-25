@@ -94,4 +94,6 @@ public class IraIraFrame : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public Vector3 GetScale() => scale;
+
+    public bool GetOneRotationFlag() => oneRotationFlag;
 }
