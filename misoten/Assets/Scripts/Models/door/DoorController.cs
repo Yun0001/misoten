@@ -2,54 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour {
+/// <summary>
+/// ドアのアニメーションスクリプト
+/// </summary>
+public class DoorController : MonoBehaviour
+{
+	// ローカル変数
+	// ---------------------------------------------
 
-    private Animator doorRAnimator;
-    private Animator doorLAnimator;
-    public bool isOpen = false;
-    private bool openAnim = false;
+	// 左右のドアのアニメーション
+	private Animator doorRAnimator, doorLAnimator;
 
-    // Use this for initialization
-    void Start () {
+	// ドアのアニメーション管理用
+	//private bool isOpen = false;
+	//private bool openAnim = false;
 
-        doorRAnimator = GameObject.Find("doorr").GetComponent<Animator>();
-        doorLAnimator = GameObject.Find("doorl").GetComponent<Animator>();
+	// ---------------------------------------------
 
-    }
+	/// <summary>
+	/// 開始関数
+	/// </summary>
+	void Start()
+	{
+		// コンポーネント取得
+		doorRAnimator = GameObject.Find("doorr").GetComponent<Animator>();
+		doorLAnimator = GameObject.Find("doorl").GetComponent<Animator>();
+	}
 
-    // Update is called once per frame
-    void Update () {
+	/// <summary>
+	/// 更新関数
+	/// </summary>
+	void Update()
+	{
+		// エイリアンが生成された時、ドアのアニメーションを行う
+		if (AlienCall.GetdoorAnimationFlag()) { DoorToDrink(); }
+		else { DoorToClose(); }
+	}
 
-        openAnim = isOpen;
+	/// <summary>
+	/// ドアを開ける関数
+	/// </summary>
+	public void DoorToDrink()
+	{
+		doorRAnimator.Play("doorr|ropen");
+		doorLAnimator.Play("doorl|lopen");
+	}
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            isOpen = !isOpen;
-        }
-
-        //_animation.SetBool("isOpen", isOpen);
-
-        if (isOpen!=openAnim)
-        {
-            DoorAnimation();
-        }
-
-    }
-
-    void DoorAnimation()
-    {
-
-        if (isOpen) {
-            doorRAnimator.Play("doorr|ropen");
-            doorLAnimator.Play("doorl|lopen");
-        }
-        else
-        {
-            doorRAnimator.Play("doorr|rclose");
-            doorLAnimator.Play("doorl|lclose");
-        }
-
-
-    }
-
+	/// <summary>
+	/// ドアを閉める関数
+	/// </summary>
+	public void DoorToClose()
+	{
+		doorRAnimator.Play("doorr|rclose");
+		doorLAnimator.Play("doorl|lclose");
+	}
 }

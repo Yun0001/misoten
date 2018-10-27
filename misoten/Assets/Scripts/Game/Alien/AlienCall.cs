@@ -89,17 +89,14 @@ public class AlienCall : MonoBehaviour
 	// 例外フラグ
 	private static bool exceptionFlag = false;
 
-	// クレーム用ID
-	private static int claimId = 0;
+	// クレーム用ID(カウンター用&持ち帰り用)
+	private static int[] claimId = new int[(int)ESeatPattern.MAX];
 
 	// 金持ち度ID(カウンター用&持ち帰り用)
 	private static int[] richDegreeId = new int[(int)ESeatPattern.MAX];
 
 	// 席管理用ID(カウンター用&持ち帰り用)
 	private static int[] seatAddId = new int[(int)ESeatPattern.MAX];
-
-	//// 持ち帰り用席管理用ID
-	//private static int takeAwaySeatAddId = 0;
 
 	// エイリアンIDの保存用(カウンター用&持ち帰り用)
 	private static int[] idSave = new int[(int)ESeatPattern.MAX];
@@ -115,6 +112,9 @@ public class AlienCall : MonoBehaviour
 
 	// 座っているかの判定(持ち帰り用)
 	private static bool[] orSitting2 = { false, false, false, false };
+
+	// ドアのアニメーションフラグ
+	private static bool doorAnimationFlag = true;
 
 	// ---------------------------------------------
 
@@ -180,6 +180,9 @@ public class AlienCall : MonoBehaviour
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
 			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.COUNTERSEATS] > inTime[(int)ESeatPattern.COUNTERSEATS])
 			{
+				// ドアのアニメーションを行う
+				SetdoorAnimationFlag(true);
+
 				// エイリアンの秒数設定処理
 				TheNumberOfSecondsSet(ESeatPattern.COUNTERSEATS);
 
@@ -228,6 +231,9 @@ public class AlienCall : MonoBehaviour
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
 			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] > inTime[(int)ESeatPattern.TAKEAWAYSEAT])
 			{
+				// ドアのアニメーションを行う
+				SetdoorAnimationFlag(true);
+
 				// エイリアンの秒数設定処理
 				TheNumberOfSecondsSet(ESeatPattern.TAKEAWAYSEAT);
 
@@ -405,31 +411,20 @@ public class AlienCall : MonoBehaviour
 	/// <returns></returns>
 	public static int GetSeatAddId(int seatId) => seatAddId[seatId];
 
-	///// <summary>
-	///// 持ち帰り用席管理用IDの格納
-	///// </summary>
-	///// <param name="_takeAwaySeatAddId"></param>
-	///// <returns></returns>
-	//public static int SetTakeAwaySeatAddId(int _takeAwaySeatAddId) => takeAwaySeatAddId = _takeAwaySeatAddId;
-
-	///// <summary>
-	///// 持ち帰り用席管理用IDの取得
-	///// </summary>
-	///// <returns></returns>
-	//public static int GetTakeAwaySeatAddId() => takeAwaySeatAddId;
-
 	/// <summary>
-	/// クレーム用IDの格納
+	/// クレーム用ID(カウンター用&持ち帰り用)の格納
 	/// </summary>
 	/// <param name="_claimId"></param>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static int SetClaimId(int _claimId) => claimId = _claimId;
+	public static int SetClaimId(int _claimId, int seatId) => claimId[seatId] = _claimId;
 
 	/// <summary>
-	/// クレーム用IDの取得
+	/// クレーム用ID(カウンター用&持ち帰り用)の取得
 	/// </summary>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static int GetClaimId() => claimId;
+	public static int GetClaimId(int seatId) => claimId[seatId];
 
 	/// <summary>
 	/// エイリアンIDの保存用(カウンター用&持ち帰り用)の取得
@@ -465,4 +460,17 @@ public class AlienCall : MonoBehaviour
 	/// <param name="seatId"></param>
 	/// <returns></returns>
 	public static bool GetOrSitting2(int seatId) => orSitting2[seatId];
+
+	/// <summary>
+	/// ドアのアニメーションフラグを格納
+	/// </summary>
+	/// <param name="_doorAnimationFlag"></param>
+	/// <returns></returns>
+	public static bool SetdoorAnimationFlag(bool _doorAnimationFlag) => doorAnimationFlag = _doorAnimationFlag;
+
+	/// <summary>
+	/// ドアのアニメーションフラグを取得
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetdoorAnimationFlag() => doorAnimationFlag;
 }

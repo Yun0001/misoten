@@ -96,18 +96,22 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// カウンター席or持ち帰り用の席への移動
-		switch (seatPatternSave)
+		// 入店時移動状態の時
+		if (whenEnteringStoreMoveFlag)
 		{
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
-				// カウンター席への移動処理
-				CounterSeatsMove();
-				break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
-				// 持ち帰り用の席への移動処理
-				TakeAwaySeatMove();
-				break;
-			default: break;
+			// カウンター席or持ち帰り用の席への移動
+			switch (seatPatternSave)
+			{
+				case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+					// カウンター席への移動処理
+					CounterSeatsMove();
+					break;
+				case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+					// 持ち帰り用の席への移動処理
+					TakeAwaySeatMove();
+					break;
+				default: break;
+			}
 		}
 
 		//// 退店時移動処理
@@ -205,66 +209,63 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void CounterSeatsMove()
 	{
-		// 入店時移動状態の時
-		if (whenEnteringStoreMoveFlag)
+		// 時間更新
+		timeAdd += Time.deltaTime;
+
+		// 予定時間を割る
+		rate = timeAdd / WhenEnteringStoreMoveTime[setEndPositionId_2];
+
+		// カウンター席に着席する管理
+		switch (setEndPositionId_2)
 		{
-			// 時間更新
-			timeAdd += Time.deltaTime;
+			case 0:
+				// 一つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(new Vector3(0.0f, 0.55f, 7.0f), counterSeatsPosition[setEndPositionId_1, 0, 0], rate);
+				break;
+			case 1:
+				// 二つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[1]) { setEndPositionId_2 = 2; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 0, 0], counterSeatsPosition[setEndPositionId_1, 1, 0], rate);
+				break;
+			case 2:
+				// 三つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId_2 = 3; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 1, 0], counterSeatsPosition[setEndPositionId_1, 2, 0], rate);
+				break;
+			case 3:
+				// 四つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[3]) { setEndPositionId_2 = 4; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 2, 0], counterSeatsPosition[setEndPositionId_1, 3, 0], rate);
+				break;
+			case 4:
+				// 五つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[4])
+				{
+					// 入店時の移動状態「OFF」
+					AlienStatus.SetCounterStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK);
 
-			// 予定時間を割る
-			rate = timeAdd / WhenEnteringStoreMoveTime[setEndPositionId_2];
+					// 着席状態「ON」
+					AlienStatus.SetCounterStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.GETON);
 
-			// カウンター席に着席する管理
-			switch (setEndPositionId_2)
-			{
-				case 0:
-					// 一つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(new Vector3(0.0f, 0.55f, 7.0f), counterSeatsPosition[setEndPositionId_1, 0, 0], rate);
-					break;
-				case 1:
-					// 二つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[1]) { setEndPositionId_2 = 2; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 0, 0], counterSeatsPosition[setEndPositionId_1, 1, 0], rate);
-					break;
-				case 2:
-					// 三つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId_2 = 3; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 1, 0], counterSeatsPosition[setEndPositionId_1, 2, 0], rate);
-					break;
-				case 3:
-					// 四つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[3]) { setEndPositionId_2 = 4; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 2, 0], counterSeatsPosition[setEndPositionId_1, 3, 0], rate);
-					break;
-				case 4:
-					// 五つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[4])
-					{
-						// 入店時の移動状態「OFF」
-						AlienStatus.SetCounterStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK);
+					// 退店時の時の為に初期化
+					timeAdd = 0.0f;
 
-						// 着席状態「ON」
-						AlienStatus.SetCounterStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.GETON);
+					// 入店時の移動終了
+					whenEnteringStoreMoveFlag = false;
 
-						// 退店時の時の為に初期化
-						timeAdd = 0.0f;
+					// 移動終了時、BoxColliderを「ON」にする
+					GetComponent<BoxCollider>().enabled = true;
 
-						// 入店時の移動終了
-						whenEnteringStoreMoveFlag = false;
+					// 退店時の為に初期化
+					setEndPositionId_2 = 0;
 
-						// 移動終了時、BoxColliderを「ON」にする
-						GetComponent<BoxCollider>().enabled = true;
-
-						// 退店時の為に初期化
-						setEndPositionId_2 = 0;
-
-						// スクリプトを切る
-						//enabled = false;
-					}
-					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 3, 0], counterSeatsPosition[setEndPositionId_1, 4, 0], rate);
-					break;
-			}
+					// スクリプトを切る
+					//enabled = false;
+				}
+				transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 3, 0], counterSeatsPosition[setEndPositionId_1, 4, 0], rate);
+				break;
+			default: break;
 		}
 	}
 
@@ -273,61 +274,58 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void TakeAwaySeatMove()
 	{
-		// 入店時移動状態の時
-		if (whenEnteringStoreMoveFlag)
+		// 時間更新
+		timeAdd += Time.deltaTime;
+
+		// 予定時間を割る
+		rate = timeAdd / WhenEnteringStoreMoveTime[setEndPositionId_2];
+
+		// 持ち帰り用の席に着席する管理
+		switch (setEndPositionId_2)
 		{
-			// 時間更新
-			timeAdd += Time.deltaTime;
+			case 0:
+				// 一つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(new Vector3(0.0f, 0.55f, 7.0f), takeAwaySeatPosition[setEndPositionId_1, 0, 0], rate);
+				break;
+			case 1:
+				// 二つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[1]) { setEndPositionId_2 = 2; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 0, 0], takeAwaySeatPosition[setEndPositionId_1, 1, 0], rate);
+				break;
+			case 2:
+				// 三つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId_2 = 3; timeAdd = 0.0f; }
+				transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 1, 0], takeAwaySeatPosition[setEndPositionId_1, 2, 0], rate);
+				break;
+			case 3:
+				// 四つ目の終点座標に到着
+				if (timeAdd > WhenEnteringStoreMoveTime[3])
+				{
+					// 入店時の移動状態「OFF」
+					AlienStatus.SetTakeOutStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK);
 
-			// 予定時間を割る
-			rate = timeAdd / WhenEnteringStoreMoveTime[setEndPositionId_2];
+					// 着席状態「ON」
+					AlienStatus.SetTakeOutStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.GETON);
 
-			// カウンター席に着席する管理
-			switch (setEndPositionId_2)
-			{
-				case 0:
-					// 一つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(new Vector3(0.0f, 0.55f, 7.0f), takeAwaySeatPosition[setEndPositionId_1, 0, 0], rate);
-					break;
-				case 1:
-					// 二つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[1]) { setEndPositionId_2 = 2; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 0, 0], takeAwaySeatPosition[setEndPositionId_1, 1, 0], rate);
-					break;
-				case 2:
-					// 三つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId_2 = 3; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 1, 0], takeAwaySeatPosition[setEndPositionId_1, 2, 0], rate);
-					break;
-				case 3:
-					// 四つ目の終点座標に到着
-					if (timeAdd > WhenEnteringStoreMoveTime[3])
-					{
-						// 入店時の移動状態「OFF」
-						AlienStatus.SetTakeOutStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK);
+					// 退店時の時の為に初期化
+					timeAdd = 0.0f;
 
-						// 着席状態「ON」
-						AlienStatus.SetTakeOutStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.GETON);
+					// 入店時の移動終了
+					whenEnteringStoreMoveFlag = false;
 
-						// 退店時の時の為に初期化
-						timeAdd = 0.0f;
+					// 移動終了時、BoxColliderを「ON」にする
+					GetComponent<BoxCollider>().enabled = true;
 
-						// 入店時の移動終了
-						whenEnteringStoreMoveFlag = false;
+					// 退店時の為に初期化
+					setEndPositionId_2 = 0;
 
-						// 移動終了時、BoxColliderを「ON」にする
-						GetComponent<BoxCollider>().enabled = true;
-
-						// 退店時の為に初期化
-						setEndPositionId_2 = 0;
-
-						// スクリプトを切る
-						//enabled = false;
-					}
-					transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 2, 0], takeAwaySeatPosition[setEndPositionId_1, 3, 0], rate);
-					break;
-			}
+					// スクリプトを切る
+					//enabled = false;
+				}
+				transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 2, 0], takeAwaySeatPosition[setEndPositionId_1, 3, 0], rate);
+				break;
+			default: break;
 		}
 	}
 
