@@ -254,11 +254,11 @@ public class Player : MonoBehaviour
                 CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
                 break;
             case 1:
-                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
                 break;
 
             case 2:
-                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
                 break;
         }
        
