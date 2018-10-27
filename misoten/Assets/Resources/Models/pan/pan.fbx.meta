@@ -1,21 +1,21 @@
 fileFormatVersion: 2
-guid: fbfb3ea08d74d40479e1cbfb50edc0fc
-timeCreated: 1540366172
+guid: 5da075426d448fd409ea18fb999f1ded
+timeCreated: 1540515629
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: doorl
+    2100000: steel3
+    2100002: steel4
+    2100004: pan
+    2100006: steel
+    2100008: steel2
     2300000: //RootNode
     3300000: //RootNode
-    4300000: doorl
-    7400000: doorl|lclose
-    7400002: doorl|lopen
-    7400004: doorl|rclose
-    7400006: doorl|ropen
-    7400008: doorl|ropen2
+    4300000: pan
+    7400000: pan|panAction
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -43,7 +43,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: pan|panAction
+      takeName: pan|panAction
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
