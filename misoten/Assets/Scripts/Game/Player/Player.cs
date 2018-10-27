@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
     /// 当たり判定
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         switch (collision.gameObject.tag)
         {
@@ -199,7 +199,7 @@ public class Player : MonoBehaviour
     /// 当たり判定がなくなるとき
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit(Collider other)
     {
         switch (other.gameObject.tag)
         {
@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         //ここに旨味成分に当たっているときの処理
         if (playerStatus != PlayerStatus.Catering) return;
