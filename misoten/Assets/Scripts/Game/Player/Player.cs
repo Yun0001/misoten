@@ -304,6 +304,8 @@ public class Player : MonoBehaviour
         if (GetHitObj((int)hitObjName.Microwave) == null) return;
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;
         if (GetHitObjComponentMicroWave().GetPlayerID() != playerID) return;
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
 
         switch (GetHitObjComponentMicroWave().GetStatus())
         {
@@ -336,6 +338,8 @@ public class Player : MonoBehaviour
         // 鍋に当たっていなければ抜ける
         if (GetHitObj((int)hitObjName.Pot) == null) return;
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Pot) return;
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
 
         cookingPot_cs.CookingStart();
     }
@@ -345,6 +349,8 @@ public class Player : MonoBehaviour
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
         if (GetHitObjComponentGrilled().GetStatus() == Grilled.GrilledState.inCcoking) return;
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
 
         cookingGrilled_cs.OnFire();
     }

@@ -119,4 +119,8 @@ public class PlayerMove : MonoBehaviour
 
         transform.position = pos;
     }
+
+    public void MoveReset() => move = Vector2.zero;
+
+    public void VelocityReset() => rb.velocity = Vector2.zero;
 }
