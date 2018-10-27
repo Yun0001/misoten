@@ -46,11 +46,17 @@ public class AlienChip : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
+	// エイリアンの呼び出し
+	private AlienCall alienCall;
+
 	// エイリアンのオーダー
 	private AlienOrder alienOrder;
 
 	// 料理が来たかの判定用
 	private bool isCuisineCame = false;
+
+	// 席の種類保存用
+	private int seatPatternSave = 0;
 
 	//料理を持ってきた相手のID
 	private int opponentID = 0;
@@ -71,10 +77,20 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// チップIDへの受け渡し
-		chipId = AlienCall.GetIdSave();
+		// コンポーネント取得
+		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
-		//Debug.Log(chipId + "初期化");
+		// 座る席の種類保存
+		seatPatternSave = alienCall.GetSeatPattern();
+
+		// エイリアンが座る席のパターン管理
+		switch (seatPatternSave)
+		{
+			// チップIDへの受け渡し
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS: chipId = AlienCall.GetIdSave(seatPatternSave); break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: chipId = AlienCall.GetIdSave(seatPatternSave); break;
+			default: break;
+		}
 
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
@@ -83,7 +99,7 @@ public class AlienChip : MonoBehaviour
 		chipPattern = EChipPattern.HANDOVER;
 
 		// ベースチップをセット
-		SetChipValue(baseChip[GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>().GetRichDegree(chipId)]);
+		SetChipValue(baseChip[alienCall.GetRichDegree(chipId)]);
 	}
 
 	/// <summary>

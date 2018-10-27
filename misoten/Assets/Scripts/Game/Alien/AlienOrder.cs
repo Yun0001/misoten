@@ -62,6 +62,9 @@ public class AlienOrder : MonoBehaviour
 	// オーダー中かの判定
 	private bool isOrder = false;
 
+	// 席の種類保存用
+	private int seatPatternSave = 0;
+
 	// オーダー内容をセーブ
 	private int orderSave = 0;
 
@@ -82,8 +85,22 @@ public class AlienOrder : MonoBehaviour
 		alienMove = GetComponent<AlienMove>();
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
-		// IDの保存
-		setId = AlienCall.GetIdSave();
+		// 座る席の種類保存
+		seatPatternSave = alienCall.GetSeatPattern();
+
+		// エイリアンが座る席のパターン管理
+		switch (seatPatternSave)
+		{
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				// IDの保存
+				setId = AlienCall.GetIdSave(seatPatternSave);
+				break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				// IDの保存
+				setId = AlienCall.GetIdSave(seatPatternSave);
+				break;
+			default: break;
+		}
 	}
 
 	/// <summary>
@@ -91,61 +108,146 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// エイリアンが注文していて、他のエイリアンがクレームを出している場合
-		// エイリアンの注文内容が見えなくなる。
-		if (GetIsOrder() && AlienClaim.GetClaimFlag()
-			|| GetIsOrder() && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+		// エイリアンが座る席のパターン管理
+		switch (seatPatternSave)
 		{
-			// 注文したものを非アクティブにする(吹き出し)
-			orderBalloon[orderSave].SetActive(false);
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS: counterOrder(); break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: TakeOutOrder(); break;
+			default: break;
 		}
+	}
 
-		// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
-		// 再び見えるようにする
-		if (GetIsOrder() && !AlienClaim.GetClaimFlag()
-			&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+	/// <summary>
+	/// カウンター席に座っているエイリアンからのオーダー
+	/// </summary>
+	void counterOrder()
+	{
+		// エイリアンがカウンター席に座っている状態の時
+		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.GETON))
 		{
-			// 注文したものをアクティブにする(吹き出し)
-			orderBalloon[orderSave].SetActive(true);
-		}
-
-		// エイリアンが席に座って、注文するまでの時間
-		if (orderTimeAdd >= orderTime)
-		{
-			// エイリアンが注文していない時
-			if (!GetIsOrder() && !AlienClaim.GetClaimFlag())
+			// エイリアンが注文していて、他のエイリアンがクレームを出している場合
+			// エイリアンの注文内容が見えなくなる。
+			if (GetIsOrder() && AlienClaim.GetClaimFlag()
+				|| GetIsOrder() && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 			{
-				// オーダー内容を保存
-				orderSave = GetOrderType();
+				// 注文したものを非アクティブにする(吹き出し)
+				orderBalloon[orderSave].SetActive(false);
+			}
 
+			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
+			// 再び見えるようにする
+			if (GetIsOrder() && !AlienClaim.GetClaimFlag()
+				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			{
 				// 注文したものをアクティブにする(吹き出し)
-				orderBalloon[GetOrderType()].SetActive(true);
+				orderBalloon[orderSave].SetActive(true);
+			}
 
-				// 注文状態「ON」
-				AlienStatus.SetStatusFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
+			// エイリアンが席に座って、注文するまでの時間
+			if (orderTimeAdd >= orderTime)
+			{
+				// エイリアンが注文していない時
+				if (!GetIsOrder() && !AlienClaim.GetClaimFlag())
+				{
+					// オーダー内容を保存
+					orderSave = GetOrderType();
 
-				//// 席のIDを更新
-				//AlienCall.SetAddId(AlienCall.GetAddId() + 1);
+					// 注文したものをアクティブにする(吹き出し)
+					orderBalloon[GetOrderType()].SetActive(true);
 
-				//// 席のIDが席最大数を超えた場合「0」に初期化
-				//if (AlienCall.GetAddId() >= alienCall.GetSeatMax()) { AlienCall.SetAddId(0); }
+					// 注文状態「ON」
+					AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
 
-				// オーダー完了
-				SetIsOrder(true);
+					//// 席のIDを更新
+					//AlienCall.SetAddId(AlienCall.GetAddId() + 1);
 
-				individualOrderType = GetOrderType();
+					//// 席のIDが席最大数を超えた場合「0」に初期化
+					//if (AlienCall.GetAddId() >= alienCall.GetSeatMax()) { AlienCall.SetAddId(0); }
 
-				// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
-				SetOrderType(GetOrderType() + 1);
+					// オーダー完了
+					SetIsOrder(true);
 
-				// 注文をループさせる為に「0」で初期化
-				if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+					individualOrderType = GetOrderType();
+
+					// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
+					SetOrderType(GetOrderType() + 1);
+
+					// 注文をループさせる為に「0」で初期化
+					if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+				}
+			}
+			else
+			{
+				// 毎フレームの時間を加算
+				orderTimeAdd += Time.deltaTime;
 			}
 		}
-		else
+	}
+
+	/// <summary>
+	/// 持ち帰り席に座っているエイリアンからのオーダー
+	/// </summary>
+	void TakeOutOrder()
+	{
+		// エイリアンが持ち帰り席に座っている状態の時
+		if (AlienStatus.GetTakeOutStatusChangeFlag(setId, (int)AlienStatus.EStatus.GETON))
 		{
-			// 毎フレームの時間を加算
-			orderTimeAdd += Time.deltaTime;
+			// エイリアンが注文していて、他のエイリアンがクレームを出している場合
+			// エイリアンの注文内容が見えなくなる。
+			if (GetIsOrder() && AlienClaim.GetClaimFlag()
+				|| GetIsOrder() && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			{
+				// 注文したものを非アクティブにする(吹き出し)
+				orderBalloon[orderSave].SetActive(false);
+			}
+
+			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
+			// 再び見えるようにする
+			if (GetIsOrder() && !AlienClaim.GetClaimFlag()
+				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			{
+				// 注文したものをアクティブにする(吹き出し)
+				orderBalloon[orderSave].SetActive(true);
+			}
+
+			// エイリアンが席に座って、注文するまでの時間
+			if (orderTimeAdd >= orderTime)
+			{
+				// エイリアンが注文していない時
+				if (!GetIsOrder() && !AlienClaim.GetClaimFlag())
+				{
+					// オーダー内容を保存
+					orderSave = GetOrderType();
+
+					// 注文したものをアクティブにする(吹き出し)
+					orderBalloon[GetOrderType()].SetActive(true);
+
+					// 注文状態「ON」
+					AlienStatus.SetTakeOutStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
+
+					//// 席のIDを更新
+					//AlienCall.SetAddId(AlienCall.GetAddId() + 1);
+
+					//// 席のIDが席最大数を超えた場合「0」に初期化
+					//if (AlienCall.GetAddId() >= alienCall.GetSeatMax()) { AlienCall.SetAddId(0); }
+
+					// オーダー完了
+					SetIsOrder(true);
+
+					individualOrderType = GetOrderType();
+
+					// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
+					SetOrderType(GetOrderType() + 1);
+
+					// 注文をループさせる為に「0」で初期化
+					if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+				}
+			}
+			else
+			{
+				// 毎フレームの時間を加算
+				orderTimeAdd += Time.deltaTime;
+			}
 		}
 	}
 

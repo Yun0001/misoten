@@ -48,6 +48,9 @@ public class AlienDisturbance : MonoBehaviour
 	// エイリアンの呼び出し
 	private AlienCall alienCall;
 
+	// 席の種類保存用
+	private int seatPatternSave = 0;
+
 	// エイリアン毎のID
 	private int setId = 0;
 
@@ -69,8 +72,17 @@ public class AlienDisturbance : MonoBehaviour
 		alienChip = GetComponent<AlienChip>();
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
-		// IDの保存
-		setId = AlienCall.GetIdSave();
+		// 座る席の種類保存
+		seatPatternSave = alienCall.GetSeatPattern();
+
+		// エイリアンが座る席のパターン管理
+		switch (seatPatternSave)
+		{
+			// チップIDへの受け渡し
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS: setId = AlienCall.GetIdSave(seatPatternSave); break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: setId = AlienCall.GetIdSave(seatPatternSave); break;
+			default: break;
+		}
 	}
 
 	/// <summary>
@@ -100,17 +112,17 @@ public class AlienDisturbance : MonoBehaviour
 						case 0: // 火星人の場合
 
 							// 火星人特有の邪魔行為
-							//MartianDisturbance();
+							MartianDisturbance();
 							break;
 						case 1: // 水星人の場合
 
 							// 水星人特有の邪魔行為
-							//MercuryDisturbance();
+							MercuryDisturbance();
 							break;
 						case 2:// 金星人の場合
 
 							// 金星人特有の邪魔行為
-							//VenusianDisturbance();
+							VenusianDisturbance();
 							break;
 						default:
 							// 例外処理
@@ -125,8 +137,20 @@ public class AlienDisturbance : MonoBehaviour
 					break;
 			}
 
-			// 注文して指定時間以上立つと怒り状態になる
-			if (latencyAdd >= AlienCall.GetOrderLatencyAdd(AlienCall.GetRichDegreeId())) { mood = EAlienMood.ANGER; }
+			// エイリアンが座る席のパターン管理
+			switch (seatPatternSave)
+			{
+				// チップIDへの受け渡し
+				case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+					// 注文して指定時間以上立つと怒り状態になる
+					if (latencyAdd >= AlienCall.GetOrderLatencyAdd1(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.COUNTERSEATS))) { mood = EAlienMood.ANGER; }
+					break;
+				case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+					// 注文して指定時間以上立つと怒り状態になる
+					if (latencyAdd >= AlienCall.GetOrderLatencyAdd2(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.TAKEAWAYSEAT))) { mood = EAlienMood.ANGER; }
+					break;
+				default: break;
+			}
 		}
 	}
 

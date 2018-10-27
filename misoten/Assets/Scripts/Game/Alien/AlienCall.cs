@@ -41,6 +41,17 @@ public class AlienCall : MonoBehaviour
 		EXCEPTION,	// 例外
 	}
 
+	/// <summary>
+	/// 席の種類
+	/// 補足：ごめん、ここだけpublicにさせて...
+	/// </summary>
+	public enum ESeatPattern
+	{
+		COUNTERSEATS = 0,	// カウンター席
+		TAKEAWAYSEAT,		// 持ち帰り用の席
+		MAX					// 最大
+	}
+
 	// ---------------------------------------------
 
 	// インスペクター上で設定可能
@@ -48,19 +59,19 @@ public class AlienCall : MonoBehaviour
 
 	// 入店に遷移する秒数設定
 	[SerializeField]
-	private float inTime;
+	private float[] inTime;
 
 	// 生成するPrefab設定用
 	[SerializeField]
 	private GameObject[] prefab;
 
-	// 生成されたPrefabの確認用
-	[SerializeField]
-	private GameObject[] obj;
+	// カウンター席の最大数指定
+	[SerializeField, Range(1, 7)]
+	private int counterSeatsMax;
 
-	// 席の最大数指定
-	[SerializeField, Range(1, 5)]
-	private int seatMax;
+	// 持ち帰り用の席の最大数指定
+	[SerializeField, Range(1, 4)]
+	private int takeAwaySeatMax;
 
 	// エイリアン最大数指定
 	[SerializeField, Range(1, 50)]
@@ -81,20 +92,29 @@ public class AlienCall : MonoBehaviour
 	// クレーム用ID
 	private static int claimId = 0;
 
-	// 金持ち度ID
-	private static int richDegreeId = 0;
+	// 金持ち度ID(カウンター用&持ち帰り用)
+	private static int[] richDegreeId = new int[(int)ESeatPattern.MAX];
 
-	// 席管理用ID
-	private static int addId = 0;
+	// 席管理用ID(カウンター用&持ち帰り用)
+	private static int[] seatAddId = new int[(int)ESeatPattern.MAX];
 
-	// エイリアンIDの保存用
-	private static int idSave = 0;
+	//// 持ち帰り用席管理用ID
+	//private static int takeAwaySeatAddId = 0;
 
-	// オーダー待ち時間
-	private static float[] orderLatencyAdd = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+	// エイリアンIDの保存用(カウンター用&持ち帰り用)
+	private static int[] idSave = new int[(int)ESeatPattern.MAX];
 
-	// 座っているかの判定
-	private static bool[] orSitting = { false, false, false, false, false };
+	// オーダー待ち時間(カウンター用)
+	private static float[] orderLatencyAdd1 = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+	// オーダー待ち時間(持ち帰り用)
+	private static float[] orderLatencyAdd2 = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+	// 座っているかの判定(カウンター用)
+	private static bool[] orSitting1 = { false, false, false, false, false, false, false };
+
+	// 座っているかの判定(持ち帰り用)
+	private static bool[] orSitting2 = { false, false, false, false };
 
 	// ---------------------------------------------
 
@@ -105,7 +125,16 @@ public class AlienCall : MonoBehaviour
 	private ERichDegree[] richDegree = new ERichDegree[51];
 
 	// エイリアンの種類設定
-	private EAlienPattern[] alienPattern = new EAlienPattern[5];
+	private EAlienPattern[] alienPattern = new EAlienPattern[7];
+
+	// 席の種類
+	private ESeatPattern seatPattern = ESeatPattern.MAX;
+
+	// カウンター専用オブジェ
+	private GameObject[] counterDesignatedObj = new GameObject[7];
+
+	// 持ち帰り用専用オブジェ
+	private GameObject[] takeOutDesignatedObj = new GameObject[4];
 
 	// エイリアン数
 	private int alienNumber = 0;
@@ -120,73 +149,157 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// 席が空いている場合
-		if (!GetOrSitting(GetAddId()))
-		{
-			// 毎フレームの時間を加算
-			latencyAdd[(int)EProcessingPattern.NORMAL] += Time.deltaTime;
+		// カウンター席専用処理
+		CounterSeatsDesignated();
 
-			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd[(int)EProcessingPattern.NORMAL] > inTime)
-			{
-				// エイリアン事の秒数設定処理
-				TheNumberOfSecondsSet();
-
-				// エイリアンの種類設定
-				alienPattern[GetAddId()] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
-
-				// エイリアン生成
-				obj[GetAddId()] = Instantiate(prefab[(int)alienPattern[GetAddId()]], new Vector3(0.0f, 5.0f, 0.0f), Quaternion.identity) as GameObject;
-				obj[GetAddId()].transform.SetParent(transform);
-
-				// 待機状態終了
-				AlienStatus.SetStatusFlag(false, GetAddId(), (int)AlienStatus.EStatus.STAND);
-
-				// 空いている席へ
-				AlienStatus.SetStatusFlag(true, GetAddId(), (int)AlienStatus.EStatus.WALK);
-
-				// その席が座られている状態にする
-				SetOrSitting(true, GetAddId());
-
-				// 時間初期化
-				latencyAdd[(int)EProcessingPattern.NORMAL] = 0.0f;
-
-				// エイリアン数の更新
-				alienNumber++;
-
-				// エイリアンIDの保存
-				idSave = GetAddId();
-			}
-		}
-		// 空いている席のIDになるまでこの処理を続ける
-		else { SetAddId(Random.Range(0, 5)); }
+		// 持ち帰り用席専用処理
+		TakeAwaySeatDesignated();
 
 		// 例外処理関数
 		//ExceptionHandling();
 
 		// クレーム終了時
-		if(AlienClaim.GetClaimEndFlag() || AlienSatisfaction.GetClaimEndFlag())
+		if (AlienClaim.GetClaimEndFlag() || AlienSatisfaction.GetClaimEndFlag())
 		{
 			// 各エイリアンが帰る処理
-			Return();
+			//Return();
 		}
+	}
+
+	/// <summary>
+	/// カウンター席専用処理
+	/// </summary>
+	void CounterSeatsDesignated()
+	{
+		// カウンター席が空いている場合
+		if (!GetOrSitting1(GetSeatAddId((int)ESeatPattern.COUNTERSEATS)))
+		{
+			// 毎フレームの時間を加算
+			latencyAdd[(int)ESeatPattern.COUNTERSEATS] += Time.deltaTime;
+
+			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
+			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.COUNTERSEATS] > inTime[(int)ESeatPattern.COUNTERSEATS])
+			{
+				// エイリアンの秒数設定処理
+				TheNumberOfSecondsSet(ESeatPattern.COUNTERSEATS);
+
+				// エイリアンの種類設定
+				alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
+
+				// エイリアン生成
+				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)]], new Vector3(0.0f, 0.55f, 7.0f), Quaternion.identity) as GameObject;
+				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)].transform.SetParent(transform);
+
+				// 待機状態終了
+				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId((int)ESeatPattern.COUNTERSEATS), (int)AlienStatus.EStatus.STAND);
+
+				// 空いている席へ
+				AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId((int)ESeatPattern.COUNTERSEATS), (int)AlienStatus.EStatus.WALK);
+
+				// その席が座られている状態にする
+				//SetOrSitting1(true, GetCounterSeatsAddId());
+				orSitting1[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = true;
+
+				// 時間初期化
+				latencyAdd[(int)ESeatPattern.COUNTERSEATS] = 0.0f;
+
+				// エイリアン数の更新
+				alienNumber++;
+
+				// エイリアンIDの保存
+				idSave[(int)ESeatPattern.COUNTERSEATS] = GetSeatAddId((int)ESeatPattern.COUNTERSEATS);
+			}
+		}
+		// 空いている席のIDになるまでこの処理を続ける
+		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax()), (int)ESeatPattern.COUNTERSEATS); }
+	}
+
+	/// <summary>
+	/// 持ち帰り用席専用処理
+	/// </summary>
+	void TakeAwaySeatDesignated()
+	{
+		// 持ち帰り用の席が空いている場合
+		if (!GetOrSitting2(GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)))
+		{
+			// 毎フレームの時間を加算
+			latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] += Time.deltaTime;
+
+			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
+			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] > inTime[(int)ESeatPattern.TAKEAWAYSEAT])
+			{
+				// エイリアンの秒数設定処理
+				TheNumberOfSecondsSet(ESeatPattern.TAKEAWAYSEAT);
+
+				// エイリアンの種類設定
+				alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
+
+				// エイリアン生成
+				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)]], new Vector3(0.0f, 0.55f, 7.0f), Quaternion.identity) as GameObject;
+				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)].transform.SetParent(transform);
+
+				// 待機状態終了
+				AlienStatus.SetTakeOutStatusChangeFlag(false, GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT), (int)AlienStatus.EStatus.STAND);
+
+				// 空いている席へ
+				AlienStatus.SetTakeOutStatusChangeFlag(true, GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT), (int)AlienStatus.EStatus.WALK);
+
+				// その席が座られている状態にする
+				//SetOrSitting2(true, GetTakeAwaySeatAddId());
+				orSitting2[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = true;
+
+				// 時間初期化
+				latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] = 0.0f;
+
+				// エイリアン数の更新
+				alienNumber++;
+
+				// エイリアンIDの保存
+				idSave[(int)ESeatPattern.TAKEAWAYSEAT] = GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT);
+			}
+		}
+		// 空いている席のIDになるまでこの処理を続ける
+		else { SetSeatAddId(Random.Range(0, GetTakeAwaySeatMax()), (int)ESeatPattern.TAKEAWAYSEAT); }
 	}
 
 	/// <summary>
 	/// 各エイリアンの秒数設定関数
 	/// </summary>
-	void TheNumberOfSecondsSet()
+	void TheNumberOfSecondsSet(ESeatPattern _seatPattern)
 	{
-		// クレーム用IDと金持ち度IDの更新
-		richDegreeId = GetAddId();
+		// カウンターor持ち帰りの設定
+		seatPattern = _seatPattern;
 
-		// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
-		switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
+		// カウンターor持ち帰りかの判断
+		switch (seatPattern)
 		{
-			case (int)ERichDegree.POVERTY: orderLatencyAdd[GetRichDegreeId()] = 15.0f; break;
-			case (int)ERichDegree.NORMAL: orderLatencyAdd[GetRichDegreeId()] = 10.0f; break;
-			case (int)ERichDegree.RICHMAN: orderLatencyAdd[GetRichDegreeId()] = 7.0f; break;
-			default: Debug.Log("Error:客の秒数設定がされていません"); break;
+			case ESeatPattern.COUNTERSEATS:
+				// 金持ち度IDの更新
+				richDegreeId[(int)ESeatPattern.COUNTERSEATS] = GetSeatAddId((int)ESeatPattern.COUNTERSEATS);
+
+				// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
+				switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
+				{
+					case (int)ERichDegree.POVERTY: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = 15.0f; break;
+					case (int)ERichDegree.NORMAL: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = 10.0f; break;
+					case (int)ERichDegree.RICHMAN: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = 7.0f; break;
+					default: Debug.Log("Error:カウンター客の秒数設定がされていません"); break;
+				}
+				break;
+			case ESeatPattern.TAKEAWAYSEAT:
+				// 金持ち度IDの更新
+				richDegreeId[(int)ESeatPattern.TAKEAWAYSEAT] = GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT);
+
+				// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
+				switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
+				{
+					case (int)ERichDegree.POVERTY: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = 15.0f; break;
+					case (int)ERichDegree.NORMAL: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = 10.0f; break;
+					case (int)ERichDegree.RICHMAN: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = 7.0f; break;
+					default: Debug.Log("Error:持ち帰り客の秒数設定がされていません"); break;
+				}
+				break;
+			default: break;
 		}
 	}
 
@@ -198,21 +311,20 @@ public class AlienCall : MonoBehaviour
 		AlienClaim.SetClaimEndFlag(false);
 		AlienSatisfaction.SetClaimEndFlag(false);
 
-		// 席の数分ループする
-		for (int i = 0; i < GetSeatMax(); i++)
+		// カウンター席の数分ループする
+		for (int i = 0; i < GetCounterSeatsMax(); i++)
 		{
 			//条件：座っている、チップをプレイヤーに渡したエイリアン
-			if (AlienStatus.GetStatusFlag(i, (int)AlienStatus.EStatus.GETON) && AlienChip.GetChipOnFlag(i))
-			{
+			//if (AlienStatus.GetStatusFlag(i, (int)AlienStatus.EStatus.GETON) && AlienChip.GetChipOnFlag(i))
+			//{
+			//	SetCounterSeatsAddId(i);
+			//	Destroy(obj[i]);
+			//	SetOrSitting(false, i);
+			//	AlienChip.SetChipOnFlag(false, i);
 
-				SetAddId(i);
-				Destroy(obj[i]);
-				SetOrSitting(false, i);
-				AlienChip.SetChipOnFlag(false, i);
-
-				// 時間初期化
-				latencyAdd[(int)EProcessingPattern.NORMAL] = 0.0f;
-			}
+			//	// 時間初期化
+			//	latencyAdd[(int)EProcessingPattern.COUNTERSEATS] = 0.0f;
+			//}
 		}
 	}
 
@@ -239,13 +351,19 @@ public class AlienCall : MonoBehaviour
 	/// 生成されたオブジェクトの取得
 	/// </summary>
 	/// <returns></returns>
-	public GameObject GetObject(int id) => obj[id];
+	public GameObject GetCounterDesignatedObj(int id) => counterDesignatedObj[id];
 
 	/// <summary>
-	/// 席の最大数の取得
+	/// カウンター席の最大数の取得
 	/// </summary>
 	/// <returns></returns>
-	public int GetSeatMax() => seatMax;
+	public int GetCounterSeatsMax() => counterSeatsMax;
+
+	/// <summary>
+	/// 持ち帰り用の席の最大数の取得
+	/// </summary>
+	/// <returns></returns>
+	public int GetTakeAwaySeatMax() => takeAwaySeatMax;
 
 	/// <summary>
 	/// エイリアンの金持ち度を取得
@@ -260,22 +378,45 @@ public class AlienCall : MonoBehaviour
 	public int GetAlienPattern(int id) => (int)alienPattern[id];
 
 	/// <summary>
-	/// 金持ち度IDの取得
+	/// 席の種類の取得
 	/// </summary>
 	/// <returns></returns>
-	public static int GetRichDegreeId() => richDegreeId;
+	public int GetSeatPattern() => (int)seatPattern;
 
 	/// <summary>
-	/// 席管理用IDの格納
+	/// 金持ち度ID(カウンター用&持ち帰り用)の取得
 	/// </summary>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static int SetAddId(int _addId) => addId = _addId;
+	public static int GetRichDegreeId(int seatId) => richDegreeId[seatId];
 
 	/// <summary>
-	/// 席管理用IDの取得
+	/// 席管理用ID(カウンター用&持ち帰り用)の格納
 	/// </summary>
+	/// <param name="_seatAddId"></param>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static int GetAddId() => addId;
+	public static int SetSeatAddId(int _seatAddId, int seatId) => seatAddId[seatId] = _seatAddId;
+
+	/// <summary>
+	/// 席管理用ID(カウンター用&持ち帰り用)の取得
+	/// </summary>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static int GetSeatAddId(int seatId) => seatAddId[seatId];
+
+	///// <summary>
+	///// 持ち帰り用席管理用IDの格納
+	///// </summary>
+	///// <param name="_takeAwaySeatAddId"></param>
+	///// <returns></returns>
+	//public static int SetTakeAwaySeatAddId(int _takeAwaySeatAddId) => takeAwaySeatAddId = _takeAwaySeatAddId;
+
+	///// <summary>
+	///// 持ち帰り用席管理用IDの取得
+	///// </summary>
+	///// <returns></returns>
+	//public static int GetTakeAwaySeatAddId() => takeAwaySeatAddId;
 
 	/// <summary>
 	/// クレーム用IDの格納
@@ -291,29 +432,37 @@ public class AlienCall : MonoBehaviour
 	public static int GetClaimId() => claimId;
 
 	/// <summary>
-	/// エイリアンIDの保存用の取得
+	/// エイリアンIDの保存用(カウンター用&持ち帰り用)の取得
 	/// </summary>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static int GetIdSave() => idSave;
+	public static int GetIdSave(int seatId) => idSave[seatId];
 
 	/// <summary>
-	/// オーダー待ち時間を取得
+	/// オーダー待ち時間(カウンター用)を取得
 	/// </summary>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static float GetOrderLatencyAdd(int id) => orderLatencyAdd[id];
+	public static float GetOrderLatencyAdd1(int seatId) => orderLatencyAdd1[seatId];
 
 	/// <summary>
-	/// 席の状態を格納
+	/// 席の状態(カウンター用)を取得
 	/// </summary>
-	/// <param name="_is"></param>
-	/// <param name="id"></param>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static bool SetOrSitting(bool _is, int id) => orSitting[id] = _is;
+	public static bool GetOrSitting1(int seatId) => orSitting1[seatId];
 
 	/// <summary>
-	/// 席の状態を取得
+	/// オーダー待ち時間(持ち帰り用)を取得
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="seatId"></param>
 	/// <returns></returns>
-	public static bool GetOrSitting(int id) => orSitting[id];
+	public static float GetOrderLatencyAdd2(int seatId) => orderLatencyAdd2[seatId];
+
+	/// <summary>
+	/// 席の状態(持ち帰り用)を取得
+	/// </summary>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool GetOrSitting2(int seatId) => orSitting2[seatId];
 }

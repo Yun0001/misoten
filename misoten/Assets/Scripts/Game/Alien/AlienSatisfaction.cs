@@ -55,6 +55,9 @@ public class AlienSatisfaction : MonoBehaviour
 			{
 				SetClaimEndFlag(true);
 				satisfactionTimeAdd = 0.0f;
+
+				// 退店時の移動開始
+				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 			}
 
 			// 毎フレームの時間を加算

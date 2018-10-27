@@ -35,7 +35,7 @@ public class AlienStatus : MonoBehaviour
 	// ---------------------------------------------
 
 	// 指定席に座るエイリアンのID(Debug用)
-	[SerializeField, Range(0, 4)]
+	[SerializeField, Range(0, 7)]
 	private int debugSeatId;
 
 	// エイリアンの状態を目視(Debug用)
@@ -47,13 +47,19 @@ public class AlienStatus : MonoBehaviour
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
 	// ---------------------------------------------
 
-	// 状態遷移フラグ
-	private static bool[,] statusChangeFlag;
+	// 状態遷移(カウンター用)フラグ
+	private static bool[,] counterStatusChangeFlag = new bool[7, (int)EStatus.MAX];
+
+	// 状態遷移(持ち帰り用)フラグ
+	private static bool[,] takeOutStatusChangeFlag = new bool[4, (int)EStatus.MAX];
 
 	// ---------------------------------------------
 
 	// ローカル変数
 	// ---------------------------------------------
+
+	// エイリアンの呼び出し
+	private AlienCall alienCall;
 
 	// 初期化フラグ
 	private bool initFlag = false;
@@ -68,19 +74,24 @@ public class AlienStatus : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// 各エイリアンの状態遷移
-		statusChangeFlag = new bool[GetComponent<AlienCall>().GetSeatMax(), (int)EStatus.MAX];
-
 		// ステータスを初期化
-		for (int i = 0; i < GetComponent<AlienCall>().GetSeatMax(); i++)
+		for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
 		{
-			for (int j = 0; j < (int)EStatus.MAX; j++)
-			{
-				statusChangeFlag[i, j] = false;
-			}
+			// 全ての状態を「OFF」にする
+			for (int j = 0; j < (int)EStatus.MAX; j++) { counterStatusChangeFlag[i, j] = false; }
 
 			// 待機状態にする
-			statusChangeFlag[i, (int)EStatus.STAND] = true;
+			counterStatusChangeFlag[i, (int)EStatus.STAND] = true;
+		}
+
+		// ステータスを初期化
+		for (int i = 0; i < GetComponent<AlienCall>().GetTakeAwaySeatMax(); i++)
+		{
+			// 全ての状態を「OFF」にする
+			for (int j = 0; j < (int)EStatus.MAX; j++) { takeOutStatusChangeFlag[i, j] = false; }
+
+			// 待機状態にする
+			takeOutStatusChangeFlag[i, (int)EStatus.STAND] = true;
 		}
 	}
 
@@ -90,7 +101,7 @@ public class AlienStatus : MonoBehaviour
 	void Update()
 	{
 		// Debug用
-		DebugText(debugSeatId);
+		//DebugText(debugSeatId);
 	}
 
 	/// <summary>
@@ -98,45 +109,72 @@ public class AlienStatus : MonoBehaviour
 	/// </summary>
 	void DebugText(int id)
 	{
-		switch (debugStatusId)
+		// エイリアンが座る席のパターン管理
+		switch (alienCall.GetSeatPattern())
 		{
-			case EStatus.STAND: Debug.Log("エイリアン「" + id + "」" + "の待機状態は" + GetStatusFlag(id, (int)EStatus.STAND)); break;
-			case EStatus.WALK: Debug.Log("エイリアン「" + id + "」" + "の入店時状態は" + GetStatusFlag(id, (int)EStatus.WALK)); break;
-			case EStatus.GETON: Debug.Log("エイリアン「" + id + "」" + "の着席状態は" + GetStatusFlag(id, (int)EStatus.GETON)); break;
-			case EStatus.ORDER: Debug.Log("エイリアン「" + id + "」" + "の注文状態は" + GetStatusFlag(id, (int)EStatus.ORDER)); break;
-			case EStatus.STAY: Debug.Log("エイリアン「" + id + "」" + "の待つ(注文待機)状態は" + GetStatusFlag(id, (int)EStatus.STAY)); break;
-			case EStatus.CLAIM: Debug.Log("エイリアン「" + id + "」" + "のクレーム状態は" + GetStatusFlag(id, (int)EStatus.CLAIM)); break;
-			case EStatus.EAT: Debug.Log("エイリアン「" + id + "」" + "の食べる状態は" + GetStatusFlag(id, (int)EStatus.EAT)); break;
-			case EStatus.RETURN_GOOD: Debug.Log("エイリアン「" + id + "」" + "の帰る(良)状態は" + GetStatusFlag(id, (int)EStatus.RETURN_GOOD)); break;
-			case EStatus.RETURN_BAD: Debug.Log("エイリアン「" + id + "」" + "の帰る(悪)状態は" + GetStatusFlag(id, (int)EStatus.RETURN_BAD)); break;
-			case EStatus.SCREEN_OUT: Debug.Log("エイリアン「" + id + "」" + "の画面外状態は" + GetStatusFlag(id, (int)EStatus.SCREEN_OUT)); break;
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				switch (debugStatusId)
+				{
+					case EStatus.STAND: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の待機状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAND)); break;
+					case EStatus.WALK: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の入店時状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.WALK)); break;
+					case EStatus.GETON: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の着席状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.GETON)); break;
+					case EStatus.ORDER: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の注文状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.ORDER)); break;
+					case EStatus.STAY: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の待つ(注文待機)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAY)); break;
+					case EStatus.CLAIM: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "のクレーム状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.CLAIM)); break;
+					case EStatus.EAT: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の食べる状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.EAT)); break;
+					case EStatus.RETURN_GOOD: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の帰る(良)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_GOOD)); break;
+					case EStatus.RETURN_BAD: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の帰る(悪)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_BAD)); break;
+					case EStatus.SCREEN_OUT: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の画面外状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.SCREEN_OUT)); break;
+					default: break;
+				}
+				break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				switch (debugStatusId)
+				{
+					case EStatus.STAND: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の待機状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.STAND)); break;
+					case EStatus.WALK: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の入店時状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.WALK)); break;
+					case EStatus.GETON: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の着席状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.GETON)); break;
+					case EStatus.ORDER: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の注文状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.ORDER)); break;
+					case EStatus.STAY: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の待つ(注文待機)状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.STAY)); break;
+					case EStatus.CLAIM: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "のクレーム状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.CLAIM)); break;
+					case EStatus.EAT: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の食べる状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.EAT)); break;
+					case EStatus.RETURN_GOOD: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の帰る(良)状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.RETURN_GOOD)); break;
+					case EStatus.RETURN_BAD: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の帰る(悪)状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.RETURN_BAD)); break;
+					case EStatus.SCREEN_OUT: Debug.Log("エイリアン(持ち帰り側)「" + id + "」" + "の画面外状態は" + GetTakeOutStatusChangeFlag(id, (int)EStatus.SCREEN_OUT)); break;
+					default: break;
+				}
+				break;
 			default: break;
 		}
-
-		//Debug.Log(id + "の待機状態は" + GetStatusFlag(id, (int)EStatus.STAND));
-		//Debug.Log(id + "の入店時状態は" + GetStatusFlag(id, (int)EStatus.WALK));
-		//Debug.Log(id + "の着席状態は" + GetStatusFlag(id, (int)EStatus.GETON));
-		//Debug.Log(id + "の注文状態は" + GetStatusFlag(id, (int)EStatus.ORDER));
-		//Debug.Log(id + "の待つ(注文待機)状態は" + GetStatusFlag(id, (int)EStatus.STAY));
-		//Debug.Log(id + "のクレーム状態は" + GetStatusFlag(id, (int)EStatus.CLAIM));
-		//Debug.Log(id + "の食べる状態は" + GetStatusFlag(id, (int)EStatus.EAT));
-		//Debug.Log(id + "の帰る(良)状態は" + GetStatusFlag(id, (int)EStatus.RETURN_GOOD));
-		//Debug.Log(id + "の帰る(悪)状態は" + GetStatusFlag(id, (int)EStatus.RETURN_BAD));
-		//Debug.Log(id + "の画面外状態は" + GetStatusFlag(id, (int)EStatus.SCREEN_OUT));
 	}
 
 	/// <summary>
-	/// 状態管理の格納
+	/// 状態管理(カウンター用)の格納
 	/// </summary>
 	/// <param name="_status"></param>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static bool SetStatusFlag(bool _statusChangeFlag, int numId, int statusId) => statusChangeFlag[numId, statusId] = _statusChangeFlag;
+	public static bool SetCounterStatusChangeFlag(bool _statusChangeFlag, int numId, int statusId) => counterStatusChangeFlag[numId, statusId] = _statusChangeFlag;
 
 	/// <summary>
-	/// 状態管理の取得
+	/// 状態管理(カウンター用)の取得
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static bool GetStatusFlag(int numId, int statusId) => statusChangeFlag[numId, statusId];
+	public static bool GetCounterStatusChangeFlag(int numId, int statusId) => counterStatusChangeFlag[numId, statusId];
+
+	/// <summary>
+	/// 状態管理(持ち帰り用)の格納
+	/// </summary>
+	/// <param name="_status"></param>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public static bool SetTakeOutStatusChangeFlag(bool _statusChangeFlag, int numId, int statusId) => takeOutStatusChangeFlag[numId, statusId] = _statusChangeFlag;
+
+	/// <summary>
+	/// 状態管理(持ち帰り用)の取得
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public static bool GetTakeOutStatusChangeFlag(int numId, int statusId) => takeOutStatusChangeFlag[numId, statusId];
 }

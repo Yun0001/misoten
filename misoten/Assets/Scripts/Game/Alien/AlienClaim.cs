@@ -68,6 +68,9 @@ public class AlienClaim : MonoBehaviour
 				claimFlag = false;
 				SetIsClaim(false);
 				SetClaimEndFlag(true);
+
+				// 退店時の移動開始
+				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 			}
 
 			// 毎フレームの時間を加算
