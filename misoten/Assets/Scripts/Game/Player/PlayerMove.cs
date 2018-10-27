@@ -14,8 +14,8 @@ public class PlayerMove : MonoBehaviour
 
     private Player player_cs;
     private PlayerAnimation playerAnimation_cs;
-    private Vector2 move;
-    private Rigidbody2D rb;
+    private Vector3 move;
+    private Rigidbody rb;
     [SerializeField]    [Range(0.0f, 30.0f)]
     private float speed;
 
@@ -31,7 +31,7 @@ public class PlayerMove : MonoBehaviour
     {
         player_cs = GetComponent<Player>();
         playerAnimation_cs = GetComponent<PlayerAnimation>();
-        rb = player_cs.gameObject.GetComponent<Rigidbody2D>();
+        rb = player_cs.gameObject.GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -60,14 +60,14 @@ public class PlayerMove : MonoBehaviour
                 break;
 
             case Player.PlayerStatus.Hindrance:
-                move = new Vector2(0f,0f);
+                move = Vector3.zero;
                 break;
         }
 
         rb.velocity = move * speed;
 
         // コントローラー４つの場合は不要
-        move = new Vector2(0f, 0f);
+        move = Vector3.zero;
         //
     }
 
@@ -76,11 +76,11 @@ public class PlayerMove : MonoBehaviour
         switch (direction)
         {
             case EDirection.Up:
-                move.y = speed;
+                move.z = speed;
                 break;
 
             case EDirection.Down:
-                move.y = -speed;
+                move.z = -speed;
                 break;
 
             case EDirection.Right:
@@ -93,34 +93,34 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    public void SetMove(Vector2 vec)
+    public void SetMove(Vector3 vec)
     {
         move = vec;
-        if (move.x != 0 || move.y != 0) playerAnimation_cs.SetPlayerStatus(1);
+        if (move.x != 0 || move.z != 0) playerAnimation_cs.SetPlayerStatus(1);
         else playerAnimation_cs.SetPlayerStatus(0);
 
         if (move.x < 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
         else if (move.x > 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
 
-        if (move.y < 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
-        else if (move.y > 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
+        if (move.z < 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
+        else if (move.z > 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
     }
 
     private void Clamp()
     {
-        float width = 8f;
-        Vector2 min = new Vector2(-width, -4.5f);
-        Vector2 max = new Vector2(width, 1.5f);
+        float width = 2.8f;
+        Vector3 min = new Vector3(-width, 0, -4.6f);
+        Vector3 max = new Vector3(width, 0,1.5f);
 
-        Vector2 pos = transform.position;
+        Vector3 pos = transform.position;
 
         pos.x = Mathf.Clamp(pos.x, min.x, max.x);
-        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+        pos.z= Mathf.Clamp(pos.z, min.z, max.z);
 
         transform.position = pos;
     }
 
-    public void MoveReset() => move = Vector2.zero;
+    public void MoveReset() => move = Vector3.zero;
 
-    public void VelocityReset() => rb.velocity = Vector2.zero;
+    public void VelocityReset() => rb.velocity = Vector3.zero;
 }

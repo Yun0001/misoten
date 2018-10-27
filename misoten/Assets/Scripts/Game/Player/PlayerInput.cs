@@ -74,7 +74,7 @@ public class PlayerInput : MonoBehaviour
                 return;
         }
 
-        playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName), -(Input.GetAxis(inputYAxisName))));
+        playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
 
     }
 
