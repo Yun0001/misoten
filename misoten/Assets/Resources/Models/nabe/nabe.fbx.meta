@@ -1,21 +1,45 @@
 fileFormatVersion: 2
-guid: fbfb3ea08d74d40479e1cbfb50edc0fc
-timeCreated: 1540366172
+guid: 3bb9d89ff99e08d429a3e44e80f02533
+timeCreated: 1540519846
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: doorl
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: doorl
-    7400000: doorl|lclose
-    7400002: doorl|lopen
-    7400004: doorl|rclose
-    7400006: doorl|ropen
-    7400008: doorl|ropen2
+    100000: motite
+    100002: //RootNode
+    100004: nabe
+    100006: nabe.001
+    100008: sasae
+    100010: totte
+    400000: motite
+    400002: //RootNode
+    400004: nabe
+    400006: nabe.001
+    400008: sasae
+    400010: totte
+    2100000: nabein
+    2100002: motite
+    2100004: otama
+    2100006: gu
+    2100008: totte
+    2100010: sasae
+    2100012: nabe
+    2300000: motite
+    2300002: nabe
+    2300004: nabe.001
+    2300006: sasae
+    2300008: totte
+    3300000: motite
+    3300002: nabe
+    3300004: nabe.001
+    3300006: sasae
+    3300008: totte
+    4300000: nabe.001
+    4300002: motite
+    4300004: totte
+    4300006: sasae
+    4300008: nabe
+    7400000: motite|action
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -43,7 +67,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: motite|action
+      takeName: motite|action
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
