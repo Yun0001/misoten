@@ -53,33 +53,29 @@ public class PlayerInput : MonoBehaviour
 
     private void InputGamepad()
     {
-        // Aボタン入力（電子レンジ）
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.ActionMicrowave();
-        // Xボタン入力（鍋）
-        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.ActionPot();
-        // Bボタン入力（フライパン）
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionGrilled();
-        // Yボタン入力（キャンセル）
-        if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerControllerNumber)) player_cs.CookingCancel();
+        AllStatus();
 
-        // 通常状態
-        if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal)
+
+        switch (player_cs.GetPlayerStatus())
         {
-            //Rトリガー入力（味の素）
-            if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.DisplayTasteGage();
-            else if (GamePad.GetButton(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.UpgateTasteGage();
-            else if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.SprinkleTaste();
+            case Player.PlayerStatus.Normal:
+                NormalStatus();
+                break;
 
-            playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName), -(Input.GetAxis(inputYAxisName))));
-        }
-        // 配膳状態
-        else if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering)
-        {
-            // Lトリガー入力（配膳）
-            if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, PlayerControllerNumber)) player_cs.OfferCuisine();
+            case Player.PlayerStatus.Catering:
+                CateringStatus();
+                break;
 
-            playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName), -(Input.GetAxis(inputYAxisName))));
+            case Player.PlayerStatus.TasteCharge:
+                TasteChargeStatus();
+                break;
+
+            default:
+                return;
         }
+
+        playerMove_cs.SetMove(new Vector2(Input.GetAxis(inputXAxisName), -(Input.GetAxis(inputYAxisName))));
+
     }
 
 
@@ -117,6 +113,36 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L)) hindrance_cs.DisplayTasteGage();
         else if (Input.GetKey(KeyCode.L)) hindrance_cs.UpgateTasteGage();
         else if (Input.GetKeyUp(KeyCode.L)) hindrance_cs.SprinkleTaste();
+    }
+
+    private void AllStatus()
+    {
+        // Aボタン入力（電子レンジ）
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.ActionMicrowave();
+        // Xボタン入力（鍋）
+        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.ActionPot();
+        // Bボタン入力（フライパン）
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionGrilled();
+        // Yボタン入力（キャンセル）
+        if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerControllerNumber)) player_cs.CookingCancel();
+    }
+
+    private void NormalStatus()
+    {
+        //Rトリガー入力（味の素）
+        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.DisplayTasteGage();
+    }
+
+    private void TasteChargeStatus()
+    {
+        if (GamePad.GetButton(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.UpgateTasteGage();
+        else if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.SprinkleTaste();
+    }
+
+    private void CateringStatus()
+    {
+        // Lトリガー入力（配膳）
+        if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, PlayerControllerNumber)) player_cs.OfferCuisine();
     }
 }
 

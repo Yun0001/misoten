@@ -365,6 +365,11 @@ public class Player : MonoBehaviour
                 SetPlayerStatus(PlayerStatus.Normal);
                 break;
 
+            case PlayerStatus.Pot:
+                cookingPot_cs.CancelCooking();
+                SetPlayerStatus(PlayerStatus.Normal);
+                break;
+
         }
     }
 
