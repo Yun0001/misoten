@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    readonly static int playerNum = 4;                     // プレイヤーの数
+    readonly static int playerNum = 1;                     // プレイヤーの数
 
     [SerializeField]
     private GameObject[] playerScore;       // 各プレイヤースコアの参照

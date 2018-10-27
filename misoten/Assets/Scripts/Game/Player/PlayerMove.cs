@@ -6,13 +6,14 @@ public class PlayerMove : MonoBehaviour
 {
     public enum EDirection
     {
-        Up,
         Down,
+        Up,
         Right,
         Left
     }
 
     private Player player_cs;
+    private PlayerAnimation playerAnimation_cs;
     private Vector2 move;
     private Rigidbody2D rb;
     [SerializeField]    [Range(0.0f, 30.0f)]
@@ -24,9 +25,12 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]    [Range(0.0f, 1.0f)]
     private float TasteChargeCoefficient;
 
+
+
     public void Init()
     {
         player_cs = GetComponent<Player>();
+        playerAnimation_cs = GetComponent<PlayerAnimation>();
         rb = player_cs.gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -92,6 +96,14 @@ public class PlayerMove : MonoBehaviour
     public void SetMove(Vector2 vec)
     {
         move = vec;
+        if (move.x != 0 || move.y != 0) playerAnimation_cs.SetPlayerStatus(1);
+        else playerAnimation_cs.SetPlayerStatus(0);
+
+        if (move.x < 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
+        else if (move.x > 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
+
+        if (move.y < 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
+        else if (move.y > 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
     }
 
     private void Clamp()
