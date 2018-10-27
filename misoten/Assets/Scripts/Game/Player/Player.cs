@@ -254,11 +254,11 @@ public class Player : MonoBehaviour
                 CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
                 break;
             case 1:
-                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
                 break;
 
             case 2:
-                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
+                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
                 break;
         }
        
@@ -302,6 +302,10 @@ public class Player : MonoBehaviour
     {
         // 電子レンジに当たっていなければ関数を抜ける
         if (GetHitObj((int)hitObjName.Microwave) == null) return;
+        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;
+        if (GetHitObjComponentMicroWave().GetPlayerID() != playerID) return;
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
 
         switch (GetHitObjComponentMicroWave().GetStatus())
         {
@@ -333,14 +337,20 @@ public class Player : MonoBehaviour
     {
         // 鍋に当たっていなければ抜ける
         if (GetHitObj((int)hitObjName.Pot) == null) return;
+        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Pot) return;
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
 
         cookingPot_cs.CookingStart();
     }
 
     public void ActionGrilled()
     {
+        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
         if (GetHitObjComponentGrilled().GetStatus() == Grilled.GrilledState.inCcoking) return;
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
 
         cookingGrilled_cs.OnFire();
     }
@@ -362,6 +372,11 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.GrilledTable:
                 cookingGrilled_cs.CancelCooking();
+                SetPlayerStatus(PlayerStatus.Normal);
+                break;
+
+            case PlayerStatus.Pot:
+                cookingPot_cs.CancelCooking();
                 SetPlayerStatus(PlayerStatus.Normal);
                 break;
 

@@ -81,4 +81,16 @@ public class Pot : MonoBehaviour {
     /// </summary>
     /// <returns>茹で料理</returns>
     public GameObject GetPotCuisine() => potCuisine;
+
+    /// <summary>
+    /// キャンセル
+    /// </summary>
+    public void InterruptionCooking()
+    {
+        potStatus = PotState.unused;
+        potGage.gameObject.SetActive(false);
+
+        CuisineManager.GetInstance().GetGrilledController().OfferCuisine(potCuisine.GetComponent<Food>().GetFoodID());
+        potCuisine = null;
+    }
 }

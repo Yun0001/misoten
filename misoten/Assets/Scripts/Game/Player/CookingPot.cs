@@ -32,4 +32,9 @@ public class CookingPot : MonoBehaviour {
         }
         return null;
     }
+
+    public void CancelCooking()
+    {
+        player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().InterruptionCooking();
+    }
 }

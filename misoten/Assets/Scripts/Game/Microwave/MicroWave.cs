@@ -263,4 +263,6 @@ public class MicroWave : MonoBehaviour
                 break;
         }
     }
+
+    public int GetPlayerID() => playerID;
 }

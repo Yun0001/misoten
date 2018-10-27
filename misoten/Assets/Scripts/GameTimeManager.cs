@@ -9,6 +9,7 @@ public class GameTimeManager : MonoBehaviour {
     private float timespeed;
     private GameObject TimeText;
     private GameObject SpeedUpText;
+    private bool isTimeUp=false;
 
     // Use this for initialization
     void Start () {
@@ -21,16 +22,20 @@ public class GameTimeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GameTimer();
-        TimerSpeed();
-        TimeOver();
-	}
+        if (!isTimeUp)
+        {
+            GameTimer();
+            TimeOver();
+            UpdateText();
+        }
+
+
+    }
 
     //時間管理
     private void GameTimer()
     {
         countTime -= Time.deltaTime; //スタートしてからの秒数を格納
-        TimeText.GetComponent<Text>().text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
     }
 
     //時間加速
@@ -80,6 +85,7 @@ public class GameTimeManager : MonoBehaviour {
         if (countTime<=0)
         {
             countTime = 0;
+            isTimeUp = true;
            // SpeedUpText.GetComponent<Text>().text = "Time Up" ;
         }
     }
@@ -89,6 +95,12 @@ public class GameTimeManager : MonoBehaviour {
         return countTime;
     }
 
+
+    private void UpdateText()
+    {
+        TimeText.GetComponent<Text>().text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
+
+    }
 
 
 }
