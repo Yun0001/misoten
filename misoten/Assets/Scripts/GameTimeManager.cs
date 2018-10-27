@@ -22,15 +22,15 @@ public class GameTimeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         GameTimer();
-        TimerSpeed();
+        //TimerSpeed();
         TimeOver();
 	}
 
     //時間管理
     private void GameTimer()
-    {
-        countTime -= Time.deltaTime; //スタートしてからの秒数を格納
+    {        
         TimeText.GetComponent<Text>().text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
+        countTime -= Time.deltaTime; //スタートしてからの秒数を格納
     }
 
     //時間加速

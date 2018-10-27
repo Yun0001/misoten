@@ -7,10 +7,10 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     private bool IsLoadScene = false;
     private bool IsKeyEnter = false;
-    private bool IsKey1 = false;
-    private bool IsKey2 = false;
-    private bool IsKey3 = false;
-    private bool IsKey4 = false;
+    //private bool IsKey1 = false;
+    //private bool IsKey2 = false;
+    //private bool IsKey3 = false;
+    //private bool IsKey4 = false;
 
     private string ScenesFolderPass = "Scenes/";
 
@@ -145,10 +145,10 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     void KeyFalse()
     {
-        IsKey1 = false;
-        IsKey2 = false;
-        IsKey3 = false;
-        IsKey4 = false;
+        //IsKey1 = false;
+        //IsKey2 = false;
+        //IsKey3 = false;
+        //IsKey4 = false;
         IsKeyEnter = false;
     }
 
