@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -665,6 +665,65 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1001 &725132942
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &727507708 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1493115646206754, guid: d721aa4f8c5596e489cd92d3e160a6df,
+    type: 2}
+  m_PrefabInternal: {fileID: 1088042444}
+--- !u!114 &727507709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 727507708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2e43fd9964238498e0913864a2db80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pScore: 
 --- !u!1 &785501021 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1421772309709022, guid: d721aa4f8c5596e489cd92d3e160a6df,

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameTimeManager : MonoBehaviour {
 
+    [SerializeField] 
     private float countTime;
     private float timespeed;
     private GameObject TimeText;
@@ -89,6 +90,6 @@ public class GameTimeManager : MonoBehaviour {
         return countTime;
     }
 
-
+    
 
 }

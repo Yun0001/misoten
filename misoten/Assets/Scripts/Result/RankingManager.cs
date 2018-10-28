@@ -7,10 +7,8 @@ public class RankingManager : MonoBehaviour {
 
     private GameObject SceneObject;
     private SceneManagerScript sceneManagerScript;
-    private ScoreManager scoreManagerScript;
-
+ 
     private int[] ResultScore;
-
     // Use this for initialization
     void Start () {
 		
@@ -20,8 +18,7 @@ public class RankingManager : MonoBehaviour {
     {
         SceneObject = GameObject.Find("SceneManager");
         sceneManagerScript = SceneObject.GetComponent<SceneManagerScript>();
-        //scoreManagerScript = GetComponent<ScoreManager>();
-
+  
     }
 	
 	// Update is called once per frame
@@ -40,9 +37,15 @@ public class RankingManager : MonoBehaviour {
 
         for (int pID=0; pID<4;pID++)
         {
-            //ResultScore[pID]= ScoreManager.GetInstance().GetPlayerScore(pID);
-            //Debug.Log( pID+" : "+ ResultScore[pID]);
-        }
+            //ResultScore[pID] = ScoreManager.GetInstance().GetPlayerScore(pID);
+            //ResultScore[pID] = scoreManager.GetPlayerScore(pID);
+            //Debug.Log(pID + " : " + ResultScore[pID]);
+           //Debug.Log(pID + " : " + scoreManager.GetPlayerScore(pID));
+            
+            //scoreManager.GetPlayerScore(pID);
+            //Debug.Log(pID + " : " + ScoreManager.GetInstance().GetPlayerScore(pID));
+            //Debug.Log(pID + " : " + pScore[pID]);
+       }
 
     }
 
@@ -52,7 +55,6 @@ public class RankingManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             sceneManagerScript.LoadNextScene();
-            //SceneManager.ADD(); 
         }
     }
 

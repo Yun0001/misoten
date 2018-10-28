@@ -16,7 +16,7 @@ public class ResultChar : MonoBehaviour {
 
     void Awake()
     {
-        Chars = GameObject.Find("chars");
+        Chars = GameObject.Find("char");
         vec3Char = Chars.transform.position;
    
     }
