@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 public class TitleController : MonoBehaviour {
 
@@ -45,7 +46,8 @@ public class TitleController : MonoBehaviour {
 
     void Update () {
 
-        if (Input.anyKeyDown)
+        //if (Input.anyKeyDown)
+        if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
         {
             if (!isStartingGame)
             {

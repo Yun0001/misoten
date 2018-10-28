@@ -7,7 +7,7 @@ public class GameTimeManager : MonoBehaviour {
 
     private float countTime;
     private float timespeed;
-    private GameObject TimeText;
+    private Text TimeText;
     private GameObject SpeedUpText;
     private bool isTimeUp=false;
 
@@ -16,7 +16,7 @@ public class GameTimeManager : MonoBehaviour {
         countTime = 60;
         timespeed = 1;
 
-        TimeText = GameObject.Find("TimeText");
+        TimeText = GetComponent<Text>();
      //   SpeedUpText = GameObject.Find("SpeedUpText");
     }
 	
@@ -98,7 +98,7 @@ public class GameTimeManager : MonoBehaviour {
 
     private void UpdateText()
     {
-        TimeText.GetComponent<Text>().text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
+        TimeText.text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
 
     }
 
