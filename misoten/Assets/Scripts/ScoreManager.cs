@@ -159,7 +159,14 @@ public class ScoreManager : Singleton<ScoreManager>
     /// </summary>
     /// <param name="pID"></param>
     /// <returns>スコア</returns>
-    private int GetPlayerScore(int pID) => playerScore[pID].GetComponent<ScoreCount>().GetScore();
+    public int GetPlayerScore(int pID) => playerScore[pID].GetComponent<ScoreCount>().GetScore();
+    //public int GetPlayerScore(int pID) {
+    //    return playerScore[pID].GetComponent<ScoreCount>().GetScore();
+    //}
 
     public int GetPlayerRank(int ID) => playerRank[ID];
+    //public int GetPlayerRank(int ID)
+    //{
+    //    return playerRank[ID];
+    //}
 }

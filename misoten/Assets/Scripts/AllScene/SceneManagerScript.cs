@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GamepadInput;
 
 public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     private bool IsLoadScene = false;
     private bool IsKeyEnter = false;
-    private bool IsKey1 = false;
-    private bool IsKey2 = false;
-    private bool IsKey3 = false;
-    private bool IsKey4 = false;
+    private string currentScene;
+    //private bool IsKey1 = false;
+    //private bool IsKey2 = false;
+    //private bool IsKey3 = false;
+    //private bool IsKey4 = false;
+    private GameObject Time;
+    private GameTimeManager GameTime;
+    private GameObject gamepad;
+    private GamePad.Index PlayerControllerNumber;
+    private Player player_cs;
+
 
     private string ScenesFolderPass = "Scenes/";
 
@@ -45,8 +53,31 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         KeyFalse();
     }
 
+    private void Awake()
+    {
+        // 現在読み込んでいるシーンの名前を取得
+        currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene == "Game")
+        {
+            Time = GameObject.Find("TimeText");
+            GameTime = Time.GetComponent<GameTimeManager>();
+
+        } 
+        ////ゲームパッド初期処理
+        //if (currentScene == "Result")
+        //{
+        //    //Gamepad
+        //    gamepad = GameObject.Find("Gamepad");
+        //    player_cs = gamepad.GetComponent<Player>();
+        //    PlayerControllerNumber = player_cs.GetPlayerControllerNumber();
+        //}
+      }
+
     // Update is called once per frame
     private void Update () {
+        // 現在読み込んでいるシーンの名前を取得
+        currentScene = SceneManager.GetActiveScene().name;
+
         KeyPress();
 
         if (IsLoadScene)
@@ -54,6 +85,10 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
             LoadNextScene();
             IsLoadScene = false;
             KeyFalse();
+        }
+        if (currentScene=="Game")
+        {            
+            timeUPloadResult();
         }
     }
 
@@ -76,7 +111,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     public void LoadNextScene()
     {
-
+        /*　ToDo： バグ中
         switch ((SceneName)SceneManager.GetActiveScene().buildIndex)
         {
             case SceneName.Title:
@@ -100,6 +135,23 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
                 Debug.LogError("不正なシーン");
                 break;
         }
+        */
+
+        switch(currentScene){
+            case "Title":
+                SceneManager.LoadScene("Game", LoadSceneMode.Single);
+                break;
+            case "Game":
+                SceneManager.LoadScene("Result", LoadSceneMode.Single);
+                break;
+            case "Result":
+                SceneManager.LoadScene("Title", LoadSceneMode.Single);
+                break;
+            default:
+                Debug.LogError("不正なシーン");
+                break;
+        }
+
     }
 
     private void LoadSceneFlg()
@@ -112,27 +164,33 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
     /// </summary>
     void KeyPress()
     {
-        //if (Input.GetButtonDown("1"))
-        //{
-        //    IsKey1 = true;
-        //    //SceneManager.GetActiveScene().buildIndex;
-        //    LoadScene();
-        //}
-        //if (Input.GetButtonDown("2"))
-        //{
-        //    IsKey1 = true;
-        //    LoadScene();
-        //}
-        //if (Input.GetButtonDown("3"))
-        //{
-        //    IsKey1 = true;
-        //    LoadScene();
-        //}
-        //if (Input.GetButtonDown("4"))
-        //{
-        //    IsKey1 = true;
-        //    LoadScene();
-        //}
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (currentScene == "Title")
+            {
+                SceneManager.LoadScene("Game", LoadSceneMode.Single);
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if (currentScene =="Game" )
+            {
+                SceneManager.LoadScene("Result", LoadSceneMode.Single);
+            }
+        }
+
+        //if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)
+        //    ||Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (currentScene == "Result")
+            {
+                SceneManager.LoadScene("Game", LoadSceneMode.Single);
+            }
+        }
+        
+  
+      
 
         //SPACEキー仮置き
         if (Input.GetKeyDown(KeyCode.Space))
@@ -143,13 +201,17 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         }
     }
 
-    void KeyFalse()
+    private void KeyFalse()
     {
-        IsKey1 = false;
-        IsKey2 = false;
-        IsKey3 = false;
-        IsKey4 = false;
         IsKeyEnter = false;
+    }
+
+    private void timeUPloadResult()
+    {
+        if(GameTime.GetCountTime()<=0)
+        {
+            SceneManager.LoadScene("Result", LoadSceneMode.Single);
+        }
     }
 
 }
