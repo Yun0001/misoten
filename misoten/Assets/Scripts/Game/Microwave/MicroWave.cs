@@ -210,7 +210,7 @@ public class MicroWave : MonoBehaviour
     /// </summary>
     /// <param name="onesecond"></param>
     /// <returns></returns>
-    private bool IsElapsedOneSecond(float onesecond) => timer >= onesecond && (timer <= 4 && onesecond > 0);
+    private bool IsElapsedOneSecond(float onesecond) => timer >= onesecond && (timer <= 3 && onesecond > 0);
 
     /// <summary>
     /// 順位に応じた範囲で判定

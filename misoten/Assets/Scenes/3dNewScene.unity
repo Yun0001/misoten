@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3086b4a87d42e924bb514083cb72556d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLooping: 1
+  isLooping: 0
 --- !u!4 &279346153 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: e32b569ae4c23804e94b6eda8fd426d1, type: 3}
@@ -2230,9 +2230,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 619621132}
+  - component: {fileID: 619621133}
+  - component: {fileID: 619621134}
   m_Layer: 0
   m_Name: nabe1
-  m_TagString: Untagged
+  m_TagString: Pot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2251,6 +2253,30 @@ Transform:
   m_Father: {fileID: 1208550335}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &619621133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619621131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 1.2}
+  m_Center: {x: 0, y: 0, z: 3}
+--- !u!114 &619621134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619621131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c97f1dec2d3c84489842d92ece30b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potCuisine: {fileID: 0}
 --- !u!1001 &632672434
 Prefab:
   m_ObjectHideFlags: 0
@@ -3749,6 +3775,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2b19addb0043edd409085c3c81e2b4d8, type: 2}
+    - target: {fileID: 100000, guid: 5da075426d448fd409ea18fb999f1ded, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5da075426d448fd409ea18fb999f1ded, type: 3}
   m_IsPrefabParent: 0
@@ -4338,19 +4368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3086b4a87d42e924bb514083cb72556d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLooping: 1
---- !u!114 &1277696279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1277696275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c97f1dec2d3c84489842d92ece30b45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  potCuisine: {fileID: 0}
+  isLooping: 0
 --- !u!4 &1295438853 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400008, guid: 378435dd599b5ef4dbe5313362cd02d4, type: 3}
@@ -4768,9 +4786,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1437630992}
   - component: {fileID: 1437630993}
+  - component: {fileID: 1437630994}
   m_Layer: 0
   m_Name: microwave1
-  m_TagString: Untagged
+  m_TagString: Microwave
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4802,19 +4821,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   microwaveTimerImage: {fileID: 709796728}
-  explosionTime: 0
+  explosionTime: 5
   timer: 0
   status: 0
   successRangeMin:
-  - 0
-  - 0
-  - 0
-  - 0
+  - 2
+  - 2
+  - 2
+  - 2
   successRangeMax:
-  - 0
-  - 0
-  - 0
-  - 0
+  - 4
+  - 4
+  - 4
+  - 4
+--- !u!65 &1437630994
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1437630991}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.5, y: 1, z: 5}
+  m_Center: {x: 0, y: 0, z: -7.7}
 --- !u!4 &1446074648 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: cf9df6156ad45f7499260946a2084fec, type: 3}
@@ -6148,9 +6179,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1880697654}
   - component: {fileID: 1880697655}
+  - component: {fileID: 1880697656}
   m_Layer: 0
   m_Name: pan1
-  m_TagString: Untagged
+  m_TagString: Fryingpan
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6180,6 +6212,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948030392be04cf47bad56b22866e6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1880697656
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1880697653}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1.5, z: 2.7}
+  m_Center: {x: 3, y: -0.3, z: -0.05}
 --- !u!1001 &1913543749
 Prefab:
   m_ObjectHideFlags: 0
