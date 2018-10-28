@@ -59,7 +59,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "Game")
         {
-            Time = GameObject.Find("TimeText");
+            Time = GameObject.Find("GameTimeManager");
             GameTime = Time.GetComponent<GameTimeManager>();
 
         } 
@@ -138,14 +138,14 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         */
 
         switch(currentScene){
-            case "Title":
+            case "Title_heita":
                 SceneManager.LoadScene("Game", LoadSceneMode.Single);
                 break;
             case "Game":
                 SceneManager.LoadScene("Result", LoadSceneMode.Single);
                 break;
             case "Result":
-                SceneManager.LoadScene("Title", LoadSceneMode.Single);
+                SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
                 break;
             default:
                 Debug.LogError("不正なシーン");
@@ -166,7 +166,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (currentScene == "Title")
+            if (currentScene == "Title_heita")
             {
                 SceneManager.LoadScene("Game", LoadSceneMode.Single);
             }
@@ -185,7 +185,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         {
             if (currentScene == "Result")
             {
-                SceneManager.LoadScene("Game", LoadSceneMode.Single);
+                SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
             }
         }
         
