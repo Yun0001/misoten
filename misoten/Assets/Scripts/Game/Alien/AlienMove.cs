@@ -16,7 +16,7 @@ public class AlienMove : MonoBehaviour
 
 	// 指定終点座標(持ち帰り用の席に座る)
 	[SerializeField]
-	Vector3[,,] takeAwaySeatPosition = new Vector3[4, 4, 2];	// [最大席の数、移動回数、入店&退店時移動]
+	Vector3[,,] takeAwaySeatPosition = new Vector3[6, 4, 2];	// [最大席の数、移動回数、入店&退店時移動]
 
 	// 入店移動時間
 	[SerializeField]
@@ -27,6 +27,17 @@ public class AlienMove : MonoBehaviour
 	private float[] WhenLeavingStoreMoveTime = new float[2];
 
 	// ---------------------------------------------
+
+	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
+	// ---------------------------------------------
+
+	// ---------------------------------------------
+
+	// 退店完了判定(カウンター用)
+	private static bool[] counterClosedCompletion = { false, false, false, false, false, false, false };
+
+	// 退店完了判定(持ち帰り用)
+	private static bool[] takeoutClosedCompletion = { false, false, false, false, false, false };
 
 	// ローカル変数
 	// ---------------------------------------------
@@ -97,7 +108,7 @@ public class AlienMove : MonoBehaviour
 	void Update()
 	{
 		// 入店時移動状態の時
-		if (whenEnteringStoreMoveFlag)
+		if (GetWhenEnteringStoreMoveFlag())
 		{
 			// カウンター席or持ち帰り用の席への移動
 			switch (seatPatternSave)
@@ -113,9 +124,23 @@ public class AlienMove : MonoBehaviour
 				default: break;
 			}
 		}
-
-		//// 退店時移動処理
-		//WhenLeavingStoreMove();
+		// 退店時移動状態の時
+		if (GetWhenLeavingStoreFlag())
+		{
+			// カウンター席or持ち帰り用席側の退店時移動
+			switch (seatPatternSave)
+			{
+				case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+					// カウンター席側のエイリアンの退店時移動処理
+					CounterWhenLeavingStoreMove();
+					break;
+				case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+					// 持ち帰り席側のエイリアンの退店時移動処理
+					TakeoutWhenLeavingStoreMove();
+					break;
+				default: break;
+			}
+		}
 	}
 
 	/// <summary>
@@ -127,31 +152,21 @@ public class AlienMove : MonoBehaviour
 		for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++) { counterSeatsPosition[i, 0, 0] = new Vector3(0.0f, 0.55f, 5.0f); }
 
 		// 二つ目の終点座標の設定(入店時)
-		counterSeatsPosition[0, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
-		counterSeatsPosition[1, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
-		counterSeatsPosition[2, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
-		counterSeatsPosition[3, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
-		counterSeatsPosition[4, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
-		counterSeatsPosition[5, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
-		counterSeatsPosition[6, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
+		counterSeatsPosition[0, 1, 0] = counterSeatsPosition[1, 1, 0] = counterSeatsPosition[2, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
+		counterSeatsPosition[3, 1, 0] = counterSeatsPosition[4, 1, 0] = counterSeatsPosition[5, 1, 0] = counterSeatsPosition[6, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
 
 		// 三つ目の終点座標の設定(入店時)
-		counterSeatsPosition[0, 2, 0] = new Vector3(-7.0f, 0.55f, 4.0f);
-		counterSeatsPosition[1, 2, 0] = new Vector3(-7.0f, 0.55f, 4.0f);
-		counterSeatsPosition[2, 2, 0] = new Vector3(-7.0f, 0.55f, 4.0f);
-		counterSeatsPosition[3, 2, 0] = new Vector3(7.0f, 0.55f, 4.0f);
-		counterSeatsPosition[4, 2, 0] = new Vector3(7.0f, 0.55f, 4.0f);
-		counterSeatsPosition[5, 2, 0] = new Vector3(7.0f, 0.55f, 4.0f);
-		counterSeatsPosition[6, 2, 0] = new Vector3(7.0f, 0.55f, 4.0f);
+		counterSeatsPosition[0, 2, 0] = counterSeatsPosition[1, 2, 0] = counterSeatsPosition[2, 2, 0] = new Vector3(-7.0f, 0.55f, 4.0f);
+		counterSeatsPosition[3, 2, 0] = counterSeatsPosition[4, 2, 0] = counterSeatsPosition[5, 2, 0] = counterSeatsPosition[6, 2, 0] = new Vector3(7.0f, 0.55f, 4.0f);
 
-		// 四つ目の終点座標の設定(入店時)
-		counterSeatsPosition[0, 3, 0] = new Vector3(-3.0f, 0.55f, 4.0f);
-		counterSeatsPosition[1, 3, 0] = new Vector3(-2.0f, 0.55f, 4.0f);
-		counterSeatsPosition[2, 3, 0] = new Vector3(-1.0f, 0.55f, 4.0f);
-		counterSeatsPosition[3, 3, 0] = new Vector3(0.0f, 0.55f, 4.0f);
-		counterSeatsPosition[4, 3, 0] = new Vector3(1.0f, 0.55f, 4.0f);
-		counterSeatsPosition[5, 3, 0] = new Vector3(2.0f, 0.55f, 4.0f);
-		counterSeatsPosition[6, 3, 0] = new Vector3(3.0f, 0.55f, 4.0f);
+		// 四つ目の終点座標の設定(入店時)&一つ目の終点座標の設定(退店時)
+		counterSeatsPosition[0, 3, 0] = counterSeatsPosition[0, 0, 1] = new Vector3(-3.0f, 0.55f, 4.0f);
+		counterSeatsPosition[1, 3, 0] = counterSeatsPosition[1, 0, 1] = new Vector3(-2.0f, 0.55f, 4.0f);
+		counterSeatsPosition[2, 3, 0] = counterSeatsPosition[2, 0, 1] = new Vector3(-1.0f, 0.55f, 4.0f);
+		counterSeatsPosition[3, 3, 0] = counterSeatsPosition[3, 0, 1] = new Vector3(0.0f, 0.55f, 4.0f);
+		counterSeatsPosition[4, 3, 0] = counterSeatsPosition[4, 0, 1] = new Vector3(1.0f, 0.55f, 4.0f);
+		counterSeatsPosition[5, 3, 0] = counterSeatsPosition[5, 0, 1] = new Vector3(2.0f, 0.55f, 4.0f);
+		counterSeatsPosition[6, 3, 0] = counterSeatsPosition[6, 0, 1] = new Vector3(3.0f, 0.55f, 4.0f);
 
 		// 五つ目の終点座標の設定(入店時)
 		counterSeatsPosition[0, 4, 0] = new Vector3(-3.0f, 0.92f, 3.5f);
@@ -162,19 +177,9 @@ public class AlienMove : MonoBehaviour
 		counterSeatsPosition[5, 4, 0] = new Vector3(2.0f, 0.92f, 3.5f);
 		counterSeatsPosition[6, 4, 0] = new Vector3(3.0f, 0.92f, 3.5f);
 
-		// 一つ目の終点座標の設定(退店時)
-		//counterSeatsPosition[0, 0, 1] = new Vector3(-6.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[1, 0, 1] = new Vector3(-3.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[2, 0, 1] = new Vector3(0.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[3, 0, 1] = new Vector3(3.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[4, 0, 1] = new Vector3(6.0f, 4.5f, -0.1f);
-
 		// 二つ目の終点座標の設定(退店時)
-		//counterSeatsPosition[0, 1, 1] = new Vector3(10.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[1, 1, 1] = new Vector3(10.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[2, 1, 1] = new Vector3(10.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[3, 1, 1] = new Vector3(-10.0f, 4.5f, -0.1f);
-		//counterSeatsPosition[4, 1, 1] = new Vector3(-10.0f, 4.5f, -0.1f);
+		counterSeatsPosition[0, 1, 1] = counterSeatsPosition[1, 1, 1] = counterSeatsPosition[2, 1, 1] = new Vector3(-7.0f, 0.55f, 4.0f);
+		counterSeatsPosition[3, 1, 1] = counterSeatsPosition[4, 1, 1] = counterSeatsPosition[5, 1, 1] = counterSeatsPosition[6, 1, 1] = new Vector3(7.0f, 0.55f, 4.0f);
 	}
 
 	/// <summary>
@@ -186,22 +191,32 @@ public class AlienMove : MonoBehaviour
 		for (int i = 0; i < alienCall.GetTakeAwaySeatMax(); i++) { takeAwaySeatPosition[i, 0, 0] = new Vector3(0.0f, 0.55f, 5.0f); }
 
 		// 二つ目の終点座標の設定(入店時)
-		takeAwaySeatPosition[0, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
-		takeAwaySeatPosition[1, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
-		takeAwaySeatPosition[2, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
-		takeAwaySeatPosition[3, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
+		takeAwaySeatPosition[0, 1, 0] = takeAwaySeatPosition[2, 1, 0] = takeAwaySeatPosition[4, 1, 0] = new Vector3(-7.0f, 0.55f, 5.0f);
+		takeAwaySeatPosition[1, 1, 0] = takeAwaySeatPosition[3, 1, 0] = takeAwaySeatPosition[5, 1, 0] = new Vector3(7.0f, 0.55f, 5.0f);
 
 		// 三つ目の終点座標の設定(入店時)
 		takeAwaySeatPosition[0, 2, 0] = new Vector3(-7.0f, 0.55f, 0.5f);
 		takeAwaySeatPosition[1, 2, 0] = new Vector3(7.0f, 0.55f, 0.5f);
-		takeAwaySeatPosition[2, 2, 0] = new Vector3(-7.0f, 0.55f, -2.0f);
-		takeAwaySeatPosition[3, 2, 0] = new Vector3(7.0f, 0.55f, -2.0f);
+		takeAwaySeatPosition[2, 2, 0] = new Vector3(-7.0f, 0.55f, -1.0f);
+		takeAwaySeatPosition[3, 2, 0] = new Vector3(7.0f, 0.55f, -1.0f);
+		takeAwaySeatPosition[4, 2, 0] = new Vector3(-7.0f, 0.55f, -2.5f);
+		takeAwaySeatPosition[5, 2, 0] = new Vector3(7.0f, 0.55f, -2.5f);
 
 		// 四つ目の終点座標の設定(入店時)
 		takeAwaySeatPosition[0, 3, 0] = new Vector3(-4.7f, 0.55f, 0.5f);
 		takeAwaySeatPosition[1, 3, 0] = new Vector3(4.7f, 0.55f, 0.5f);
-		takeAwaySeatPosition[2, 3, 0] = new Vector3(-4.7f, 0.55f, -2.0f);
-		takeAwaySeatPosition[3, 3, 0] = new Vector3(4.7f, 0.55f, -2.0f);
+		takeAwaySeatPosition[2, 3, 0] = new Vector3(-4.7f, 0.55f, -1.0f);
+		takeAwaySeatPosition[3, 3, 0] = new Vector3(4.7f, 0.55f, -1.0f);
+		takeAwaySeatPosition[4, 3, 0] = new Vector3(-4.7f, 0.55f, -2.5f);
+		takeAwaySeatPosition[5, 3, 0] = new Vector3(4.7f, 0.55f, -2.5f);
+
+		// 四つ目の終点座標の設定(退店時)
+		takeAwaySeatPosition[0, 0, 1] = new Vector3(-7.0f, 0.55f, 0.5f);
+		takeAwaySeatPosition[1, 0, 1] = new Vector3(7.0f, 0.55f, 0.5f);
+		takeAwaySeatPosition[2, 0, 1] = new Vector3(-7.0f, 0.55f, -1.0f);
+		takeAwaySeatPosition[3, 0, 1] = new Vector3(7.0f, 0.55f, -1.0f);
+		takeAwaySeatPosition[4, 0, 1] = new Vector3(-7.0f, 0.55f, -2.5f);
+		takeAwaySeatPosition[5, 0, 1] = new Vector3(7.0f, 0.55f, -2.5f);
 	}
 
 	/// <summary>
@@ -255,7 +270,7 @@ public class AlienMove : MonoBehaviour
 					whenEnteringStoreMoveFlag = false;
 
 					// 移動終了時、BoxColliderを「ON」にする
-					GetComponent<BoxCollider>().enabled = true;
+					GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.COUNTERSEATS].enabled = true;
 
 					// 退店時の為に初期化
 					setEndPositionId_2 = 0;
@@ -315,7 +330,7 @@ public class AlienMove : MonoBehaviour
 					whenEnteringStoreMoveFlag = false;
 
 					// 移動終了時、BoxColliderを「ON」にする
-					GetComponent<BoxCollider>().enabled = true;
+					GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.TAKEAWAYSEAT].enabled = true;
 
 					// 退店時の為に初期化
 					setEndPositionId_2 = 0;
@@ -330,12 +345,12 @@ public class AlienMove : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 退店時移動処理
+	/// カウンター客の退店時移動処理
 	/// </summary>
-	void WhenLeavingStoreMove()
+	void CounterWhenLeavingStoreMove()
 	{
-		// 退店時移動状態の時
-		if (whenLeavingStoreFlag)
+		// 退店完了ではない時
+		if(!GetCounterClosedCompletion(setEndPositionId_1))
 		{
 			// 時間更新
 			timeAdd += Time.deltaTime;
@@ -343,8 +358,8 @@ public class AlienMove : MonoBehaviour
 			// 予定時間を割る
 			rate = timeAdd / WhenLeavingStoreMoveTime[setEndPositionId_2];
 
-			// 移動終了時、BoxCollider2Dを「OFF」にする
-			GetComponent<BoxCollider2D>().enabled = false;
+			// 移動終了時、BoxColliderを「OFF」にする
+			GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.COUNTERSEATS].enabled = false;
 
 			// カウンター席に着席する管理
 			switch (setEndPositionId_2)
@@ -352,16 +367,44 @@ public class AlienMove : MonoBehaviour
 				case 0:
 					// 一つ目の終点座標に到着
 					if (timeAdd > WhenLeavingStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; }
-					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 2, 0], counterSeatsPosition[setEndPositionId_1, 0, 1], rate);
+					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 4, 0], counterSeatsPosition[setEndPositionId_1, 0, 1], rate);
 					break;
 				case 1:
-					// 二つ目の終点座標に到着
-					if (timeAdd > WhenLeavingStoreMoveTime[1])
-					{
-
-					}
+					// 二つ目の終点座標に到着、退店完了
+					if (timeAdd > WhenLeavingStoreMoveTime[1]) { counterClosedCompletion[setEndPositionId_1] = true; }
 					transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 0, 1], counterSeatsPosition[setEndPositionId_1, 1, 1], rate);
 					break;
+				default: break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// 持ち帰り客の退店時移動処理
+	/// </summary>
+	void TakeoutWhenLeavingStoreMove()
+	{
+		// 退店完了ではない時
+		if (!GetTakeoutClosedCompletion(setEndPositionId_1))
+		{
+			// 時間更新
+			timeAdd += Time.deltaTime;
+
+			// 予定時間を割る
+			rate = timeAdd / WhenLeavingStoreMoveTime[setEndPositionId_2];
+
+			// 移動終了時、BoxColliderを「OFF」にする
+			GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.TAKEAWAYSEAT].enabled = false;
+
+			// カウンター席に着席する管理
+			switch (setEndPositionId_2)
+			{
+				case 0:
+					// 一つ目の終点座標に到着、退店完了
+					if (timeAdd > WhenLeavingStoreMoveTime[0]) { takeoutClosedCompletion[setEndPositionId_1] = true; }
+					transform.position = Vector3.Lerp(takeAwaySeatPosition[setEndPositionId_1, 3, 0], takeAwaySeatPosition[setEndPositionId_1, 0, 1], rate);
+					break;
+				default: break;
 			}
 		}
 	}
@@ -391,4 +434,34 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public bool GetWhenLeavingStoreFlag() => whenLeavingStoreFlag;
+
+	/// <summary>
+	/// カウンター側のエイリアンが退店完了かの格納
+	/// </summary>
+	/// <param name="_counterClosedCompletion"></param>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool SetCounterClosedCompletion(bool _counterClosedCompletion, int seatId) => counterClosedCompletion[seatId] = _counterClosedCompletion;
+
+	/// <summary>
+	/// カウンター側のエイリアンが退店完了かの取得
+	/// </summary>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool GetCounterClosedCompletion(int seatId) => counterClosedCompletion[seatId];
+
+	/// <summary>
+	/// 持ち帰り側のエイリアンが退店完了かの格納
+	/// </summary>
+	/// <param name="_takeoutClosedCompletion"></param>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool SetTakeoutClosedCompletion(bool _takeoutClosedCompletion, int seatId) => takeoutClosedCompletion[seatId] = _takeoutClosedCompletion;
+
+	/// <summary>
+	/// 持ち帰り側のエイリアンが退店完了かの取得
+	/// </summary>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool GetTakeoutClosedCompletion(int seatId) => takeoutClosedCompletion[seatId];
 }

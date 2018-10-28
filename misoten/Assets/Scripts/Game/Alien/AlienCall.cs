@@ -70,7 +70,7 @@ public class AlienCall : MonoBehaviour
 	private int counterSeatsMax;
 
 	// 持ち帰り用の席の最大数指定
-	[SerializeField, Range(1, 4)]
+	[SerializeField, Range(1, 6)]
 	private int takeAwaySeatMax;
 
 	// エイリアン最大数指定
@@ -87,7 +87,7 @@ public class AlienCall : MonoBehaviour
 	// ---------------------------------------------
 
 	// 例外フラグ
-	private static bool exceptionFlag = false;
+	//private static bool exceptionFlag = false;
 
 	// クレーム用ID(カウンター用&持ち帰り用)
 	private static int[] claimId = new int[(int)ESeatPattern.MAX];
@@ -105,13 +105,13 @@ public class AlienCall : MonoBehaviour
 	private static float[] orderLatencyAdd1 = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// オーダー待ち時間(持ち帰り用)
-	private static float[] orderLatencyAdd2 = { 0.0f, 0.0f, 0.0f, 0.0f };
+	private static float[] orderLatencyAdd2 = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// 座っているかの判定(カウンター用)
 	private static bool[] orSitting1 = { false, false, false, false, false, false, false };
 
 	// 座っているかの判定(持ち帰り用)
-	private static bool[] orSitting2 = { false, false, false, false };
+	private static bool[] orSitting2 = { false, false, false, false, false, false };
 
 	// ドアのアニメーションフラグ
 	private static bool doorAnimationFlag = true;
@@ -134,7 +134,7 @@ public class AlienCall : MonoBehaviour
 	private GameObject[] counterDesignatedObj = new GameObject[7];
 
 	// 持ち帰り用専用オブジェ
-	private GameObject[] takeOutDesignatedObj = new GameObject[4];
+	private GameObject[] takeOutDesignatedObj = new GameObject[6];
 
 	// エイリアン数
 	private int alienNumber = 0;
@@ -158,12 +158,8 @@ public class AlienCall : MonoBehaviour
 		// 例外処理関数
 		//ExceptionHandling();
 
-		// クレーム終了時
-		if (AlienClaim.GetClaimEndFlag() || AlienSatisfaction.GetClaimEndFlag())
-		{
-			// 各エイリアンが帰る処理
-			//Return();
-		}
+		// 各エイリアンが帰る(削除)処理
+		Return();
 	}
 
 	/// <summary>
@@ -314,23 +310,52 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	void Return()
 	{
-		AlienClaim.SetClaimEndFlag(false);
-		AlienSatisfaction.SetClaimEndFlag(false);
-
 		// カウンター席の数分ループする
 		for (int i = 0; i < GetCounterSeatsMax(); i++)
 		{
-			//条件：座っている、チップをプレイヤーに渡したエイリアン
-			//if (AlienStatus.GetStatusFlag(i, (int)AlienStatus.EStatus.GETON) && AlienChip.GetChipOnFlag(i))
-			//{
-			//	SetCounterSeatsAddId(i);
-			//	Destroy(obj[i]);
-			//	SetOrSitting(false, i);
-			//	AlienChip.SetChipOnFlag(false, i);
+			// 退店が完了したかの判定をとる
+			if (AlienMove.GetCounterClosedCompletion(i))
+			{
+				// エイリアン削除
+				Destroy(counterDesignatedObj[i]);
 
-			//	// 時間初期化
-			//	latencyAdd[(int)EProcessingPattern.COUNTERSEATS] = 0.0f;
-			//}
+				// 次のエイリアンが入店出来るようにする
+				SetSeatAddId(i, (int)ESeatPattern.COUNTERSEATS);
+				orSitting1[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = false;
+
+				// 次のエイリアンが退店出来るようにする
+				AlienMove.SetCounterClosedCompletion(false, i);
+
+				// 次のエイリアンがチップをプレイヤーに渡せるように初期化
+				AlienChip.SetChipOnFlag(false, i);
+
+				// 時間初期化
+				latencyAdd[(int)ESeatPattern.COUNTERSEATS] = 0.0f;
+			}
+		}
+
+		// 持ち帰り席の数分ループする
+		for (int i = 0; i < GetTakeAwaySeatMax(); i++)
+		{
+			// 退店が完了したかの判定をとる
+			if (AlienMove.GetTakeoutClosedCompletion(i))
+			{
+				// エイリアン削除
+				Destroy(takeOutDesignatedObj[i]);
+
+				// 次のエイリアンが入店出来るようにする
+				SetSeatAddId(i, (int)ESeatPattern.TAKEAWAYSEAT);
+				orSitting2[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = false;
+
+				// 次のエイリアンが退店出来るようにする
+				AlienMove.SetTakeoutClosedCompletion(false, i);
+
+				// 次のエイリアンがチップをプレイヤーに渡せるように初期化
+				AlienChip.SetChipOnFlag(false, i);
+
+				// 時間初期化
+				latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] = 0.0f;
+			}
 		}
 	}
 
