@@ -40,6 +40,8 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerMove.EDirection playerUDDirection = PlayerMove.EDirection.Down;
     private PlayerMove.EDirection playerRLDirection = PlayerMove.EDirection.Right;
     private int isCatering = 0;
+
+    [SerializeField]
     private int animID = 0;
 
 	// Use this for initialization
@@ -51,7 +53,7 @@ public class PlayerAnimation : MonoBehaviour
         WaiitAnimationSpriteLoad();
 
         // 歩行画像ロード
-        WaorkAnimationSpriteLoad();
+        WorkAnimationSpriteLoad();
     }
 
     private void WaiitAnimationSpriteLoad()
@@ -60,18 +62,17 @@ public class PlayerAnimation : MonoBehaviour
             for (int j = 0; j < 2; j++)
                 for (int k = 0; k < 4; k++)
                 {
-                    string a = folderPass[0] + waitTextureName[i, j, k];
                     sprite[0, i, j, k] = Resources.Load<Sprite>(folderPass[0] + waitTextureName[i, j, k]);
                 }
               
     }
 
-    private void WaorkAnimationSpriteLoad()
+    private void WorkAnimationSpriteLoad()
     {
         for (int i = 0; i < 2; i++)
             for (int j = 0; j < 2; j++)
                 for (int k = 0; k < 4; k++)
-                    sprite[1, i, j, k] = Resources.Load<Sprite>(folderPass[1] + waitTextureName[i, j, k]);
+                    sprite[1, i, j, k] = Resources.Load<Sprite>(folderPass[1] + workTextureName[i, j, k]);
     }
 
     private void ChangeSprite() => GetComponent<SpriteRenderer>().sprite = sprite[playerStatus, isCatering, (int)playerUDDirection, animID];
@@ -86,13 +87,13 @@ public class PlayerAnimation : MonoBehaviour
         if (direction == PlayerMove.EDirection.Right)
         {
             Vector3 scale = transform.localScale;
-            scale.x = 0.4f;
+            scale.x = 0.3f;
             transform.localScale = scale;
         }
         else if (direction == PlayerMove.EDirection.Left)
         {
             Vector3 scale = transform.localScale;
-            scale.x = -0.4f;
+            scale.x = -0.3f;
             transform.localScale = scale;
         }
     } 
@@ -111,6 +112,7 @@ public class PlayerAnimation : MonoBehaviour
         {
             countAnimTime = 0;
             animID++;
+            Debug.Log(animID);
             if (animID > ANIMATION_NUM -1) animID = 0;
             ChangeSprite();
         }

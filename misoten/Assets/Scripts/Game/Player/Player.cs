@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     private CookingGrilled cookingGrilled_cs;
     private PlayerMove playerMove_cs;
     private HindranceItem hindrance_cs;
+    private PlayerAnimation playerAnimation_cs;
     
 
     // Use this for initialization
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
         playerMove_cs = GetComponent<PlayerMove>();
         playerMove_cs.Init();
         hindrance_cs=GetComponent<HindranceItem>();
+        playerAnimation_cs = GetComponent<PlayerAnimation>();
     }
 
     private void FixedUpdate()
@@ -139,6 +141,8 @@ public class Player : MonoBehaviour
                     {
                         // 焼く調理終了の処理
                         WithaCuisine(GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GrilledCookingEnd());
+                     GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+
                     }
                     break;
 
@@ -233,6 +237,17 @@ public class Player : MonoBehaviour
         //配膳中かつ当たっているものが旨味成分かつ旨味成分が自分のものではないとき
         // 配膳中の料理の旨味を向上させる
         haveInHandFood.GetComponent<Food>().SubQualityTaste();        
+
+
+        /*
+        // これで、カウンター側の客（０番目）の待機状態が取れる
+        AlienStatus.GetCounterStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
+
+        // これで、持ち帰り側の客（０番目）の待機状態が取れる
+        AlienStatus.GetTakeOutStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
+        */
+
+        // GetHitObj((int)hitObjName.Alien).GetComponent<Alien>
     }
 
 
@@ -306,6 +321,7 @@ public class Player : MonoBehaviour
         if (GetHitObjComponentMicroWave().GetPlayerID() != playerID) return;
         playerMove_cs.MoveReset();
         playerMove_cs.VelocityReset();
+        playerAnimation_cs.SetPlayerStatus(0);
 
         switch (GetHitObjComponentMicroWave().GetStatus())
         {
@@ -340,6 +356,7 @@ public class Player : MonoBehaviour
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Pot) return;
         playerMove_cs.MoveReset();
         playerMove_cs.VelocityReset();
+        playerAnimation_cs.SetPlayerStatus(0);
 
         cookingPot_cs.CookingStart();
     }
@@ -351,6 +368,8 @@ public class Player : MonoBehaviour
         if (GetHitObjComponentGrilled().GetStatus() == Grilled.GrilledState.inCcoking) return;
         playerMove_cs.MoveReset();
         playerMove_cs.VelocityReset();
+        playerAnimation_cs.SetPlayerStatus(0);
+
 
         cookingGrilled_cs.OnFire();
     }

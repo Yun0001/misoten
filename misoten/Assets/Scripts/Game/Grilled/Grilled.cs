@@ -43,11 +43,10 @@ public class Grilled : MonoBehaviour {
         grilledCuisine = CuisineManager.GetInstance().GetGrilledController().OutputCuisine();
         grilledGage.SetActive(true);
         grilledGage.GetComponent<GrilledGage>().Init(pRank);
-        Vector3 pPos = pos;
-        //pPos.y++;
-        //pPos.z = -0.03f;
-        pPos.z+=2;
-        grilledGage.transform.position = pPos;
+
+        Vector3 gPos = transform.position;
+        gPos.z-=1f;
+        grilledGage.transform.position = gPos;
         grilledGage.transform.Find("TimingPoint").GetComponent<TimingPoint>().SetPlayerNumber(pNumber);
     }
 

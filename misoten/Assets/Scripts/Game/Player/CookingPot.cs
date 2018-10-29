@@ -17,6 +17,7 @@ public class CookingPot : MonoBehaviour {
         {
             player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().StartCookingPot(player_cs.GetPlayerID());
             player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
+            player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
         }
     }
 
@@ -28,6 +29,7 @@ public class CookingPot : MonoBehaviour {
     {
         if (player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateCooking())
         {
+            player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
             return player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().GetPotCuisine();
         }
         return null;
@@ -36,5 +38,7 @@ public class CookingPot : MonoBehaviour {
     public void CancelCooking()
     {
         player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().InterruptionCooking();
+        player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+
     }
 }

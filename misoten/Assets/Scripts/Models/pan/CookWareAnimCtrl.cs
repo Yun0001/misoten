@@ -7,7 +7,8 @@ public class CookWareAnimCtrl : MonoBehaviour {
     private Animator _animator;
     private bool isAnimation = false;
 
-    public bool isLooping = false;
+    [SerializeField]
+    private bool isLooping = false;
 
     // Use this for initialization
     void Start()
@@ -41,5 +42,7 @@ public class CookWareAnimCtrl : MonoBehaviour {
             _animator.Play("loopAction");
         }
     }
+
+    public void SetBool(bool b) => isLooping = b;
 
 }

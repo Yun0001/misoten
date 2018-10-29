@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50979241746991780}
   - component: {fileID: 114909314483228580}
   - component: {fileID: 114020297746660548}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SuccessArea_Hard
   m_TagString: SuccessArea
   m_Icon: {fileID: 0}

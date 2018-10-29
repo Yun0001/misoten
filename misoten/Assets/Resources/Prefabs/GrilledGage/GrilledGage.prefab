@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23819563684665122}
   - component: {fileID: 61580087341236406}
   - component: {fileID: 114240129162372348}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Frame
   m_TagString: GrilledGage
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114791278557595820}
   - component: {fileID: 61149508102615056}
   - component: {fileID: 50990977837873372}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: TimingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4237214508193298}
   - component: {fileID: 114548002482966052}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: GrilledGage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 4468031548392336}
   - component: {fileID: 61391422193928344}
   - component: {fileID: 50387418454970216}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Outside
   m_TagString: OutsideGrilledGage
   m_Icon: {fileID: 0}

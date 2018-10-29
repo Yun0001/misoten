@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50506841496413834}
   - component: {fileID: 114421575401148172}
   - component: {fileID: 114752581426369384}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SuccessArea_Normal2
   m_TagString: SuccessAreaChild
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4877469821715858}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SuccessArea_Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 114923071032567730}
   - component: {fileID: 114561990591691102}
   - component: {fileID: 61523199002217022}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SuccessArea_Normal1
   m_TagString: SuccessAreaChild
   m_Icon: {fileID: 0}

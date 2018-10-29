@@ -40,8 +40,6 @@ public class MicrowaveTimerImage : MonoBehaviour
         "Timer_Explosion_Prototype"
     };
 
-   // [SerializeField]
-   // private GameObject timerSprite;
 
     /// <summary>
     /// 初期処理
@@ -50,6 +48,13 @@ public class MicrowaveTimerImage : MonoBehaviour
     {
         for (int i = 0; i < textures.Length; i++)
             textures[i] = Resources.Load<Sprite>(folderPass + textureName[i]);
+
+        Vector3 p = Camera.main.transform.position;
+        p.x = transform.position.x;
+        transform.LookAt(p);
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
 
         gameObject.SetActive(false);
     }
@@ -103,8 +108,8 @@ public class MicrowaveTimerImage : MonoBehaviour
 
     private void SetPosition(Vector3 pPos)
     {
-        Vector3 pos = pPos;
-        pos.y += 1.5f;
+        Vector3 pos = transform.position;
+        pos.z -= 0.5f;
         transform.position = pos;
     }
 }

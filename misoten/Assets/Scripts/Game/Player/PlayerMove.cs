@@ -73,22 +73,23 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMove(EDirection direction)
     {
+        int a=25;
         switch (direction)
         {
             case EDirection.Up:
-                move.z = speed;
+                move.z = speed/a;
                 break;
 
             case EDirection.Down:
-                move.z = -speed;
+                move.z = -speed/a;
                 break;
 
             case EDirection.Right:
-                move.x = speed;
+                move.x = speed/a;
                 break;
 
             case EDirection.Left:
-                move.x = -speed;
+                move.x = -speed/a;
                 break;
         }
     }
@@ -108,9 +109,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Clamp()
     {
-        float width = 2.8f;
+        float width = 3.3f;
         Vector3 min = new Vector3(-width, 0, -4.6f);
-        Vector3 max = new Vector3(width, 0,1.5f);
+        Vector3 max = new Vector3(width, 0,2.0f);
 
         Vector3 pos = transform.position;
 

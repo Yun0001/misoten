@@ -38,6 +38,8 @@ public class Joystick : MonoBehaviour
 	// プレイヤー
 	private Player player;
 
+    private Vector3 pos;
+
     // ---------------------------------------------
 
     /// <summary>
@@ -48,8 +50,13 @@ public class Joystick : MonoBehaviour
 		//スティックを生成する必要があれば生成し、位置を中心に設定
 		stickObj.transform.localPosition = Vector3.zero;
 
-		// コンポーネント取得
-		//player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
+        // コンポーネント取得
+        //player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
+
+        pos = transform.position;
+        pos.x += 0.1f;
+        pos.y -= 2.7f;
+        transform.position = pos;
     }
 
 
@@ -64,9 +71,9 @@ public class Joystick : MonoBehaviour
     void Update()
 	{
         //プレイヤーの上に表示
-        Vector3 pos = player.transform.position;
-        pos.y += 2;
-        gameObject.transform.position = pos;
+       // Vector3 pos = player.transform.position;
+      //  pos.y += 2;
+        //gameObject.transform.position = pos;
 
         // 現在のワールド座標をスクリーン座標に変換
         Vector3 Position;

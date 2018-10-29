@@ -18,6 +18,9 @@ public class Pot : MonoBehaviour {
 
     private PotState potStatus;
 
+    [SerializeField]
+    private GameObject PotUICamera;
+
    
 
 
@@ -25,7 +28,8 @@ public class Pot : MonoBehaviour {
     {
         potGagePrefab = Resources.Load("Prefabs/PotMiniGame") as GameObject;
         potGage = Instantiate(potGagePrefab, transform.position, Quaternion.identity);
-        potGage.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
+
+        potGage.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = PotUICamera.GetComponent<Camera>();
         frame = potGage.transform.Find("Canvas/JoyStick/SecondHandFrame").gameObject;
         potGage.SetActive(false);
         potStatus = PotState.unused;

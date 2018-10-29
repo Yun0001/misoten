@@ -16,6 +16,7 @@ TagManager:
   - GrilledGage
   - SuccessAreaChild
   - OutsideGrilledGage
+  - SecondHand
   layers:
   - Default
   - TransparentFX
@@ -34,8 +35,8 @@ TagManager:
   - Microwave
   - Pot
   - GrilledTable
-  - 
-  - 
+  - CookingUI
+  - PotUI
   - 
   - 
   - 

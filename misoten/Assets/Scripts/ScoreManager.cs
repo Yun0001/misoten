@@ -164,7 +164,7 @@ public class ScoreManager : Singleton<ScoreManager>
     //    return playerScore[pID].GetComponent<ScoreCount>().GetScore();
     //}
 
-    public int GetPlayerRank(int ID) => playerRank[ID];
+    public int GetPlayerRank(int ID) => playerRank[0];
     //public int GetPlayerRank(int ID)
     //{
     //    return playerRank[ID];
