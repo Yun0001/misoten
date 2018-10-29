@@ -39,7 +39,7 @@ public class AlienChip : MonoBehaviour
 	// ---------------------------------------------
 
 	// チップをプレイヤーに渡したかのフラグ
-	private static bool[] chipOnFlag = { false, false, false, false, false };
+	private static bool[] chipOnFlag = { false, false, false, false, false, false, false };
 
 	// ---------------------------------------------
 
@@ -87,8 +87,8 @@ public class AlienChip : MonoBehaviour
 		switch (seatPatternSave)
 		{
 			// チップIDへの受け渡し
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS: chipId = AlienCall.GetIdSave(seatPatternSave); break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: chipId = AlienCall.GetIdSave(seatPatternSave); break;
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS: chipId = AlienCall.GetIdSave((int)AlienCall.ESeatPattern.COUNTERSEATS); break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: chipId = AlienCall.GetIdSave((int)AlienCall.ESeatPattern.TAKEAWAYSEAT); break;
 			default: break;
 		}
 

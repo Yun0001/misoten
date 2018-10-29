@@ -51,7 +51,7 @@ public class AlienStatus : MonoBehaviour
 	private static bool[,] counterStatusChangeFlag = new bool[7, (int)EStatus.MAX];
 
 	// 状態遷移(持ち帰り用)フラグ
-	private static bool[,] takeOutStatusChangeFlag = new bool[4, (int)EStatus.MAX];
+	private static bool[,] takeOutStatusChangeFlag = new bool[6, (int)EStatus.MAX];
 
 	// ---------------------------------------------
 
@@ -60,12 +60,6 @@ public class AlienStatus : MonoBehaviour
 
 	// エイリアンの呼び出し
 	private AlienCall alienCall;
-
-	// 初期化フラグ
-	private bool initFlag = false;
-
-	// エイリアン最大数
-	private int alienMaxNumber = 0;
 
 	// ---------------------------------------------
 
@@ -96,18 +90,9 @@ public class AlienStatus : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 更新関数
-	/// </summary>
-	void Update()
-	{
-		// Debug用
-		//DebugText(debugSeatId);
-	}
-
-	/// <summary>
 	/// デバッグ用関数
 	/// </summary>
-	void DebugText(int id)
+	public void DebugText(int id)
 	{
 		// エイリアンが座る席のパターン管理
 		switch (alienCall.GetSeatPattern())

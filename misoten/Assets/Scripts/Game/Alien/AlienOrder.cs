@@ -53,9 +53,6 @@ public class AlienOrder : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-	// エイリアンの移動
-	private AlienMove alienMove;
-
 	// エイリアンの呼び出し
 	private AlienCall alienCall;
 
@@ -82,7 +79,6 @@ public class AlienOrder : MonoBehaviour
 	void Start()
 	{
 		// コンポーネント取得
-		alienMove = GetComponent<AlienMove>();
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
 		// 座る席の種類保存

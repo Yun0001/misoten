@@ -23,9 +23,6 @@ public class AlienSatisfaction : MonoBehaviour
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
 	// ---------------------------------------------
 
-	// 満足終了フラグ
-	private static bool satisfactionEndFlag = false;
-
 	// 満足時間
 	private static float satisfactionTimeAdd = 0.0f;
 
@@ -53,7 +50,6 @@ public class AlienSatisfaction : MonoBehaviour
 			// 満足時間が指定時間を超えた場合
 			if (satisfactionTimeAdd >= satisfactionTime)
 			{
-				SetClaimEndFlag(true);
 				satisfactionTimeAdd = 0.0f;
 
 				// 退店時の移動開始
@@ -77,17 +73,4 @@ public class AlienSatisfaction : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public bool GetSatisfactionFlag() => satisfactionFlag;
-
-	/// <summary>
-	/// 満足終了フラグの格納
-	/// </summary>
-	/// <param name="_satisfactionEndFlag"></param>
-	/// <returns></returns>
-	public static bool SetClaimEndFlag(bool _satisfactionEndFlag) => satisfactionEndFlag = _satisfactionEndFlag;
-
-	/// <summary>
-	/// 満足終了フラグの取得
-	/// </summary>
-	/// <returns></returns>
-	public static bool GetClaimEndFlag() => satisfactionEndFlag;
 }

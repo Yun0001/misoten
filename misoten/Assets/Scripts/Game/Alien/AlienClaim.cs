@@ -26,9 +26,6 @@ public class AlienClaim : MonoBehaviour
 	// エイリアンが一体でもクレームをすると、他のエイリアンの注文内容が見えなくなる用
 	private static bool claimFlag = false;
 
-	// クレーム終了フラグ
-	private static bool claimEndFlag = false;
-
 	// クレーム時間
 	private static float claimTimeAdd = 0.0f;
 
@@ -67,7 +64,6 @@ public class AlienClaim : MonoBehaviour
 				claimTimeAdd = 0.0f;
 				claimFlag = false;
 				SetIsClaim(false);
-				SetClaimEndFlag(true);
 
 				// 退店時の移動開始
 				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
@@ -112,19 +108,6 @@ public class AlienClaim : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static bool GetClaimFlag() => claimFlag;
-
-	/// <summary>
-	/// クレーム終了フラグの格納
-	/// </summary>
-	/// <param name="_claimEndFlag"></param>
-	/// <returns></returns>
-	public static bool SetClaimEndFlag(bool _claimEndFlag) => claimEndFlag = _claimEndFlag;
-
-	/// <summary>
-	/// クレーム終了フラグの取得
-	/// </summary>
-	/// <returns></returns>
-	public static bool GetClaimEndFlag() => claimEndFlag;
 
 	/// <summary>
 	/// クレーム時間
