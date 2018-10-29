@@ -45,8 +45,16 @@ public class AlienDisturbance : MonoBehaviour
 	// エイリアンのチップ
 	private AlienChip alienChip;
 
+	// エイリアン時間制限
+	private AlienTimeLimit[,] alienTimeLimit = new AlienTimeLimit[7, (int)AlienCall.ESeatPattern.MAX];
+
+	private TimeLimitDraw[,] timeLimitDraw = new TimeLimitDraw[7, (int)AlienCall.ESeatPattern.MAX];
+
 	// エイリアンの呼び出し
 	private AlienCall alienCall;
+
+	// エイリアンの機嫌
+	private EAlienMood[,] mood = new EAlienMood[7, (int)AlienCall.ESeatPattern.MAX];
 
 	// 席の種類保存用
 	private int seatPatternSave = 0;
@@ -55,10 +63,11 @@ public class AlienDisturbance : MonoBehaviour
 	private int setId = 0;
 
 	// 待ち時間の加算
-	private float latencyAdd = 0.0f;
+	private float[,] latencyAdd = new float[7, (int)AlienCall.ESeatPattern.MAX];
 
-	// エイリアンの機嫌
-	private EAlienMood mood = EAlienMood.NORMAL;
+	private bool parent = true;
+
+	private Vector3 setPos;
 
 	// ---------------------------------------------
 
@@ -79,10 +88,21 @@ public class AlienDisturbance : MonoBehaviour
 		switch (seatPatternSave)
 		{
 			// チップIDへの受け渡し
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS: setId = AlienCall.GetIdSave(seatPatternSave); break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: setId = AlienCall.GetIdSave(seatPatternSave); break;
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				setId = AlienCall.GetIdSave(seatPatternSave);
+				alienTimeLimit[setId, seatPatternSave] = GetComponent<AlienTimeLimit>();
+				mood[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] = EAlienMood.NORMAL;
+				latencyAdd[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] = AlienCall.GetOrderLatencyAdd1(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.COUNTERSEATS));
+				break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				setId = AlienCall.GetIdSave(seatPatternSave);
+				alienTimeLimit[setId, seatPatternSave] = GetComponent<AlienTimeLimit>();
+				mood[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] = EAlienMood.NORMAL;
+				latencyAdd[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] = AlienCall.GetOrderLatencyAdd2(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.TAKEAWAYSEAT));
+				break;
 			default: break;
 		}
+		parent = true;
 	}
 
 	/// <summary>
@@ -90,68 +110,186 @@ public class AlienDisturbance : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// エイリアンが注文している時
-		if (alienOrder.GetIsOrder())
+		// エイリアンが座る席のパターン管理
+		switch (seatPatternSave)
 		{
-			// エイリアンの機嫌管理
-			switch (mood)
-			{
-				case EAlienMood.NORMAL: // 通常状態
-
-					// 料理が来ていない時
-					if (!alienChip.GetCuisineCame())
-					{
-						// 毎フレームの時間を加算
-						latencyAdd += Time.deltaTime;
-					}
-					break;
-				case EAlienMood.ANGER:	// 怒り状態
-					// エイリアンの種類管理
-					switch (alienCall.GetAlienPattern(setId))
-					{
-						case 0: // 火星人の場合
-
-							// 火星人特有の邪魔行為
-							MartianDisturbance();
-							break;
-						case 1: // 水星人の場合
-
-							// 水星人特有の邪魔行為
-							MercuryDisturbance();
-							break;
-						case 2:// 金星人の場合
-
-							// 金星人特有の邪魔行為
-							VenusianDisturbance();
-							break;
-						default:
-							// 例外処理
-							break;
-					}
-					break;
-				case EAlienMood.FAVORABLE:  // 良好状態
-
-					break;
-				default:
-					// 例外処理
-					break;
-			}
-
-			// エイリアンが座る席のパターン管理
-			switch (seatPatternSave)
-			{
-				// チップIDへの受け渡し
-				case (int)AlienCall.ESeatPattern.COUNTERSEATS:
-					// 注文して指定時間以上立つと怒り状態になる
-					if (latencyAdd >= AlienCall.GetOrderLatencyAdd1(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.COUNTERSEATS))) { mood = EAlienMood.ANGER; }
-					break;
-				case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
-					// 注文して指定時間以上立つと怒り状態になる
-					if (latencyAdd >= AlienCall.GetOrderLatencyAdd2(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.TAKEAWAYSEAT))) { mood = EAlienMood.ANGER; }
-					break;
-				default: break;
-			}
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				// エイリアンが注文している時
+				if (alienOrder.GetIsOrder(seatPatternSave))
+				{
+					Mood((int)AlienCall.ESeatPattern.COUNTERSEATS);
+				}
+				break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				// エイリアンが注文している時
+				if (alienOrder.GetIsOrder(seatPatternSave))
+				{
+					Mood((int)AlienCall.ESeatPattern.TAKEAWAYSEAT);
+				}
+				break;
+			default: break;
 		}
+	}
+
+	/// <summary>
+	/// エイリアンのモード
+	/// </summary>
+	/// <param name="pattern"></param>
+	void Mood(int pattern)
+	{
+		// エイリアンの機嫌管理
+		switch (mood[setId, pattern])
+		{
+			case EAlienMood.NORMAL: // 通常状態
+
+				// 毎フレームの時間を加算
+				latencyAdd[setId, pattern] -= Time.deltaTime;
+
+				if (latencyAdd[setId, pattern] <= 0.0f)
+				{
+					mood[setId, pattern] = EAlienMood.ANGER;
+					break;
+				}
+
+				if (parent)
+				{
+					alienTimeLimit[setId, pattern].TextParent();
+					parent = false;
+					timeLimitDraw[setId, pattern] = GameObject.Find(transform.name + "/TimeLimitTextCanvas(Clone)/TimeLimitText").gameObject.GetComponent<TimeLimitDraw>();
+
+
+				}
+
+				timeLimitDraw[setId, pattern].TimeLimit((int)latencyAdd[setId, pattern], transform.position);
+
+				//if(setId == 0)
+				//Debug.Log(setId + "の時間は" + latencyAdd[setId, pattern]);
+
+				// 料理が来ていない時
+				if (!alienChip.GetCuisineCame())
+				{
+
+				}
+				break;
+			case EAlienMood.ANGER:  // 怒り状態
+				// エイリアンの種類管理
+				switch (alienCall.GetAlienPattern(setId))
+				{
+					case 0: // 火星人の場合
+
+						// 火星人特有の邪魔行為
+						MartianDisturbance();
+						break;
+					case 1: // 水星人の場合
+
+						// 水星人特有の邪魔行為
+						MercuryDisturbance();
+						break;
+					case 2:// 金星人の場合
+
+						// 金星人特有の邪魔行為
+						VenusianDisturbance();
+						break;
+					default:
+						// 例外処理
+						break;
+				}
+
+				// 退店時の移動開始
+				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+				break;
+			case EAlienMood.FAVORABLE:  // 良好状態
+
+				break;
+			default:
+				// 例外処理
+				break;
+		}
+
+
+
+
+		//// エイリアンの機嫌管理
+		//switch (mood[setId, pattern])
+		//{
+		//	case EAlienMood.NORMAL: // 通常状態
+		//	// エイリアンが座る席のパターン管理
+		//		switch (seatPatternSave)
+		//		{
+		//			// チップIDへの受け渡し
+		//			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+		//				// 注文して指定時間以上立つと怒り状態になる
+		//				//if (latencyAdd >= AlienCall.GetOrderLatencyAdd1(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.COUNTERSEATS))) { mood = EAlienMood.ANGER; }
+
+		//				// 毎フレームの時間を加算
+		//				latencyAdd[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] -= Time.deltaTime;
+
+		//				if (latencyAdd[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] <= 0.0f)
+		//				{
+		//					mood[setId, pattern] = EAlienMood.ANGER;
+		//				}
+
+		//				alienTimeLimit.TimeLimit((int)latencyAdd[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS]);
+
+		//				break;
+		//			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+		//				// 注文して指定時間以上立つと怒り状態になる
+		//				//if (latencyAdd >= AlienCall.GetOrderLatencyAdd2(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.TAKEAWAYSEAT))) { mood = EAlienMood.ANGER; }
+
+		//				// 毎フレームの時間を加算
+		//				latencyAdd[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] -= Time.deltaTime;
+
+		//				if (latencyAdd[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] <= 0.0f)
+		//				{
+		//					mood[setId, pattern] = EAlienMood.ANGER;
+		//				}
+
+		//				alienTimeLimit.TimeLimit((int)latencyAdd[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT]);
+
+		//				break;
+		//			default: break;
+		//		}
+
+		//		// 料理が来ていない時
+		//		if (!alienChip.GetCuisineCame())
+		//		{
+
+		//		}
+		//		break;
+		//	case EAlienMood.ANGER:  // 怒り状態
+		//		// エイリアンの種類管理
+		//		switch (alienCall.GetAlienPattern(setId))
+		//		{
+		//			case 0: // 火星人の場合
+
+		//				// 火星人特有の邪魔行為
+		//				MartianDisturbance();
+		//				break;
+		//			case 1: // 水星人の場合
+
+		//				// 水星人特有の邪魔行為
+		//				MercuryDisturbance();
+		//				break;
+		//			case 2:// 金星人の場合
+
+		//				// 金星人特有の邪魔行為
+		//				VenusianDisturbance();
+		//				break;
+		//			default:
+		//				// 例外処理
+		//				break;
+		//		}
+
+		//		// 退店時の移動開始
+		//		GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+		//		break;
+		//	case EAlienMood.FAVORABLE:  // 良好状態
+
+		//		break;
+		//	default:
+		//		// 例外処理
+		//		break;
+		//}
 	}
 
 	/// <summary>
