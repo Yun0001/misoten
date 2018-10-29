@@ -107,15 +107,34 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
+		// エイリアンが座る席のパターン管理
+		switch (seatPatternSave)
+		{
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				ChipGive(seatPatternSave);
+				break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				ChipGive(seatPatternSave);
+				break;
+			default: break;
+		}
+	}
+
+	/// <summary>
+	/// チップを与える
+	/// </summary>
+	/// <param name="pattern"></param>
+	void ChipGive(int pattern)
+	{
 		// エイリアンが注文している時
-		if (alienOrder.GetIsOrder())
+		if (alienOrder.GetIsOrder(pattern))
 		{
 			if (isCuisineCame)
 			{
 				// チップの渡し方の管理
 				switch (chipPattern)
 				{
-					case EChipPattern.PUT:		// チップを置いていく
+					case EChipPattern.PUT:      // チップを置いていく
 
 						break;
 					case EChipPattern.HANDOVER: // チップを直接渡す

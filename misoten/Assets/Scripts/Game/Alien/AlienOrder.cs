@@ -57,7 +57,7 @@ public class AlienOrder : MonoBehaviour
 	private AlienCall alienCall;
 
 	// オーダー中かの判定
-	private bool isOrder = false;
+	private bool[] isOrder = new bool[(int)AlienCall.ESeatPattern.MAX];
 
 	// 席の種類保存用
 	private int seatPatternSave = 0;
@@ -123,8 +123,8 @@ public class AlienOrder : MonoBehaviour
 		{
 			// エイリアンが注文していて、他のエイリアンがクレームを出している場合
 			// エイリアンの注文内容が見えなくなる。
-			if (GetIsOrder() && AlienClaim.GetClaimFlag()
-				|| GetIsOrder() && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			if (GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && AlienClaim.GetClaimFlag()
+				|| GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 			{
 				// 注文したものを非アクティブにする(吹き出し)
 				orderBalloon[orderSave].SetActive(false);
@@ -132,7 +132,7 @@ public class AlienOrder : MonoBehaviour
 
 			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
 			// 再び見えるようにする
-			if (GetIsOrder() && !AlienClaim.GetClaimFlag()
+			if (GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && !AlienClaim.GetClaimFlag()
 				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 			{
 				// 注文したものをアクティブにする(吹き出し)
@@ -143,7 +143,7 @@ public class AlienOrder : MonoBehaviour
 			if (orderTimeAdd >= orderTime)
 			{
 				// エイリアンが注文していない時
-				if (!GetIsOrder() && !AlienClaim.GetClaimFlag())
+				if (!GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && !AlienClaim.GetClaimFlag())
 				{
 					// オーダー内容を保存
 					orderSave = GetOrderType();
@@ -154,14 +154,8 @@ public class AlienOrder : MonoBehaviour
 					// 注文状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
 
-					//// 席のIDを更新
-					//AlienCall.SetAddId(AlienCall.GetAddId() + 1);
-
-					//// 席のIDが席最大数を超えた場合「0」に初期化
-					//if (AlienCall.GetAddId() >= alienCall.GetSeatMax()) { AlienCall.SetAddId(0); }
-
 					// オーダー完了
-					SetIsOrder(true);
+					SetIsOrder(true, (int)AlienCall.ESeatPattern.COUNTERSEATS);
 
 					individualOrderType = GetOrderType();
 
@@ -190,8 +184,8 @@ public class AlienOrder : MonoBehaviour
 		{
 			// エイリアンが注文していて、他のエイリアンがクレームを出している場合
 			// エイリアンの注文内容が見えなくなる。
-			if (GetIsOrder() && AlienClaim.GetClaimFlag()
-				|| GetIsOrder() && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			if (GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && AlienClaim.GetClaimFlag()
+				|| GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 			{
 				// 注文したものを非アクティブにする(吹き出し)
 				orderBalloon[orderSave].SetActive(false);
@@ -199,7 +193,7 @@ public class AlienOrder : MonoBehaviour
 
 			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
 			// 再び見えるようにする
-			if (GetIsOrder() && !AlienClaim.GetClaimFlag()
+			if (GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && !AlienClaim.GetClaimFlag()
 				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 			{
 				// 注文したものをアクティブにする(吹き出し)
@@ -210,7 +204,7 @@ public class AlienOrder : MonoBehaviour
 			if (orderTimeAdd >= orderTime)
 			{
 				// エイリアンが注文していない時
-				if (!GetIsOrder() && !AlienClaim.GetClaimFlag())
+				if (!GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && !AlienClaim.GetClaimFlag())
 				{
 					// オーダー内容を保存
 					orderSave = GetOrderType();
@@ -221,14 +215,8 @@ public class AlienOrder : MonoBehaviour
 					// 注文状態「ON」
 					AlienStatus.SetTakeOutStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
 
-					//// 席のIDを更新
-					//AlienCall.SetAddId(AlienCall.GetAddId() + 1);
-
-					//// 席のIDが席最大数を超えた場合「0」に初期化
-					//if (AlienCall.GetAddId() >= alienCall.GetSeatMax()) { AlienCall.SetAddId(0); }
-
 					// オーダー完了
-					SetIsOrder(true);
+					SetIsOrder(true, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT);
 
 					individualOrderType = GetOrderType();
 
@@ -252,13 +240,19 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	/// <param name="_isOrder"></param>
 	/// <returns></returns>
-	public bool SetIsOrder(bool _isOrder) => isOrder = _isOrder;
+	public bool SetIsOrder(bool _isOrder, int seatId) => isOrder[seatId] = _isOrder;
 
 	/// <summary>
 	/// 注文状態を取得
 	/// </summary>
 	/// <returns></returns>
-	public bool GetIsOrder() => isOrder;
+	public bool GetIsOrder(int seatId) => isOrder[seatId];
+
+	/// <summary>
+	/// セットIDを取得
+	/// </summary>
+	/// <returns></returns>
+	public int GetSetId() => setId;
 
 	/// <summary>
 	/// オーダーフラグの取得

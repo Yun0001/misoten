@@ -39,4 +39,3 @@ public class ScoreCount : MonoBehaviour
     /// <returns>スコア</returns>
     public int GetScore() => score;
 }
-
