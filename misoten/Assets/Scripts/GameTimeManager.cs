@@ -13,7 +13,7 @@ public class GameTimeManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        countTime = 60;
+        countTime = 210;
         timespeed = 1;
 
         TimeText = GetComponent<Text>();
