@@ -35,9 +35,10 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
     private Dictionary<SceneName, string> m_sceneNameDictionary = new Dictionary<SceneName, string> {
         { SceneName.Title, "Title"},        //"Aseets/Scenes/Title.unity"
         { SceneName.Tutorial,"Tutorial" },  //"Aseets/Scenes/Tutorial.unity"
-        { SceneName.Game,"Game" },          //"Aseets/Scenes/Game.unity"
+        { SceneName.Game,"GameTest" },          //"Aseets/Scenes/Game.unity"
         { SceneName.Result,"Result" }       //"Aseets/Scenes/Result.unity"
     };
+
 
     
 
@@ -57,7 +58,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
     {
         // 現在読み込んでいるシーンの名前を取得
         currentScene = SceneManager.GetActiveScene().name;
-        if (currentScene == "Game")
+        if (currentScene == "GameTest")
         {
             Time = GameObject.Find("GameTimeManager");
             GameTime = Time.GetComponent<GameTimeManager>();
@@ -86,7 +87,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
             IsLoadScene = false;
             KeyFalse();
         }
-        if (currentScene=="Game")
+        if (currentScene=="GameTest")
         {            
             timeUPloadResult();
         }
@@ -139,9 +140,9 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
         switch(currentScene){
             case "Title_heita":
-                SceneManager.LoadScene("Game", LoadSceneMode.Single);
+                SceneManager.LoadScene("GameTest", LoadSceneMode.Single);
                 break;
-            case "Game":
+            case "GameTest":
                 SceneManager.LoadScene("Result", LoadSceneMode.Single);
                 break;
             case "Result":
@@ -173,7 +174,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
-            if (currentScene =="Game" )
+            if (currentScene =="GameTest" )
             {
                 SceneManager.LoadScene("Result", LoadSceneMode.Single);
             }

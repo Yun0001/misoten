@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
+using System.Linq;
+
 
 public class Player : MonoBehaviour
 {
@@ -38,13 +40,13 @@ public class Player : MonoBehaviour
     private string inputXAxisName;
     private string inputYAxisName;
 
-    private GamePad.Index PlayerControllerNumber;// コントローラーナンバー
+    private GamePad.Index playerControllerNumber;// コントローラーナンバー
     private int playerID;//プレイヤーID
     [SerializeField]
-    private GameObject[] hitObj = new GameObject[(int)hitObjName.HitObjMax];// 現在プレイヤーと当たっているオブジェクト
+    private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 5).ToArray();// 現在プレイヤーと当たっているオブジェクト
 
     [SerializeField]
-    private GameObject haveInHandFood;  // 持っている食材
+    private GameObject haveInHandCusine;  // 持っている食材
 
     private readonly static float HINDRANCE_TIME = 3;
     private float hindranceTime = HINDRANCE_TIME; // 邪魔動作の時間
@@ -64,44 +66,31 @@ public class Player : MonoBehaviour
         switch (layerName)
         {
             case "Player1":
-                playerID = 0;
-                PlayerControllerNumber = GamePad.Index.One;
-                inputXAxisName = "L_XAxis_1";
-                inputYAxisName = "L_YAxis_1";
+                SetPlayerID(0);
+                SetPlayerControllerNumber(GamePad.Index.One);
+                SetInputAxisName("L_XAxis_1", "L_YAxis_1");
                 break;
             case "Player2":
-                playerID = 1;
-                PlayerControllerNumber = GamePad.Index.Two;
-                inputXAxisName = "L_XAxis_2";
-                inputYAxisName = "L_YAxis_2";
+                SetPlayerID(1);
+                SetPlayerControllerNumber(GamePad.Index.Two);
+                SetInputAxisName("L_XAxis_2", "L_YAxis_2");
                 break;
             case "Player3":
-                playerID = 2;
-                PlayerControllerNumber = GamePad.Index.Three;
-                inputXAxisName = "L_XAxis_3";
-                inputYAxisName = "L_YAxis_3";
+                SetPlayerID(2);
+                SetPlayerControllerNumber(GamePad.Index.Three);
+                SetInputAxisName("L_XAxis_3", "L_YAxis_3");
                 break;
             case "Player4":
-                playerID = 3;
-                PlayerControllerNumber = GamePad.Index.Four;
-                inputXAxisName = "L_XAxis_4";
-                inputYAxisName = "L_YAxis_4";
+                SetPlayerID(3);
+                SetPlayerControllerNumber(GamePad.Index.Four);
+                SetInputAxisName("L_XAxis_4", "L_YAxis_4");
                 break;
         }
 
-        playerStatus = PlayerStatus.Normal;
-        for (int i = 0; i < hitObj.Length; i++)
-        {
-            hitObj[i] = null;
-        }
-        cookingMicrowave_cs = GetComponent<CookingMicrowave>();
-        cookingPot_cs=GetComponent<CookingPot>();
-        cookingGrilled_cs = GetComponent<CookingGrilled>();
+        SetPlayerStatus(PlayerStatus.Normal);
+        SetScript();
         GetComponent<PlayerInput>().Init(inputXAxisName, inputYAxisName);
-        playerMove_cs = GetComponent<PlayerMove>();
         playerMove_cs.Init();
-        hindrance_cs=GetComponent<HindranceItem>();
-        playerAnimation_cs = GetComponent<PlayerAnimation>();
     }
 
     private void FixedUpdate()
@@ -112,57 +101,40 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-        if (playerStatus == PlayerStatus.Hindrance)
+        switch (playerStatus)
         {
-            // 邪魔状態の時の処理
-            hindranceTime -= Time.deltaTime;
-            if (hindranceTime < 0)
-            {
-                hindranceTime = HINDRANCE_TIME;
-                SetPlayerStatus(PlayerStatus.Normal);
-            }
-        }
-        else
-        {
-            //　邪魔状態以外の時の処理
-            switch (playerStatus)
-            {
-                case PlayerStatus.Pot:
-                    //茹で料理を調理中の処理
-                    GameObject cuisine = null;
-                    cuisine = cookingPot_cs.Mix();
-                    if (cuisine != null) WithaCuisine(cuisine);
-                    break;
+            //茹で料理中更新処理
+            case PlayerStatus.Pot:
+                UpdateCookingPot();
+                break;
 
-                case PlayerStatus.GrilledTable:
-                    if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().IsEndCooking())
-                    {
-                        // 焼く調理終了の処理
-                        WithaCuisine(GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GrilledCookingEnd());
-                     GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+            // 焼き料理中更新処理
+            case PlayerStatus.GrilledTable:
+                UpdateCookingGrilled();
+                break;
 
-                    }
-                    break;
+            //電子レンジの爆発状態
+            case PlayerStatus.Microwave:
+                if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.Explostion)
+                {
+                    SetPlayerStatus(PlayerStatus.Explosion);
+                }
+                break;
+            case PlayerStatus.Explosion:
+                if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.SwitchOff)
+                {
+                    SetPlayerStatus(PlayerStatus.Normal);
+                }
+                break;
 
-                    //電子レンジの爆発状態
-                case PlayerStatus.Microwave:
-                    if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.Explostion)
-                    {
-                        SetPlayerStatus(PlayerStatus.Explosion);
-                    }
-                    break;
-                case PlayerStatus.Explosion:
-                    if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.SwitchOff)
-                    {
-                        SetPlayerStatus(PlayerStatus.Normal);
-                    }
-                    break;
-                default:
-                    
-                    break;
-            }
+            case PlayerStatus.Hindrance:
+                UpdateHindrance();
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -236,7 +208,7 @@ public class Player : MonoBehaviour
 
         //配膳中かつ当たっているものが旨味成分かつ旨味成分が自分のものではないとき
         // 配膳中の料理の旨味を向上させる
-        haveInHandFood.GetComponent<Food>().SubQualityTaste();        
+        haveInHandCusine.GetComponent<Food>().SubQualityTaste();        
 
 
         
@@ -256,38 +228,27 @@ public class Player : MonoBehaviour
     /// </summary>
     public void OfferCuisine()
     {
-        if (haveInHandFood == null) return;
-        if (playerStatus != PlayerStatus.Catering) return;
-        if (GetHitObj((int)hitObjName.Alien) == null) return;
+        if (haveInHandCusine == null) return;                             // 料理を持っていないならreturn
+        if (playerStatus != PlayerStatus.Catering) return;          // 配膳状態でないならreturn
+        if (GetHitObj((int)hitObjName.Alien) == null) return;    // 宇宙人との当たり判定がなければreturn
 
 
         // エイリアンのスクリプトを取得して料理を渡す
-        GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandFood);
-        switch (haveInHandFood.GetComponent<Food>().GetCategory())
-        {
-            case 0:
-                CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
-                break;
-            case 1:
-                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
-                break;
+        GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandCusine);
+        // 料理コントローラーが新たに料理を出せるようにする
+        CuisineControllerOfferCuisine();
 
-            case 2:
-                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandFood.GetComponent<Food>().GetFoodID());
-                break;
-        }
-       
-        haveInHandFood = null;
-        playerStatus = PlayerStatus.Normal;
+        SetHaveInHanCuisine();
+        SetPlayerStatus(PlayerStatus.Normal);
     }
 
     
     /// <summary>
     /// 料理を持つ
     /// </summary>
-    public void WithaCuisine(GameObject Food)
+    public void WithaCuisine(GameObject cuisine)
     {
-        haveInHandFood = Food;
+        SetHaveInHanCuisine(cuisine);
         SetPlayerStatus(PlayerStatus.Catering);
     }
     
@@ -308,21 +269,17 @@ public class Player : MonoBehaviour
 
     public  void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
-    public GamePad.Index GetPlayerControllerNumber() => PlayerControllerNumber;
+    public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
 
-
+    /// <summary>
+    /// Bボタン入力
+    /// </summary>
     public void ActionBranch()
     {
- 
-           ActionMicrowave();
-           ActionPot();
-           ActionGrilled();
-
+        ActionMicrowave();
+        ActionPot();
+        ActionGrilled();
         OfferCuisine();
-
-
-
-
     }
 
     /// <summary>
@@ -330,13 +287,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public void ActionMicrowave()
     {
-        // 電子レンジに当たっていなければ関数を抜ける
-        if (GetHitObj((int)hitObjName.Microwave) == null) return;
-        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;
-        if (GetHitObjComponentMicroWave().GetPlayerID() != playerID) return;
-        playerMove_cs.MoveReset();
-        playerMove_cs.VelocityReset();
-        playerAnimation_cs.SetPlayerStatus(0);
+     
+        if (GetHitObj((int)hitObjName.Microwave) == null) return;   // 電子レンジに当たっていなければreturn
+        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
+        if (GetHitObjComponentMicroWave().GetPlayerID() != playerID) return;// 操作しているのが自分でなければreturn
+        ResetMove(); // 移動値をリセット
 
         switch (GetHitObjComponentMicroWave().GetStatus())
         {
@@ -355,6 +310,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     WithaCuisine(cuisine);
+                    playerAnimation_cs.SetIsCatering(true);
                 }
 
                 break;
@@ -369,9 +325,7 @@ public class Player : MonoBehaviour
         // 鍋に当たっていなければ抜ける
         if (GetHitObj((int)hitObjName.Pot) == null) return;
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Pot) return;
-        playerMove_cs.MoveReset();
-        playerMove_cs.VelocityReset();
-        playerAnimation_cs.SetPlayerStatus(0);
+        ResetMove();
 
         cookingPot_cs.CookingStart();
     }
@@ -381,10 +335,7 @@ public class Player : MonoBehaviour
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
         if (GetHitObjComponentGrilled().GetStatus() == Grilled.GrilledState.inCcoking) return;
-        playerMove_cs.MoveReset();
-        playerMove_cs.VelocityReset();
-        playerAnimation_cs.SetPlayerStatus(0);
-
+        ResetMove();
 
         cookingGrilled_cs.OnFire();
     }
@@ -417,7 +368,124 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// プレイヤーIDセット
+    /// </summary>
+    /// <param name="pID"></param>
+    private void SetPlayerID(int pID)
+    {
+        if (pID < 0 || pID > 3)
+        {
+            Debug.LogError("不正なplayerID");
+            return;
+        }
+        playerID = pID;
+    }
+
+
+    private void SetInputAxisName(string XAxisName, string YAxisName)
+    {
+        inputXAxisName = XAxisName;
+        inputYAxisName = YAxisName;
+    }
+
+    private void SetPlayerControllerNumber(GamePad.Index index)
+    {
+        if (index < GamePad.Index.One || index > GamePad.Index.Four)
+        {
+            Debug.LogError("不正なコントローラindex");
+            return;
+        }
+        playerControllerNumber = index;
+    }
+
+
+    private void SetScript()
+    {
+        cookingMicrowave_cs = GetComponent<CookingMicrowave>();
+        cookingPot_cs = GetComponent<CookingPot>();
+        cookingGrilled_cs = GetComponent<CookingGrilled>();
+        playerMove_cs = GetComponent<PlayerMove>();
+        hindrance_cs = GetComponent<HindranceItem>();
+        playerAnimation_cs = GetComponent<PlayerAnimation>();
+    }
+
     public string GetInputXAxisName() => inputXAxisName;
 
     public string GetInputYAxisName() => inputYAxisName;
+
+    /// <summary>
+    /// 茹で料理の更新処理
+    /// </summary>
+    private void UpdateCookingPot()
+    {
+        // スティック一周ができればcuisineはnullでない
+        GameObject cuisine = null;
+        cuisine = cookingPot_cs.Mix();
+        if (cuisine != null)
+        {
+            // 料理を持つ
+            WithaCuisine(cuisine);
+            playerAnimation_cs.SetIsCatering(true);
+        }
+    }
+
+    /// <summary>
+    /// 焼き料理の更新処理
+    /// </summary>
+    private void UpdateCookingGrilled()
+    {
+        if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().IsEndCooking())
+        {
+            // 焼く調理終了の処理
+            WithaCuisine(GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GrilledCookingEnd());
+            playerAnimation_cs.SetIsCatering(true);
+            GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        }
+    }
+
+    /// <summary>
+    /// 邪魔状態の更新処理
+    /// </summary>
+    private void UpdateHindrance()
+    {
+        // 邪魔状態の時の処理
+        hindranceTime -= Time.deltaTime;
+        if (hindranceTime < 0)
+        {
+            hindranceTime = HINDRANCE_TIME;
+            SetPlayerStatus(PlayerStatus.Normal);
+        }
+    }
+
+    private void CuisineControllerOfferCuisine()
+    {
+        switch (haveInHandCusine.GetComponent<Food>().GetCategory())
+        {
+            case 0:
+                CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandCusine.GetComponent<Food>().GetFoodID());
+                break;
+            case 1:
+                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandCusine.GetComponent<Food>().GetFoodID());
+                break;
+
+            case 2:
+                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandCusine.GetComponent<Food>().GetFoodID());
+                break;
+        }
+    }
+
+    private void SetHaveInHanCuisine(GameObject Cuisine = null)
+    {
+        haveInHandCusine = Cuisine;
+    }
+
+    private void ResetMove()
+    {
+        playerMove_cs.MoveReset();
+        playerMove_cs.VelocityReset();
+        playerAnimation_cs.SetPlayerStatus(0);
+    }
 }

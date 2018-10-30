@@ -55,7 +55,7 @@ public class PlayerInput : MonoBehaviour
     {
         AllStatus();
 
-
+        /*
         switch (player_cs.GetPlayerStatus())
         {
             case Player.PlayerStatus.Normal:
@@ -73,7 +73,7 @@ public class PlayerInput : MonoBehaviour
             default:
                 return;
         }
-
+        */
         playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
 
     }

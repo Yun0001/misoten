@@ -78,7 +78,7 @@ public class Grilled : MonoBehaviour {
     /// <returns></returns>
     public GameObject GrilledCookingEnd()
     {
-        grilledStatus = grilledStatus = GrilledState.unused;
+        grilledStatus = GrilledState.unused;
         grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage.GetComponent<GrilledGage>().ResetPosition();
         grilledGage.gameObject.SetActive(false);
@@ -90,7 +90,7 @@ public class Grilled : MonoBehaviour {
     /// </summary>
     public void InterruptionCooking()
     {
-        grilledStatus = grilledStatus = GrilledState.unused;
+       grilledStatus = GrilledState.unused;
         grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage.GetComponent<GrilledGage>().ResetPosition();
         grilledGage.gameObject.SetActive(false);

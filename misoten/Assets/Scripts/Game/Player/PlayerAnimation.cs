@@ -35,10 +35,9 @@ public class PlayerAnimation : MonoBehaviour
     // スプライト
     public Sprite[,,,] sprite = new Sprite[ANIMATION_STATUS_PATTERN, IS_CATERING, PLAYER_DIRECTION_NUM, ANIMATION_NUM];
 
-   // private Sprite[,,,] sprite;
     private int playerStatus = 0;
     private PlayerMove.EDirection playerUDDirection = PlayerMove.EDirection.Down;
-    private PlayerMove.EDirection playerRLDirection = PlayerMove.EDirection.Right;
+   // private PlayerMove.EDirection playerRLDirection = PlayerMove.EDirection.Right;
     private int isCatering = 0;
 
     [SerializeField]
@@ -83,7 +82,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetPlayerRLDirection(PlayerMove.EDirection direction)
     {
-        playerRLDirection = direction;
+        //playerRLDirection = direction;
         if (direction == PlayerMove.EDirection.Right)
         {
             Vector3 scale = transform.localScale;
@@ -101,8 +100,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetIsCatering(bool catering)
     {
-        if (catering) isCatering = 0;
-        else isCatering = 1;
+        if (catering) isCatering = 1;
+        else isCatering = 0;
     }
 
     void Update ()

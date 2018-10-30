@@ -7,20 +7,20 @@ public class PowderSetManager : MonoBehaviour {
     //private bool Is;
     [SerializeField]
     private float SetPressure;
-    private int minSet;
+    //private int minSet;
     [SerializeField]
     private int SetCount;
     private int maxSetCount;
     [SerializeField] private float maxSetPressureTime;
-    [SerializeField] private Player playerScript;
+    //[SerializeField] private Player playerScript;
 
     // Use this for initialization
     private void Start () {
         SetPressure = 0f;
-        minSet = 2;
+        //minSet = 2;
         maxSetPressureTime = 10f;
         maxSetCount =3;
-        playerScript = GetComponent<Player>();
+        //playerScript = GetComponent<Player>();
         //SetCount = playerScript.GetSetCountPlayer();
     }
 
