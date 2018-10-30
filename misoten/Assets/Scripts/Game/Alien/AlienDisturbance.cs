@@ -151,6 +151,7 @@ public class AlienDisturbance : MonoBehaviour
 					break;
 				}
 
+                /*
 				if (parent)
 				{
 					alienTimeLimit[setId, pattern].TextParent();
@@ -161,7 +162,7 @@ public class AlienDisturbance : MonoBehaviour
 				}
 
 				timeLimitDraw[setId, pattern].TimeLimit((int)latencyAdd[setId, pattern], transform.position);
-
+                */
 				//if(setId == 0)
 				//Debug.Log(setId + "の時間は" + latencyAdd[setId, pattern]);
 

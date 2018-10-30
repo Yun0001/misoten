@@ -239,13 +239,13 @@ public class Player : MonoBehaviour
         haveInHandFood.GetComponent<Food>().SubQualityTaste();        
 
 
-        /*
+        
         // これで、カウンター側の客（０番目）の待機状態が取れる
         AlienStatus.GetCounterStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
 
         // これで、持ち帰り側の客（０番目）の待機状態が取れる
         AlienStatus.GetTakeOutStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
-        */
+        
 
         // GetHitObj((int)hitObjName.Alien).GetComponent<Alien>
     }
@@ -309,6 +309,21 @@ public class Player : MonoBehaviour
     public  void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
     public GamePad.Index GetPlayerControllerNumber() => PlayerControllerNumber;
+
+
+    public void ActionBranch()
+    {
+ 
+           ActionMicrowave();
+           ActionPot();
+           ActionGrilled();
+
+        OfferCuisine();
+
+
+
+
+    }
 
     /// <summary>
     /// 電子レンジへのアクション

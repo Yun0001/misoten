@@ -117,6 +117,7 @@ public class PlayerInput : MonoBehaviour
 
     private void AllStatus()
     {
+        /*
         // Aボタン入力（電子レンジ）
         if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.ActionMicrowave();
         // Xボタン入力（鍋）
@@ -125,6 +126,13 @@ public class PlayerInput : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionGrilled();
         // Yボタン入力（キャンセル）
         if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerControllerNumber)) player_cs.CookingCancel();
+        */
+
+        // アクション
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionBranch();
+
+        // Yボタン入力（キャンセル）
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.CookingCancel();
     }
 
     private void NormalStatus()
