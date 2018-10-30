@@ -57,6 +57,9 @@ public class Player : MonoBehaviour
     private PlayerMove playerMove_cs;
     private HindranceItem hindrance_cs;
     private PlayerAnimation playerAnimation_cs;
+
+    [SerializeField]
+    private int hitAlienID;
     
 
     // Use this for initialization
@@ -217,9 +220,9 @@ public class Player : MonoBehaviour
 
         // これで、持ち帰り側の客（０番目）の待機状態が取れる
         AlienStatus.GetTakeOutStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
-        
 
-        // GetHitObj((int)hitObjName.Alien).GetComponent<Alien>
+        //GetHitObj((int)hitObjName.Alien).
+       
     }
 
 
@@ -488,4 +491,6 @@ public class Player : MonoBehaviour
         playerMove_cs.VelocityReset();
         playerAnimation_cs.SetPlayerStatus(0);
     }
+
+    public void SetHitAlienID(int aID) => hitAlienID = aID;
 }

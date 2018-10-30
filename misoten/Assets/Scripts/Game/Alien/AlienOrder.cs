@@ -310,4 +310,13 @@ public class AlienOrder : MonoBehaviour
 			GetComponent<AlienClaim>().SetIsClaim(true);
 		}
 	}
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Player>().SetHitAlienID(setId);
+        }
+     
+    }
 }

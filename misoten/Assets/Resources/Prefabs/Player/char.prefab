@@ -137,8 +137,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361366194408336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.27, y: 1, z: -2.78}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: -2.27, y: 0.77, z: -2.78}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4357734348534822}
   m_RootOrder: 2
@@ -167,8 +167,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241768003219786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.37, y: 1, z: -2.48}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: 2.37, y: 0.77, z: -2.48}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4357734348534822}
   m_RootOrder: 3
@@ -180,8 +180,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667367895936502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.17, y: 1, z: 0.65}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: -2.17, y: 0.77, z: 0.65}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4357734348534822}
   m_RootOrder: 0
@@ -193,8 +193,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192980347936184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.31, y: 1, z: 0.64}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: 2.31, y: 0.77, z: 0.64}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4357734348534822}
   m_RootOrder: 1
@@ -212,7 +212,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!54 &54388761988505920
 Rigidbody:
@@ -227,7 +227,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!54 &54560589305626652
 Rigidbody:
@@ -242,7 +242,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!54 &54888866700745282
 Rigidbody:
@@ -257,7 +257,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!65 &65192281962559324
 BoxCollider:
@@ -266,10 +266,10 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192980347936184}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12, z: 0.2}
+  m_Size: {x: 1.9, y: 4.7, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65448895651050134
 BoxCollider:
@@ -278,11 +278,11 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667367895936502}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12, z: 0.2}
-  m_Center: {x: -0.00000047683716, y: 0, z: 0}
+  m_Size: {x: 1.9, y: 4.7, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65492128649407472
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -290,11 +290,11 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361366194408336}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12, z: 0.2}
-  m_Center: {x: -0.0000009536743, y: -0.00000023841858, z: 0}
+  m_Size: {x: 1.9, y: 4.7, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65558895271989046
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -302,11 +302,11 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241768003219786}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12, z: 0.2}
-  m_Center: {x: -0.00000047683716, y: -0.00000023841858, z: 0}
+  m_Size: {x: 1.9, y: 4.7, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114034077562368610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -340,7 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9baa49bcfd837e4998277a8fdbd07ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 100
+  oneAnimPatternSwitchTime: 60
+  animID: 0
 --- !u!114 &114098330894766458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -385,7 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9baa49bcfd837e4998277a8fdbd07ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 100
+  oneAnimPatternSwitchTime: 60
+  animID: 0
 --- !u!114 &114159672212979044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -404,11 +406,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  haveInHandFood: {fileID: 0}
+  haveInHandCusine: {fileID: 0}
 --- !u!114 &114267563490594468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -427,11 +425,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  haveInHandFood: {fileID: 0}
+  haveInHandCusine: {fileID: 0}
 --- !u!114 &114274440573710212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -450,11 +444,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  haveInHandFood: {fileID: 0}
+  haveInHandCusine: {fileID: 0}
 --- !u!114 &114300606766374360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -587,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee1851e25d788f4d983a4b02c93398f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 4
   CateringCoefficient: 0.5
   TasteChargeCoefficient: 0.1
 --- !u!114 &114652190334580276
@@ -601,7 +591,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9baa49bcfd837e4998277a8fdbd07ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 100
+  oneAnimPatternSwitchTime: 60
+  animID: 0
 --- !u!114 &114712542104254410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -646,11 +637,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  haveInHandFood: {fileID: 0}
+  haveInHandCusine: {fileID: 0}
 --- !u!114 &114851811614464044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -694,7 +681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee1851e25d788f4d983a4b02c93398f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 4
   CateringCoefficient: 0.5
   TasteChargeCoefficient: 0.1
 --- !u!114 &114957010503624970
@@ -708,7 +695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9baa49bcfd837e4998277a8fdbd07ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 100
+  oneAnimPatternSwitchTime: 60
+  animID: 0
 --- !u!114 &114964465390699292
 MonoBehaviour:
   m_ObjectHideFlags: 1
