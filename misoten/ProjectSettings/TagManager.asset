@@ -17,6 +17,8 @@ TagManager:
   - SuccessAreaChild
   - OutsideGrilledGage
   - SecondHand
+  - MicrowaveSuccessArea
+  - MicrowaveGreatSuccessArea
   layers:
   - Default
   - TransparentFX

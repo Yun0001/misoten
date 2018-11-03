@@ -11,6 +11,7 @@ public class Grilled : MonoBehaviour {
     }
 
     // 状態
+    [SerializeField]
     private GrilledState grilledStatus;
 
     // 焼き料理

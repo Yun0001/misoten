@@ -46,7 +46,7 @@ public class PlayerInput : MonoBehaviour
 
             case 3:
                 InputGamepad();
-                InputKeyBoard_Player2();
+                InputKeyBoard_Player4();
                 break;
         }
     }
@@ -55,31 +55,11 @@ public class PlayerInput : MonoBehaviour
     {
         AllStatus();
 
-        /*
-        switch (player_cs.GetPlayerStatus())
-        {
-            case Player.PlayerStatus.Normal:
-                NormalStatus();
-                break;
-
-            case Player.PlayerStatus.Catering:
-                CateringStatus();
-                break;
-
-            case Player.PlayerStatus.TasteCharge:
-                TasteChargeStatus();
-                break;
-
-            default:
-                return;
-        }
-        */
         playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
-
     }
 
 
-    private void InputKeyBoard_Player2()
+    private void InputKeyBoard_Player4()
     {
         if (Input.GetKey(KeyCode.A)) playerMove_cs.SetMove(PlayerMove.EDirection.Left);
         if (Input.GetKey(KeyCode.D)) playerMove_cs.SetMove(PlayerMove.EDirection.Right);
@@ -92,9 +72,7 @@ public class PlayerInput : MonoBehaviour
             player_cs.ActionGrilled();
             player_cs.OfferCuisine();
         }
-        if (Input.GetKeyDown(KeyCode.X)) hindrance_cs.DisplayTasteGage();
-        else if (Input.GetKey(KeyCode.X)) hindrance_cs.UpgateTasteGage();
-        else if (Input.GetKeyUp(KeyCode.X)) hindrance_cs.SprinkleTaste();
+        if (Input.GetKeyDown(KeyCode.X)) player_cs.CookingCancel();
     }
 
     private void InputKeyBoard_Player3()
@@ -110,9 +88,7 @@ public class PlayerInput : MonoBehaviour
             player_cs.ActionGrilled();
             player_cs.OfferCuisine();
         }
-        if (Input.GetKeyDown(KeyCode.L)) hindrance_cs.DisplayTasteGage();
-        else if (Input.GetKey(KeyCode.L)) hindrance_cs.UpgateTasteGage();
-        else if (Input.GetKeyUp(KeyCode.L)) hindrance_cs.SprinkleTaste();
+        if (Input.GetKeyDown(KeyCode.L)) player_cs.CookingCancel();
     }
 
     private void AllStatus()
@@ -151,6 +127,31 @@ public class PlayerInput : MonoBehaviour
     {
         // Lトリガー入力（配膳）
         if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, PlayerControllerNumber)) player_cs.OfferCuisine();
+    }
+
+    public void InputMicrowave()
+    {
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        {
+            player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
+        }
+
+        switch (PlayerControllerNumber)
+        {
+            case GamePad.Index.Three:
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
+                }
+                break;
+
+            case GamePad.Index.Four:
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
+                }
+                break;
+        }
     }
 }
 
