@@ -23,6 +23,13 @@ public class SuccessArea : MonoBehaviour
         moveSpeed = 0.01f;
     }
 
+    void Init()
+    {
+        ResetMoveUV();
+        Vector2[] nUV = { new Vector2(0.6f, 0.0f), new Vector2(0.9f, 0.0f), new Vector2(0.9f, 1.0f), new Vector2(0.6f, 1.0f) };
+        myMesh.uv = nUV;
+    }
+
     public void SetMoveSpeed(float speed) => moveSpeed = speed;
 
     // Update is called once per frame
@@ -60,9 +67,22 @@ public class SuccessArea : MonoBehaviour
                 if (tag == "SuccessAreaChild")
                 {
                     gameObject.transform.parent.gameObject.SetActive(false);
+                    GameObject a= gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal1").gameObject;
+                    a.SetActive(false);
+                    GameObject b = gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal2").gameObject;
+                    b.SetActive(false);
+                    gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal1").gameObject.GetComponent<SuccessArea>().Init();
+                    gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal2").gameObject.GetComponent<SuccessArea>().Init();
+
+
+
                 }
-                else { gameObject.SetActive(false); }
-                
+                else
+                {
+                    Init();
+                    gameObject.SetActive(false);
+                }
+                isOutGageFrame = false;
             }
         }
     }
