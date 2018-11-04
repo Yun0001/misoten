@@ -225,11 +225,11 @@ public class Player : MonoBehaviour
         if (playerStatus != PlayerStatus.Catering) return;          // 配膳状態でないならreturn
         if (GetHitObj((int)hitObjName.Alien) == null) return;    // 宇宙人との当たり判定がなければreturn
 
-        //AlienStatus.GetCounterStatusChangeFlag(0, (int)AlienStatus.EStatus.);
         // エイリアンのスクリプトを取得して料理を渡す
         GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandCusine);
         // 料理コントローラーが新たに料理を出せるようにする
         CuisineControllerOfferCuisine();
+        playerAnimation_cs.SetIsCatering(false);
 
         SetHaveInHanCuisine();
         SetPlayerStatus(PlayerStatus.Normal);
