@@ -9,6 +9,8 @@ public class SuccessArea : MonoBehaviour
     public float moveUV = 0;
     public float moveSpeed=0.01f;
 
+    public Vector2[] uv = new Vector2[4];
+
     public bool isInGageFrame = false;
     public bool isOutGageFrame = false;
 
@@ -19,6 +21,7 @@ public class SuccessArea : MonoBehaviour
     void Awake () {
         myMesh = GetComponent<MeshFilter>().mesh;
         Vector2[] nUV = { new Vector2(0.6f, 0.0f), new Vector2(0.9f, 0.0f), new Vector2(0.9f, 1.0f), new Vector2(0.6f, 1.0f) };
+        uv = nUV;
         myMesh.uv = nUV;
         moveSpeed = 0.01f;
     }
@@ -27,6 +30,8 @@ public class SuccessArea : MonoBehaviour
     {
         ResetMoveUV();
         Vector2[] nUV = { new Vector2(0.6f, 0.0f), new Vector2(0.9f, 0.0f), new Vector2(0.9f, 1.0f), new Vector2(0.6f, 1.0f) };
+        uv = nUV;
+
         myMesh.uv = nUV;
     }
 
@@ -47,6 +52,8 @@ public class SuccessArea : MonoBehaviour
                     nUV[i].x -= transparent_U / (transform.localScale.x / moveSpeed);
                 }
                 myMesh.uv = nUV;
+                uv = nUV;
+
             }
         }
         // ゲージの外に出た時の処理
@@ -61,6 +68,7 @@ public class SuccessArea : MonoBehaviour
                     nUV[i].x += color_U / (transform.localScale.x / moveSpeed);
                 }
                 myMesh.uv = nUV;
+                uv = nUV;
             }
             if (moveUV >= color_U)
             {
@@ -68,12 +76,13 @@ public class SuccessArea : MonoBehaviour
                 {
                     gameObject.transform.parent.gameObject.SetActive(false);
                     GameObject a= gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal1").gameObject;
-                    a.SetActive(false);
+                    //a.SetActive(false);
                     GameObject b = gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal2").gameObject;
-                    b.SetActive(false);
+                    //b.SetActive(false);
                     gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal1").gameObject.GetComponent<SuccessArea>().Init();
                     gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal2").gameObject.GetComponent<SuccessArea>().Init();
-
+                    gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal1").gameObject.GetComponent<SuccessArea>().isOutGageFrame = false;
+                    gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal2").gameObject.GetComponent<SuccessArea>().isOutGageFrame = false;
 
 
                 }
@@ -81,8 +90,8 @@ public class SuccessArea : MonoBehaviour
                 {
                     Init();
                     gameObject.SetActive(false);
+                    isOutGageFrame = false;
                 }
-                isOutGageFrame = false;
             }
         }
     }
@@ -106,6 +115,8 @@ public class SuccessArea : MonoBehaviour
     private void ChangeUV()
     {
         Vector2[] nUV = { new Vector2(0.4f, 0.0f), new Vector2(0.1f, 0.0f), new Vector2(0.1f, 1.0f), new Vector2(0.4f, 1.0f) };
+        uv = nUV;
+
         myMesh.uv = nUV;
     }
 

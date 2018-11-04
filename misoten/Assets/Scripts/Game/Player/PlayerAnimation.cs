@@ -21,13 +21,13 @@ public class PlayerAnimation : MonoBehaviour
     private string[] folderPass = { "Textures/Player/Wait/", "Textures/Player/Work/" };
 
     private string[,,] waitTextureName = {
-       { {"前1" ,"前2","前1" ,"前2"}, {"後1" ,"後2","後1" ,"後2"} },
-       { {"前_1" ,"前_2","前_1" ,"前_2"}, {"後_1" ,"後_2","後_1" ,"後_2"} }
+       { {"front1" ,"front2","front1" ,"front2"}, {"behind1" ,"behind2","behind1" ,"behind2"} },
+       { {"h_front1" ,"h_front2","h_front1" ,"h_front2"}, {"h_behind1" ,"h_behind2","h_behind1" ,"h_behind2"} }
     };
 
     private string[,,] workTextureName ={
-       { { "前1","前2","前3","前4"}, { "後1","後2","後3","後4"} },
-       {  { "前_1","前_2","前_3","前_4"}, { "後_1","後_2","後_3","後_4"} }
+       { { "front1","front2","front3","front4"}, { "behind1","behind2","behind3","behind4"} },
+       {  { "h_front1","h_front2","h_front3","h_front4"}, { "h_behind1","h_behind2","h_behind3","h_behind4"} }
     };
 
 
@@ -37,7 +37,6 @@ public class PlayerAnimation : MonoBehaviour
 
     private int playerStatus = 0;
     private PlayerMove.EDirection playerUDDirection = PlayerMove.EDirection.Down;
-   // private PlayerMove.EDirection playerRLDirection = PlayerMove.EDirection.Right;
     private int isCatering = 0;
 
     [SerializeField]
@@ -82,7 +81,6 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetPlayerRLDirection(PlayerMove.EDirection direction)
     {
-        //playerRLDirection = direction;
         if (direction == PlayerMove.EDirection.Right)
         {
             Vector3 scale = transform.localScale;

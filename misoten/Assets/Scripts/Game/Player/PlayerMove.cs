@@ -74,22 +74,27 @@ public class PlayerMove : MonoBehaviour
     public void SetMove(EDirection direction)
     {
         int a=25;
+        playerAnimation_cs.SetPlayerStatus(1);
         switch (direction)
         {
             case EDirection.Up:
                 move.z = speed/a;
+                playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
                 break;
 
             case EDirection.Down:
                 move.z = -speed/a;
+                playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
                 break;
 
             case EDirection.Right:
                 move.x = speed/a;
+                playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
                 break;
 
             case EDirection.Left:
                 move.x = -speed/a;
+                playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
                 break;
         }
     }

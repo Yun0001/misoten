@@ -2111,6 +2111,30 @@ Prefab:
       propertyPath: oneAnimPatternSwitchTime
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 212800307789193286, guid: 5d361e8b2babd194884249a6b6adb51f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20d6fe7f41bd81747b87e1d503062cb3,
+        type: 3}
+    - target: {fileID: 212172698282729098, guid: 5d361e8b2babd194884249a6b6adb51f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20d6fe7f41bd81747b87e1d503062cb3,
+        type: 3}
+    - target: {fileID: 212626664736049328, guid: 5d361e8b2babd194884249a6b6adb51f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20d6fe7f41bd81747b87e1d503062cb3,
+        type: 3}
+    - target: {fileID: 212497730360833220, guid: 5d361e8b2babd194884249a6b6adb51f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20d6fe7f41bd81747b87e1d503062cb3,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d361e8b2babd194884249a6b6adb51f, type: 2}
   m_IsPrefabParent: 0
