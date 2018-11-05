@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// エイリアン時間制限の管理スクリプト
@@ -13,7 +14,9 @@ public class AlienTimeLimit : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-	private GameObject obj;
+	// オブジェクト保存用
+	private GameObject textObj;
+	private GameObject setObj;
 
 	// ---------------------------------------------
 
@@ -23,7 +26,7 @@ public class AlienTimeLimit : MonoBehaviour
 	public void TextParent()
 	{
 		// テキスト生成
-		obj = Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1.0f), Quaternion.identity) as GameObject;
-		obj.transform.SetParent(transform);
+		textObj = Instantiate(prefab, new Vector3(), Quaternion.identity) as GameObject;
+		textObj.transform.SetParent(transform);
 	}
 }

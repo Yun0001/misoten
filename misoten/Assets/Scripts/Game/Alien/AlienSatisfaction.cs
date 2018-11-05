@@ -52,6 +52,9 @@ public class AlienSatisfaction : MonoBehaviour
 			{
 				satisfactionTimeAdd = 0.0f;
 
+				// 帰る(良)状態「ON」
+				AlienStatus.SetTakeOutStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
+
 				// 退店時の移動開始
 				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 			}

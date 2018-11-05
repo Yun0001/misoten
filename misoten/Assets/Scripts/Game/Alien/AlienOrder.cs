@@ -107,8 +107,30 @@ public class AlienOrder : MonoBehaviour
 		// エイリアンが座る席のパターン管理
 		switch (seatPatternSave)
 		{
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS: counterOrder(); break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: TakeOutOrder(); break;
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				// クレーム状態の時or満足状態の時
+				if (GetComponent<AlienClaim>().GetIsClaim() || GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+				{
+					// EAT状態が「ON」になった時、当たり判定が消える
+					AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
+					GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.COUNTERSEATS].enabled = false;
+				}
+
+				// カウンター席に座っているエイリアンからの注文処理
+				counterOrder();
+			break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				// クレーム状態の時or満足状態の時
+				if (GetComponent<AlienClaim>().GetIsClaim() || GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+				{
+					// EAT状態が「ON」になった時、当たり判定が消える
+					AlienStatus.SetTakeOutStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
+					GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.TAKEAWAYSEAT].enabled = false;
+				}
+
+				// 持ち帰り席に座っているエイリアンからの注文処理
+				TakeOutOrder();
+				break;
 			default: break;
 		}
 	}
@@ -124,7 +146,8 @@ public class AlienOrder : MonoBehaviour
 			// エイリアンが注文していて、他のエイリアンがクレームを出している場合
 			// エイリアンの注文内容が見えなくなる。
 			if (GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && AlienClaim.GetClaimFlag()
-				|| GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+				|| GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
+				|| GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものを非アクティブにする(吹き出し)
 				orderBalloon[orderSave].SetActive(false);
@@ -132,8 +155,8 @@ public class AlienOrder : MonoBehaviour
 
 			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
 			// 再び見えるようにする
-			if (GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && !AlienClaim.GetClaimFlag()
-				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			if (GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && !AlienClaim.GetClaimFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag()
+				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものをアクティブにする(吹き出し)
 				orderBalloon[orderSave].SetActive(true);
@@ -143,7 +166,8 @@ public class AlienOrder : MonoBehaviour
 			if (orderTimeAdd >= orderTime)
 			{
 				// エイリアンが注文していない時
-				if (!GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && !AlienClaim.GetClaimFlag())
+				if (!GetIsOrder((int)AlienCall.ESeatPattern.COUNTERSEATS) && !AlienClaim.GetClaimFlag()
+					&& !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 				{
 					// オーダー内容を保存
 					orderSave = GetOrderType();
@@ -185,7 +209,8 @@ public class AlienOrder : MonoBehaviour
 			// エイリアンが注文していて、他のエイリアンがクレームを出している場合
 			// エイリアンの注文内容が見えなくなる。
 			if (GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && AlienClaim.GetClaimFlag()
-				|| GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+				|| GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
+				|| GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものを非アクティブにする(吹き出し)
 				orderBalloon[orderSave].SetActive(false);
@@ -193,8 +218,8 @@ public class AlienOrder : MonoBehaviour
 
 			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
 			// 再び見えるようにする
-			if (GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && !AlienClaim.GetClaimFlag()
-				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			if (GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && !AlienClaim.GetClaimFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag()
+				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものをアクティブにする(吹き出し)
 				orderBalloon[orderSave].SetActive(true);
@@ -204,7 +229,8 @@ public class AlienOrder : MonoBehaviour
 			if (orderTimeAdd >= orderTime)
 			{
 				// エイリアンが注文していない時
-				if (!GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && !AlienClaim.GetClaimFlag())
+				if (!GetIsOrder((int)AlienCall.ESeatPattern.TAKEAWAYSEAT) && !AlienClaim.GetClaimFlag()
+					&& !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 				{
 					// オーダー内容を保存
 					orderSave = GetOrderType();
@@ -308,6 +334,27 @@ public class AlienOrder : MonoBehaviour
 			Debug.Log("注文内容が合ってない");
 
 			GetComponent<AlienClaim>().SetIsClaim(true);
+		}
+
+		// 各席への移動をする為の設定を行う
+		switch (seatPatternSave)
+		{
+			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
+				// スクリプトを切る
+				if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
+				{
+					Debug.Log("BoxCollider停止");
+					GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.COUNTERSEATS].enabled = false;
+				}
+				break;
+			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
+				if (AlienStatus.GetTakeOutStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
+				{
+					GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.TAKEAWAYSEAT].enabled = false;
+				}
+				break;
+			// エラー
+			default: break;
 		}
 	}
 

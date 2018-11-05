@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 114162500645957414}
   - component: {fileID: 114161735359799014}
   - component: {fileID: 114409238326003042}
+  - component: {fileID: 114186525108509590}
   - component: {fileID: 65749666875418072}
   - component: {fileID: 65954573557556990}
   m_Layer: 0
@@ -743,7 +744,7 @@ MonoBehaviour:
   claimBalloon:
   - {fileID: 1531800561617084}
   - {fileID: 1944728025404552}
-  claimTime: 5
+  claimTime: 3
 --- !u!114 &114162500645957414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -757,13 +758,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhenEnteringStoreMoveTime:
   - 1
+  - 2
   - 1
-  - 1
-  - 1
+  - 2
   - 1
   WhenLeavingStoreMoveTime:
   - 1
   - 1
+--- !u!114 &114186525108509590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569293353061264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd0673a2abef77458af3934c528b96b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1208508541616682, guid: 0a7659b1e18927f46bf05e5ca19cb80c, type: 2}
 --- !u!114 &114409238326003042
 MonoBehaviour:
   m_ObjectHideFlags: 1
