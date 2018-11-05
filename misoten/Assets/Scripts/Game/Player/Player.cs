@@ -276,6 +276,7 @@ public class Player : MonoBehaviour
         if (GetHitObjComponentMicroWave().IsCooking()) return;
         ResetMove(); // 移動値をリセット
         cookingMicrowave_cs.PresstheMicrowaveStartButton();
+
     }
 
     public void ActionPot()

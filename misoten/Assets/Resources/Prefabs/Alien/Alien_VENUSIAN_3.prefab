@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 114443524808776160}
   - component: {fileID: 65221820893470962}
   - component: {fileID: 65724478776573640}
-  - component: {fileID: 114533751812510844}
+  - component: {fileID: 114125620855854806}
   m_Layer: 0
   m_Name: Alien_VENUSIAN_3
   m_TagString: Alien
@@ -689,6 +689,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 5, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114125620855854806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1963688665283992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneAnimPatternSwitchTime: 30
+  animID: 0
 --- !u!114 &114224116882312596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -766,19 +779,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 1208508541616682, guid: 0a7659b1e18927f46bf05e5ca19cb80c, type: 2}
---- !u!114 &114533751812510844
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1963688665283992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37823b7f17c41e04d84503caa12c99b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 20
-  animID: 0
 --- !u!114 &114784261424430780
 MonoBehaviour:
   m_ObjectHideFlags: 1

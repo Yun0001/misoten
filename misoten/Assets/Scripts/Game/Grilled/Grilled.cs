@@ -75,6 +75,7 @@ public class Grilled : MonoBehaviour {
         SetIsCooking(false);
         grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage.GetComponent<GrilledGage>().ResetPosition();
+        grilledGage.GetComponent<GrilledGage>().ResetSuccessArea();
         grilledGage.gameObject.SetActive(false);
         return grilledCuisine;
     }

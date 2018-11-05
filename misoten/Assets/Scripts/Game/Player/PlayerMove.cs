@@ -101,15 +101,19 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMove(Vector3 vec)
     {
-        move = vec;
-        if (move.x != 0 || move.z != 0) playerAnimation_cs.SetPlayerStatus(1);
-        else playerAnimation_cs.SetPlayerStatus(0);
+        if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal || player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering)
+        {
+            move = vec;
+            if (move.x != 0 || move.z != 0) playerAnimation_cs.SetPlayerStatus(1);
+            else playerAnimation_cs.SetPlayerStatus(0);
 
-        if (move.x < 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
-        else if (move.x > 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
+            if (move.x < 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
+            else if (move.x > 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
 
-        if (move.z < 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
-        else if (move.z > 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
+            if (move.z < 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
+            else if (move.z > 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
+        }
+
     }
 
     private void Clamp()

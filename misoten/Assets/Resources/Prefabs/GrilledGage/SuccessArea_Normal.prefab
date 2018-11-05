@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4877469821715858}
   m_Layer: 17
   m_Name: SuccessArea_Normal
-  m_TagString: Untagged
+  m_TagString: SuccessAreaNormalParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,6 +307,11 @@ MonoBehaviour:
   myMesh: {fileID: 0}
   moveUV: 0
   moveSpeed: 0.01
+  uv:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
   isInGageFrame: 0
   isOutGageFrame: 0
 --- !u!114 &114752581426369384
@@ -323,6 +328,11 @@ MonoBehaviour:
   myMesh: {fileID: 0}
   moveUV: 0
   moveSpeed: 0.01
+  uv:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
   isInGageFrame: 0
   isOutGageFrame: 0
 --- !u!114 &114923071032567730

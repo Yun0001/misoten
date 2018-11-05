@@ -10,6 +10,7 @@ public class MicrowaveGage2 : MonoBehaviour
         Wait,
         Roll,
         Start,
+        Success,
         End,
     }
     private int timer = 600;
@@ -17,6 +18,8 @@ public class MicrowaveGage2 : MonoBehaviour
     private float timerMax = 20;
     private float timerCount = 0;
     private float TIMER_COUNT;
+    private int SUCCESS_WAIT_FRAME = 10;
+    private int successWaitFrame = 0;
 
     [SerializeField]
     private float missPoint;
@@ -91,9 +94,9 @@ public class MicrowaveGage2 : MonoBehaviour
                 {
                     TIMER_COUNT = timerCount;
                     status = MicrowaveState.Start;
-                    checkClock.SetActive(true);
                     successAreaParent.SetActive(true);
                     DecisionSuceesAreaPosition();
+                    checkClock.SetActive(true);
                 }
                 break;
 
@@ -111,6 +114,16 @@ public class MicrowaveGage2 : MonoBehaviour
 
                 checkClock.transform.Rotate(new Vector3(0, 0, rotateSpped));
                 break;
+
+            case MicrowaveState.Success:
+                successWaitFrame++;
+                if (successWaitFrame >= SUCCESS_WAIT_FRAME)
+                {
+                    status = MicrowaveState.Start;
+                    checkClock.SetActive(true);
+                }
+
+                break;
         }
 
         return false;
@@ -127,6 +140,9 @@ public class MicrowaveGage2 : MonoBehaviour
         {
             arrayElement = rand.Next(5);
         }
+        successWaitFrame = 0;
+        checkClock.transform.rotation = Quaternion.identity;
+        checkClock.SetActive(false);
         oldRand = arrayElement;
         float rot = successAreaRotation[arrayElement];
         successAreaParent.transform.rotation = Quaternion.identity;
@@ -146,8 +162,8 @@ public class MicrowaveGage2 : MonoBehaviour
 
     public void ChinMiss()
     {
-        timerCount -= missPoint;
-        clock.transform.Rotate(new Vector3(0, 0, missPoint));
+        timerCount += missPoint;
+        clock.transform.Rotate(new Vector3(0, 0, -missPoint));
     }
 
     public void DecisionCheckClockCollision()
@@ -155,6 +171,7 @@ public class MicrowaveGage2 : MonoBehaviour
         if (status == MicrowaveState.Start)
         {
             checkClock_cs.GetComponent<CheckClock>().DecisionArea();
+            status = MicrowaveState.Success;
         }
     }
 }

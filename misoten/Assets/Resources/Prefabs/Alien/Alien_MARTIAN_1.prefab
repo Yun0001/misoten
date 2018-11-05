@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 114600462336683366}
   - component: {fileID: 65482453676922878}
   - component: {fileID: 65431933202079118}
-  - component: {fileID: 114516825953756032}
+  - component: {fileID: 114958730231215842}
   m_Layer: 0
   m_Name: Alien_MARTIAN_1
   m_TagString: Alien
@@ -715,19 +715,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   satisfactionBalloon: {fileID: 1580072333053820}
   satisfactionTime: 1
---- !u!114 &114516825953756032
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1683141491711858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37823b7f17c41e04d84503caa12c99b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 20
-  animID: 0
 --- !u!114 &114552704645016598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -805,6 +792,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1971375355849292, guid: cc904eaf68b909446b212a1a3d9d240d, type: 2}
   moodChangeTime: 7
+--- !u!114 &114958730231215842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683141491711858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneAnimPatternSwitchTime: 30
+  animID: 0
 --- !u!212 &212996046003843280
 SpriteRenderer:
   m_ObjectHideFlags: 1

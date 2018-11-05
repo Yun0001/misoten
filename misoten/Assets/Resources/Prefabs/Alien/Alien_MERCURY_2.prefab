@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 114758606635263186}
   - component: {fileID: 65150535977892606}
   - component: {fileID: 65776522482834070}
-  - component: {fileID: 114367257936302418}
+  - component: {fileID: 114967019351865180}
   m_Layer: 0
   m_Name: Alien_MERCURY_2
   m_TagString: Alien
@@ -702,19 +702,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   satisfactionBalloon: {fileID: 1043468532303962}
   satisfactionTime: 1
---- !u!114 &114367257936302418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1409932613990378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37823b7f17c41e04d84503caa12c99b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 20
-  animID: 0
 --- !u!114 &114440007079486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -805,6 +792,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipPattern: 0
   chipVal: 0
+--- !u!114 &114967019351865180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1409932613990378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneAnimPatternSwitchTime: 30
+  animID: 0
 --- !u!212 &212621624205433166
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -512,9 +512,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41f726405704e34fa6981124035c36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missPoint: 20
+  missPoint: 2
   waitFrame: 20
-  cheackClock: {fileID: 0}
+  checkClock: {fileID: 0}
   clock: {fileID: 0}
   successAreaParent: {fileID: 0}
   rotateSpped: 1
