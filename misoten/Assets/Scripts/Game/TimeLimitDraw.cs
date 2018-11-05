@@ -13,7 +13,7 @@ public class TimeLimitDraw : MonoBehaviour
 	/// </summary>
 	public void TimeLimit(int timeFont, Vector3 pos)
 	{
-		transform.position = new Vector3(pos.x, pos.y + 5.0f, pos.z);
+		transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 		GetComponent<Text>().text = timeFont.ToString("00");
 	}
 }

@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 114064517845665492}
   - component: {fileID: 114382143341957636}
   - component: {fileID: 114468260934968300}
+  - component: {fileID: 114220058364593640}
   - component: {fileID: 65902773251765622}
   - component: {fileID: 65981379830362190}
   m_Layer: 0
@@ -742,13 +743,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhenEnteringStoreMoveTime:
   - 1
+  - 2
   - 1
-  - 1
-  - 1
+  - 2
   - 1
   WhenLeavingStoreMoveTime:
   - 1
   - 1
+--- !u!114 &114220058364593640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1970211814897608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd0673a2abef77458af3934c528b96b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1208508541616682, guid: 0a7659b1e18927f46bf05e5ca19cb80c, type: 2}
 --- !u!114 &114382143341957636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -763,7 +776,7 @@ MonoBehaviour:
   claimBalloon:
   - {fileID: 1837805566862776}
   - {fileID: 1779083582444948}
-  claimTime: 5
+  claimTime: 3
 --- !u!114 &114468260934968300
 MonoBehaviour:
   m_ObjectHideFlags: 1

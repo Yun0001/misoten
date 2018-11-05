@@ -59,7 +59,7 @@ public class AlienCall : MonoBehaviour
 
 	// 入店に遷移する秒数設定
 	[SerializeField]
-	private float[] inTime;
+	private float[] inAlienTime;
 
 	// 生成するPrefab設定用
 	[SerializeField]
@@ -136,6 +136,15 @@ public class AlienCall : MonoBehaviour
 	// 持ち帰り用専用オブジェ
 	private GameObject[] takeOutDesignatedObj = new GameObject[6];
 
+	// スコアカウント
+	private ScoreCount scoreCount;
+
+	// タイムマネージャー
+	private GameTimeManager gameTimeManager;
+
+	// 最初にエイリアンが入ったかのフラグ
+	private bool inAlienFlag = false;
+
 	// エイリアン数
 	private int alienNumber = 0;
 
@@ -143,6 +152,19 @@ public class AlienCall : MonoBehaviour
 	private float[] latencyAdd = { 0.0f, 0.0f };
 
 	// ---------------------------------------------
+
+	/// <summary>
+	/// 開始関数
+	/// </summary>
+	void Start()
+	{
+		// コンポーネント取得
+		scoreCount = GameObject.Find("Score/Canvas/Score_1").gameObject.GetComponent<ScoreCount>();
+		gameTimeManager = GameObject.Find("Score/Canvas/GameTimeManager").gameObject.GetComponent<GameTimeManager>();
+
+		inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 1.0f;
+		inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 2.0f;
+	}
 
 	/// <summary>
 	/// 更新関数
@@ -154,6 +176,9 @@ public class AlienCall : MonoBehaviour
 
 		// 持ち帰り用席専用処理
 		TakeAwaySeatDesignated();
+
+		// 時間設定処理
+		InTimeConfiguration();
 
 		// 例外処理関数
 		//ExceptionHandling();
@@ -173,8 +198,19 @@ public class AlienCall : MonoBehaviour
 			// 毎フレームの時間を加算
 			latencyAdd[(int)ESeatPattern.COUNTERSEATS] += Time.deltaTime;
 
+			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
+			switch(scoreCount.GetScore())
+			{
+				case 300: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 4.5f; break;
+				case 600: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 4.0f; break;
+				case 900: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 3.5f; break;
+				case 1200: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 3.0f; break;
+				case 1500: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 2.5f; break;
+				case 1800: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 2.0f; break;
+			}
+
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.COUNTERSEATS] > inTime[(int)ESeatPattern.COUNTERSEATS])
+			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.COUNTERSEATS] > inAlienTime[(int)ESeatPattern.COUNTERSEATS])
 			{
 				// ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -186,7 +222,7 @@ public class AlienCall : MonoBehaviour
 				alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
 
 				// エイリアン生成
-				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)]], new Vector3(0.0f, 0.55f, 7.0f), Quaternion.identity) as GameObject;
+				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)]], new Vector3(0.0f, 0.75f, 7.0f), Quaternion.identity) as GameObject;
 				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)].transform.SetParent(transform);
 
 				// 待機状態終了
@@ -224,8 +260,19 @@ public class AlienCall : MonoBehaviour
 			// 毎フレームの時間を加算
 			latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] += Time.deltaTime;
 
+			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
+			switch (scoreCount.GetScore())
+			{
+				case 300: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 5.5f; break;
+				case 600: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 5.0f; break;
+				case 900: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 4.5f; break;
+				case 1200: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 4.0f; break;
+				case 1500: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 3.5f; break;
+				case 1800: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 3.0f; break;
+			}
+
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] > inTime[(int)ESeatPattern.TAKEAWAYSEAT])
+			if (alienNumber < alienMax && latencyAdd[(int)ESeatPattern.TAKEAWAYSEAT] > inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT])
 			{
 				// ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -237,7 +284,7 @@ public class AlienCall : MonoBehaviour
 				alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
 
 				// エイリアン生成
-				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)]], new Vector3(0.0f, 0.55f, 7.0f), Quaternion.identity) as GameObject;
+				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)]], new Vector3(0.0f, 0.75f, 7.0f), Quaternion.identity) as GameObject;
 				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)].transform.SetParent(transform);
 
 				// 待機状態終了
@@ -375,6 +422,37 @@ public class AlienCall : MonoBehaviour
 
 			// Debug用
 			Debug.Log("例外処理に入りました");
+		}
+	}
+
+	/// <summary>
+	/// 時間設定関数
+	/// </summary>
+	void InTimeConfiguration()
+	{
+		// カウンターと持ち帰り用分ループ
+		for (int i = 0; i < (int)ESeatPattern.MAX; i++)
+		{
+			// 現在の時間を管理
+			// 残り時間が減っていく毎にエイリアンの入店インターバルが減っていく
+			switch ((int)gameTimeManager.GetCountTime())
+			{
+				case 200: inAlienTime[i] -= 0.1f; break;
+				case 180: inAlienTime[i] -= 0.2f; break;
+				case 150: inAlienTime[i] -= 0.3f; break;
+				case 120: inAlienTime[i] -= 0.4f; break;
+				case 90: inAlienTime[i] -= 0.5f; break;
+				case 60: inAlienTime[i] -= 0.6f; break;
+				case 30: inAlienTime[i] -= 0.7f; break;
+			}
+		}
+
+		// 指定した数分エイリアンが入店すると、入店時間が再設定される
+		if (alienNumber >= 2 && !inAlienFlag)
+		{
+			inAlienFlag = !inAlienFlag;
+			inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 7.0f;
+			inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 8.0f;
 		}
 	}
 
