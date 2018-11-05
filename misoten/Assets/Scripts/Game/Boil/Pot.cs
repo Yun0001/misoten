@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class Pot : MonoBehaviour {
 
-    public enum PotState
-    {
-        unused,
-        inCcoking
-    }
     [SerializeField]
-    private GameObject potCuisine;
+    private GameObject cuisine;
 
-    private GameObject potGagePrefab;
     private GameObject potGage;
     private GameObject frame;
 
-    private PotState potStatus;
+    private bool isCooking = false;
 
     [SerializeField]
     private GameObject PotUICamera;
@@ -26,33 +20,38 @@ public class Pot : MonoBehaviour {
 
     private void Awake()
     {
-        potGagePrefab = Resources.Load("Prefabs/PotMiniGame") as GameObject;
-        potGage = Instantiate(potGagePrefab, transform.position, Quaternion.identity);
+        potGage = Instantiate(Resources.Load("Prefabs/PotMiniGame") as GameObject, transform.position, Quaternion.identity);
 
         potGage.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = PotUICamera.GetComponent<Camera>();
         frame = potGage.transform.Find("Canvas/JoyStick/SecondHandFrame").gameObject;
         potGage.SetActive(false);
-        potStatus = PotState.unused;
     }
 
     /// <summary>
     /// 初期化
     /// </summary>
-    private void Init()
+    private void ResetStatus()
     {
-        potStatus = PotState.unused;
+        SetIsCooking(false);
         potGage.SetActive(false);
     }
 
     /// <summary>
     /// 調理開始
     /// </summary>
-    public void StartCookingPot(int playerID)
+    public bool StartCookingPot(int playerID)
     {
-        potStatus     = PotState.inCcoking;
-        potCuisine = CuisineManager.GetInstance().GetPotController().OutputCuisine();
-        potGage.transform.Find("Canvas/JoyStick").GetComponent<Joystick>().Init(playerID);
+        if (isCooking) return false;
+
+        cuisine = CuisineManager.GetInstance().GetPotController().OutputCuisine();
+        if (cuisine == null) return false; // 料理が取得できなければ関数を抜ける
+
+        SetIsCooking(true);
+        
         potGage.SetActive(true);
+        potGage.transform.Find("Canvas/JoyStick").GetComponent<Joystick>().Init(playerID);
+
+        return true;
     }
 
     /// <summary>
@@ -65,7 +64,7 @@ public class Pot : MonoBehaviour {
         if (frame.GetComponent<IraIraFrame>().GetOneRotationFlag())
         {
             // 調理終了
-            Init();         // 初期化
+            ResetStatus();         // 初期化
             return true;
         }
         
@@ -78,23 +77,24 @@ public class Pot : MonoBehaviour {
     /// ステータス取得
     /// </summary>
     /// <returns>ステータス</returns>
-    public PotState GetStatus() => potStatus;
+    public bool IsCooking() => isCooking;
 
     /// <summary>
     /// 茹で料理を返す
     /// </summary>
     /// <returns>茹で料理</returns>
-    public GameObject GetPotCuisine() => potCuisine;
+    public GameObject GetPotCuisine() => cuisine;
 
     /// <summary>
     /// キャンセル
     /// </summary>
     public void InterruptionCooking()
     {
-        potStatus = PotState.unused;
-        potGage.gameObject.SetActive(false);
+        ResetStatus();
 
-        CuisineManager.GetInstance().GetGrilledController().OfferCuisine(potCuisine.GetComponent<Food>().GetFoodID());
-        potCuisine = null;
+        CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
+        cuisine = null;
     }
+
+    public void SetIsCooking(bool flg) => isCooking = flg;
 }

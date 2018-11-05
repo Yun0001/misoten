@@ -26,7 +26,7 @@ public class SuccessArea : MonoBehaviour
         moveSpeed = 0.01f;
     }
 
-    void Init()
+    public void Init()
     {
         ResetMoveUV();
         Vector2[] nUV = { new Vector2(0.6f, 0.0f), new Vector2(0.9f, 0.0f), new Vector2(0.9f, 1.0f), new Vector2(0.6f, 1.0f) };

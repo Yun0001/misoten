@@ -60,7 +60,16 @@ public class AlienAnimation : MonoBehaviour {
 
     private void ChangeSprite() => GetComponent<SpriteRenderer>().sprite = sprite[alienStatus, animID];
 
-    public void SetAlienStatus(int alienstatus) => alienStatus = alienstatus;
+    public void SetAlienStatus(int alienstatus)
+    {
+        if (alienStatus != alienstatus)
+        {
+            alienStatus = alienstatus;
+            countAnimTime = 0;
+            animID = 0;
+            ChangeSprite();
+        }
+    } 
 
     public void SetPlayerRLDirection(int direction)
     {

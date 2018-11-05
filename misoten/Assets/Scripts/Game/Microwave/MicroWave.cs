@@ -8,9 +8,7 @@ public class Microwave : MonoBehaviour
 
     private GameObject microwaveGage;
 
-    private GameObject microwaveCuisine;
-
-    private int usingPlayerID;
+    private GameObject cuisine;
 
     [SerializeField]
     private GameObject canvadsCamera;
@@ -22,17 +20,16 @@ public class Microwave : MonoBehaviour
         microwaveGage = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
         microwaveGage.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvadsCamera.GetComponent<Camera>();
         microwaveGage.SetActive(false);
-
     }
 
     public bool StartCookingMicrowave(int pID, GamePad.Index index)
     {
         if (isCooking) return false;  // すでに調理中なら抜ける
 
-        microwaveCuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();   // 料理を取得
-        if (microwaveCuisine == null) return false; // 料理が取得できなければ関数を抜ける
+        cuisine = CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();   // 料理を取得
+        if (cuisine == null) return false; // 料理が取得できなければ関数を抜ける
+
         SetIsCooking(true); // 調理中に変更
-        SetUsingPlayerID(pID);    // 使用プレイヤーIDセット
 
         microwaveGage.SetActive(true);
         microwaveGage.GetComponent<MicrowaveGage2>().ResetMicrowaveGage();  // ゲージの状態をリセット
@@ -53,10 +50,9 @@ public class Microwave : MonoBehaviour
     public GameObject EndCookingMicrowave()
     {
         // ゲージを非表示
-        microwaveGage.SetActive(false);
-        SetIsCooking(false);
+        ResetStatus();
 
-        return microwaveCuisine;
+        return cuisine;
     }
 
     /// <summary>
@@ -65,12 +61,10 @@ public class Microwave : MonoBehaviour
     public bool InterruptionCooking()
     {
         // 中の料理をnull
-        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(microwaveCuisine.GetComponent<Food>().GetFoodID());
-        microwaveCuisine = null;
+        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
+        cuisine = null;
 
-        // ゲージを非表示
-        microwaveGage.SetActive(false);
-
+        ResetStatus();
         return true;
     }
 
@@ -78,14 +72,16 @@ public class Microwave : MonoBehaviour
 
     public bool IsCooking() => isCooking;
 
-    private void SetUsingPlayerID(int pID) => usingPlayerID = pID;
-
-    public int GetUsingPlayerID() => usingPlayerID;
-
-    public void AddCuisinePoint(int point) => microwaveCuisine.GetComponent<Food>().AddQualityTaste(point);
+    public void AddCuisinePoint(int point) => cuisine.GetComponent<Food>().AddQualityTaste(point);
 
     public void DecisionCheckClockCollision()
     {
         microwaveGage.GetComponent<MicrowaveGage2>().DecisionCheckClockCollision();
+    }
+
+    private void ResetStatus()
+    {
+        microwaveGage.SetActive(false);
+        SetIsCooking(false);
     }
 }

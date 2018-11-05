@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Grilled : MonoBehaviour {
 
-    public enum GrilledState
-    {
-        unused,
-        inCcoking
-    }
 
     // 状態
     [SerializeField]
-    private GrilledState grilledStatus;
+    private bool isCooking = false;
 
     // 焼き料理
     private GameObject grilledCuisine;
@@ -31,15 +26,15 @@ public class Grilled : MonoBehaviour {
     void Awake ()
     {
         GrilledGageInstance(); // ゲージ作成
-        grilledStatus = GrilledState.unused;
+        SetIsCooking(false);
     }
 
     /// <summary>
     /// 調理開始
     /// </summary>
-    public void StartCooking(GamepadInput.GamePad.Index pNumber, int pRank, Vector3 pos)
+    public void StartCooking(GamepadInput.GamePad.Index pNumber, int pRank)
     {
-        grilledStatus = GrilledState.inCcoking;
+        SetIsCooking(true);
         // 料理をコントローラーから取得
         grilledCuisine = CuisineManager.GetInstance().GetGrilledController().OutputCuisine();
         grilledGage.SetActive(true);
@@ -56,8 +51,6 @@ public class Grilled : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public bool IsEndCooking() => grilledGage.GetComponent<GrilledGage>().GetStatus() == GrilledGage.EGrilledGageStatus.End;
-
-    public GrilledState GetStatus() => grilledStatus;
 
     public GameObject GetGrilledCuisine() => grilledCuisine;
 
@@ -79,7 +72,7 @@ public class Grilled : MonoBehaviour {
     /// <returns></returns>
     public GameObject GrilledCookingEnd()
     {
-        grilledStatus = GrilledState.unused;
+        SetIsCooking(false);
         grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage.GetComponent<GrilledGage>().ResetPosition();
         grilledGage.gameObject.SetActive(false);
@@ -91,12 +84,17 @@ public class Grilled : MonoBehaviour {
     /// </summary>
     public void InterruptionCooking()
     {
-       grilledStatus = GrilledState.unused;
+        SetIsCooking(false);
         grilledGage.GetComponent<GrilledGage>().SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage.GetComponent<GrilledGage>().ResetPosition();
+        grilledGage.GetComponent<GrilledGage>().ResetSuccessArea();
         grilledGage.gameObject.SetActive(false);
 
         CuisineManager.GetInstance().GetGrilledController().OfferCuisine(grilledCuisine.GetComponent<Food>().GetFoodID());
         grilledCuisine = null;
     }
+
+    private void SetIsCooking(bool flg) => isCooking = flg;
+
+    public bool IsCooking() => isCooking;
 }

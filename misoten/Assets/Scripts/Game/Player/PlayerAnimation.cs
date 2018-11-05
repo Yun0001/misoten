@@ -48,23 +48,26 @@ public class PlayerAnimation : MonoBehaviour
         oneAnimPatternTime = oneAnimPatternSwitchTime / ANIMATION_NUM;
 
         // 待機画像ロード
-        WaiitAnimationSpriteLoad();
+        WaitAnimationSpriteLoad();
 
         // 歩行画像ロード
         WorkAnimationSpriteLoad();
     }
 
-    private void WaiitAnimationSpriteLoad()
+    /// <summary>
+    /// 待機画像ロード
+    /// </summary>
+    private void WaitAnimationSpriteLoad()
     {
         for (int i = 0; i < 2; i++)
             for (int j = 0; j < 2; j++)
                 for (int k = 0; k < 4; k++)
-                {
                     sprite[0, i, j, k] = Resources.Load<Sprite>(folderPass[0] + waitTextureName[i, j, k]);
-                }
-              
     }
 
+    /// <summary>
+    /// 歩行画像ロード
+    /// </summary>
     private void WorkAnimationSpriteLoad()
     {
         for (int i = 0; i < 2; i++)
@@ -75,9 +78,27 @@ public class PlayerAnimation : MonoBehaviour
 
     private void ChangeSprite() => GetComponent<SpriteRenderer>().sprite = sprite[playerStatus, isCatering, (int)playerUDDirection, animID];
 
-    public void SetPlayerStatus(int playerstatus) => playerStatus = playerstatus;
+    public void SetPlayerStatus(int playerstatus)
+    {
+        if (playerStatus != playerstatus)
+        {
+            playerStatus = playerstatus;
+            countAnimTime = 0;
+            animID = 0;
+            ChangeSprite();
+        }
+    }
 
-    public void SetPlayerUDDirection(PlayerMove.EDirection direction) => playerUDDirection = direction;
+    public void SetPlayerUDDirection(PlayerMove.EDirection direction)
+    {
+        if (playerUDDirection != direction)
+        {
+            playerUDDirection = direction;
+            countAnimTime = 0;
+            animID = 0;
+            ChangeSprite();
+        }
+    } 
 
     public void SetPlayerRLDirection(PlayerMove.EDirection direction)
     {

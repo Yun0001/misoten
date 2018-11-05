@@ -102,6 +102,31 @@ public class GrilledGage : MonoBehaviour {
         }
     }
 
+    public void ResetSuccessArea()
+    {
+        ResetPosition();
+        for (int i = 0; i < successAreaGroup.Length; i++)
+        {
+            if (successAreaGroup[i].tag == "SuccessAreaNormalParent")
+            {
+                successAreaGroup[i].transform.Find("SuccessArea_Normal1").GetComponent<SuccessArea>().isInGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal1").GetComponent<SuccessArea>().isOutGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal1").GetComponent<SuccessArea>().Init();
+                successAreaGroup[i].transform.Find("SuccessArea_Normal2").GetComponent<SuccessArea>().isInGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal2").GetComponent<SuccessArea>().isOutGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal2").GetComponent<SuccessArea>().Init();
+            }
+            else
+            {
+                successAreaGroup[i].GetComponent<SuccessArea>().isInGageFrame = false;
+                successAreaGroup[i].GetComponent<SuccessArea>().isOutGageFrame = false;
+                successAreaGroup[i].GetComponent<SuccessArea>().Init();
+            }
+
+            }
+
+    }
+
 
     public void ResetPosition()
     {
