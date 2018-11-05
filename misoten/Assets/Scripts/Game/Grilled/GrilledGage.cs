@@ -29,6 +29,7 @@ public class GrilledGage : MonoBehaviour {
         { EArea.Hard, EArea.Hard, EArea.Hard, EArea.Hell, EArea.Hell }
     };
 
+    [SerializeField]
     private EGrilledGageStatus grilledGageStatus;
 
     private GameObject[] successAreaPrefab = new GameObject[3];
@@ -39,6 +40,7 @@ public class GrilledGage : MonoBehaviour {
     private GameObject[,] allPatternSuccessArea = new GameObject[PATTERN_NUM, SUCCESSAREA_NUM];
 
     // ノーツを流す時に使う変数
+    [SerializeField]
     private GameObject[] successAreaGroup = new GameObject[SUCCESSAREA_NUM];
     
     // エリア移動速度
@@ -47,7 +49,8 @@ public class GrilledGage : MonoBehaviour {
 
     // ゲージ表示から流れてくるまでのフレーム数
     [SerializeField]
-    private float STAY_TIME;
+    private float STAY_TIME =1;
+    [SerializeField]
     private float stayTime;
 
 
@@ -99,6 +102,31 @@ public class GrilledGage : MonoBehaviour {
         }
     }
 
+    public void ResetSuccessArea()
+    {
+        ResetPosition();
+        for (int i = 0; i < successAreaGroup.Length; i++)
+        {
+            if (successAreaGroup[i].tag == "SuccessAreaNormalParent")
+            {
+                successAreaGroup[i].transform.Find("SuccessArea_Normal1").GetComponent<SuccessArea>().isInGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal1").GetComponent<SuccessArea>().isOutGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal1").GetComponent<SuccessArea>().Init();
+                successAreaGroup[i].transform.Find("SuccessArea_Normal2").GetComponent<SuccessArea>().isInGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal2").GetComponent<SuccessArea>().isOutGageFrame = false;
+                successAreaGroup[i].transform.Find("SuccessArea_Normal2").GetComponent<SuccessArea>().Init();
+            }
+            else
+            {
+                successAreaGroup[i].GetComponent<SuccessArea>().isInGageFrame = false;
+                successAreaGroup[i].GetComponent<SuccessArea>().isOutGageFrame = false;
+                successAreaGroup[i].GetComponent<SuccessArea>().Init();
+            }
+
+            }
+
+    }
+
 
     public void ResetPosition()
     {
@@ -117,7 +145,10 @@ public class GrilledGage : MonoBehaviour {
         switch (grilledGageStatus)
         {
             case EGrilledGageStatus.Stay:
-                if (CountDownStayTime() <= 0) SetStatus(EGrilledGageStatus.Play);
+                if (CountDownStayTime() <= 0)
+                {
+                    SetStatus(EGrilledGageStatus.Play);
+                }
                 break;
 
             case EGrilledGageStatus.Play:
@@ -132,6 +163,7 @@ public class GrilledGage : MonoBehaviour {
                 {
                     if (successAreaGroup[i].activeInHierarchy) return;
                 }
+                
                 grilledGageStatus = EGrilledGageStatus.End;
                 break;
 
@@ -145,4 +177,6 @@ public class GrilledGage : MonoBehaviour {
     public void SetStatus(EGrilledGageStatus status) => grilledGageStatus = status;
 
     private float CountDownStayTime() => stayTime -= Time.deltaTime;
+
+    public void ResetStayTime() => stayTime = STAY_TIME;
 }

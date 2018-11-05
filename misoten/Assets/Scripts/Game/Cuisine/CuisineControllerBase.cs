@@ -25,6 +25,7 @@ public class CuisineControllerBase : MonoBehaviour
     /// <summary>
     /// 料理が配膳中か
     /// </summary>
+    [SerializeField]
     protected bool[] isCateringCuisine = new bool[maxCuisine];
 
     protected void Init(Food.Category category)

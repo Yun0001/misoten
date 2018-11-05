@@ -21,13 +21,13 @@ public class PlayerAnimation : MonoBehaviour
     private string[] folderPass = { "Textures/Player/Wait/", "Textures/Player/Work/" };
 
     private string[,,] waitTextureName = {
-       { {"前1" ,"前2","前1" ,"前2"}, {"後1" ,"後2","後1" ,"後2"} },
-       { {"前_1" ,"前_2","前_1" ,"前_2"}, {"後_1" ,"後_2","後_1" ,"後_2"} }
+       { {"front1" ,"front2","front1" ,"front2"}, {"behind1" ,"behind2","behind1" ,"behind2"} },
+       { {"h_front1" ,"h_front2","h_front1" ,"h_front2"}, {"h_behind1" ,"h_behind2","h_behind1" ,"h_behind2"} }
     };
 
     private string[,,] workTextureName ={
-       { { "前1","前2","前3","前4"}, { "後1","後2","後3","後4"} },
-       {  { "前_1","前_2","前_3","前_4"}, { "後_1","後_2","後_3","後_4"} }
+       { { "front1","front2","front3","front4"}, { "behind1","behind2","behind3","behind4"} },
+       {  { "h_front1","h_front2","h_front3","h_front4"}, { "h_behind1","h_behind2","h_behind3","h_behind4"} }
     };
 
 
@@ -37,7 +37,6 @@ public class PlayerAnimation : MonoBehaviour
 
     private int playerStatus = 0;
     private PlayerMove.EDirection playerUDDirection = PlayerMove.EDirection.Down;
-   // private PlayerMove.EDirection playerRLDirection = PlayerMove.EDirection.Right;
     private int isCatering = 0;
 
     [SerializeField]
@@ -49,23 +48,26 @@ public class PlayerAnimation : MonoBehaviour
         oneAnimPatternTime = oneAnimPatternSwitchTime / ANIMATION_NUM;
 
         // 待機画像ロード
-        WaiitAnimationSpriteLoad();
+        WaitAnimationSpriteLoad();
 
         // 歩行画像ロード
         WorkAnimationSpriteLoad();
     }
 
-    private void WaiitAnimationSpriteLoad()
+    /// <summary>
+    /// 待機画像ロード
+    /// </summary>
+    private void WaitAnimationSpriteLoad()
     {
         for (int i = 0; i < 2; i++)
             for (int j = 0; j < 2; j++)
                 for (int k = 0; k < 4; k++)
-                {
                     sprite[0, i, j, k] = Resources.Load<Sprite>(folderPass[0] + waitTextureName[i, j, k]);
-                }
-              
     }
 
+    /// <summary>
+    /// 歩行画像ロード
+    /// </summary>
     private void WorkAnimationSpriteLoad()
     {
         for (int i = 0; i < 2; i++)
@@ -76,13 +78,30 @@ public class PlayerAnimation : MonoBehaviour
 
     private void ChangeSprite() => GetComponent<SpriteRenderer>().sprite = sprite[playerStatus, isCatering, (int)playerUDDirection, animID];
 
-    public void SetPlayerStatus(int playerstatus) => playerStatus = playerstatus;
+    public void SetPlayerStatus(int playerstatus)
+    {
+        if (playerStatus != playerstatus)
+        {
+            playerStatus = playerstatus;
+            countAnimTime = 0;
+            animID = 0;
+            ChangeSprite();
+        }
+    }
 
-    public void SetPlayerUDDirection(PlayerMove.EDirection direction) => playerUDDirection = direction;
+    public void SetPlayerUDDirection(PlayerMove.EDirection direction)
+    {
+        if (playerUDDirection != direction)
+        {
+            playerUDDirection = direction;
+            countAnimTime = 0;
+            animID = 0;
+            ChangeSprite();
+        }
+    } 
 
     public void SetPlayerRLDirection(PlayerMove.EDirection direction)
     {
-        //playerRLDirection = direction;
         if (direction == PlayerMove.EDirection.Right)
         {
             Vector3 scale = transform.localScale;

@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     private PlayerMove playerMove_cs;
     private HindranceItem hindrance_cs;
     private PlayerAnimation playerAnimation_cs;
+    private PlayerInput playerInput_cs;
 
     [SerializeField]
     private int hitAlienID;
@@ -92,7 +93,7 @@ public class Player : MonoBehaviour
 
         SetPlayerStatus(PlayerStatus.Normal);
         SetScript();
-        GetComponent<PlayerInput>().Init(inputXAxisName, inputYAxisName);
+        playerInput_cs.Init(inputXAxisName, inputYAxisName);
         playerMove_cs.Init();
     }
 
@@ -108,6 +109,11 @@ public class Player : MonoBehaviour
     {
         switch (playerStatus)
         {
+            case PlayerStatus.Microwave:
+                playerInput_cs.InputMicrowave();
+                UpdateCookingMicrowave();
+                break;
+
             //茹で料理中更新処理
             case PlayerStatus.Pot:
                 UpdateCookingPot();
@@ -116,20 +122,6 @@ public class Player : MonoBehaviour
             // 焼き料理中更新処理
             case PlayerStatus.GrilledTable:
                 UpdateCookingGrilled();
-                break;
-
-            //電子レンジの爆発状態
-            case PlayerStatus.Microwave:
-                if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.Explostion)
-                {
-                    SetPlayerStatus(PlayerStatus.Explosion);
-                }
-                break;
-            case PlayerStatus.Explosion:
-                if (GetHitObjComponentMicroWave().GetStatus() == MicroWave.EMWState.SwitchOff)
-                {
-                    SetPlayerStatus(PlayerStatus.Normal);
-                }
                 break;
 
             case PlayerStatus.Hindrance:
@@ -211,18 +203,7 @@ public class Player : MonoBehaviour
 
         //配膳中かつ当たっているものが旨味成分かつ旨味成分が自分のものではないとき
         // 配膳中の料理の旨味を向上させる
-        haveInHandCusine.GetComponent<Food>().SubQualityTaste();        
-
-
-        
-        // これで、カウンター側の客（０番目）の待機状態が取れる
-        AlienStatus.GetCounterStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
-
-        // これで、持ち帰り側の客（０番目）の待機状態が取れる
-        AlienStatus.GetTakeOutStatusChangeFlag(0, (int)AlienStatus.EStatus.STAND);
-
-        //GetHitObj((int)hitObjName.Alien).
-       
+        haveInHandCusine.GetComponent<Food>().SubQualityTaste();
     }
 
 
@@ -235,11 +216,11 @@ public class Player : MonoBehaviour
         if (playerStatus != PlayerStatus.Catering) return;          // 配膳状態でないならreturn
         if (GetHitObj((int)hitObjName.Alien) == null) return;    // 宇宙人との当たり判定がなければreturn
 
-
         // エイリアンのスクリプトを取得して料理を渡す
         GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandCusine);
         // 料理コントローラーが新たに料理を出せるようにする
         CuisineControllerOfferCuisine();
+        playerAnimation_cs.SetIsCatering(false);
 
         SetHaveInHanCuisine();
         SetPlayerStatus(PlayerStatus.Normal);
@@ -262,7 +243,7 @@ public class Player : MonoBehaviour
         return hitObj[HitObjID].gameObject;
     } 
 
-    private MicroWave GetHitObjComponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<MicroWave>();
+    private Microwave GetHitObjComponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<Microwave>();
     
     private Pot GetHitObjComponetPot() => GetHitObj((int)hitObjName.Pot).GetComponent<Pot>();
 
@@ -290,37 +271,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public void ActionMicrowave()
     {
-     
         if (GetHitObj((int)hitObjName.Microwave) == null) return;   // 電子レンジに当たっていなければreturn
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
-        if (GetHitObjComponentMicroWave().GetPlayerID() != playerID) return;// 操作しているのが自分でなければreturn
+        if (GetHitObjComponentMicroWave().IsCooking()) return;
         ResetMove(); // 移動値をリセット
-
-        switch (GetHitObjComponentMicroWave().GetStatus())
-        {
-            case MicroWave.EMWState.SwitchOff:
-                // 電子レンジを動かす
-                cookingMicrowave_cs.PresstheMicrowaveStartButton();
-                break;
-
-            case MicroWave.EMWState.SwitchOn:
-                // 電子レンジを停止させる
-                GameObject cuisine = cookingMicrowave_cs.PresstheMicrowaveStopButton();
-                if (cuisine == null)
-                {
-                    SetPlayerStatus(PlayerStatus.Microwave);
-                }
-                else
-                {
-                    WithaCuisine(cuisine);
-                    playerAnimation_cs.SetIsCatering(true);
-                }
-
-                break;
-
-            default:
-                break;
-        }
+        cookingMicrowave_cs.PresstheMicrowaveStartButton();
     }
 
     public void ActionPot()
@@ -337,7 +292,7 @@ public class Player : MonoBehaviour
     {
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
-        if (GetHitObjComponentGrilled().GetStatus() == Grilled.GrilledState.inCcoking) return;
+        if (GetHitObjComponentGrilled().IsCooking()) return;
         ResetMove();
 
         cookingGrilled_cs.OnFire();
@@ -413,11 +368,24 @@ public class Player : MonoBehaviour
         playerMove_cs = GetComponent<PlayerMove>();
         hindrance_cs = GetComponent<HindranceItem>();
         playerAnimation_cs = GetComponent<PlayerAnimation>();
+        playerInput_cs = GetComponent<PlayerInput>();
     }
 
     public string GetInputXAxisName() => inputXAxisName;
 
     public string GetInputYAxisName() => inputYAxisName;
+
+    private void UpdateCookingMicrowave()
+    {
+        GameObject cuisine = null;
+        cuisine = cookingMicrowave_cs.UpdateMicrowave();
+        if (cuisine != null)
+        {
+            // 料理を持つ
+            WithaCuisine(cuisine);
+            playerAnimation_cs.SetIsCatering(true);
+        }
+    }
 
     /// <summary>
     /// 茹で料理の更新処理

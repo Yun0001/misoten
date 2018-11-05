@@ -11,14 +11,19 @@ public class CookingMicrowave : MonoBehaviour {
     {
         player_cs = GetComponent<Player>();
 	}
-	
+
+    public GameObject UpdateMicrowave()
+    {
+        return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().UpdateMicrowaveGage();
+    }
+
     /// <summary>
     /// 電子レンジを動かす
     /// </summary>
     public void PresstheMicrowaveStartButton()
     {
         // 電子レンジ調理開始
-        if (!player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().StartCooking(player_cs.GetPlayerID(),transform.position)) return;
+        if (!player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().StartCookingMicrowave(player_cs.GetPlayerID(), player_cs.GetPlayerControllerNumber())) return;
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
     }
@@ -30,7 +35,7 @@ public class CookingMicrowave : MonoBehaviour {
     public GameObject PresstheMicrowaveStopButton()
     {
         // 電子レンジ調理終了
-        return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().EndCooking();
+        return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().EndCookingMicrowave();
     }
 
     /// <summary>
@@ -38,6 +43,6 @@ public class CookingMicrowave : MonoBehaviour {
     /// </summary>
     public void CancelCooking()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<MicroWave>().InterruptionCooking();
+        player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().InterruptionCooking();
     }
 }

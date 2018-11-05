@@ -13,12 +13,10 @@ public class CookingPot : MonoBehaviour {
 
     public void CookingStart()
     {
-        if (player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().GetStatus() == Pot.PotState.unused)
-        {
-            player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().StartCookingPot(player_cs.GetPlayerID());
-            player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
-            player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
-        }
+        if (!player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().StartCookingPot(player_cs.GetPlayerID())) return;
+        player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
+        player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
+
     }
 
     /// <summary>
