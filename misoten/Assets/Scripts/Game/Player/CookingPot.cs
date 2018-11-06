@@ -23,7 +23,7 @@ public class CookingPot : MonoBehaviour {
     /// 調理
     /// </summary>
     /// <param name="stickVec"></param>
-    public GameObject Mix()
+    public GameObject UpdatePot()
     {
         if (player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateCooking())
         {

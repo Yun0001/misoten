@@ -153,6 +153,31 @@ public class PlayerInput : MonoBehaviour
                 break;
         }
     }
+
+    public void InputGrilled()
+    {
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        {
+            player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
+        }
+
+        switch (PlayerControllerNumber)
+        {
+            case GamePad.Index.Three:
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
+                }
+                break;
+
+            case GamePad.Index.Four:
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
+                }
+                break;
+        }
+    }
 }
 
 

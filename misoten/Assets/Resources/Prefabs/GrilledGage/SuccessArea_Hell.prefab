@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114770611657115928}
   m_Layer: 17
   m_Name: SuccessArea_Hell
-  m_TagString: SuccessArea
+  m_TagString: GrilledSuccessAreaHell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,5 +157,10 @@ MonoBehaviour:
   myMesh: {fileID: 0}
   moveUV: 0
   moveSpeed: 0.01
+  uv:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
   isInGageFrame: 0
   isOutGageFrame: 0

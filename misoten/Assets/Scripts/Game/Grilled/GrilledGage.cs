@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GrilledGage : MonoBehaviour {
 
@@ -53,6 +54,8 @@ public class GrilledGage : MonoBehaviour {
     [SerializeField]
     private float stayTime;
 
+    private TimingPoint timingPoint_cs;
+
 
 
 
@@ -76,7 +79,9 @@ public class GrilledGage : MonoBehaviour {
                 allPatternSuccessArea[j, i].SetActive(false);
             }
         }
-    }
+
+        timingPoint_cs = transform.Find("TimingPoint").GetComponent<TimingPoint>();
+}
 
 
     public void Init(int pRank)
@@ -122,9 +127,7 @@ public class GrilledGage : MonoBehaviour {
                 successAreaGroup[i].GetComponent<SuccessArea>().isOutGageFrame = false;
                 successAreaGroup[i].GetComponent<SuccessArea>().Init();
             }
-
-            }
-
+        }
     }
 
 
@@ -140,7 +143,7 @@ public class GrilledGage : MonoBehaviour {
 
 
     // Update is called once per frame
-    void Update()
+    public bool CookingGrilledCuisine()
     {
         switch (grilledGageStatus)
         {
@@ -161,15 +164,18 @@ public class GrilledGage : MonoBehaviour {
                 }
                 for (int i = 0; i < successAreaGroup.Length; i++)
                 {
-                    if (successAreaGroup[i].activeInHierarchy) return;
+                    if (successAreaGroup[i].activeInHierarchy) return false;
                 }
-                
-                grilledGageStatus = EGrilledGageStatus.End;
-                break;
+
+                return true;
+                //grilledGageStatus = EGrilledGageStatus.End;
+                //break;
 
             case EGrilledGageStatus.End:
                 break;
         }
+
+        return false;
     }
 
     public EGrilledGageStatus GetStatus() => grilledGageStatus;
@@ -179,4 +185,27 @@ public class GrilledGage : MonoBehaviour {
     private float CountDownStayTime() => stayTime -= Time.deltaTime;
 
     public void ResetStayTime() => stayTime = STAY_TIME;
+
+    public GameObject DecisionIsHit()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (timingPoint_cs.IsHit(i))
+            {
+                return GetTimingPointHitObj(i);
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetTimingPointHitObj(int i)
+    {
+        return timingPoint_cs.GetHitObj(i);
+    }
+
+    public void ResetIsHit(int i)
+    {
+        timingPoint_cs.SetIsHit(i, false);
+        timingPoint_cs.ResetHitObj(i);
+    }
 }

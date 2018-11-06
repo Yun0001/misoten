@@ -72,7 +72,7 @@ public class SuccessArea : MonoBehaviour
             }
             if (moveUV >= color_U)
             {
-                if (tag == "SuccessAreaChild")
+                if (tag == "GrilledSuccessAreaNormal1"|| tag == "GrilledSuccessAreaNormal2")
                 {
                     gameObject.transform.parent.gameObject.SetActive(false);
                     GameObject a= gameObject.transform.parent.gameObject.transform.Find("SuccessArea_Normal1").gameObject;

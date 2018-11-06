@@ -4837,7 +4837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af69fc2f81814784a925fc837ea31356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvadsCamera: {fileID: 874477769}
+  canvasCamera: {fileID: 874477769}
 --- !u!65 &1437630994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6339,8 +6339,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1880697654}
-  - component: {fileID: 1880697655}
   - component: {fileID: 1880697656}
+  - component: {fileID: 1880697655}
   m_Layer: 0
   m_Name: pan1
   m_TagString: Fryingpan
@@ -6370,10 +6370,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880697653}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948030392be04cf47bad56b22866e6ef, type: 3}
+  m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCooking: 0
+  canvasCamera: {fileID: 874477769}
 --- !u!65 &1880697656
 BoxCollider:
   m_ObjectHideFlags: 0

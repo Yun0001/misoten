@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114752581426369384}
   m_Layer: 17
   m_Name: SuccessArea_Normal2
-  m_TagString: SuccessAreaChild
+  m_TagString: GrilledSuccessAreaNormal2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 61523199002217022}
   m_Layer: 17
   m_Name: SuccessArea_Normal1
-  m_TagString: SuccessAreaChild
+  m_TagString: GrilledSuccessAreaNormal1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

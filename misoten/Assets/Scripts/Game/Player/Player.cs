@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     private string layerName;// レイヤーの名前
     [SerializeField]
     private PlayerStatus playerStatus;
- 
+
     // 左スティックの入力を取る用
     private string inputXAxisName;
     private string inputYAxisName;
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int hitAlienID;
-    
+
 
     // Use this for initialization
     void Awake()
@@ -121,6 +121,7 @@ public class Player : MonoBehaviour
 
             // 焼き料理中更新処理
             case PlayerStatus.GrilledTable:
+                playerInput_cs.InputGrilled();
                 UpdateCookingGrilled();
                 break;
 
@@ -226,7 +227,7 @@ public class Player : MonoBehaviour
         SetPlayerStatus(PlayerStatus.Normal);
     }
 
-    
+
     /// <summary>
     /// 料理を持つ
     /// </summary>
@@ -235,23 +236,19 @@ public class Player : MonoBehaviour
         SetHaveInHanCuisine(cuisine);
         SetPlayerStatus(PlayerStatus.Catering);
     }
-    
+
     public GameObject GetHitObj(int HitObjID)
     {
         if (hitObj[HitObjID] == null) return null;
 
         return hitObj[HitObjID].gameObject;
-    } 
+    }
 
     private Microwave GetHitObjComponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<Microwave>();
-    
-    private Pot GetHitObjComponetPot() => GetHitObj((int)hitObjName.Pot).GetComponent<Pot>();
-
-    private Grilled GetHitObjComponentGrilled() => GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>();
 
     public int GetPlayerID() => playerID;
 
-    public  void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
+    public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
     public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
 
@@ -275,7 +272,7 @@ public class Player : MonoBehaviour
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
         if (GetHitObjComponentMicroWave().IsCooking()) return;
         ResetMove(); // 移動値をリセット
-        cookingMicrowave_cs.PresstheMicrowaveStartButton();
+        cookingMicrowave_cs.CookingStart();
 
     }
 
@@ -293,10 +290,10 @@ public class Player : MonoBehaviour
     {
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
-        if (GetHitObjComponentGrilled().IsCooking()) return;
+        if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Flyingpan>().IsCooking()) return;
         ResetMove();
 
-        cookingGrilled_cs.OnFire();
+        cookingGrilled_cs.CookingStart();
     }
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
@@ -378,8 +375,7 @@ public class Player : MonoBehaviour
 
     private void UpdateCookingMicrowave()
     {
-        GameObject cuisine = null;
-        cuisine = cookingMicrowave_cs.UpdateMicrowave();
+        GameObject cuisine = cookingMicrowave_cs.UpdateMicrowave();
         if (cuisine != null)
         {
             // 料理を持つ
@@ -394,8 +390,7 @@ public class Player : MonoBehaviour
     private void UpdateCookingPot()
     {
         // スティック一周ができればcuisineはnullでない
-        GameObject cuisine = null;
-        cuisine = cookingPot_cs.Mix();
+        GameObject cuisine = cookingPot_cs.UpdatePot();
         if (cuisine != null)
         {
             // 料理を持つ
@@ -409,13 +404,13 @@ public class Player : MonoBehaviour
     /// </summary>
     private void UpdateCookingGrilled()
     {
-        if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().IsEndCooking())
-        {
-            // 焼く調理終了の処理
-            WithaCuisine(GetHitObj((int)hitObjName.GrilledTable).GetComponent<Grilled>().GrilledCookingEnd());
-            playerAnimation_cs.SetIsCatering(true);
-            GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
-        }
+        GameObject cuisine = cookingGrilled_cs.UpdateGrilled();
+        if (cuisine == null) return;
+
+        // 焼く調理終了の処理
+        WithaCuisine(cuisine);
+        playerAnimation_cs.SetIsCatering(true);
+        GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
     /// <summary>

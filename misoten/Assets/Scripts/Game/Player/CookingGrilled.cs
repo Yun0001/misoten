@@ -11,16 +11,21 @@ public class CookingGrilled : MonoBehaviour {
         player_cs = GetComponent<Player>();
     }
 
-    public void OnFire()
+    public void CookingStart()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().StartCooking(player_cs.GetPlayerControllerNumber(),ScoreManager.GetInstance().GetPlayerRank(player_cs.GetPlayerID()));
+        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart();
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
     }
 
+    public GameObject UpdateGrilled()
+    {
+        return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Flyingpan>().UpdateMiniGame();
+    }
+
     public void CancelCooking()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Grilled>().InterruptionCooking();
+        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingInterruption();
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
 
     }

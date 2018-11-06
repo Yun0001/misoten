@@ -9,7 +9,7 @@ public class CheckClock : MonoBehaviour {
     [SerializeField]
     private GameObject MicrowaveGage;
 
-    private MicrowaveGage2 microwaveGage_cs;
+    private MicrowaveGage microwaveGage_cs;
 
     private Microwave microwave_cs;
 
@@ -18,7 +18,7 @@ public class CheckClock : MonoBehaviour {
     private void Awake()
     {
         microwave_cs= GameObject.Find("microwave1").GetComponent<Microwave>();
-        microwaveGage_cs = MicrowaveGage.GetComponent<MicrowaveGage2>();
+        microwaveGage_cs = MicrowaveGage.GetComponent<MicrowaveGage>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

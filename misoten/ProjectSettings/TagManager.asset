@@ -12,13 +12,19 @@ TagManager:
   - TasteMachine
   - Alien
   - GrilledTable
-  - SuccessArea
   - GrilledGage
-  - SuccessAreaChild
   - OutsideGrilledGage
   - SecondHand
   - MicrowaveSuccessArea
   - MicrowaveGreatSuccessArea
+  - GrilledSuccessAreaHard
+  - GrilledSuccessAreaHell
+  - GrilledSuccessAreaNormal1
+  - GrilledSuccessAreaNormal2
+  - GrilledSuccessAreaParent
+  - SuccessArea
+  - SuccessAreaNormalParent
+  - SuccessAreaChild
   layers:
   - Default
   - TransparentFX
