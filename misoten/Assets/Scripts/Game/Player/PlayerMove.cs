@@ -118,7 +118,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Clamp()
     {
-        float width = 3.3f;
+        float width = 3.2f;
         Vector3 min = new Vector3(-width, 0, -4.6f);
         Vector3 max = new Vector3(width, 0,2.0f);
 
