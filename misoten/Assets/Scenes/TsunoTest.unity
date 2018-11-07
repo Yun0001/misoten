@@ -2128,7 +2128,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294574079
-  m_RenderingPath: -1
+  m_RenderingPath: 0
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -3825,6 +3825,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4067066537750424, guid: 009ec43561200dd49a27e9e0e6e61432, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114703179106699690, guid: 009ec43561200dd49a27e9e0e6e61432,
+        type: 2}
+      propertyPath: isOpen
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6424,8 +6429,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.85294116, b: 0.9776876, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -6856,6 +6861,39 @@ Prefab:
     - target: {fileID: 4741097179821720, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
+        type: 2}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067738345617724, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067738345617724, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
+        type: 2}
+      propertyPath: m_MaskInteraction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
+        type: 2}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
+        type: 2}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
