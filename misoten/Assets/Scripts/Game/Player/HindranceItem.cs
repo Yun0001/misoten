@@ -12,7 +12,7 @@ public class HindranceItem : MonoBehaviour
 
 
     [SerializeField][Range(0.0f,5.0f)]
-    private float[] hindranceArea;
+    private float[] hindranceAreaRange;
 
     /// <summary>
     /// スタート時の味の素の状態
@@ -30,7 +30,6 @@ public class HindranceItem : MonoBehaviour
 
     //ゲージスクリプト
     //ゲージプレハブ
-    [SerializeField]
     private GameObject tasteGagePrefab;
     private GameObject tasteGage;
     private TasteGage tasteGage_cs;
@@ -80,7 +79,7 @@ public class HindranceItem : MonoBehaviour
         if (tasteGage_cs.GetSmokeLevel() != TasteGage.ESmokeLevel.Zero)
         {
             int smokeLevel = (int)tasteGage_cs.GetSmokeLevel();
-            float area = hindranceArea[smokeLevel - 1];
+            float area = hindranceAreaRange[smokeLevel - 1];
             // 味の素実体化
             InstanceTaste(area);
 

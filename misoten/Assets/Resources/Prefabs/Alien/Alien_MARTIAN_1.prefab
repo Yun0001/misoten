@@ -77,9 +77,10 @@ GameObject:
   - component: {fileID: 114925821929502010}
   - component: {fileID: 114066665716938446}
   - component: {fileID: 114632938270421296}
+  - component: {fileID: 114381662848332572}
+  - component: {fileID: 114468516181697602}
   - component: {fileID: 65755848182458126}
   - component: {fileID: 65064965529486718}
-  - component: {fileID: 114304167395155470}
   m_Layer: 0
   m_Name: Alien_MARTIAN_1
   m_TagString: Alien
@@ -148,22 +149,7 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 4767291262536372}
-  - component: {fileID: 212996046003843280}
-  - component: {fileID: 114699179553811818}
-  - component: {fileID: 114958414298701262}
-  - component: {fileID: 114333074135691512}
-  - component: {fileID: 114954275401350184}
-  - component: {fileID: 114552704645016598}
-  - component: {fileID: 114423430905334830}
-  - component: {fileID: 114600462336683366}
-  - component: {fileID: 65482453676922878}
-  - component: {fileID: 65431933202079118}
-  - component: {fileID: 114958730231215842}
-=======
   - component: {fileID: 4143325877991862}
->>>>>>> エイリアン挙動Text
   m_Layer: 0
   m_Name: OrderBalloon
   m_TagString: Untagged
@@ -816,29 +802,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52fe494ea9d9a1842a7e69bb4209fc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  satisfactionBalloon: {fileID: 1580072333053820}
-  satisfactionTime: 1
---- !u!114 &114552704645016598
-=======
   prefab: {fileID: 1971375355849292, guid: cc904eaf68b909446b212a1a3d9d240d, type: 2}
   moodChangeTime: 7
   TextMeshBalloon: {fileID: 1869061972787098}
---- !u!114 &114304167395155470
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1461183678987482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37823b7f17c41e04d84503caa12c99b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 20
-  animID: 0
 --- !u!114 &114327568030443722
->>>>>>> エイリアン挙動Text
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -855,6 +822,38 @@ MonoBehaviour:
   - {fileID: 1335113123109868}
   orderTime: 0.1
   individualOrderType: 0
+--- !u!114 &114381662848332572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1461183678987482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneAnimPatternSwitchTime: 10
+  animID: 0
+--- !u!114 &114468516181697602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1461183678987482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1a91df21d9b0b41914749861af001c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab:
+  - {fileID: 198408748922992586, guid: 58b7251254e5c1140b816a3853357857, type: 2}
+  - {fileID: 198035655553859540, guid: 9fb3edaf0e46d604399b2dff94ea4a42, type: 2}
+  - {fileID: 0}
+  particleSystems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114632938270421296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -899,28 +898,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7503b147a6208e5458560a09258ce74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  prefab: {fileID: 1971375355849292, guid: cc904eaf68b909446b212a1a3d9d240d, type: 2}
-  moodChangeTime: 7
---- !u!114 &114958730231215842
-=======
 --- !u!114 &114992078492794630
->>>>>>> エイリアン挙動Text
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 1683141491711858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 30
-  animID: 0
---- !u!212 &212996046003843280
-=======
   m_GameObject: {fileID: 1461183678987482}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -930,7 +912,6 @@ MonoBehaviour:
   chipPattern: 0
   chipVal: 0
 --- !u!212 &212499926622845722
->>>>>>> エイリアン挙動Text
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

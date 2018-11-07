@@ -138,20 +138,6 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 4435100021856978}
-  - component: {fileID: 212621624205433166}
-  - component: {fileID: 114711746992126538}
-  - component: {fileID: 114577786819819640}
-  - component: {fileID: 114867998265298584}
-  - component: {fileID: 114440007079486768}
-  - component: {fileID: 114722774736327870}
-  - component: {fileID: 114041858092819346}
-  - component: {fileID: 114758606635263186}
-  - component: {fileID: 65150535977892606}
-  - component: {fileID: 65776522482834070}
-  - component: {fileID: 114967019351865180}
-=======
   - component: {fileID: 4337811380344268}
   - component: {fileID: 212316859914897710}
   - component: {fileID: 114699437030480112}
@@ -160,10 +146,10 @@ GameObject:
   - component: {fileID: 114028138685582334}
   - component: {fileID: 114668964674197288}
   - component: {fileID: 114043759429237978}
+  - component: {fileID: 114739755090865626}
+  - component: {fileID: 114730206945622436}
   - component: {fileID: 65167339892394682}
   - component: {fileID: 65225654018495068}
-  - component: {fileID: 114960263828756558}
->>>>>>> エイリアン挙動Text
   m_Layer: 0
   m_Name: Alien_MERCURY_2
   m_TagString: Alien
@@ -801,11 +787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c49190c51fb69499a301d8b64ef5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  satisfactionBalloon: {fileID: 1043468532303962}
-  satisfactionTime: 1
---- !u!114 &114440007079486768
-=======
   WhenEnteringStoreMoveTime:
   - 1
   - 2
@@ -829,7 +810,6 @@ MonoBehaviour:
   satisfactionBalloon: {fileID: 1600320636080020}
   satisfactionTime: 1
 --- !u!114 &114438911217584760
->>>>>>> エイリアン挙動Text
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -885,6 +865,38 @@ MonoBehaviour:
   - {fileID: 1002773164206638}
   orderTime: 0.1
   individualOrderType: 0
+--- !u!114 &114730206945622436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688965645527120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1a91df21d9b0b41914749861af001c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab:
+  - {fileID: 198408748922992586, guid: 58b7251254e5c1140b816a3853357857, type: 2}
+  - {fileID: 198035655553859540, guid: 9fb3edaf0e46d604399b2dff94ea4a42, type: 2}
+  - {fileID: 0}
+  particleSystems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &114739755090865626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688965645527120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneAnimPatternSwitchTime: 10
+  animID: 0
 --- !u!114 &114866637655355224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -899,39 +911,7 @@ MonoBehaviour:
   prefab: {fileID: 1971375355849292, guid: cc904eaf68b909446b212a1a3d9d240d, type: 2}
   moodChangeTime: 7
   TextMeshBalloon: {fileID: 1487180093399618}
---- !u!114 &114960263828756558
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688965645527120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37823b7f17c41e04d84503caa12c99b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  chipPattern: 0
-  chipVal: 0
---- !u!114 &114967019351865180
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1409932613990378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 30
-  animID: 0
---- !u!212 &212621624205433166
-=======
-  oneAnimPatternSwitchTime: 20
-  animID: 0
 --- !u!212 &212316859914897710
->>>>>>> エイリアン挙動Text
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

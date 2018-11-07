@@ -351,7 +351,7 @@ public class AlienOrder : MonoBehaviour
 	/// <param name="cuisine"></param>
 	public void EatCuisine(GameObject cuisine)
 	{
-		if (individualOrderType == cuisine.GetComponent<Food>().GetCategory())
+		if (individualOrderType == (int)cuisine.GetComponent<Food>().GetCategory())
 		{
 			GetComponent<AlienChip>().SetCuisineCoefficient(1f);
 			//GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
@@ -403,13 +403,4 @@ public class AlienOrder : MonoBehaviour
 			default: break;
 		}
 	}
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.tag == "Player")
-        {
-            collision.gameObject.GetComponent<Player>().SetHitAlienID(setId);
-        }
-     
-    }
 }

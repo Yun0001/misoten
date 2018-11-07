@@ -20,13 +20,12 @@ public class CookingGrilled : MonoBehaviour {
 
     public GameObject UpdateGrilled()
     {
-        return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Flyingpan>().UpdateMiniGame();
+        return player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().UpdateMiniGame();
     }
 
     public void CancelCooking()
     {
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingInterruption();
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
-
     }
 }
