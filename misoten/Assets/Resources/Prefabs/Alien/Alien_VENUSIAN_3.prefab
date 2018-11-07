@@ -41,9 +41,10 @@ GameObject:
   - component: {fileID: 114203963331303174}
   - component: {fileID: 114227610513839170}
   - component: {fileID: 114331757566950334}
+  - component: {fileID: 114058040878342016}
+  - component: {fileID: 114482740185268940}
   - component: {fileID: 65459773667061712}
   - component: {fileID: 65533222720143214}
-  - component: {fileID: 114371222076768542}
   m_Layer: 0
   m_Name: Alien_VENUSIAN_3
   m_TagString: Alien
@@ -181,22 +182,7 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 4596783927784326}
-  - component: {fileID: 212088067722869744}
-  - component: {fileID: 114265704590656164}
-  - component: {fileID: 114299239510214264}
-  - component: {fileID: 114907463845045012}
-  - component: {fileID: 114224116882312596}
-  - component: {fileID: 114405623624580040}
-  - component: {fileID: 114784261424430780}
-  - component: {fileID: 114443524808776160}
-  - component: {fileID: 65221820893470962}
-  - component: {fileID: 65724478776573640}
-  - component: {fileID: 114125620855854806}
-=======
   - component: {fileID: 4878731981496078}
->>>>>>> エイリアン挙動Text
   m_Layer: 0
   m_Name: OrderBalloon
   m_TagString: Untagged
@@ -769,42 +755,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 5, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
---- !u!114 &114125620855854806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1963688665283992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 30
-  animID: 0
---- !u!114 &114224116882312596
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1963688665283992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c49190c51fb69499a301d8b64ef5b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WhenEnteringStoreMoveTime:
-  - 1
-  - 2
-  - 1
-  - 2
-  - 1
-  WhenLeavingStoreMoveTime:
-  - 1
-  - 1
---- !u!114 &114265704590656164
-=======
 --- !u!102 &102888480789567518
 TextMesh:
   serializedVersion: 3
@@ -827,7 +777,6 @@ TextMesh:
     serializedVersion: 2
     rgba: 4278190080
 --- !u!114 &114043679210813756
->>>>>>> エイリアン挙動Text
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -844,6 +793,19 @@ MonoBehaviour:
   - {fileID: 1463543176786498}
   orderTime: 0.1
   individualOrderType: 0
+--- !u!114 &114058040878342016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1071456356252156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneAnimPatternSwitchTime: 10
+  animID: 0
 --- !u!114 &114203963331303174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -890,27 +852,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf6e32be4f0bff459e0febcf5cdc534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  prefab: {fileID: 1208508541616682, guid: 0a7659b1e18927f46bf05e5ca19cb80c, type: 2}
---- !u!114 &114784261424430780
-=======
   satisfactionBalloon: {fileID: 1484378253920514}
   satisfactionTime: 1
---- !u!114 &114371222076768542
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1071456356252156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37823b7f17c41e04d84503caa12c99b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oneAnimPatternSwitchTime: 20
-  animID: 0
 --- !u!114 &114446884728509824
->>>>>>> エイリアン挙動Text
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -923,6 +867,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipPattern: 0
   chipVal: 0
+--- !u!114 &114482740185268940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1071456356252156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1a91df21d9b0b41914749861af001c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab:
+  - {fileID: 198408748922992586, guid: 58b7251254e5c1140b816a3853357857, type: 2}
+  - {fileID: 198035655553859540, guid: 9fb3edaf0e46d604399b2dff94ea4a42, type: 2}
+  - {fileID: 0}
+  particleSystems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114745149820093144
 MonoBehaviour:
   m_ObjectHideFlags: 1
