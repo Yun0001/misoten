@@ -3419,13 +3419,17 @@ MonoBehaviour:
   - 0
   - 0
   prefab:
-  - {fileID: 1683141491711858, guid: e4268bc55bbd61c4894e28b4da391231, type: 2}
-  - {fileID: 1409932613990378, guid: 327b8ecf9a7de7047bd9c0c8c84f6679, type: 2}
-  - {fileID: 1963688665283992, guid: 8510b733dfc472444ae34cf4af599e71, type: 2}
+  - {fileID: 1461183678987482, guid: e4268bc55bbd61c4894e28b4da391231, type: 2}
+  - {fileID: 1688965645527120, guid: 327b8ecf9a7de7047bd9c0c8c84f6679, type: 2}
+  - {fileID: 1071456356252156, guid: 8510b733dfc472444ae34cf4af599e71, type: 2}
   counterSeatsMax: 7
   takeAwaySeatMax: 6
   alienMax: 50
-  period: 2
+  period: 10
+  theRemainingTime:
+  - 20
+  - 15
+  - 10
 --- !u!4 &884487747
 Transform:
   m_ObjectHideFlags: 0
