@@ -23,7 +23,6 @@ public class Pot : KitchenwareBase
 
     protected override void ResetMiniGameUI()
     {
-        SetIsCooking(false);
         miniGameUI.SetActive(false);
     }
 

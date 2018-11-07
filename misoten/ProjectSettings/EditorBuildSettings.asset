@@ -8,15 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title_heita.unity
     guid: 2106d791be9c55446b7f82c272fafeb3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameTest.unity
     guid: b11d4e76e4b40b14c8b920f00dd96d5d
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 1e06e523dc33a004fb608befa80d1a7f
   - enabled: 0
-    path: Assets/Scenes/2DGame.unity
-    guid: 7f072e6b75627f44999004ed7cb50e84
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 0d54472c12ed9aa47b02b3cf20a97982

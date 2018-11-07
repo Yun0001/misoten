@@ -55,6 +55,7 @@ public abstract class KitchenwareBase : MonoBehaviour
         if (Cooking())
         {
             ResetMiniGameUI();
+            SetIsCooking(false);
             SetIsEnd(true);
         }
 

@@ -38,6 +38,7 @@ public class MicrowaveGage : MonoBehaviour
     [SerializeField]
     private GameObject successAreaParent;
 
+    [SerializeField]
     MicrowaveState status = MicrowaveState.Wait;
 
     [SerializeField]
@@ -110,7 +111,11 @@ public class MicrowaveGage : MonoBehaviour
 
                 timerCount -= TIMER_COUNT / timer;
                 clock.transform.Rotate(new Vector3(0, 0, TIMER_COUNT / timer));
-                if (timerCount <= timerMin) return true;
+                if (timerCount <= timerMin)
+                {
+                    status = MicrowaveState.Wait;
+                    return true;
+                }
 
                 checkClock.transform.Rotate(new Vector3(0, 0, rotateSpped));
                 break;
