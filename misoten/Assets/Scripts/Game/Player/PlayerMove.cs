@@ -25,6 +25,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]    [Range(0.0f, 1.0f)]
     private float TasteChargeCoefficient;
 
+    [SerializeField, Range(1, 50)]
+    private int adjustment;
+
 
 
     public void Init()
@@ -45,7 +48,7 @@ public class PlayerMove : MonoBehaviour
         if (pStatus == Player.PlayerStatus.Microwave) return;
         if (pStatus == Player.PlayerStatus.Pot) return;
         if (pStatus == Player.PlayerStatus.GrilledTable) return;
-        if (pStatus == Player.PlayerStatus.Explosion) return;
+        if (pStatus == Player.PlayerStatus.Hindrance) return;
 
 
         // 配膳中または味の素チャージ中ならば移動量減少
@@ -58,10 +61,6 @@ public class PlayerMove : MonoBehaviour
             case Player.PlayerStatus.TasteCharge:
                 move *= TasteChargeCoefficient;
                 break;
-
-            case Player.PlayerStatus.Hindrance:
-                move = Vector3.zero;
-                break;
         }
 
         rb.velocity = move * speed;
@@ -73,27 +72,26 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMove(EDirection direction)
     {
-        int a=25;
         playerAnimation_cs.SetPlayerStatus(1);
         switch (direction)
         {
             case EDirection.Up:
-                move.z = speed/a;
+                move.z = speed/ adjustment;
                 playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
                 break;
 
             case EDirection.Down:
-                move.z = -speed/a;
+                move.z = -speed/ adjustment;
                 playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
                 break;
 
             case EDirection.Right:
-                move.x = speed/a;
+                move.x = speed/ adjustment;
                 playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
                 break;
 
             case EDirection.Left:
-                move.x = -speed/a;
+                move.x = -speed/ adjustment;
                 playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
                 break;
         }
@@ -129,8 +127,6 @@ public class PlayerMove : MonoBehaviour
 
         transform.position = pos;
     }
-
-    public void MoveReset() => move = Vector3.zero;
 
     public void VelocityReset() => rb.velocity = Vector3.zero;
 }
