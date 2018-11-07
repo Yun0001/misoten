@@ -394,6 +394,12 @@ public class AlienMove : MonoBehaviour
 			// 移動終了時、BoxColliderを「OFF」にする
 			GetComponents<BoxCollider>()[(int)AlienCall.ESeatPattern.COUNTERSEATS].enabled = false;
 
+			// 歩行アニメーションになる
+			GetComponent<AlienAnimation>().SetIsCatering(true);
+
+			if (setEndPositionId_1 < 3) { RightMoveAnimation(); }
+			else { LeftMoveAnimation(); }
+
 			// カウンター席に着席する管理
 			switch (setEndPositionId_2)
 			{

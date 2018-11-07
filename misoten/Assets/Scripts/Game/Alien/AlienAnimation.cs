@@ -74,7 +74,6 @@ public class AlienAnimation : MonoBehaviour
 
 	public void SetAlienRLDirection(AlienMove.EDirection direction)
 	{
-		//playerRLDirection = direction;
 		if (direction == AlienMove.EDirection.Right)
 		{
 			Vector3 scale = transform.localScale;
