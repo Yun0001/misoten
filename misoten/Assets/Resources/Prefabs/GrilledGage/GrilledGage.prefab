@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33344233553422080}
   - component: {fileID: 23819563684665122}
   - component: {fileID: 61580087341236406}
-  - component: {fileID: 114240129162372348}
   m_Layer: 17
   m_Name: Frame
   m_TagString: GrilledGage
@@ -133,7 +132,7 @@ Transform:
   m_GameObject: {fileID: 1052547811860660}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.8, y: 1, z: 1}
+  m_LocalScale: {x: 1.95, y: 0.42, z: 1}
   m_Children: []
   m_Father: {fileID: 4237214508193298}
   m_RootOrder: 0
@@ -335,17 +334,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114240129162372348
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1052547811860660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b8fe91cd80ce8e48aa3ab7839d51c1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114548002482966052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,8 +345,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3fb8c58c39e874693dcedf5d6d711e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grilledGageStatus: 0
+  successAreaGroup:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   areaSpeed: 0.01
   STAY_TIME: 0
+  stayTime: 0
 --- !u!114 &114791278557595820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -370,4 +366,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70d0134247f6068498b65d3192689d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grilled_cs: {fileID: 0}
