@@ -49,8 +49,6 @@ public class Flyingpan : KitchenwareBase
     /// </summary>
     protected override void ResetMiniGameUI()
     {
-        SetIsCooking(false);
-        SetIsEnd(false);
         grilledGage_cs.SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage_cs.ResetPosition();
         grilledGage_cs.ResetSuccessArea();

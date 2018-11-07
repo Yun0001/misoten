@@ -30,7 +30,7 @@ public class Joystick : MonoBehaviour
 	// ---------------------------------------------
 
 	// プレイヤーへの参照の為
-	private string[] nameObj = { "char/Player1", "char/Player2", "char/Player3", "char/Player4" };
+	private string[] nameObj = { "Players/Player1", "Players/Player2", "Players/Player3", "Players/Player4" };
 
 	// 画像の位置
 	private Vector2 imagePos = Vector2.zero;

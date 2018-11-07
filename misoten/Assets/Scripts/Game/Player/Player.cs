@@ -372,7 +372,7 @@ public class Player : MonoBehaviour
         // 料理を持つ
         WithaCuisine(cuisine);
         playerAnimation_cs.SetIsCatering(true);
-        GetHitObj((int)hitObjName.Pot).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
+        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
 
     }
 
