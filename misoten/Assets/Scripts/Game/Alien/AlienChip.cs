@@ -39,7 +39,7 @@ public class AlienChip : MonoBehaviour
 	// ---------------------------------------------
 
 	// チップをプレイヤーに渡したかのフラグ
-	private static bool[] chipOnFlag = { false, false, false, false, false, false, false };
+	private static bool[] chipOnFlag = { false, false, false, false, false, false, false, false, false };
 
 	// ---------------------------------------------
 
@@ -54,9 +54,6 @@ public class AlienChip : MonoBehaviour
 
 	// 料理が来たかの判定用
 	private bool isCuisineCame = false;
-
-	// 席の種類保存用
-	private int seatPatternSave = 0;
 
 	//料理を持ってきた相手のID
 	private int opponentID = 0;
@@ -80,17 +77,8 @@ public class AlienChip : MonoBehaviour
 		// コンポーネント取得
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
-		// 座る席の種類保存
-		seatPatternSave = alienCall.GetSeatPattern();
-
-		// エイリアンが座る席のパターン管理
-		switch (seatPatternSave)
-		{
-			// チップIDへの受け渡し
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS: chipId = AlienCall.GetIdSave((int)AlienCall.ESeatPattern.COUNTERSEATS); break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT: chipId = AlienCall.GetIdSave((int)AlienCall.ESeatPattern.TAKEAWAYSEAT); break;
-			default: break;
-		}
+		// チップIDへの受け渡し
+		chipId = AlienCall.GetIdSave();
 
 		// コンポーネント取得
 		alienOrder = GetComponent<AlienOrder>();
@@ -107,27 +95,8 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// エイリアンが座る席のパターン管理
-		switch (seatPatternSave)
-		{
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
-				ChipGive(seatPatternSave);
-				break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
-				ChipGive(seatPatternSave);
-				break;
-			default: break;
-		}
-	}
-
-	/// <summary>
-	/// チップを与える
-	/// </summary>
-	/// <param name="pattern"></param>
-	void ChipGive(int pattern)
-	{
 		// エイリアンが注文している時
-		if (alienOrder.GetIsOrder(pattern))
+		if (alienOrder.GetIsOrder())
 		{
 			if (isCuisineCame)
 			{

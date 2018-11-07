@@ -53,16 +53,13 @@ public class AlienDisturbance : MonoBehaviour
 	private AlienCall alienCall;
 
 	// エイリアンのタイムリミット用
-	private GameObject[,] timeLimitDraw = new GameObject[7, (int)AlienCall.ESeatPattern.MAX];
+	private GameObject[] timeLimitDraw = new GameObject[9];
 
 	// エイリアンの機嫌
-	private EAlienMood[,] mood = new EAlienMood[7, (int)AlienCall.ESeatPattern.MAX];
+	private EAlienMood[] mood = new EAlienMood[9];
 
 	// テキストメッシュフラグ
 	private bool textMeshFlag = true;
-
-	// 席の種類保存用
-	private int seatPatternSave = 0;
 
 	// エイリアン毎のID
 	private int setId = 0;
@@ -71,7 +68,7 @@ public class AlienDisturbance : MonoBehaviour
 	private int timeFont = 0;
 
 	// 待ち時間の加算
-	private float[,] latencyAdd = new float[7, (int)AlienCall.ESeatPattern.MAX];
+	private float[] latencyAdd = new float[9];
 
 	// ---------------------------------------------
 
@@ -85,27 +82,10 @@ public class AlienDisturbance : MonoBehaviour
 		alienChip = GetComponent<AlienChip>();
 		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 
-		// 座る席の種類保存
-		seatPatternSave = alienCall.GetSeatPattern();
-
-		// エイリアンが座る席のパターン管理
-		switch (seatPatternSave)
-		{
-			// チップIDへの受け渡し
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
-				setId = AlienCall.GetIdSave(seatPatternSave);
-				timeLimitDraw[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] = gameObject.transform.Find("TextMesh").gameObject;
-				mood[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] = EAlienMood.NORMAL;
-				latencyAdd[setId, (int)AlienCall.ESeatPattern.COUNTERSEATS] = AlienCall.GetOrderLatencyAdd1(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.COUNTERSEATS));
-				break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
-				setId = AlienCall.GetIdSave(seatPatternSave);
-				timeLimitDraw[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] = gameObject.transform.Find("TextMesh").gameObject;
-				mood[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] = EAlienMood.NORMAL;
-				latencyAdd[setId, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT] = AlienCall.GetOrderLatencyAdd2(AlienCall.GetRichDegreeId((int)AlienCall.ESeatPattern.TAKEAWAYSEAT));
-				break;
-			default: break;
-		}
+		setId = AlienCall.GetIdSave();
+		timeLimitDraw[setId] = gameObject.transform.Find("TextMesh").gameObject;
+		mood[setId] = EAlienMood.NORMAL;
+		latencyAdd[setId] = AlienCall.GetOrderLatencyAdd(AlienCall.GetRichDegreeId());
 	}
 
 	/// <summary>
@@ -113,46 +93,28 @@ public class AlienDisturbance : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// エイリアンが座る席のパターン管理
-		switch (seatPatternSave)
-		{
-			case (int)AlienCall.ESeatPattern.COUNTERSEATS:
-				// エイリアンが注文している時
-				if (alienOrder.GetIsOrder(seatPatternSave))
-				{
-					Mood((int)AlienCall.ESeatPattern.COUNTERSEATS);
-				}
-				break;
-			case (int)AlienCall.ESeatPattern.TAKEAWAYSEAT:
-				// エイリアンが注文している時
-				if (alienOrder.GetIsOrder(seatPatternSave))
-				{
-					Mood((int)AlienCall.ESeatPattern.TAKEAWAYSEAT);
-				}
-				break;
-			default: break;
-		}
+		// エイリアンが注文している時
+		if (alienOrder.GetIsOrder()) { Mood(); }
 	}
 
 	/// <summary>
-	/// エイリアンのモード
+	/// エイリアンのモード関数
 	/// </summary>
-	/// <param name="pattern"></param>
-	void Mood(int pattern)
+	void Mood()
 	{
 		// エイリアンの機嫌管理
-		switch (mood[setId, pattern])
+		switch (mood[setId])
 		{
 			case EAlienMood.NORMAL: // 通常状態
 
 				// 毎フレームの時間を加算
-				latencyAdd[setId, pattern] -= Time.deltaTime;
+				latencyAdd[setId] -= Time.deltaTime;
 
 				// 残存時間の可視化準備完了
 				if (textMeshFlag) { TextMeshBalloon.SetActive(true); textMeshFlag = !textMeshFlag; }
 
 				// 残存時間更新
-				timeFont = (int)latencyAdd[setId, pattern];
+				timeFont = (int)latencyAdd[setId];
 
 				// 残存時間が「-1」以下になると入る
 				if(timeFont <= -1)
@@ -161,7 +123,7 @@ public class AlienDisturbance : MonoBehaviour
 					TextMeshBalloon.SetActive(false);
 
 					// 怒り状態になる
-					mood[setId, pattern] = EAlienMood.ANGER;
+					mood[setId] = EAlienMood.ANGER;
 				}
 
 				// クレームor満足状態になった時

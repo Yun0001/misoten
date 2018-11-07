@@ -78,7 +78,7 @@ public class AlienClaim : MonoBehaviour
 				claimBalloon[1].SetActive(false);
 
 				// 帰る(悪)状態「ON」
-				AlienStatus.SetTakeOutStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
+				AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
 
 				// 退店時の移動開始
 				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
