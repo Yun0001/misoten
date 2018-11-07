@@ -48,6 +48,12 @@ public class AlienOrder : MonoBehaviour
 	// 注文結果格納・取得用
 	private static int orderType = 0;
 
+	// 例外処理用のカウント
+	private static int exceptionCount = 0;
+
+	// 例外処理用のオーダー
+	private static int exceptionOrderType = 0;
+
 	// ---------------------------------------------
 
 	// ローカル変数
@@ -172,8 +178,11 @@ public class AlienOrder : MonoBehaviour
 					// オーダー内容を保存
 					orderSave = GetOrderType();
 
+					// オーダーセット
+					OrderSet(AlienCall.ESeatPattern.COUNTERSEATS);
+
 					// 注文したものをアクティブにする(吹き出し)
-					orderBalloon[GetOrderType()].SetActive(true);
+					orderBalloon[orderSave].SetActive(true);
 
 					// 注文状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
@@ -181,13 +190,7 @@ public class AlienOrder : MonoBehaviour
 					// オーダー完了
 					SetIsOrder(true, (int)AlienCall.ESeatPattern.COUNTERSEATS);
 
-					individualOrderType = GetOrderType();
-
-					// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
-					SetOrderType(GetOrderType() + 1);
-
-					// 注文をループさせる為に「0」で初期化
-					if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+					individualOrderType = orderSave;
 				}
 			}
 			else
@@ -235,8 +238,11 @@ public class AlienOrder : MonoBehaviour
 					// オーダー内容を保存
 					orderSave = GetOrderType();
 
+					// オーダーセット
+					OrderSet(AlienCall.ESeatPattern.TAKEAWAYSEAT);
+
 					// 注文したものをアクティブにする(吹き出し)
-					orderBalloon[GetOrderType()].SetActive(true);
+					orderBalloon[orderSave].SetActive(true);
 
 					// 注文状態「ON」
 					AlienStatus.SetTakeOutStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
@@ -244,13 +250,7 @@ public class AlienOrder : MonoBehaviour
 					// オーダー完了
 					SetIsOrder(true, (int)AlienCall.ESeatPattern.TAKEAWAYSEAT);
 
-					individualOrderType = GetOrderType();
-
-					// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
-					SetOrderType(GetOrderType() + 1);
-
-					// 注文をループさせる為に「0」で初期化
-					if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+					individualOrderType = orderSave;
 				}
 			}
 			else
@@ -259,6 +259,52 @@ public class AlienOrder : MonoBehaviour
 				orderTimeAdd += Time.deltaTime;
 			}
 		}
+	}
+
+	/// <summary>
+	/// オーダーのセット関数
+	/// </summary>
+	void OrderSet(AlienCall.ESeatPattern _seatPattern)
+	{
+		// 例外処理
+		if (AlienCall.GetExceptionFlag())
+		{
+			// Debug用
+			//Debug.Log(_seatPattern + "例外処理中");
+
+			// 同じ注文が3回続く
+			SetOrderType(exceptionOrderType);
+
+			if (exceptionCount < (int)AlienStatus.EStatus.ORDER) { exceptionCount++; }
+			else
+			{
+				// 例外カウント初期化
+				exceptionCount = 0;
+
+				// 例外処理終了
+				AlienCall.SetExceptionFlag(false);
+
+				// 次回も同じ注文が続くようにする
+				if (exceptionOrderType < (int)AlienStatus.EStatus.ORDER) { exceptionOrderType++; }
+				else { exceptionOrderType = 0; }
+
+				// Debug用
+				//Debug.Log(_seatPattern + "例外処理終了");
+			}
+		}
+
+		// 例外処理ではない
+		else
+		{
+			// Debug用
+			//Debug.Log(_seatPattern + "通常処理中");
+
+			// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
+			SetOrderType(orderSave + 1);
+		}
+
+		// 注文をループさせる為に「0」で初期化
+		if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
 	}
 
 	/// <summary>
@@ -287,7 +333,7 @@ public class AlienOrder : MonoBehaviour
 	public static bool GetOrderFlag() => orderFlag;
 
 	/// <summary>
-	///  注文の種類を格納
+	/// 注文の種類を格納
 	/// </summary>
 	/// <param name="_orderType"></param>
 	/// <returns></returns>

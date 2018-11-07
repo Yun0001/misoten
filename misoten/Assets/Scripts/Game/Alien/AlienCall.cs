@@ -81,13 +81,17 @@ public class AlienCall : MonoBehaviour
 	[SerializeField]
 	private float period;
 
+	// 客の残存時間設定
+	[SerializeField]
+	private float[] theRemainingTime = new float[3];
+
 	// ---------------------------------------------
 
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
 	// ---------------------------------------------
 
 	// 例外フラグ
-	//private static bool exceptionFlag = false;
+	private static bool exceptionFlag = false;
 
 	// クレーム用ID(カウンター用&持ち帰り用)
 	private static int[] claimId = new int[(int)ESeatPattern.MAX];
@@ -151,6 +155,9 @@ public class AlienCall : MonoBehaviour
 	// 待ち時間の加算
 	private float[] latencyAdd = { 0.0f, 0.0f };
 
+	// 例外処理用の時間
+	private float exceptionTime = 0.0f;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -177,11 +184,11 @@ public class AlienCall : MonoBehaviour
 		// 持ち帰り用席専用処理
 		TakeAwaySeatDesignated();
 
+		// 例外処理関数
+		ExceptionHandling();
+
 		// 時間設定処理
 		InTimeConfiguration();
-
-		// 例外処理関数
-		//ExceptionHandling();
 
 		// 各エイリアンが帰る(削除)処理
 		Return();
@@ -201,12 +208,12 @@ public class AlienCall : MonoBehaviour
 			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
 			switch(scoreCount.GetScore())
 			{
-				case 300: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 4.5f; break;
-				case 600: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 4.0f; break;
-				case 900: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 3.5f; break;
-				case 1200: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 3.0f; break;
-				case 1500: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 2.5f; break;
-				case 1800: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 2.0f; break;
+				case 300: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 9.5f; break;
+				case 600: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 9.0f; break;
+				case 900: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 8.5f; break;
+				case 1200: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 8.0f; break;
+				case 1500: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 7.5f; break;
+				case 1800: inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 7.0f; break;
 			}
 
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
@@ -222,7 +229,7 @@ public class AlienCall : MonoBehaviour
 				alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
 
 				// エイリアン生成
-				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)]], new Vector3(0.0f, 0.75f, 7.0f), Quaternion.identity) as GameObject;
+				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
 				counterDesignatedObj[GetSeatAddId((int)ESeatPattern.COUNTERSEATS)].transform.SetParent(transform);
 
 				// 待機状態終了
@@ -263,12 +270,12 @@ public class AlienCall : MonoBehaviour
 			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
 			switch (scoreCount.GetScore())
 			{
-				case 300: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 5.5f; break;
-				case 600: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 5.0f; break;
-				case 900: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 4.5f; break;
-				case 1200: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 4.0f; break;
-				case 1500: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 3.5f; break;
-				case 1800: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 3.0f; break;
+				case 300: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 10.5f; break;
+				case 600: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 10.0f; break;
+				case 900: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 9.5f; break;
+				case 1200: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 9.0f; break;
+				case 1500: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 8.5f; break;
+				case 1800: inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 8.0f; break;
 			}
 
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
@@ -284,7 +291,7 @@ public class AlienCall : MonoBehaviour
 				alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
 
 				// エイリアン生成
-				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)]], new Vector3(0.0f, 0.75f, 7.0f), Quaternion.identity) as GameObject;
+				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)] = Instantiate(prefab[(int)alienPattern[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
 				takeOutDesignatedObj[GetSeatAddId((int)ESeatPattern.TAKEAWAYSEAT)].transform.SetParent(transform);
 
 				// 待機状態終了
@@ -329,9 +336,9 @@ public class AlienCall : MonoBehaviour
 				// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
 				switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
 				{
-					case (int)ERichDegree.POVERTY: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = 15.0f; break;
-					case (int)ERichDegree.NORMAL: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = 10.0f; break;
-					case (int)ERichDegree.RICHMAN: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = 7.0f; break;
+					case (int)ERichDegree.POVERTY: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = theRemainingTime[0]; break;
+					case (int)ERichDegree.NORMAL: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = theRemainingTime[1]; break;
+					case (int)ERichDegree.RICHMAN: orderLatencyAdd1[GetRichDegreeId((int)ESeatPattern.COUNTERSEATS)] = theRemainingTime[2]; break;
 					default: Debug.Log("Error:カウンター客の秒数設定がされていません"); break;
 				}
 				break;
@@ -342,13 +349,36 @@ public class AlienCall : MonoBehaviour
 				// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
 				switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
 				{
-					case (int)ERichDegree.POVERTY: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = 15.0f; break;
-					case (int)ERichDegree.NORMAL: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = 10.0f; break;
-					case (int)ERichDegree.RICHMAN: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = 7.0f; break;
+					case (int)ERichDegree.POVERTY: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = theRemainingTime[0]; break;
+					case (int)ERichDegree.NORMAL: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = theRemainingTime[1]; break;
+					case (int)ERichDegree.RICHMAN: orderLatencyAdd2[GetRichDegreeId((int)ESeatPattern.TAKEAWAYSEAT)] = theRemainingTime[2]; break;
 					default: Debug.Log("Error:持ち帰り客の秒数設定がされていません"); break;
 				}
 				break;
 			default: break;
+		}
+	}
+
+	/// <summary>
+	/// 例外処理関数
+	/// </summary>
+	void ExceptionHandling()
+	{
+		// 例外フラグがOFFの時
+		if(!GetExceptionFlag())
+		{
+			// 例外処理用のフレーム更新
+			exceptionTime += Time.deltaTime;
+
+			// 指定の一定間隔で例外処理発生
+			if (exceptionTime >= period)
+			{
+				// フレームの初期化(一定間隔で例外処理を発生させる為に)
+				exceptionTime = 0.0f;
+
+				// 例外フラグON
+				exceptionFlag = true;
+			}
 		}
 	}
 
@@ -407,25 +437,6 @@ public class AlienCall : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 例外処理関数
-	/// </summary>
-	void ExceptionHandling()
-	{
-		// 例外処理用のフレーム更新
-		latencyAdd[(int)EProcessingPattern.EXCEPTION] += Time.deltaTime;
-
-		// 指定の一定間隔で例外処理発生
-		if (latencyAdd[(int)EProcessingPattern.EXCEPTION] >= period)
-		{
-			// フレームの初期化(一定間隔で例外処理を発生させる為に)
-			latencyAdd[(int)EProcessingPattern.EXCEPTION] = 0.0f;
-
-			// Debug用
-			Debug.Log("例外処理に入りました");
-		}
-	}
-
-	/// <summary>
 	/// 時間設定関数
 	/// </summary>
 	void InTimeConfiguration()
@@ -437,13 +448,13 @@ public class AlienCall : MonoBehaviour
 			// 残り時間が減っていく毎にエイリアンの入店インターバルが減っていく
 			switch ((int)gameTimeManager.GetCountTime())
 			{
-				case 200: inAlienTime[i] -= 0.1f; break;
-				case 180: inAlienTime[i] -= 0.2f; break;
-				case 150: inAlienTime[i] -= 0.3f; break;
-				case 120: inAlienTime[i] -= 0.4f; break;
-				case 90: inAlienTime[i] -= 0.5f; break;
-				case 60: inAlienTime[i] -= 0.6f; break;
-				case 30: inAlienTime[i] -= 0.7f; break;
+				case 200: inAlienTime[i] -= 0.01f; break;
+				case 180: inAlienTime[i] -= 0.03f; break;
+				case 150: inAlienTime[i] -= 0.05f; break;
+				case 120: inAlienTime[i] -= 0.07f; break;
+				case 90: inAlienTime[i] -= 0.09f; break;
+				case 60: inAlienTime[i] -= 0.1f; break;
+				case 30: inAlienTime[i] -= 0.12f; break;
 			}
 		}
 
@@ -451,8 +462,8 @@ public class AlienCall : MonoBehaviour
 		if (alienNumber >= 2 && !inAlienFlag)
 		{
 			inAlienFlag = !inAlienFlag;
-			inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 7.0f;
-			inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 8.0f;
+			inAlienTime[(int)ESeatPattern.COUNTERSEATS] = 10.0f;
+			inAlienTime[(int)ESeatPattern.TAKEAWAYSEAT] = 12.0f;
 		}
 	}
 
@@ -498,6 +509,19 @@ public class AlienCall : MonoBehaviour
 	/// <param name="seatId"></param>
 	/// <returns></returns>
 	public static int GetRichDegreeId(int seatId) => richDegreeId[seatId];
+
+	/// <summary>
+	/// 例外フラグの格納
+	/// </summary>
+	/// <param name="_exceptionFlag"></param>
+	/// <returns></returns>
+	public static bool SetExceptionFlag(bool _exceptionFlag) => exceptionFlag = _exceptionFlag;
+
+	/// <summary>
+	/// 例外フラグの取得
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetExceptionFlag() => exceptionFlag;
 
 	/// <summary>
 	/// 席管理用ID(カウンター用&持ち帰り用)の格納
