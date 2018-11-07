@@ -1,30 +1,23 @@
 fileFormatVersion: 2
-guid: 45e45e12a0d34eb41b9c7a0d9e1929ed
-timeCreated: 1539939239
+guid: 21ca045c489b4d545a1c7fd974ce703e
+timeCreated: 1541580463
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Cylinder
-    100002: glass
-    100004: //RootNode
-    100006: partition
-    400000: Cylinder
-    400002: glass
-    400004: //RootNode
-    400006: partition
-    2100000: glass
-    2100002: cylinder
-    2100004: partition
-    2300000: Cylinder
-    2300002: glass
-    2300004: partition
-    3300000: Cylinder
-    3300002: glass
-    3300004: partition
-    4300000: glass
-    4300002: Cylinder
-    4300004: partition
+    100000: //RootNode
+    100002: foot
+    100004: table
+    400000: //RootNode
+    400002: foot
+    400004: table
+    2100000: table
+    2300000: foot
+    2300002: table
+    3300000: foot
+    3300002: table
+    4300000: foot
+    4300002: table
   externalObjects: {}
   materials:
     importMaterials: 1
