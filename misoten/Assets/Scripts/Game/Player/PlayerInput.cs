@@ -27,7 +27,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   public void UpdateInput()
     {
         switch (playerID)
         {
@@ -182,13 +182,29 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public void InputMixerWait()
+    public void InputMixerAccess()
     {
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        {
+            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
+            player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
+        }
+
+
         if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber))
         {
             player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
+        }
+    }
+
+    public void InputMixerWait()
+    {
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber))
+        {
+            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
+            player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         }
     }
 }

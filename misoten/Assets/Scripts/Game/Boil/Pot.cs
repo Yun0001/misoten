@@ -41,7 +41,7 @@ public class Pot : KitchenwareBase
     public override void CookingInterruption()
     {
         ResetMiniGameUI();
-
+        SetIsCooking(false);
         CuisineManager.GetInstance().GetPotController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;
     }

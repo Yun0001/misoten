@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
         Microwave,        //電子レンジ
         Pot,                   //鍋
         GrilledTable,       //焼き台
+        MixerAccess,
         MixerWait,
         Mixer,
         Catering,           //配膳
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
 
     private string layerName;// レイヤーの名前
 
+    [SerializeField]
     private PlayerStatus playerStatus;
 
     // 左スティックの入力を取る用
@@ -120,6 +122,10 @@ public class Player : MonoBehaviour
                 UpdateCookingGrilled();
                 break;
 
+            case PlayerStatus.MixerAccess:
+                playerInput_cs.InputMixerAccess();
+                break;
+
             case PlayerStatus.MixerWait:
                 playerInput_cs.InputMixerWait();
                 break;
@@ -131,6 +137,7 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
+        playerInput_cs.UpdateInput();
     }
 
 

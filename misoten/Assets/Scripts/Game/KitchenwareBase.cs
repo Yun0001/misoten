@@ -46,6 +46,7 @@ public abstract class KitchenwareBase : MonoBehaviour
         return true;
     }
 
+
     public GameObject UpdateMiniGame()
     {
         // 調理が終わっていれば料理を返す

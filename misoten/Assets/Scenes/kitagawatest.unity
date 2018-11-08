@@ -4146,6 +4146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasCamera: {fileID: 0}
+  openFrame: 150
+  accessNum: 0
   status: 0
 --- !u!1001 &1014994710
 Prefab:

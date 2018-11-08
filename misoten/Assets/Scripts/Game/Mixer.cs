@@ -20,9 +20,14 @@ public class Mixer : KitchenwareBase {
     private float time;
     private float count;
     private float power;
-    private float animCount;
+    private float animCount = 0;
 
-    private bool accessFlg;
+    // 蓋が開いてるフレーム
+    [SerializeField]
+    private int openFrame;
+
+    [SerializeField]
+    private int accessNum = 0;
     private bool efectFlg;
     private bool seFlg;
     private bool uiFlg;
@@ -36,6 +41,36 @@ public class Mixer : KitchenwareBase {
     void Awake () {
 		
 	}
+
+    private void Update()
+    {
+        if (!IsUpdate()) return;
+
+        switch (status)
+        {
+            case Status.AccessTwo:
+
+                if (accessNum == (int)Status.AccessTwo)
+                {
+                    // 調理開始
+                    status = Status.Open;
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+                }
+                break;
+
+            case Status.Open:
+                animCount++;
+                if (animCount >= openFrame)
+                {
+                    status = Status.Play;
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                }
+                break;
+        }
+
+
+
+    }
 
     protected override void InstanceMiniGameUI()
     {
@@ -81,6 +116,12 @@ public class Mixer : KitchenwareBase {
         }
 
         status++;
+        if (status == Status.AccessThree)
+        {
+            accessNum = 3;
+            status = Status.Open;
+            transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+        }
         return true;
     }
 
@@ -114,5 +155,14 @@ public class Mixer : KitchenwareBase {
 
     public void ReturnStatus() => status--;
 
+    public void AddAccessNum() => accessNum++;
+
+    public void SubAccessNum() => accessNum--;
+
     public Status GetStatus() => status;
+
+    private bool IsUpdate()
+    {
+        return (status == Status.AccessTwo) || (status == Status.Open);
+    }
 }

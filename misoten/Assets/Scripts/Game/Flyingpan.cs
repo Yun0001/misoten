@@ -61,7 +61,7 @@ public class Flyingpan : KitchenwareBase
     public override void CookingInterruption()
     {
         ResetMiniGameUI();
-
+        SetIsCooking(false);
         CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;
     }
