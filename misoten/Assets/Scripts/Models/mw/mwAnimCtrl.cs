@@ -48,5 +48,5 @@ public class mwAnimCtrl : MonoBehaviour
     }
 
     public void SetBool(bool b) => isLooping = b;
-
+	public bool GetBool() => isLooping;
 }

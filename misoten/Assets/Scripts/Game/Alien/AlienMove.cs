@@ -179,6 +179,9 @@ public class AlienMove : MonoBehaviour
 
 				if (setEndPositionId_1 < 4) { LeftMoveAnimation(); }
 				else { RightMoveAnimation(); }
+
+				// ドアのアニメーションを行う
+				AlienCall.SetdoorAnimationFlag(false);
 				break;
 			case 3:
 				// 四つ目の終点座標に到着
