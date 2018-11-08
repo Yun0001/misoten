@@ -120,6 +120,10 @@ public class Player : MonoBehaviour
                 UpdateCookingGrilled();
                 break;
 
+            case PlayerStatus.MixerWait:
+                playerInput_cs.InputMixerWait();
+                break;
+
             case PlayerStatus.Hindrance:
                 UpdateHindrance();
                 break;

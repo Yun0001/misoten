@@ -181,6 +181,16 @@ public class PlayerInput : MonoBehaviour
                 break;
         }
     }
+
+    public void InputMixerWait()
+    {
+        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber))
+        {
+            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
+            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
+        }
+    }
 }
 
 

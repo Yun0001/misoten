@@ -84,27 +84,35 @@ public class Mixer : KitchenwareBase {
         return true;
     }
 
-    private bool DecisionAccessPoint(Vector3 accesspos)
+    public bool DecisionAccessPoint(Vector3 accesspos)
     {
         float border = transform.position.z - 0.5f;
-        BoxCollider[] bc = GetComponents<BoxCollider>();
+
         if (accesspos.z < border)
         {
-            bc[0].enabled = false;
+            ChangeBoxColliderEnable(0);
             return true;
         }
         else if (accesspos.x > transform.position.x)
         {
-            bc[1].enabled = false;
+            ChangeBoxColliderEnable(1);
             return true;
         }
         else if (accesspos.x < transform.position.x)
         {
-            bc[2].enabled = false;
+            ChangeBoxColliderEnable(2);
             return true;
         }
         return false;
     }
+
+    private void ChangeBoxColliderEnable(int element)
+    {
+        BoxCollider[] bc = GetComponents<BoxCollider>();
+        bc[element].enabled = !bc[element].enabled;
+    }
+
+    public void ReturnStatus() => status--;
 
     public Status GetStatus() => status;
 }
