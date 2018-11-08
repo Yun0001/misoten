@@ -67,9 +67,10 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) playerMove_cs.SetMove(PlayerMove.EDirection.Down);
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            player_cs.ActionMicrowave();
-            player_cs.ActionPot();
-            player_cs.ActionGrilled();
+            player_cs.AccessMicrowave();
+            player_cs.AccessPot();
+            player_cs.AccessFlyingpan();
+            player_cs.AccessMixer();
             player_cs.OfferCuisine();
         }
         if (Input.GetKeyDown(KeyCode.X)) player_cs.CookingCancel();
@@ -83,9 +84,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Down);
         if (Input.GetKeyDown(KeyCode.K))
         {
-            player_cs.ActionMicrowave();
-            player_cs.ActionPot();
-            player_cs.ActionGrilled();
+            player_cs.AccessMicrowave();
+            player_cs.AccessPot();
+            player_cs.AccessFlyingpan();
+            player_cs.AccessMixer();
+
             player_cs.OfferCuisine();
         }
         if (Input.GetKeyDown(KeyCode.L)) player_cs.CookingCancel();
