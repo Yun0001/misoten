@@ -247,18 +247,6 @@ public class AlienMove : MonoBehaviour
 			if (timeAdd > WhenLeavingStoreMoveTime) { counterClosedCompletion[setEndPositionId_1] = true; }
 			transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 3, 0], counterSeatsPosition[setEndPositionId_1, 1, 1], rate);
 		}
-
-		/*
-		 counterSeatsPosition[0, 0, 1] = 
-		 counterSeatsPosition[1, 0, 1] = 
-		 counterSeatsPosition[2, 0, 1] = 
-		 counterSeatsPosition[3, 0, 1] = 
-		 counterSeatsPosition[4, 0, 1] = 
-		 counterSeatsPosition[5, 0, 1] = 
-		 counterSeatsPosition[6, 0, 1] = 
-		 counterSeatsPosition[7, 0, 1] = 
-		 counterSeatsPosition[8, 0, 1] = 
-		 */
 	}
 
 	/// <summary>

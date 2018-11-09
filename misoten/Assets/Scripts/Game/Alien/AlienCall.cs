@@ -48,7 +48,7 @@ public class AlienCall : MonoBehaviour
 
 	// 入店に遷移する秒数設定
 	[SerializeField]
-	private float inAlienTime;
+	private float enterShop;
 
 	// 生成するPrefab設定用
 	[SerializeField]
@@ -131,6 +131,9 @@ public class AlienCall : MonoBehaviour
 	// 例外処理用の時間
 	private float exceptionTime = 0.0f;
 
+	// 入店に遷移する秒数設定
+	private float inAlienTime;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -142,7 +145,7 @@ public class AlienCall : MonoBehaviour
 		scoreCount = GameObject.Find("Score/Canvas/Score_1").gameObject.GetComponent<ScoreCount>();
 		gameTimeManager = GameObject.Find("Score/Canvas/GameTimeManager").gameObject.GetComponent<GameTimeManager>();
 
-		// エイリアンが出てくる時間
+		// ゲームが開始してエイリアンが出てくる時間
 		inAlienTime = 1.0f;
 	}
 
@@ -178,12 +181,12 @@ public class AlienCall : MonoBehaviour
 			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
 			switch(scoreCount.GetScore())
 			{
-				case 300: inAlienTime = 9.5f; break;
-				case 600: inAlienTime = 9.0f; break;
-				case 900: inAlienTime = 8.5f; break;
-				case 1200: inAlienTime = 8.0f; break;
-				case 1500: inAlienTime = 7.5f; break;
-				case 1800: inAlienTime = 7.0f; break;
+				case 300: inAlienTime -= 0.5f; break;
+				case 600: inAlienTime -= 1.0f; break;
+				case 900: inAlienTime -= 1.5f; break;
+				case 1200:inAlienTime -= 2.0f;  break;
+				case 1500:inAlienTime -= 2.5f;  break;
+				case 1800: inAlienTime -= 3.0f; break;
 			}
 
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
@@ -315,10 +318,10 @@ public class AlienCall : MonoBehaviour
 		}
 
 		// 指定した数分エイリアンが入店すると、入店時間が再設定される
-		if (alienNumber >= 2 && !inAlienFlag)
+		if (alienNumber >= 1 && !inAlienFlag)
 		{
 			inAlienFlag = !inAlienFlag;
-			inAlienTime = 10.0f;
+			inAlienTime = enterShop;
 		}
 	}
 

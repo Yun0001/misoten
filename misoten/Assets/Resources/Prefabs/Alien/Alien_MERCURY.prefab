@@ -237,7 +237,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1145897554144642}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalPosition: {x: 1, y: 3.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4757821818005310}
@@ -323,7 +323,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169512384598816}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0.6, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4258724829923608}
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WhenEnteringStoreMoveTime:
-  - 1
+  - 2
   - 2
   - 1
   - 2
@@ -817,7 +817,7 @@ MonoBehaviour:
   prefab:
   - {fileID: 198408748922992586, guid: 58b7251254e5c1140b816a3853357857, type: 2}
   - {fileID: 198035655553859540, guid: 9fb3edaf0e46d604399b2dff94ea4a42, type: 2}
-  - {fileID: 0}
+  - {fileID: 198778288485439660, guid: 4d82bc8f568152d4191e1e124a880af3, type: 2}
   particleSystems:
   - {fileID: 0}
   - {fileID: 0}

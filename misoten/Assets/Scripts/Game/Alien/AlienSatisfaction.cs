@@ -45,12 +45,16 @@ public class AlienSatisfaction : MonoBehaviour
 		if(GetSatisfactionFlag())
 		{
 			// 満足した吹き出しを出す
-			satisfactionBalloon.SetActive(true);
+			if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD)) { satisfactionBalloon.SetActive(true); }
 
 			// 満足時間が指定時間を超えた場合
 			if (satisfactionTimeAdd >= satisfactionTime)
 			{
+				// 時間の初期化
 				satisfactionTimeAdd = 0.0f;
+
+				// 満足した吹き出しを消す
+				satisfactionBalloon.SetActive(false);
 
 				// 帰る(良)状態「ON」
 				AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
