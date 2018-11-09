@@ -37,9 +37,10 @@ public class GrilledEffect : MonoBehaviour
 
 	// 焼き調理を行っているかの判定用に使う
 	private CookWareAnimCtrl[] cookWareAnimCtrl = new CookWareAnimCtrl[2];
+	private mwAnimCtrl mwAnimCtrl;
 
 	// エフェクトフラグ
-	private bool[] effectFlag = { false, false };
+	private bool[] effectFlag = { false, false, false };
 
 	// ---------------------------------------------
 
@@ -57,6 +58,10 @@ public class GrilledEffect : MonoBehaviour
 			case EOrderType.SIMMER:
 				// コンポーネント取得
 				cookWareAnimCtrl[1] = GameObject.Find("Stage/cookwares/nabes/nabe1/nabe").gameObject.GetComponent<CookWareAnimCtrl>();
+				break;
+			case EOrderType.MICROWAVE:
+				// コンポーネント取得
+				mwAnimCtrl = GameObject.Find("Stage/cookwares/microwaves/microwave1/microwave").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			default: break;
 		}
@@ -79,6 +84,10 @@ public class GrilledEffect : MonoBehaviour
 			case EOrderType.SIMMER:
 				if (cookWareAnimCtrl[1].GetBool() && !effectFlag[1]) { GetComponent<ParticleSystem>().Play(); effectFlag[1] = !effectFlag[1]; }
 				if (!cookWareAnimCtrl[1].GetBool() && effectFlag[1]) { GetComponent<ParticleSystem>().Stop(); effectFlag[1] = !effectFlag[1]; }
+				break;
+			case EOrderType.MICROWAVE:
+				if (mwAnimCtrl.GetBool() && !effectFlag[2]) { GetComponent<ParticleSystem>().Play(); effectFlag[2] = !effectFlag[2]; }
+				if (!mwAnimCtrl.GetBool() && effectFlag[2]) { GetComponent<ParticleSystem>().Stop(); effectFlag[2] = !effectFlag[2]; }
 				break;
 			default: break;
 		}
