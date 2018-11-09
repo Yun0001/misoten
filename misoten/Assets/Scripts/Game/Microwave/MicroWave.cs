@@ -6,6 +6,7 @@ using System;
 
 public class Microwave : KitchenwareBase
 {
+    [SerializeField]
     MicrowaveGage microwaveGage_cs;
 
 	// Use this for initialization
