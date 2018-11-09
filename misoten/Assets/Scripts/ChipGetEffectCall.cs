@@ -21,6 +21,7 @@ public class ChipGetEffectCall : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
+		// チップを取得したら入る
 		if(AlienSatisfaction.GetSatisfactionChipFlag())
 		{
 			// パーティクル再生

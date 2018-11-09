@@ -60,6 +60,9 @@ public class GrilledEffect : MonoBehaviour
 				break;
 			default: break;
 		}
+
+		// パーティクル停止
+		GetComponent<ParticleSystem>().Stop();
 	}
 	
 	/// <summary>
