@@ -23,6 +23,9 @@ public class AlienSatisfaction : MonoBehaviour
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
 	// ---------------------------------------------
 
+	// 満足フラグ(チップ取得時用)
+	private static bool satisfactionChipFlag = false;
+
 	// 満足時間
 	private static float satisfactionTimeAdd = 0.0f;
 
@@ -44,13 +47,24 @@ public class AlienSatisfaction : MonoBehaviour
 		// 満足した場合
 		if(GetSatisfactionFlag())
 		{
-			// 満足した吹き出しを出す
-			satisfactionBalloon.SetActive(true);
+			// 満足を指定ない時
+			if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD))
+			{
+				// 満足した吹き出しを出す
+				satisfactionBalloon.SetActive(true);
+
+				// 満足フラグ(チップ取得時用)をON
+				satisfactionChipFlag = true;
+			}
 
 			// 満足時間が指定時間を超えた場合
 			if (satisfactionTimeAdd >= satisfactionTime)
 			{
+				// 時間の初期化
 				satisfactionTimeAdd = 0.0f;
+
+				// 満足した吹き出しを消す
+				satisfactionBalloon.SetActive(false);
 
 				// 帰る(良)状態「ON」
 				AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
@@ -76,4 +90,17 @@ public class AlienSatisfaction : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public bool GetSatisfactionFlag() => satisfactionFlag;
+
+	/// <summary>
+	/// 満足フラグ(チップ取得時用)の格納
+	/// </summary>
+	/// <param name="_satisfactionChipFlag"></param>
+	/// <returns></returns>
+	public static bool SetSatisfactionChipFlag(bool _satisfactionChipFlag) => satisfactionChipFlag = _satisfactionChipFlag;
+
+	/// <summary>
+	/// 満足フラグ(チップ取得時用)の取得
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetSatisfactionChipFlag() => satisfactionChipFlag;
 }
