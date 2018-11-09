@@ -14,9 +14,6 @@ public class DoorLController : MonoBehaviour {
     void Start()
     {
 
-        //親オブジェクトを取得
-        _parent = transform.root.gameObject;
-
         _animator = GetComponent<Animator>();
 
     }
