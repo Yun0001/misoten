@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class KitchenwareBase : MonoBehaviour
 {
+    [SerializeField]
+    protected bool isDebugMode;
+
     // 状態
     protected bool isCooking = false;
 
@@ -25,6 +28,12 @@ public abstract class KitchenwareBase : MonoBehaviour
     /// <returns></returns>
     public bool CookingStart()
     {
+        if (isDebugMode)
+        {
+            cuisine = SetCuisine();
+            return true;
+        }
+
         // 既に調理中なら抜ける
         if (isCooking) return false;
 
@@ -44,11 +53,17 @@ public abstract class KitchenwareBase : MonoBehaviour
 
         // 調理開始
         return true;
-    }
+
+}
 
 
     public GameObject UpdateMiniGame()
     {
+        if (isDebugMode)
+        {
+            return cuisine;
+        }
+
         // 調理が終わっていれば料理を返す
         if (isEnd) return cuisine;
 
