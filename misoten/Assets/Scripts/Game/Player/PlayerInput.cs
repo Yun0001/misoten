@@ -13,6 +13,18 @@ public class PlayerInput : MonoBehaviour
     private PlayerMove playerMove_cs;
     private HindranceItem hindrance_cs;
 
+    Vector2 oldStickVec = new Vector2(0, -1);
+
+    private int stickframe = 0;
+
+    [SerializeField]
+    private float Angle;
+
+    [SerializeField]
+    private float AngleSum = 0;
+
+    [SerializeField]
+    private int rotationNum = 0;
 
     // Use this for initialization
     public void Init(string xaxisname,string yaxisdname)
@@ -96,17 +108,6 @@ public class PlayerInput : MonoBehaviour
 
     private void AllStatus()
     {
-        /*
-        // Aボタン入力（電子レンジ）
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.ActionMicrowave();
-        // Xボタン入力（鍋）
-        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.ActionPot();
-        // Bボタン入力（フライパン）
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionGrilled();
-        // Yボタン入力（キャンセル）
-        if (GamePad.GetButtonDown(GamePad.Button.Y, PlayerControllerNumber)) player_cs.CookingCancel();
-        */
-
         // アクション
         if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionBranch();
 
@@ -197,6 +198,37 @@ public class PlayerInput : MonoBehaviour
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
         }
+
+        switch (PlayerControllerNumber)
+        {
+            case GamePad.Index.Three:
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
+                }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
+                }
+                break;
+
+            case GamePad.Index.Four:
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
+                }
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
+                }
+                break;
+        }
     }
 
     public void InputMixerWait()
@@ -206,6 +238,77 @@ public class PlayerInput : MonoBehaviour
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         }
+
+        switch (PlayerControllerNumber)
+        {
+            case GamePad.Index.Three:
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
+                }
+                break;
+
+            case GamePad.Index.Four:
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
+                }
+
+                break;
+        }
+    }
+
+    public void InputMixer()
+    {
+        stickframe++;
+        if (stickframe >= 2)
+        {
+            stickframe = 0;
+            Vector2 stickVec = GamePad.GetAxis(GamePad.Axis.LeftStick, PlayerControllerNumber);
+            Angle = AngleWithSign(oldStickVec, stickVec);
+            if (Angle != 90)
+            {
+                AngleSum += Angle;
+                if (!player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().GetMiniGameUI().GetComponent<MixerMiniGame>().GetRotation())
+                {
+                    if ((int)AngleSum <= -360 * (rotationNum + 1))
+                    {
+                        rotationNum++;
+                        if (player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().OneRotation())
+                        {
+                            rotationNum = 0;
+                            AngleSum = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    if ((int)AngleSum >= 360 * (rotationNum + 1))
+                    {
+                        rotationNum++;
+                        player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().OneRotation();
+                    }
+                }
+
+            }
+            oldStickVec = stickVec;
+        }
+
+    }
+
+    private float Cross2D(Vector2 a, Vector2 b)
+    {
+        return a.x * b.y - a.y * b.x;
+    }
+
+
+    private float AngleWithSign(Vector2 oldVec, Vector2 Vec)
+    {
+        float angle = Vector2.Angle(oldVec, Vec);
+        float cross = Cross2D(oldVec, Vec);
+        return (cross != 0) ? angle * Mathf.Sign(cross) : angle;
     }
 }
 

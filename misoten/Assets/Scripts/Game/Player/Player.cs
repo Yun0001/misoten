@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 7).ToArray();// 現在プレイヤーと当たっているオブジェクト
 
+    [SerializeField]
     private GameObject haveInHandCusine;  // 持っている食材
 
     private readonly static float HINDRANCE_TIME = 3;
@@ -128,6 +129,23 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.MixerWait:
                 playerInput_cs.InputMixerWait();
+                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                {
+                    SetPlayerStatus(PlayerStatus.Mixer);
+                    // ミキサーに持っている料理を入れる
+                    GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
+                    SetHaveInHandCuisine();
+
+                    playerAnimation_cs.SetIsCatering(false);
+                }
+                break;
+
+            case PlayerStatus.Mixer:
+                playerInput_cs.InputMixer();
+                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                {
+                    SetPlayerStatus(PlayerStatus.Normal);
+                }
                 break;
 
             case PlayerStatus.Hindrance:
@@ -235,7 +253,7 @@ public class Player : MonoBehaviour
         CuisineControllerOfferCuisine();
         playerAnimation_cs.SetIsCatering(false);
 
-        SetHaveInHanCuisine();
+        SetHaveInHandCuisine();
         SetPlayerStatus(PlayerStatus.Normal);
     }
 
@@ -245,7 +263,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void WithaCuisine(GameObject cuisine)
     {
-        SetHaveInHanCuisine(cuisine);
+        SetHaveInHandCuisine(cuisine);
         SetPlayerStatus(PlayerStatus.Catering);
     }
 
@@ -447,6 +465,7 @@ public class Player : MonoBehaviour
         GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
+
     /// <summary>
     /// 邪魔状態の更新処理
     /// </summary>
@@ -479,7 +498,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void SetHaveInHanCuisine(GameObject Cuisine = null)
+    private void SetHaveInHandCuisine(GameObject Cuisine = null)
     {
         haveInHandCusine = Cuisine;
     }

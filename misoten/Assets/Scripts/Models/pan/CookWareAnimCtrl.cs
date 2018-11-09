@@ -5,6 +5,7 @@ using UnityEngine;
 public class CookWareAnimCtrl : MonoBehaviour {
 
     private Animator _animator;
+    [SerializeField]
     private bool isAnimation = false;
 
     [SerializeField]

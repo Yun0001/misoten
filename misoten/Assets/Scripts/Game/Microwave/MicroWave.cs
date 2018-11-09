@@ -45,7 +45,7 @@ public class Microwave : KitchenwareBase
     {
         ResetMiniGameUI();
         SetIsCooking(false);
-        CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
+        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;
     }
 

@@ -21,7 +21,5 @@ public class CookingMixer : MonoBehaviour {
             }
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         }
-
-      
     }
 }
