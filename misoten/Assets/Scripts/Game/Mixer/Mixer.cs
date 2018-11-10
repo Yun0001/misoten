@@ -212,7 +212,7 @@ public class Mixer : KitchenwareBase {
 
     public override void CookingInterruption()
     {
-
+        // ミキサーはキャンセルなし
     }
 
     /// <summary>

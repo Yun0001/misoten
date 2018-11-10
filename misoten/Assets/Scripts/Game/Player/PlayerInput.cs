@@ -77,14 +77,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) playerMove_cs.SetMove(PlayerMove.EDirection.Right);
         if (Input.GetKey(KeyCode.W)) playerMove_cs.SetMove(PlayerMove.EDirection.Up);
         if (Input.GetKey(KeyCode.S)) playerMove_cs.SetMove(PlayerMove.EDirection.Down);
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            player_cs.AccessMicrowave();
-            player_cs.AccessPot();
-            player_cs.AccessFlyingpan();
-            player_cs.AccessMixer();
-            player_cs.OfferCuisine();
-        }
+        if (Input.GetKeyDown(KeyCode.Z)) player_cs.ActionBranch();
         if (Input.GetKeyDown(KeyCode.X)) player_cs.CookingCancel();
     }
 
@@ -94,15 +87,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Right);
         if (Input.GetKey(KeyCode.UpArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Up);
         if (Input.GetKey(KeyCode.DownArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Down);
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            player_cs.AccessMicrowave();
-            player_cs.AccessPot();
-            player_cs.AccessFlyingpan();
-            player_cs.AccessMixer();
-
-            player_cs.OfferCuisine();
-        }
+        if (Input.GetKeyDown(KeyCode.K)) player_cs.ActionBranch();
         if (Input.GetKeyDown(KeyCode.L)) player_cs.CookingCancel();
     }
 
@@ -110,6 +95,9 @@ public class PlayerInput : MonoBehaviour
     {
         // アクション
         if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionBranch();
+
+
+        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().DecisionPutEatoyElement();
 
         // Yボタン入力（キャンセル）
         if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.CookingCancel();
@@ -250,7 +238,7 @@ public class PlayerInput : MonoBehaviour
                 break;
 
             case GamePad.Index.Four:
-                if (Input.GetKeyDown(KeyCode.Z))
+                if (Input.GetKeyDown(KeyCode.X))
                 {
                     player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
                     player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
@@ -295,7 +283,6 @@ public class PlayerInput : MonoBehaviour
             }
             oldStickVec = stickVec;
         }
-
     }
 
     private float Cross2D(Vector2 a, Vector2 b)
@@ -309,6 +296,32 @@ public class PlayerInput : MonoBehaviour
         float angle = Vector2.Angle(oldVec, Vec);
         float cross = Cross2D(oldVec, Vec);
         return (cross != 0) ? angle * Mathf.Sign(cross) : angle;
+    }
+
+    public void InputIceBox()
+    {
+        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        {
+            player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
+        }
+
+        switch (PlayerControllerNumber)
+        {
+            case GamePad.Index.Three:
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
+                }
+                break;
+
+            case GamePad.Index.Four:
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
+                }
+
+                break;
+        }
     }
 }
 

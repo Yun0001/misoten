@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
         MixerAccess,
         MixerWait,
         Mixer,
+        IceBox,
+        CateringIceEatoy,
         Catering,           //配膳
         Hindrance,          //邪魔
         Replenishment, // 補充
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
         Pot,//鍋
         GrilledTable,//焼き台
         Mixer,
+        IceBox,
         TasteMachine,//旨味成分補充マシーン
         Alien,//宇宙人
         Taste,//旨味成分
@@ -148,6 +151,16 @@ public class Player : MonoBehaviour
                 }
                 break;
 
+            case PlayerStatus.IceBox:
+                playerInput_cs.InputIceBox();
+                if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
+                {
+                    SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
+                    GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
+                    SetPlayerStatus(PlayerStatus.CateringIceEatoy);
+                }
+                break;
+
             case PlayerStatus.Hindrance:
                 UpdateHindrance();
                 break;
@@ -183,6 +196,10 @@ public class Player : MonoBehaviour
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = collision.gameObject;
                 break;
+
+            case "IceBox":
+                hitObj[(int)hitObjName.IceBox] = collision.gameObject;
+                break;
             // 補充マシーン
             case "TasteMachine":
                 // 味の素補充
@@ -214,6 +231,9 @@ public class Player : MonoBehaviour
                 break;
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = null;
+                break;
+            case "IceBox":
+                hitObj[(int)hitObjName.IceBox] = null;
                 break;
             case "TasteMachine":
                 hitObj[(int)hitObjName.TasteMachine] = null;
@@ -291,13 +311,14 @@ public class Player : MonoBehaviour
         AccessPot();
         AccessFlyingpan();
         AccessMixer();
+        AccessIceBox();
         OfferCuisine();
     }
 
     /// <summary>
     /// 電子レンジへのアクション
     /// </summary>
-    public void AccessMicrowave()
+    private void AccessMicrowave()
     {
         if (GetHitObj((int)hitObjName.Microwave) == null) return;   // 電子レンジに当たっていなければreturn
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
@@ -309,7 +330,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 鍋へのアクション
     /// </summary>
-    public void AccessPot()
+    private void AccessPot()
     {
         // 鍋に当たっていなければ抜ける
         if (GetHitObj((int)hitObjName.Pot) == null) return;
@@ -322,7 +343,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// フライパンへのアクション
     /// </summary>
-    public void AccessFlyingpan()
+    private void AccessFlyingpan()
     {
         if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
@@ -335,7 +356,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// ミキサーへのアクション
     /// </summary>
-    public void AccessMixer()
+    private void AccessMixer()
     {
         if (GetPlayerStatus() != PlayerStatus.Catering) return;
         if (GetHitObj((int)hitObjName.Mixer) == null) return;
@@ -344,6 +365,18 @@ public class Player : MonoBehaviour
         StopMove();
 
         cookingMixer_cs.Preparation();
+    }
+
+    private void AccessIceBox()
+    {
+        if (GetPlayerStatus() != PlayerStatus.Normal) return;
+        if (GetHitObj((int)hitObjName.IceBox) == null) return;
+        StopMove();
+
+        if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().Access(playerID))
+        {
+            SetPlayerStatus(PlayerStatus.IceBox);
+        }
     }
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
