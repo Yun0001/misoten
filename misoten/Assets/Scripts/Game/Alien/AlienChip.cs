@@ -55,7 +55,7 @@ public class AlienChip : MonoBehaviour
 	// 料理が来たかの判定用
 	private bool isCuisineCame = false;
 
-	//料理を持ってきた相手のID
+	// 料理を持ってきた相手のID
 	private int opponentID = 0;
 
 	// ベースチップ
@@ -112,9 +112,6 @@ public class AlienChip : MonoBehaviour
 
 						// チップをプレイヤーに渡した
 						chipOnFlag[chipId] = true;
-
-						//Debug.Log(chipId);
-
 						break;
 					default:
 						// 例外処理
@@ -150,23 +147,11 @@ public class AlienChip : MonoBehaviour
 	/// <returns></returns>
 	public float GetChipValue() => chipVal;
 
-    /// <summary>
-    /// ベースチップに掛ける旨味係数セット
-    /// </summary>
-    /// <param name="coefficient">料理の旨味係数</param>
-    public void SetCuisineCoefficient(float coefficient)
-    {
-        cisineTasteCoefficient = coefficient;
-    }
-
-    /// <summary>
-    /// 渡すor置くチップの計算
-    /// </summary>
-    /// <returns>渡すor置くチップの値</returns>
-    public int CalcChipValue()
-    {
-        return (int)(chipVal * cisineTasteCoefficient);
-    }
+	/// <summary>
+	/// ベースチップに掛ける旨味係数セット
+	/// </summary>
+	/// <param name="coefficient">料理の旨味係数</param>
+	public void SetCuisineCoefficient(float coefficient) => cisineTasteCoefficient = coefficient;
 
 	/// <summary>
 	/// チップをプレイヤーに渡したかのフラグの格納
@@ -183,5 +168,18 @@ public class AlienChip : MonoBehaviour
 	/// <returns></returns>
 	public static bool GetChipOnFlag(int id) => chipOnFlag[id];
 
+	/// <summary>
+	/// 料理を持ってきた相手のIDの格納
+	/// </summary>
+	/// <param name="ID"></param>
 	public void SetOpponentID(int ID) => opponentID = ID;
+
+	/// <summary>
+	/// 渡すor置くチップの計算
+	/// </summary>
+	/// <returns>渡すor置くチップの値</returns>
+	public int CalcChipValue()
+	{
+		return (int)(chipVal * cisineTasteCoefficient);
+	}
 }
