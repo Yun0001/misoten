@@ -350,6 +350,12 @@ public class AlienCall : MonoBehaviour
 	public int GetAlienPattern(int id) => (int)alienPattern[id];
 
 	/// <summary>
+	/// エイリアン数の取得
+	/// </summary>
+	/// <returns></returns>
+	public int GetAlienNumber() => alienNumber;
+
+	/// <summary>
 	/// 金持ち度IDの取得
 	/// </summary>
 	/// <returns></returns>
