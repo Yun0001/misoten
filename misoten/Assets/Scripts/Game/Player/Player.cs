@@ -405,7 +405,7 @@ public class Player : MonoBehaviour
 
     private void AccessDastBox()
     {
-        //if (GetPlayerStatus() != PlayerStatus.Catering || GetPlayerStatus() != PlayerStatus.CateringIceEatoy) return;
+        if (GetPlayerStatus() != PlayerStatus.Catering && GetPlayerStatus() != PlayerStatus.CateringIceEatoy) return;
         if (GetHitObj((int)hitObjName.DastBox) == null) return;
         StopMove();
 

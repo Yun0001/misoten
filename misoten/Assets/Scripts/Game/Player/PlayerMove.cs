@@ -71,7 +71,9 @@ public class PlayerMove : MonoBehaviour
         if (pStatus == Player.PlayerStatus.Microwave) return;
         if (pStatus == Player.PlayerStatus.Pot) return;
         if (pStatus == Player.PlayerStatus.GrilledTable) return;
-        if (pStatus == Player.PlayerStatus.Hindrance) return;
+        if (pStatus == Player.PlayerStatus.DastBox) return;
+        if (pStatus == Player.PlayerStatus.IceBox) return;
+        if (pStatus == Player.PlayerStatus.Mixer) return;
 
 
         // 配膳中または味の素チャージ中ならば移動量減少
@@ -81,9 +83,6 @@ public class PlayerMove : MonoBehaviour
                 move *= CateringCoefficient;
                 break;
 
-            case Player.PlayerStatus.TasteCharge:
-                move *= TasteChargeCoefficient;
-                break;
         }
 
         MoveEffectCall();
@@ -124,7 +123,7 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMove(Vector3 vec)
     {
-        if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal || player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering)
+        if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal || player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering || player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
         {
             move = vec;
             if (move.x != 0 || move.z != 0) playerAnimation_cs.SetPlayerStatus(1);
@@ -141,7 +140,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Clamp()
     {
-        float width = 4.0f;
+        float width = 5.0f;
         Vector3 min = new Vector3(-width, 0, -4.6f);
         Vector3 max = new Vector3(width, 0,2.0f);
 
