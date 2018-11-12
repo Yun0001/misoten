@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         MixerWait,
         Mixer,
         IceBox,
+        DastBox,
         CateringIceEatoy,
         Catering,           //配膳
         Hindrance,          //邪魔
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
         GrilledTable,//焼き台
         Mixer,
         IceBox,
+        DastBox,
         TasteMachine,//旨味成分補充マシーン
         Alien,//宇宙人
         Taste,//旨味成分
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
     private HindranceItem hindrance_cs;
     private PlayerAnimation playerAnimation_cs;
     private PlayerInput playerInput_cs;
+    private GameObject dastBoxGage;
 
 
     // Use this for initialization
@@ -101,6 +104,8 @@ public class Player : MonoBehaviour
         SetScript();
         playerInput_cs.Init(inputXAxisName, inputYAxisName);
         playerMove_cs.Init();
+        dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity);
+        dastBoxGage.SetActive(false);
     }
 
     private void FixedUpdate() => playerMove_cs.Move();
@@ -161,6 +166,17 @@ public class Player : MonoBehaviour
                 }
                 break;
 
+            case PlayerStatus.DastBox:
+                playerInput_cs.InputDastBox();
+                if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
+                {
+                    haveInHandCusine = null;
+                    SetPlayerStatus(PlayerStatus.Normal);
+                    playerAnimation_cs.SetIsCatering(false);
+                    GetDastBoxUI().SetActive(false);
+                }
+                break;
+
             case PlayerStatus.Hindrance:
                 UpdateHindrance();
                 break;
@@ -192,13 +208,17 @@ public class Player : MonoBehaviour
             case "Fryingpan":
                 hitObj[(int)hitObjName.GrilledTable] = collision.gameObject;
                 break;
-                // ミキサー
+            // ミキサー
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = collision.gameObject;
                 break;
 
             case "IceBox":
                 hitObj[(int)hitObjName.IceBox] = collision.gameObject;
+                break;
+
+            case "DastBox":
+                hitObj[(int)hitObjName.DastBox] = collision.gameObject;
                 break;
             // 補充マシーン
             case "TasteMachine":
@@ -234,6 +254,9 @@ public class Player : MonoBehaviour
                 break;
             case "IceBox":
                 hitObj[(int)hitObjName.IceBox] = null;
+                break;
+            case "DastBox":
+                hitObj[(int)hitObjName.DastBox] = null;
                 break;
             case "TasteMachine":
                 hitObj[(int)hitObjName.TasteMachine] = null;
@@ -312,6 +335,7 @@ public class Player : MonoBehaviour
         AccessFlyingpan();
         AccessMixer();
         AccessIceBox();
+        AccessDastBox();
         OfferCuisine();
     }
 
@@ -377,6 +401,17 @@ public class Player : MonoBehaviour
         {
             SetPlayerStatus(PlayerStatus.IceBox);
         }
+    }
+
+    private void AccessDastBox()
+    {
+        //if (GetPlayerStatus() != PlayerStatus.Catering || GetPlayerStatus() != PlayerStatus.CateringIceEatoy) return;
+        if (GetHitObj((int)hitObjName.DastBox) == null) return;
+        StopMove();
+
+        dastBoxGage.SetActive(true);
+        dastBoxGage.GetComponent<DastBox>().Access((int)playerStatus, transform.position);
+        SetPlayerStatus(PlayerStatus.DastBox);
     }
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
@@ -541,4 +576,7 @@ public class Player : MonoBehaviour
         playerMove_cs.VelocityReset();
         playerAnimation_cs.SetPlayerStatus(0);
     }
+
+    public GameObject GetDastBoxUI() => dastBoxGage;
+    
 }

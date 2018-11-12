@@ -11,9 +11,21 @@ public class GameTimeManager : MonoBehaviour {
     private GameObject SpeedUpText;
     private bool isTimeUp=false;
 
+
+    [SerializeField]
+    private GameObject[] time;
+
+    private Sprite[] sprits;
     // Use this for initialization
     void Start () {
-        countTime = 210;
+        sprits = Resources.LoadAll<Sprite>("Textures/UI_Digital2");
+        countTime = 110;
+        int suu = (int)countTime;
+        for (int i = 0; i < 3; i++)
+        {
+            time[i].GetComponent<SpriteRenderer>().sprite = sprits[suu % 10];
+            suu = suu / 10;
+        }
         timespeed = 1;
 
         TimeText = GetComponent<Text>();
@@ -98,8 +110,24 @@ public class GameTimeManager : MonoBehaviour {
 
     private void UpdateText()
     {
-        TimeText.text = "Time : " + countTime.ToString("F2"); //小数2桁にして表示
+        int suu = (int)countTime;
+        int rement;
+        for (int i = 0; i < 3; i++)
+        {
+            rement = suu % 10;
+            if (i == 2 && suu < 100)
+            {
+                time[i].GetComponent<SpriteRenderer>().sprite = null;
+                break;
+            }
+            time[i].GetComponent<SpriteRenderer>().sprite = sprits[rement];
+            if (rement == 0)
+            {
+                break;
+            }
+            suu = suu / 10;
 
+        }
     }
 
 

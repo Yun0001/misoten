@@ -52,7 +52,7 @@ public class Flyingpan : KitchenwareBase
         grilledGage_cs.SetStatus(GrilledGage.EGrilledGageStatus.Standby);
         grilledGage_cs.ResetPosition();
         grilledGage_cs.ResetSuccessArea();
-        miniGameUI.gameObject.SetActive(false);
+        miniGameUI.SetActive(false);
     }
 
     /// <summary>
@@ -60,7 +60,10 @@ public class Flyingpan : KitchenwareBase
     /// </summary>
     public override void CookingInterruption()
     {
-        ResetMiniGameUI();
+        grilledGage_cs.SetStatus(GrilledGage.EGrilledGageStatus.Standby);
+        grilledGage_cs.ResetPosition();
+        grilledGage_cs.ResetSuccessArea();
+        miniGameUI.gameObject.SetActive(false);
         SetIsCooking(false);
         CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;

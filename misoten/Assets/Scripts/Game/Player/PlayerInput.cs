@@ -323,6 +323,71 @@ public class PlayerInput : MonoBehaviour
                 break;
         }
     }
+
+    public void InputDastBox()
+    {
+        if (GamePad.GetButton(GamePad.Button.B, PlayerControllerNumber))
+        {
+            player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
+        }
+        else if (GamePad.GetButtonUp(GamePad.Button.B, PlayerControllerNumber))
+        {
+            player_cs.GetDastBoxUI().SetActive(false);
+            switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
+            {
+                case 9:
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+                    break;
+                case 10:
+                    player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+                    break;
+            }
+        }
+
+        switch (PlayerControllerNumber)
+        {
+            case GamePad.Index.Three:
+                if (Input.GetKey(KeyCode.K))
+                {
+                    player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
+                }
+                else if (Input.GetKeyUp(KeyCode.K))
+                {
+                    player_cs.GetDastBoxUI().SetActive(false);
+                    switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
+                    {
+                        case 9:
+                            player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+                            break;
+                        case 10:
+                            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+                            break;
+                    }
+
+                }
+                break;
+
+            case GamePad.Index.Four:
+                if (Input.GetKey(KeyCode.Z))
+                {
+                    player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
+                }
+                else if (Input.GetKeyUp(KeyCode.Z))
+                {
+                    player_cs.GetDastBoxUI().SetActive(false);
+                    switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
+                    {
+                        case 9:
+                            player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+                            break;
+                        case 10:
+                            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+                            break;
+                    }
+                }
+                break;
+        }
+    }
 }
 
 
