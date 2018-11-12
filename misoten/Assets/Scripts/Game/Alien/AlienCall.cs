@@ -13,7 +13,7 @@ public class AlienCall : MonoBehaviour
 	/// <summary>
 	/// エイリアンがお金を多く持っているかの種類
 	/// </summary>
-	enum ERichDegree
+	public enum ERichDegree
 	{
 		POVERTY = 0,	// 貧乏
 		NORMAL,			// 普通
@@ -24,7 +24,7 @@ public class AlienCall : MonoBehaviour
 	/// <summary>
 	/// エイリアンの種類設定
 	/// </summary>
-	private enum EAlienPattern
+	public enum EAlienPattern
 	{
 		MARTIAN,	// 火星人
 		MERCURY,	// 水星人
@@ -94,6 +94,9 @@ public class AlienCall : MonoBehaviour
 	// エイリアンIDの保存用
 	private static int idSave = 0;
 
+	// 金持ち度
+	private static float[] richDegree = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
 	// オーダー待ち時間
 	private static float[] orderLatencyAdd = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
@@ -107,9 +110,6 @@ public class AlienCall : MonoBehaviour
 
 	// ローカル変数
 	// ---------------------------------------------
-
-	// 金持ち度
-	private ERichDegree[] richDegree = new ERichDegree[51];
 
 	// エイリアンの種類設定
 	private EAlienPattern[] alienPattern = new EAlienPattern[9];
@@ -148,7 +148,25 @@ public class AlienCall : MonoBehaviour
 
 		// ゲームが開始してエイリアンが出てくる時間
 		inAlienTime = 1.0f;
-	}
+
+		// 例外フラグの初期化
+		exceptionFlag = false;
+
+		// エイリアン数の初期化
+		alienNumber = 0;
+
+		// クレーム用IDの初期化
+		claimId = 0;
+
+		// 金持ち度IDの初期化
+		richDegreeId = 0;
+
+		// 席管理用IDの初期化
+		seatAddId = 0;
+
+		// エイリアンIDの保存用の初期化
+		idSave = 0;
+}
 
 	/// <summary>
 	/// 更新関数
@@ -159,7 +177,7 @@ public class AlienCall : MonoBehaviour
 		CounterSeatsDesignated();
 
 		// 例外処理関数
-		ExceptionHandling();
+		//ExceptionHandling();
 
 		// 時間設定処理
 		InTimeConfiguration();
@@ -180,15 +198,12 @@ public class AlienCall : MonoBehaviour
 			latencyAdd += Time.deltaTime;
 
 			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
-			switch(scoreCount.GetScore())
-			{
-				case 300: inAlienTime -= 0.5f; break;
-				case 600: inAlienTime -= 1.0f; break;
-				case 900: inAlienTime -= 1.5f; break;
-				case 1200:inAlienTime -= 2.0f; break;
-				case 1500:inAlienTime -= 2.5f; break;
-				case 1800: inAlienTime -= 3.0f; break;
-			}
+			if(inAlienTime >= 300.0f) { inAlienTime = enterShop - 0.5f; }
+			else if(inAlienTime >= 600.0f) { inAlienTime = enterShop - 1.0f; }
+			else if (inAlienTime >= 900.0f) { inAlienTime = enterShop - 1.5f; }
+			else if (inAlienTime >= 1200.0f) { inAlienTime = enterShop - 2.0f; }
+			else if (inAlienTime >= 1500.0f) { inAlienTime = enterShop - 2.5f; }
+			else if (inAlienTime >= 1800.0f) { inAlienTime = enterShop - 3.0f; }
 
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
 			if (alienNumber < alienMax && latencyAdd > inAlienTime)
@@ -209,8 +224,8 @@ public class AlienCall : MonoBehaviour
 				// 待機状態終了
 				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);
 
-				// 空いている席へ
-				AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId(), (int)AlienStatus.EStatus.WALK);
+				// 訪問状態を「ON」にする
+				AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId(), (int)AlienStatus.EStatus.VISIT);
 
 				// その席が座られている状態にする
 				orSitting[GetSeatAddId()] = true;
@@ -240,9 +255,9 @@ public class AlienCall : MonoBehaviour
 		// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
 		switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
 		{
-			case (int)ERichDegree.POVERTY: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[0]; break;
-			case (int)ERichDegree.NORMAL: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[1]; break;
-			case (int)ERichDegree.RICHMAN: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[2]; break;
+			case (int)ERichDegree.POVERTY: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[0]; richDegree[GetRichDegreeId()] = 100.0f; break;
+			case (int)ERichDegree.NORMAL: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[1]; richDegree[GetRichDegreeId()] = 200.0f; break;
+			case (int)ERichDegree.RICHMAN: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[2]; richDegree[GetRichDegreeId()] = 300.0f; break;
 			default: Debug.Log("Error:カウンター客の秒数設定がされていません"); break;
 		}
 	}
@@ -339,12 +354,6 @@ public class AlienCall : MonoBehaviour
 	public int GetCounterSeatsMax() => counterSeatsMax;
 
 	/// <summary>
-	/// エイリアンの金持ち度を取得
-	/// </summary>
-	/// <returns></returns>
-	public int GetRichDegree(int id) => (int)richDegree[id];
-
-	/// <summary>
 	/// エイリアンの種類設定の取得
 	/// </summary>
 	/// <returns></returns>
@@ -355,6 +364,12 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public int GetAlienNumber() => alienNumber;
+
+	/// <summary>
+	/// エイリアンの金持ち度を取得
+	/// </summary>
+	/// <returns></returns>
+	public static float GetRichDegree(int seatId) => richDegree[seatId];
 
 	/// <summary>
 	/// 金持ち度IDの取得

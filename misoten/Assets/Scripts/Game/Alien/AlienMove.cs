@@ -88,7 +88,7 @@ public class AlienMove : MonoBehaviour
 		setEndPositionId_1 = AlienCall.GetIdSave();
 
 		// 歩行アニメーションになる
-		GetComponent<AlienAnimation>().SetIsCatering(true);
+		GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WORK);
 	}
 
 	/// <summary>
@@ -157,38 +157,41 @@ public class AlienMove : MonoBehaviour
 		switch (setEndPositionId_2)
 		{
 			case 0:
-				// 一つ目の終点座標に到着
-				if (timeAdd > WhenEnteringStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; }
+				// 一つ目の終点座標に到着(画面外に向かって歩いている状態「ON」)
+				if (timeAdd > WhenEnteringStoreMoveTime[0]) { setEndPositionId_2 = 1; timeAdd = 0.0f; AlienStatus.SetCounterStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.WALK_SIDE); }
 				transform.position = Vector3.Lerp(new Vector3(0.0f, 0.8f, 7.0f), counterSeatsPosition[setEndPositionId_1, 0, 0], rate);
 
 				// 右移動アニメーション
 				RightMoveAnimation();
 				break;
 			case 1:
-				// 二つ目の終点座標に到着
-				if (timeAdd > WhenEnteringStoreMoveTime[1]) { setEndPositionId_2 = 2; timeAdd = 0.0f; }
+				// 二つ目の終点座標に到着(画面外に消えた状態「ON」)(画面外に向かって歩いている状態「OFF」)
+				if (timeAdd > WhenEnteringStoreMoveTime[1]) { setEndPositionId_2 = 2; timeAdd = 0.0f;
+					AlienStatus.SetCounterStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.OUT_SCREEN);
+					AlienStatus.SetCounterStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK_SIDE);
+				}
 				transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 0, 0], counterSeatsPosition[setEndPositionId_1, 1, 0], rate);
 
 				if (setEndPositionId_1 < 4) { RightMoveAnimation(); }
 				else { LeftMoveAnimation(); }
+
+				// ドアのアニメーションを行う
+				AlienCall.SetdoorAnimationFlag(false);
 				break;
 			case 2:
-				// 三つ目の終点座標に到着
-				if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId_2 = 3; timeAdd = 0.0f; }
+				// 三つ目の終点座標に到着(客席に向かって歩いている「ON」)
+				if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId_2 = 3; timeAdd = 0.0f; AlienStatus.SetCounterStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.WALK_IN); }
 				transform.position = Vector3.Lerp(counterSeatsPosition[setEndPositionId_1, 1, 0], counterSeatsPosition[setEndPositionId_1, 2, 0], rate);
 
 				if (setEndPositionId_1 < 4) { LeftMoveAnimation(); }
 				else { RightMoveAnimation(); }
-
-				// ドアのアニメーションを行う
-				AlienCall.SetdoorAnimationFlag(false);
 				break;
 			case 3:
 				// 四つ目の終点座標に到着
 				if (timeAdd > WhenEnteringStoreMoveTime[3])
 				{
-					// 入店時の移動状態「OFF」
-					AlienStatus.SetCounterStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.WALK);
+					// 訪問時の移動状態「OFF」
+					AlienStatus.SetCounterStatusChangeFlag(false, setEndPositionId_1, (int)AlienStatus.EStatus.VISIT);
 
 					// 着席状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, setEndPositionId_1, (int)AlienStatus.EStatus.GETON);
@@ -199,14 +202,11 @@ public class AlienMove : MonoBehaviour
 					// 入店時の移動終了
 					whenEnteringStoreMoveFlag = false;
 
-					// 移動終了時、BoxColliderを「ON」にする
-					GetComponent<BoxCollider>().enabled = true;
-
 					// 退店時の為に初期化
 					setEndPositionId_2 = 0;
 
 					// 待機アニメーションになる
-					GetComponent<AlienAnimation>().SetIsCatering(false);
+					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
 
 					// 右移動時のアニメーション
 					RightMoveAnimation();
@@ -234,11 +234,11 @@ public class AlienMove : MonoBehaviour
 			// 予定時間を割る
 			rate = timeAdd / WhenLeavingStoreMoveTime;
 
-			// 移動終了時、BoxColliderを「OFF」にする
+			// BoxColliderを「OFF」にする
 			GetComponent<BoxCollider>().enabled = false;
 
 			// 歩行アニメーションになる
-			GetComponent<AlienAnimation>().SetIsCatering(true);
+			GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WORK);
 
 			if (setEndPositionId_1 < 4) { RightMoveAnimation(); }
 			else { LeftMoveAnimation(); }

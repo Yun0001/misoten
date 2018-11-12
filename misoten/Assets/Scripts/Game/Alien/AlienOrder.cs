@@ -13,12 +13,33 @@ public class AlienOrder : MonoBehaviour
 	/// <summary>
 	/// 注文の種類
 	/// </summary>
-	private enum EOrderType
+	public enum EOrderType
 	{
-		GRILLED = 0,	// 焼き
-		SIMMER,			// 煮る
-		MICROWAVE,		// 電子レンジ
-		MAX				// 最大
+		BASE = 0,	// 注文内容(ベース用)
+		CHANGE,		// 注文内容(チェンジ用)
+		MAX			// 最大
+	}
+
+	/// <summary>
+	/// 注文の種類(ベース用)
+	/// </summary>
+	private enum EOrderBaseType
+	{
+		RED = 0,	// 赤
+		BLUE,		// 青
+		YELLOW,		// 黄
+		MAX			// 最大
+	}
+
+	/// <summary>
+	/// 注文の種類(チェンジ用)
+	/// </summary>
+	private enum EOrderChangeType
+	{
+		PURPLE = 0, // 紫
+		ORANGE,		// 橙
+		GREEN,		// 緑
+		MAX			// 最大
 	}
 
 	// ---------------------------------------------
@@ -26,16 +47,33 @@ public class AlienOrder : MonoBehaviour
 	// インスペクター上で設定可能
 	// ---------------------------------------------
 
-	// オーダー内容描画用
+	// オーダー内容描画用(ベース)
 	[SerializeField]
-	GameObject[] orderBalloon;
+	GameObject[] orderBaseBalloon;
+
+	// オーダー内容描画用(チェンジ)
+	[SerializeField]
+	GameObject[] orderChangeBalloon;
 
 	// オーダーするまでの時間
 	[SerializeField]
 	private float orderTime;
 
+	// 画面外に移動する時に指定した時間だけ注文内容を出す用
 	[SerializeField]
-	private int individualOrderType;
+	private float orderPlanDispCount;
+
+	// イート行動を行う時間
+	[SerializeField]
+	private float eatingCount;
+
+	// オーダーベース用
+	[SerializeField]
+	private int individualOrderBaseType;
+
+	// オーダーチェンジ用
+	[SerializeField]
+	private int individualOrderChangeType;
 
 	// ---------------------------------------------
 
@@ -44,9 +82,6 @@ public class AlienOrder : MonoBehaviour
 
 	// オーダーフラグ
 	private static bool orderFlag = false;
-
-	// 注文結果格納・取得用
-	private static int orderType = 0;
 
 	// 例外処理用のカウント
 	private static int exceptionCount = 0;
@@ -65,11 +100,23 @@ public class AlienOrder : MonoBehaviour
 	// オーダー中かの判定
 	private bool isOrder = false;
 
-	// オーダー内容をセーブ
-	private int orderSave = 0;
+	// 状態移行フラグ
+	private bool statusMoveFlag = false;
+
+	// オーダーの種類
+	private int orderType = 0;
+
+	// オーダー内容をセーブ(ベース)
+	private int orderBaseSave = 0;
+
+	// オーダー内容をセーブ(チェンジ)
+	private int orderChangeSave = 0;
 
 	// エイリアン毎のID
 	private int setId = 0;
+
+	// 注文傾向
+	private int orderTrend = 0;
 
 	// 注文するまでの時間を測る
 	private float orderTimeAdd = 0.0f;
@@ -86,6 +133,9 @@ public class AlienOrder : MonoBehaviour
 
 		// IDの保存
 		setId = AlienCall.GetIdSave();
+
+		// 3種のエイリアンの色に合わせてテーブルを作成しテーブルを決定
+		OrderTable();
 	}
 
 	/// <summary>
@@ -93,14 +143,15 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// クレーム状態の時or満足状態の時
-		if (GetComponent<AlienClaim>().GetIsClaim() || GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+		// 食べる状態の時
+		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 		{
-			// EAT状態が「ON」になる
-			AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
-
 			// 当たり判定が消える
 			GetComponent<BoxCollider>().enabled = false;
+
+			// 「0」になると、クレーム状態or満足状態に移行
+			if (eatingCount <= 0.0f) { statusMoveFlag = true; AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT); }
+			else { eatingCount -= Time.deltaTime; }
 		}
 
 		// カウンター席に座っているエイリアンからの注文処理
@@ -122,7 +173,8 @@ public class AlienOrder : MonoBehaviour
 				|| GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものを非アクティブにする(吹き出し)
-				orderBalloon[orderSave].SetActive(false);
+				//orderBaseBalloon[orderSave].SetActive(false);
+				OrderType(false);
 			}
 
 			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
@@ -133,7 +185,8 @@ public class AlienOrder : MonoBehaviour
 				&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものをアクティブにする(吹き出し)
-				orderBalloon[orderSave].SetActive(true);
+				//aorderBaseBalloon[orderSave].SetActive(true);
+				OrderType(true);
 			}
 
 			// エイリアンが席に座って、注文するまでの時間
@@ -144,13 +197,14 @@ public class AlienOrder : MonoBehaviour
 					&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 				{
 					// オーダー内容を保存
-					orderSave = GetOrderType();
+					//orderSave = GetOrderType();
 
 					// オーダーセット
 					OrderSet();
 
 					// 注文したものをアクティブにする(吹き出し)
-					orderBalloon[orderSave].SetActive(true);
+					//orderBaseBalloon[orderSave].SetActive(true);
+					OrderType(true);
 
 					// 注文状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
@@ -158,7 +212,16 @@ public class AlienOrder : MonoBehaviour
 					// オーダー完了
 					SetIsOrder(true);
 
-					individualOrderType = orderSave;
+					// 注文すると、BoxColliderを「ON」にする
+					GetComponent<BoxCollider>().enabled = true;
+
+					// オーダーの種類管理
+					switch (orderType)
+					{
+						case (int)EOrderType.BASE: individualOrderBaseType = orderBaseSave; break;
+						case (int)EOrderType.CHANGE: individualOrderChangeType = orderChangeSave; break;
+						default: break;
+					}
 				}
 			}
 			else
@@ -166,6 +229,14 @@ public class AlienOrder : MonoBehaviour
 				// 毎フレームの時間を加算
 				orderTimeAdd += Time.deltaTime;
 			}
+		}
+
+		// 画面外に向かって歩いている状態の時
+		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.WALK_SIDE))
+		{
+			// 「0」になるまで、注文内容を描画する
+			if (orderPlanDispCount <= 0.0f) { OrderType(false); }
+			else { OrderType(true); orderPlanDispCount -= Time.deltaTime; }
 		}
 	}
 
@@ -181,7 +252,7 @@ public class AlienOrder : MonoBehaviour
 			//Debug.Log(_seatPattern + "例外処理中");
 
 			// 同じ注文が3回続く
-			SetOrderType(exceptionOrderType);
+			//SetOrderType(exceptionOrderType);
 
 			if (exceptionCount < (int)AlienStatus.EStatus.ORDER) { exceptionCount++; }
 			else
@@ -201,18 +272,79 @@ public class AlienOrder : MonoBehaviour
 			}
 		}
 
-		// 例外処理ではない
+		// 通常処理
 		else
 		{
 			// Debug用
 			//Debug.Log(_seatPattern + "通常処理中");
 
 			// エイリアンの注文結果を出す(焼き=>煮る=>レンチン)
-			SetOrderType(orderSave + 1);
+			//SetOrderType(orderSave + 1);
 		}
 
 		// 注文をループさせる為に「0」で初期化
-		if ((GetOrderType() >= (int)EOrderType.MAX)) { SetOrderType(0); }
+		//if ((GetOrderType() >= (int)EOrderBaseType.MAX)) { SetOrderType(0); }
+	}
+
+	/// <summary>
+	/// エイリアンのオーダーテーブル関数
+	/// </summary>
+	void OrderTable()
+	{
+		// エイリアンの種類によって、注文傾向が変わる
+		switch ((AlienCall.EAlienPattern)alienCall.GetAlienPattern(GetSetId()))
+		{
+			case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
+				OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE,
+					EOrderBaseType.BLUE, EOrderBaseType.YELLOW, EOrderBaseType.RED);
+				break;
+			case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
+				OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN,
+					EOrderBaseType.RED, EOrderBaseType.YELLOW, EOrderBaseType.BLUE);
+				break;
+			case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
+				OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
+					EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
+				break;
+			default: Debug.LogError("エイリアンの注文傾向が設定されていません！"); break;
+		}
+	}
+
+	/// <summary>
+	/// オーダー設定関数
+	/// </summary>
+	void OrderConfiguration(EOrderChangeType change1, EOrderChangeType change2,
+		EOrderBaseType base1, EOrderBaseType base2, EOrderBaseType base3)
+	{
+		// 乱数で注文傾向を決める
+		orderTrend = Random.Range(1, 101);
+
+		if (orderTrend >= 1 && orderTrend <= 5) { orderChangeSave = (int)change1; orderType = (int)EOrderType.CHANGE; return; }
+		if (orderTrend >= 6 && orderTrend <= 10) { orderChangeSave = (int)change2; orderType = (int)EOrderType.CHANGE; return; }
+		if (orderTrend >= 11 && orderTrend <= 30) { orderBaseSave = (int)base1; orderType = (int)EOrderType.BASE; return; }
+		if (orderTrend >= 31 && orderTrend <= 50) { orderBaseSave = (int)base2; orderType = (int)EOrderType.BASE; return; }
+		if (orderTrend >= 51 && orderTrend <= 100) { orderBaseSave = (int)base3; orderType = (int)EOrderType.BASE; return; }
+	}
+
+	/// <summary>
+	/// オーダーの種類関数
+	/// </summary>
+	/// <param name="value"></param>
+	void OrderType(bool value)
+	{
+		// オーダーの種類管理
+		switch (orderType)
+		{
+			case (int)EOrderType.BASE:
+				// 注文内容を描画・非描画する(ベース用)
+				orderBaseBalloon[orderBaseSave].SetActive(value);
+				break;
+			case (int)EOrderType.CHANGE:
+				// 注文内容を描画・非描画する(チェンジ用)
+				orderChangeBalloon[orderChangeSave].SetActive(value);
+				break;
+			default: break;
+		}
 	}
 
 	/// <summary>
@@ -221,31 +353,46 @@ public class AlienOrder : MonoBehaviour
 	/// <param name="cuisine"></param>
 	public void EatCuisine(GameObject cuisine)
 	{
-		if (individualOrderType == (int)cuisine.GetComponent<Food>().GetCategory())
+		// EAT状態が「ON」になる
+		AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
+
+		// Debug用
+		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
+
+		// オーダーの種類管理
+		switch (orderType)
 		{
-			GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
-			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-			GetComponent<AlienChip>().SetCuisineCame(true);
+			case (int)EOrderType.BASE:
+				if (individualOrderBaseType == (int)cuisine.GetComponent<Food>().GetCategory())
+				{
+					GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
+					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+					GetComponent<AlienChip>().SetCuisineCame(true);
 
-			// Debug用
-			//Debug.Log("注文内容が合ってる");
+					// エイリアンが満足する
+					GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
+				}
+				else
+				{
+					GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
+					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+					GetComponent<AlienChip>().SetCuisineCame(true);
 
-			// エイリアンが満足する
-			GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
-		}
-		else
-		{
-			GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
-			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-			GetComponent<AlienChip>().SetCuisineCame(true);
-
-			// Debug用
-			//Debug.Log("注文内容が合ってない");
-
-			// エイリアンがクレームをする
-			GetComponent<AlienClaim>().SetIsClaim(true);
+					// エイリアンがクレームをする
+					GetComponent<AlienClaim>().SetIsClaim(true);
+				}
+				break;
+			case (int)EOrderType.CHANGE:
+				break;
+			default: break;
 		}
 	}
+
+	/// <summary>
+	/// 状態移行フラグの取得
+	/// </summary>
+	/// <returns></returns>
+	public bool GetStatusMoveFlag() => statusMoveFlag;
 
 	/// <summary>
 	/// 注文状態を格納
@@ -267,27 +414,33 @@ public class AlienOrder : MonoBehaviour
 	public int GetSetId() => setId;
 
 	/// <summary>
-	/// 保存したオーダーの取得
+	/// 保存したオーダー(ベース)の取得
 	/// </summary>
 	/// <returns></returns>
-	public int GetOrderSave() => orderSave;
+	public int GetOrderBaseSave() => orderBaseSave;
 
 	/// <summary>
-	/// オーダーフラグの取得
+	/// 保存したオーダー(チェンジ)の取得
 	/// </summary>
 	/// <returns></returns>
-	public static bool GetOrderFlag() => orderFlag;
+	public int GetOrderChangeSave() => orderChangeSave;
 
 	/// <summary>
 	/// 注文の種類を格納
 	/// </summary>
 	/// <param name="_orderType"></param>
 	/// <returns></returns>
-	public static int SetOrderType(int _orderType) => orderType = _orderType;
+	public int SetOrderType(int _orderType) => orderType = _orderType;
 
 	/// <summary>
 	/// 注文の種類を取得
 	/// </summary>
 	/// <returns></returns>
-	public static int GetOrderType() => orderType;
+	public int GetOrderType() => orderType;
+
+	/// <summary>
+	/// オーダーフラグの取得
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetOrderFlag() => orderFlag;
 }

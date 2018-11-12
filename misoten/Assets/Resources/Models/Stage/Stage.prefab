@@ -15747,7 +15747,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af69fc2f81814784a925fc837ea31356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebugMode: 0
   canvasCamera: {fileID: 0}
+  microwaveGage_cs: {fileID: 0}
 --- !u!114 &114357540176600758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15783,7 +15785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 0
+  isDebugMode: 1
   canvasCamera: {fileID: 0}
 --- !u!114 &114472454859855834
 MonoBehaviour:
@@ -16193,7 +16195,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1643395547
+  randomSeed: 1474193590
   InitialModule:
     serializedVersion: 3
     enabled: 1
