@@ -130,7 +130,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             countAnimTime = 0;
             animID++;
-            Debug.Log(animID);
             if (animID > ANIMATION_NUM -1) animID = 0;
             ChangeSprite();
         }
