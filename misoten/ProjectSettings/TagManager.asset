@@ -26,6 +26,8 @@ TagManager:
   - SuccessAreaNormalParent
   - SuccessAreaChild
   - Mixer
+  - IceBox
+  - DastBox
   layers:
   - Default
   - TransparentFX

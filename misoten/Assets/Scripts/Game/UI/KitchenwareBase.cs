@@ -10,6 +10,7 @@ public abstract class KitchenwareBase : MonoBehaviour
     // 状態
     protected bool isCooking = false;
 
+    [SerializeField]
     protected bool isEnd = false;
 
     // 各料理のミニゲームUI
@@ -59,13 +60,7 @@ public abstract class KitchenwareBase : MonoBehaviour
 
     public GameObject UpdateMiniGame()
     {
-        if (isDebugMode)
-        {
-            return cuisine;
-        }
-
-        // 調理が終わっていれば料理を返す
-        if (isEnd) return cuisine;
+        if (isDebugMode) return cuisine;
 
         // 調理をすすめる
         if (Cooking())
@@ -73,6 +68,7 @@ public abstract class KitchenwareBase : MonoBehaviour
             ResetMiniGameUI();
             SetIsCooking(false);
             SetIsEnd(true);
+            return cuisine;
         }
 
         // nullを返す

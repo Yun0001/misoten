@@ -12,6 +12,15 @@ public class PlayerMove : MonoBehaviour
         Left
     }
 
+    [SerializeField]
+    private ParticleSystem prefab = new ParticleSystem();
+
+    // 呼び出したエフェクトの確認用
+    [SerializeField]
+    private ParticleSystem particleSystems = new ParticleSystem();
+
+    private bool effectFlag = false;
+
     private Player player_cs;
     private PlayerAnimation playerAnimation_cs;
     private Vector3 move;
@@ -30,16 +39,30 @@ public class PlayerMove : MonoBehaviour
 
 
 
+
     public void Init()
     {
         player_cs = GetComponent<Player>();
         playerAnimation_cs = GetComponent<PlayerAnimation>();
         rb = player_cs.gameObject.GetComponent<Rigidbody>();
+        // パーティクル生成
+        particleSystems = Instantiate(prefab, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), Quaternion.identity) as ParticleSystem;
+        particleSystems.transform.SetParent(transform);
     }
 
     private void Update()
     {
         Clamp();
+        if (move == Vector3.zero)
+        {
+            particleSystems.Stop();
+
+            // パーティクル削除
+            // Destroy(particleSystems);
+
+            // 退店時の時用に
+            effectFlag = false;
+        }
     }
 
     public void Move()
@@ -63,6 +86,7 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
 
+        MoveEffectCall();
         rb.velocity = move * speed;
 
         // コントローラー４つの場合は不要
@@ -72,6 +96,7 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMove(EDirection direction)
     {
+        MoveEffectCall();
         playerAnimation_cs.SetPlayerStatus(1);
         switch (direction)
         {
@@ -129,4 +154,20 @@ public class PlayerMove : MonoBehaviour
     }
 
     public void VelocityReset() => rb.velocity = Vector3.zero;
+
+    void MoveEffectCall()
+    {
+        // 一度しか通らない
+        if (!effectFlag)
+        {
+            // 拡縮設定
+
+            // パーティクル再生
+            particleSystems.Play();
+
+            // 一度しか通らないようにする
+            effectFlag = true;
+
+        }
+    }
 }
