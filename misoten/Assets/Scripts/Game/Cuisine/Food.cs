@@ -12,13 +12,19 @@ public class Food : MonoBehaviour {
         Grilled,
         Pot,
         Microwave,
-
     }
 
-    /// <summary>
-    /// この食材の所有プレイヤーID
-    /// </summary>
-    private int ownershipPlayerID;
+	public enum CategoryChange
+	{
+		PURPLE,
+		ORANGE,
+		GREEN,
+	}
+
+	/// <summary>
+	/// この食材の所有プレイヤーID
+	/// </summary>
+	private int ownershipPlayerID;
 
     /// <summary>
     /// 宇宙人に料理を渡した時にもらえるチップ割合Max100%Min70%
@@ -29,12 +35,13 @@ public class Food : MonoBehaviour {
     private int foodID;
 
     private Category category;
+	private CategoryChange categoryChange;
 
 
-    /// <summary>
-    /// 初期処理
-    /// </summary>
-    void Awake() => Init();
+	/// <summary>
+	/// 初期処理
+	/// </summary>
+	void Awake() => Init();
 
     /// <summary>
     /// 初期化
@@ -86,11 +93,11 @@ public class Food : MonoBehaviour {
     /// <returns>料理ID</returns>
     public int GetFoodID() => foodID;
 
-   /// <summary>
-   /// 料理の種類セット
-   /// </summary>
-   /// <param name="_category"></param>
-    public void SetCategory(Category _category) => category = _category;
+	/// <summary>
+	/// 料理の種類セット
+	/// </summary>
+	/// <param name="_category"></param>
+	public void SetCategory(Category _category) => category = _category;
 
     /// <summary>
     /// 料理の種類取得
@@ -98,5 +105,17 @@ public class Food : MonoBehaviour {
     /// <returns>料理の種類</returns>
     public Category GetCategory() => category;
 
-    public void AddQualityTaste(int point) => qualityTaste += point;
+	/// <summary>
+	/// 料理の種類(チェンジ)セット
+	/// </summary>
+	/// <param name="_categoryChange"></param>
+	public void SetCategoryChange(CategoryChange _categoryChange) => categoryChange = _categoryChange;
+
+	/// <summary>
+	/// 料理の種類(チェンジ)取得
+	/// </summary>
+	/// <returns></returns>
+	public CategoryChange GetCategoryChange() => categoryChange;
+
+	public void AddQualityTaste(int point) => qualityTaste += point;
 }

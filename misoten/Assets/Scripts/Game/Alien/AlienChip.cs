@@ -46,9 +46,6 @@ public class AlienChip : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-	// エイリアンの呼び出し
-	private AlienCall alienCall;
-
 	// エイリアンのオーダー
 	private AlienOrder alienOrder;
 
@@ -57,9 +54,6 @@ public class AlienChip : MonoBehaviour
 
 	// 料理を持ってきた相手のID
 	private int opponentID = 0;
-
-	// ベースチップ
-	private int[] baseChip = { 100, 200, 300 };
 
 	// チップID(各エイリアン事に持っている)
 	private int chipId = 0;
@@ -74,9 +68,6 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// コンポーネント取得
-		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
-
 		// チップIDへの受け渡し
 		chipId = AlienCall.GetIdSave();
 
@@ -87,7 +78,10 @@ public class AlienChip : MonoBehaviour
 		chipPattern = EChipPattern.HANDOVER;
 
 		// ベースチップをセット
-		SetChipValue(baseChip[alienCall.GetRichDegree(chipId)]);
+		SetChipValue(AlienCall.GetRichDegree(chipId));
+
+		// Debug用
+		//Debug.Log("金持ち度"+ AlienCall.GetRichDegree(chipId));
 	}
 
 	/// <summary>
@@ -107,11 +101,15 @@ public class AlienChip : MonoBehaviour
 
 						break;
 					case EChipPattern.HANDOVER: // チップを直接渡す
-						ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
-						SetCuisineCame(false);
+						// 満足状態の時
+						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+						{
+							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
+							SetCuisineCame(false);
 
-						// チップをプレイヤーに渡した
-						chipOnFlag[chipId] = true;
+							// チップをプレイヤーに渡した
+							chipOnFlag[chipId] = true;
+						}
 						break;
 					default:
 						// 例外処理

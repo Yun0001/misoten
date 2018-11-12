@@ -12,11 +12,15 @@ public class AlienSatisfaction : MonoBehaviour
 
 	// 満足描画用
 	[SerializeField]
-	GameObject satisfactionBalloon;
+	GameObject[] satisfactionBalloon = new GameObject[4];
 
 	// 満足を行う時間
 	[SerializeField, Range(1.0f, 10.0f)]
-	float satisfactionTime;
+	private float judgeCount;
+
+	// 満足度
+	[SerializeField]
+	private float[] satisfactionLevel = new float[4];
 
 	// ---------------------------------------------
 
@@ -47,34 +51,38 @@ public class AlienSatisfaction : MonoBehaviour
 		// 満足した場合
 		if(GetSatisfactionFlag())
 		{
-			// 満足を指定ない時
-			if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD))
+			// 状態移行フラグが「ON」の時
+			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
-				// 満足した吹き出しを出す
-				satisfactionBalloon.SetActive(true);
+				// 満足を指定ない時
+				if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD))
+				{
+					// 満足アニメーションになる
+					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
 
-				// 満足フラグ(チップ取得時用)をON
-				satisfactionChipFlag = true;
+					// 満足した吹き出しを出す
+					satisfactionBalloon[0].SetActive(true);
+
+					// 満足フラグ(チップ取得時用)をON
+					satisfactionChipFlag = true;
+				}
+
+				// 満足時間が指定時間を超えた場合
+				if (satisfactionTimeAdd >= judgeCount)
+				{
+					// 時間の初期化
+					satisfactionTimeAdd = 0.0f;
+
+					// 帰る(良)状態「ON」
+					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
+
+					// 退店時の移動開始
+					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+				}
+
+				// 毎フレームの時間を加算
+				satisfactionTimeAdd += Time.deltaTime;
 			}
-
-			// 満足時間が指定時間を超えた場合
-			if (satisfactionTimeAdd >= satisfactionTime)
-			{
-				// 時間の初期化
-				satisfactionTimeAdd = 0.0f;
-
-				// 満足した吹き出しを消す
-				satisfactionBalloon.SetActive(false);
-
-				// 帰る(良)状態「ON」
-				AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
-
-				// 退店時の移動開始
-				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
-			}
-
-			// 毎フレームの時間を加算
-			satisfactionTimeAdd += Time.deltaTime;
 		}
 	}
 

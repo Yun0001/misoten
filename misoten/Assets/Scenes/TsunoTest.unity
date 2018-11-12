@@ -150,9 +150,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4562639452080286, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114636831898434350, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 2115223357}
+    - target: {fileID: 114452945723931176, guid: 4d6072833a311f94bb6274ef48de36af,
         type: 2}
       propertyPath: canvasCamera
       value: 
@@ -167,6 +172,15 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 2115223357}
+    - target: {fileID: 114172972160590462, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: isDebugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326931183786888, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
   m_IsPrefabParent: 0
@@ -414,7 +428,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 489636196
+  randomSeed: -1120998851
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7158,7 +7172,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &287749508
 Prefab:
@@ -10944,7 +10958,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4741097179821720, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114085613592037000, guid: 14915348d9d16e842ba1a74fd476d84f,
+        type: 2}
+      propertyPath: speed
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
@@ -10978,7 +10997,7 @@ Transform:
   - {fileID: 665150767}
   - {fileID: 2115223358}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1212355407
 GameObject:
@@ -11011,7 +11030,7 @@ Transform:
   - {fileID: 175004205}
   - {fileID: 452485868}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1212355409
 MonoBehaviour:
@@ -11052,7 +11071,7 @@ Transform:
   m_Children:
   - {fileID: 1943350001}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1284439133
 Prefab:
@@ -11289,7 +11308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1477874156
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -11404,7 +11423,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1878295105
+  randomSeed: 1150975829
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14717,7 +14736,7 @@ Transform:
   m_Children:
   - {fileID: 177474460}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1600316620
 GameObject:
@@ -14746,7 +14765,7 @@ Transform:
   m_Children:
   - {fileID: 667560832}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1745191713
 GameObject:
@@ -14778,7 +14797,7 @@ Transform:
   - {fileID: 1284439134}
   - {fileID: 2027858394}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1939816216
 Prefab:

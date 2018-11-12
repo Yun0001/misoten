@@ -44,7 +44,8 @@ public class AlienClaim : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// ビックリマーク吹き出しを出さない
+		// 吹き出しを出さない
+		claimBalloon[0].SetActive(false);
 		claimBalloon[1].SetActive(false);
 	}
 
@@ -56,53 +57,64 @@ public class AlienClaim : MonoBehaviour
 		// クレーム状態の時
 		if (GetIsClaim())
 		{
-			// エイリアンの注文内容が見えている状態の時
-			if (!claimFlag)
+			// 状態移行フラグが「ON」の時
+			if(GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
-				// クレーム吹き出しを出す
-				claimBalloon[0].SetActive(true);
+				// エイリアンの注文内容が見えている状態の時
+				if (!claimFlag)
+				{
+					// 怒りアニメーションになる
+					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.ANGER);
 
-				// エイリアンの注文内容が見えなくなる
-				claimFlag = true;
+					// クレーム吹き出しを出す
+					claimBalloon[0].SetActive(true);
+
+					// エイリアンの注文内容が見えなくなる
+					claimFlag = true;
+				}
+
+				// クレーム時間が指定時間を超えた場合
+				if (GetClaimTimeAdd() >= claimTime)
+				{
+					// クレーム終了
+					claimTimeAdd = 0.0f;
+					claimFlag = false;
+					SetIsClaim(false);
+
+					// ビックリマーク吹き出しを出さない
+					claimBalloon[1].SetActive(false);
+
+					// 帰る(悪)状態「ON」
+					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
+
+					// 退店時の移動開始
+					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+				}
+
+				// 毎フレームの時間を加算
+				claimTimeAdd += Time.deltaTime;
 			}
-
-			// クレーム時間が指定時間を超えた場合
-			if (GetClaimTimeAdd() >= claimTime)
-			{
-				// クレーム終了
-				claimTimeAdd = 0.0f;
-				claimFlag = false;
-				SetIsClaim(false);
-
-				// ビックリマーク吹き出しを出さない
-				claimBalloon[1].SetActive(false);
-
-				// 帰る(悪)状態「ON」
-				AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
-
-				// 退店時の移動開始
-				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
-			}
-
-			// 毎フレームの時間を加算
-			claimTimeAdd += Time.deltaTime;
 		}
 		else
 		{
-			// エイリアンの注文内容が見えている状態の時
-			if (!claimFlag)
+			// 状態移行フラグが「ON」の時
+			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
-				// クレームを終えた場合は、クレーム用の吹き出しを消す
-				claimBalloon[0].SetActive(false);
-				claimBalloon[1].SetActive(false);
-			}
-			// エイリアンの注文内容が見えていない状態の時
-			else
-			{
-				if (!GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag())
+				// エイリアンの注文内容が見えている状態の時
+				if (!claimFlag)
 				{
-					// ビックリマークをアクティブにする(吹き出し)
-					claimBalloon[1].SetActive(true);
+					// クレームを終えた場合は、クレーム用の吹き出しを消す
+					claimBalloon[0].SetActive(false);
+					claimBalloon[1].SetActive(false);
+				}
+				// エイリアンの注文内容が見えていない状態の時
+				else
+				{
+					if (!GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag())
+					{
+						// ビックリマークをアクティブにする(吹き出し)
+						claimBalloon[1].SetActive(true);
+					}
 				}
 			}
 		}

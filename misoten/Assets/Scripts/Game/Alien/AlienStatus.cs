@@ -17,7 +17,10 @@ public class AlienStatus : MonoBehaviour
 	public enum EStatus
 	{
 		STAND = 0,      // 待機
-		WALK,           // 入店時
+		VISIT,          // 訪問時
+		WALK_SIDE,      // 画面外に向かって歩いている
+		OUT_SCREEN,     // 画面外に消えた
+		WALK_IN,        // 客席に向かって歩いている
 		GETON,          // 着席
 		ORDER,          // 注文
 		STAY,           // 待つ(注文待機)
@@ -83,16 +86,19 @@ public class AlienStatus : MonoBehaviour
 	{
 		switch (debugStatusId)
 		{
-			case EStatus.STAND: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の待機状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAND)); break;
-			case EStatus.WALK: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の入店時状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.WALK)); break;
-			case EStatus.GETON: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の着席状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.GETON)); break;
-			case EStatus.ORDER: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の注文状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.ORDER)); break;
-			case EStatus.STAY: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の待つ(注文待機)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAY)); break;
-			case EStatus.CLAIM: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "のクレーム状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.CLAIM)); break;
-			case EStatus.EAT: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の食べる状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.EAT)); break;
-			case EStatus.RETURN_GOOD: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の帰る(良)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_GOOD)); break;
-			case EStatus.RETURN_BAD: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の帰る(悪)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_BAD)); break;
-			case EStatus.SCREEN_OUT: Debug.Log("エイリアン(カウンター側)「" + id + "」" + "の画面外状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.SCREEN_OUT)); break;
+			case EStatus.STAND: Debug.Log("エイリアン「" + id + "」" + "の待機状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAND)); break;
+			case EStatus.VISIT: Debug.Log("エイリアン「" + id + "」" + "の訪問時状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.VISIT)); break;
+			case EStatus.WALK_SIDE: Debug.Log("エイリアン「" + id + "」" + "の画面外に向かって歩いている状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.WALK_SIDE)); break;
+			case EStatus.OUT_SCREEN: Debug.Log("エイリアン「" + id + "」" + "の画面外に消えた状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.OUT_SCREEN)); break;
+			case EStatus.WALK_IN: Debug.Log("エイリアン「" + id + "」" + "の客席に向かって歩いている状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.WALK_IN)); break;
+			case EStatus.GETON: Debug.Log("エイリアン「" + id + "」" + "の着席状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.GETON)); break;
+			case EStatus.ORDER: Debug.Log("エイリアン「" + id + "」" + "の注文状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.ORDER)); break;
+			case EStatus.STAY: Debug.Log("エイリアン「" + id + "」" + "の待つ(注文待機)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAY)); break;
+			case EStatus.CLAIM: Debug.Log("エイリアン「" + id + "」" + "のクレーム状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.CLAIM)); break;
+			case EStatus.EAT: Debug.Log("エイリアン「" + id + "」" + "の食べる状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.EAT)); break;
+			case EStatus.RETURN_GOOD: Debug.Log("エイリアン「" + id + "」" + "の帰る(良)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_GOOD)); break;
+			case EStatus.RETURN_BAD: Debug.Log("エイリアン「" + id + "」" + "の帰る(悪)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_BAD)); break;
+			case EStatus.SCREEN_OUT: Debug.Log("エイリアン「" + id + "」" + "の画面外状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.SCREEN_OUT)); break;
 			default: break;
 		}
 	}
