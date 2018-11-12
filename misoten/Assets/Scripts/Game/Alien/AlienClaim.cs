@@ -44,7 +44,8 @@ public class AlienClaim : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// ビックリマーク吹き出しを出さない
+		// 吹き出しを出さない
+		claimBalloon[0].SetActive(false);
 		claimBalloon[1].SetActive(false);
 	}
 
@@ -96,20 +97,24 @@ public class AlienClaim : MonoBehaviour
 		}
 		else
 		{
-			// エイリアンの注文内容が見えている状態の時
-			if (!claimFlag)
+			// 状態移行フラグが「ON」の時
+			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
-				// クレームを終えた場合は、クレーム用の吹き出しを消す
-				claimBalloon[0].SetActive(false);
-				claimBalloon[1].SetActive(false);
-			}
-			// エイリアンの注文内容が見えていない状態の時
-			else
-			{
-				if (!GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag())
+				// エイリアンの注文内容が見えている状態の時
+				if (!claimFlag)
 				{
-					// ビックリマークをアクティブにする(吹き出し)
-					claimBalloon[1].SetActive(true);
+					// クレームを終えた場合は、クレーム用の吹き出しを消す
+					claimBalloon[0].SetActive(false);
+					claimBalloon[1].SetActive(false);
+				}
+				// エイリアンの注文内容が見えていない状態の時
+				else
+				{
+					if (!GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag())
+					{
+						// ビックリマークをアクティブにする(吹き出し)
+						claimBalloon[1].SetActive(true);
+					}
 				}
 			}
 		}

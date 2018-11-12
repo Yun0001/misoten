@@ -73,6 +73,7 @@ MonoBehaviour:
   counterSeatsMax: 9
   alienMax: 50
   period: 30
+  inAlienTime: 0
   theRemainingTime:
   - 20
   - 15

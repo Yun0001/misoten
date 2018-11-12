@@ -136,12 +136,18 @@ public class AlienOrder : MonoBehaviour
 
 		// 3種のエイリアンの色に合わせてテーブルを作成しテーブルを決定
 		OrderTable();
-	}
 
-	/// <summary>
-	/// 更新関数
-	/// </summary>
-	void Update ()
+		// 状態移行フラグの初期化
+		statusMoveFlag = false;
+
+		// 注文するまでの時間の初期化
+		orderTimeAdd = 0.0f;
+}
+
+/// <summary>
+/// 更新関数
+/// </summary>
+void Update ()
 	{
 		// 食べる状態の時
 		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
@@ -193,7 +199,7 @@ public class AlienOrder : MonoBehaviour
 			if (orderTimeAdd >= orderTime)
 			{
 				// エイリアンが注文していない時
-				if (!GetIsOrder() && !AlienClaim.GetClaimFlag() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag()
+				if (!GetIsOrder() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag()
 					&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 				{
 					// オーダー内容を保存

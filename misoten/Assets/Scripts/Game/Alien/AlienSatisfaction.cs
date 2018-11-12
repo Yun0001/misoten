@@ -73,9 +73,6 @@ public class AlienSatisfaction : MonoBehaviour
 					// 時間の初期化
 					satisfactionTimeAdd = 0.0f;
 
-					// 満足した吹き出しを消す
-					satisfactionBalloon[0].SetActive(false);
-
 					// 帰る(良)状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
 
