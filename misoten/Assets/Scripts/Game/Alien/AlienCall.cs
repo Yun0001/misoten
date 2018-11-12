@@ -66,6 +66,10 @@ public class AlienCall : MonoBehaviour
 	[SerializeField]
 	private float period;
 
+	// 入店に遷移する秒数設定
+	[SerializeField]
+	private float inAlienTime;
+
 	// 客の残存時間設定
 	[SerializeField]
 	private float[] theRemainingTime = new float[3];
@@ -131,9 +135,6 @@ public class AlienCall : MonoBehaviour
 	// 例外処理用の時間
 	private float exceptionTime = 0.0f;
 
-	// 入店に遷移する秒数設定
-	private float inAlienTime;
-
 	// ---------------------------------------------
 
 	/// <summary>
@@ -184,8 +185,8 @@ public class AlienCall : MonoBehaviour
 				case 300: inAlienTime -= 0.5f; break;
 				case 600: inAlienTime -= 1.0f; break;
 				case 900: inAlienTime -= 1.5f; break;
-				case 1200:inAlienTime -= 2.0f;  break;
-				case 1500:inAlienTime -= 2.5f;  break;
+				case 1200:inAlienTime -= 2.0f; break;
+				case 1500:inAlienTime -= 2.5f; break;
 				case 1800: inAlienTime -= 3.0f; break;
 			}
 
@@ -348,6 +349,12 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public int GetAlienPattern(int id) => (int)alienPattern[id];
+
+	/// <summary>
+	/// エイリアン数の取得
+	/// </summary>
+	/// <returns></returns>
+	public int GetAlienNumber() => alienNumber;
 
 	/// <summary>
 	/// 金持ち度IDの取得

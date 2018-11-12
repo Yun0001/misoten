@@ -96,19 +96,21 @@ public class AlienOrder : MonoBehaviour
 		// クレーム状態の時or満足状態の時
 		if (GetComponent<AlienClaim>().GetIsClaim() || GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 		{
-			// EAT状態が「ON」になった時、当たり判定が消える
+			// EAT状態が「ON」になる
 			AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
+
+			// 当たり判定が消える
 			GetComponent<BoxCollider>().enabled = false;
 		}
 
 		// カウンター席に座っているエイリアンからの注文処理
-		counterOrder();
+		CounterOrder();
 	}
 
 	/// <summary>
 	/// カウンター席に座っているエイリアンからのオーダー
 	/// </summary>
-	void counterOrder()
+	void CounterOrder()
 	{
 		// エイリアンがカウンター席に座っている状態の時
 		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.GETON))
@@ -214,6 +216,38 @@ public class AlienOrder : MonoBehaviour
 	}
 
 	/// <summary>
+	/// エイリアンが注文した料理が来たかの判定関数
+	/// </summary>
+	/// <param name="cuisine"></param>
+	public void EatCuisine(GameObject cuisine)
+	{
+		if (individualOrderType == (int)cuisine.GetComponent<Food>().GetCategory())
+		{
+			GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
+			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+			GetComponent<AlienChip>().SetCuisineCame(true);
+
+			// Debug用
+			//Debug.Log("注文内容が合ってる");
+
+			// エイリアンが満足する
+			GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
+		}
+		else
+		{
+			GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
+			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
+			GetComponent<AlienChip>().SetCuisineCame(true);
+
+			// Debug用
+			//Debug.Log("注文内容が合ってない");
+
+			// エイリアンがクレームをする
+			GetComponent<AlienClaim>().SetIsClaim(true);
+		}
+	}
+
+	/// <summary>
 	/// 注文状態を格納
 	/// </summary>
 	/// <param name="_isOrder"></param>
@@ -233,6 +267,12 @@ public class AlienOrder : MonoBehaviour
 	public int GetSetId() => setId;
 
 	/// <summary>
+	/// 保存したオーダーの取得
+	/// </summary>
+	/// <returns></returns>
+	public int GetOrderSave() => orderSave;
+
+	/// <summary>
 	/// オーダーフラグの取得
 	/// </summary>
 	/// <returns></returns>
@@ -250,49 +290,4 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static int GetOrderType() => orderType;
-
-	/// <summary>
-	/// エイリアンが注文した料理が来たかの判定関数
-	/// </summary>
-	/// <param name="cuisine"></param>
-	public void EatCuisine(GameObject cuisine)
-	{
-		if (individualOrderType == (int)cuisine.GetComponent<Food>().GetCategory())
-		{
-			GetComponent<AlienChip>().SetCuisineCoefficient(1f);
-			//GetComponent<AlienChip>().SetCuisineCoefficient(cuisine.GetComponent<Food>().GetQualityTaste());
-			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-			GetComponent<AlienChip>().SetCuisineCame(true);
-
-			//AlienCall.SetClaimId(AlienCall.GetAddId());
-			Debug.Log("注文内容が合ってる");
-
-			GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
-		}
-		else
-		{
-			GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
-			GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-			GetComponent<AlienChip>().SetCuisineCame(true);
-
-			// クレームフラグが立つ
-			//AlienCall.SetClaimFlag(true, AlienCall.GetClaimId());
-
-			//AlienCall.SetClaimId(AlienCall.GetAddId());
-
-			// クレーム状態「ON」
-			//AlienStatus.SetStatusFlag(true, 1, (int)AlienStatus.EStatus.CLAIM);
-
-			Debug.Log("注文内容が合ってない");
-
-			GetComponent<AlienClaim>().SetIsClaim(true);
-		}
-
-		// スクリプトを切る
-		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
-		{
-			Debug.Log("BoxCollider停止");
-			GetComponent<BoxCollider>().enabled = false;
-		}
-	}
 }
