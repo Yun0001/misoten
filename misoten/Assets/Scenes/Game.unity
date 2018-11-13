@@ -637,6 +637,23 @@ Transform:
   m_PrefabParentObject: {fileID: 4764218896639990, guid: db666771aa3ba294fb291619084f81bd,
     type: 2}
   m_PrefabInternal: {fileID: 2024267994}
+--- !u!1 &427328349 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1191645857900666, guid: 4d6072833a311f94bb6274ef48de36af,
+    type: 2}
+  m_PrefabInternal: {fileID: 2136078583}
+--- !u!65 &427328353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 427328349}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8, y: 1, z: 3}
+  m_Center: {x: 0.25, y: 0, z: 0}
 --- !u!1001 &497682027
 Prefab:
   m_ObjectHideFlags: 0
@@ -4194,6 +4211,7 @@ GameObject:
   - component: {fileID: 639568708}
   - component: {fileID: 639568707}
   - component: {fileID: 639568706}
+  - component: {fileID: 639568711}
   m_Layer: 0
   m_Name: DastBox
   m_TagString: DastBox
@@ -4280,6 +4298,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &639568711
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 639568705}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.0265019}
+  m_Center: {x: 0, y: 0, z: 0.013250947}
+--- !u!1 &671718046 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1943810999821148, guid: 4d6072833a311f94bb6274ef48de36af,
+    type: 2}
+  m_PrefabInternal: {fileID: 2136078583}
+--- !u!65 &671718050
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 671718046}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8, y: 1, z: 3}
+  m_Center: {x: -0.1, y: 0, z: 0}
 --- !u!1 &678740090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4575,6 +4622,7 @@ GameObject:
   - component: {fileID: 993675311}
   - component: {fileID: 993675310}
   - component: {fileID: 993675309}
+  - component: {fileID: 993675314}
   m_Layer: 0
   m_Name: DastBox (1)
   m_TagString: DastBox
@@ -4661,6 +4709,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &993675314
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 993675308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.0405996}
+  m_Center: {x: 0, y: 0, z: 0.020299792}
 --- !u!4 &1041527511 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32,
