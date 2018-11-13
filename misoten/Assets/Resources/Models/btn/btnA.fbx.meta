@@ -1,23 +1,30 @@
 fileFormatVersion: 2
-guid: a79e19bb4e08e7f43b4f3af8a62f3ace
-timeCreated: 1542098436
+guid: 971c47c196f3b4b45b45fa507b57539a
+timeCreated: 1542099601
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: foot
-    100004: table
-    400000: //RootNode
-    400002: foot
-    400004: table
-    2100000: table
-    2300000: foot
-    2300002: table
-    3300000: foot
-    3300002: table
-    4300000: foot
-    4300002: table
+    100000: Armature
+    100002: Bone
+    100004: Bone_end
+    100006: //RootNode
+    100008: Cube
+    100010: Cylinder
+    400000: Armature
+    400002: Bone
+    400004: Bone_end
+    400006: //RootNode
+    400008: Cube
+    400010: Cylinder
+    2100000: btn
+    2300000: Cube
+    3300000: Cube
+    4300000: Cylinder
+    4300002: Cube
+    7400000: Armature|action
+    9500000: //RootNode
+    13700000: Cylinder
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -92,7 +99,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

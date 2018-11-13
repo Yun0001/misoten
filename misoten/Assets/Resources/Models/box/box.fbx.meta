@@ -1,23 +1,34 @@
 fileFormatVersion: 2
-guid: a79e19bb4e08e7f43b4f3af8a62f3ace
-timeCreated: 1542098436
+guid: 243d725bb9928a94fbb8666a3b4d3b56
+timeCreated: 1542099653
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: foot
-    100004: table
-    400000: //RootNode
-    400002: foot
-    400004: table
-    2100000: table
-    2300000: foot
-    2300002: table
-    3300000: foot
-    3300002: table
-    4300000: foot
-    4300002: table
+    100000: Armature
+    100002: Bone
+    100004: Bone.001
+    100006: Bone.002
+    100008: Bone.003
+    100010: Bone.004
+    100012: Bone.005
+    100014: Bone.005_end
+    100016: //RootNode
+    100018: box
+    400000: Armature
+    400002: Bone
+    400004: Bone.001
+    400006: Bone.002
+    400008: Bone.003
+    400010: Bone.004
+    400012: Bone.005
+    400014: Bone.005_end
+    400016: //RootNode
+    400018: box
+    2100000: box
+    2300000: box
+    3300000: box
+    4300000: box
   externalObjects: {}
   materials:
     importMaterials: 1

@@ -1,41 +1,31 @@
 fileFormatVersion: 2
-guid: a332c09a2208f1d419a64302584c25cc
-timeCreated: 1542089615
+guid: 3c02243f3a489b648a82dc195914f6d8
+timeCreated: 1542100065
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: Armature
     100002: Bone
-    100004: Bone.001
-    100006: Bone.002
-    100008: Bone.003
-    100010: Bone.004
-    100012: Bone.005
-    100014: Bone.005_end
-    100016: Bone.006
-    100018: Bone.006_end
-    100020: Cube
-    100022: //RootNode
+    100004: Bone_end
+    100006: Cylinder
+    100008: Sphere
+    100010: //RootNode
     400000: Armature
     400002: Bone
-    400004: Bone.001
-    400006: Bone.002
-    400008: Bone.003
-    400010: Bone.004
-    400012: Bone.005
-    400014: Bone.005_end
-    400016: Bone.006
-    400018: Bone.006_end
-    400020: Cube
-    400022: //RootNode
-    2100000: icebox
-    4300000: Cube
-    7400000: Armature|action
-    7400002: Armature|close
-    7400004: Armature|open
+    400004: Bone_end
+    400006: Cylinder
+    400008: Sphere
+    400010: //RootNode
+    2100000: stick
+    2300000: Sphere
+    3300000: Sphere
+    4300000: Cylinder
+    4300002: Sphere
+    7400000: Armature|lSpin
+    7400002: Armature|rSpin
     9500000: //RootNode
-    13700000: Cube
+    13700000: Cylinder
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -64,8 +54,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|action
-      takeName: Armature|action
+      name: Armature|lSpin
+      takeName: Armature|lSpin
       firstFrame: 0
       lastFrame: 80
       wrapMode: 0
@@ -92,38 +82,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|close
-      takeName: Armature|close
+      name: Armature|rSpin
+      takeName: Armature|rSpin
       firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|open
-      takeName: Armature|open
-      firstFrame: 0
-      lastFrame: 1
+      lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

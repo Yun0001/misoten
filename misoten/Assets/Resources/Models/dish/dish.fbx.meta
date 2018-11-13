@@ -1,23 +1,16 @@
 fileFormatVersion: 2
-guid: a79e19bb4e08e7f43b4f3af8a62f3ace
-timeCreated: 1542098436
+guid: 7e9d3d26fdcb9b2439416fe738840ba6
+timeCreated: 1542098601
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: foot
-    100004: table
     400000: //RootNode
-    400002: foot
-    400004: table
-    2100000: table
-    2300000: foot
-    2300002: table
-    3300000: foot
-    3300002: table
-    4300000: foot
-    4300002: table
+    2100000: color
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Sphere
   externalObjects: {}
   materials:
     importMaterials: 1
