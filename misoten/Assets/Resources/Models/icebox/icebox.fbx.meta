@@ -36,7 +36,12 @@ ModelImporter:
     7400004: Armature|open
     9500000: //RootNode
     13700000: Cube
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: icebox
+    second: {fileID: 2100000, guid: 19f2f3b8549958e4a9a07bc56be5d1da, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
