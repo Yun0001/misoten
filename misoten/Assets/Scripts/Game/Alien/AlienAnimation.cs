@@ -49,9 +49,9 @@ public class AlienAnimation : MonoBehaviour
 	private string[] workTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/3", "Mercury/4" };
 	private string[] workTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/3", "Venusian/4" };
 
-	private string[] angerTextureName1 = { "Martian/1", "Martian/1", "Martian/1", "Martian/1" };
-	private string[] angerTextureName2 = { "Mercury/1", "Mercury/1", "Mercury/1", "Mercury/1" };
-	private string[] angerTextureName3 = { "Venusian/1", "Venusian/1", "Venusian/1", "Venusian/1" };
+	private string[] angerTextureName1 = { "Martian/1", "Martian/2", "Martian/1", "Martian/2" };
+	private string[] angerTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/1", "Mercury/2" };
+	private string[] angerTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/1", "Venusian/2" };
 
 	private string[] satisfactionTextureName1 = { "Martian/1", "Martian/1", "Martian/1", "Martian/1" };
 	private string[] satisfactionTextureName2 = { "Mercury/1", "Mercury/1", "Mercury/1", "Mercury/1" };

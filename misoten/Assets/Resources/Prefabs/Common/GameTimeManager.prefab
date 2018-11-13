@@ -20,15 +20,15 @@ GameObject:
   m_Component:
   - component: {fileID: 224071768285529856}
   - component: {fileID: 222173227894401498}
-  - component: {fileID: 114947282141961878}
   - component: {fileID: 114638475942695550}
+  - component: {fileID: 114708259147554216}
   m_Layer: 0
   m_Name: GameTimeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114638475942695550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'Time : xx : xx'
---- !u!114 &114947282141961878
+--- !u!114 &114708259147554216
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -73,6 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40bfb4a145dfd14bb54887b47b7c8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!222 &222173227894401498
 CanvasRenderer:
   m_ObjectHideFlags: 1
