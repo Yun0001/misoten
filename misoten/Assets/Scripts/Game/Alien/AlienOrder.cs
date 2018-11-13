@@ -199,9 +199,9 @@ void Update ()
 			if (orderTimeAdd >= orderTime)
 			{
 				// エイリアンが注文していない時
-				if (!GetIsOrder() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag()
-					&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
-				{
+				if (!GetIsOrder() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag() && !GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
+                    && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && !AlienClaim.GetClaimFlag())
+                {
 					// オーダー内容を保存
 					//orderSave = GetOrderType();
 

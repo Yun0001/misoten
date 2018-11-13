@@ -19,7 +19,7 @@ public class GameTimeManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         sprits = Resources.LoadAll<Sprite>("Textures/UI_Digital2");
-        countTime = 110;
+        countTime = 180;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {
@@ -115,7 +115,7 @@ public class GameTimeManager : MonoBehaviour {
         for (int i = 0; i < 3; i++)
         {
             rement = suu % 10;
-            if (i == 2 && suu < 100)
+            if (i == 2 && countTime < 100)
             {
                 time[i].GetComponent<SpriteRenderer>().sprite = null;
                 break;
@@ -126,7 +126,6 @@ public class GameTimeManager : MonoBehaviour {
                 break;
             }
             suu = suu / 10;
-
         }
     }
 

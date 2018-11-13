@@ -143,7 +143,7 @@ public class AlienCall : MonoBehaviour
 	void Start()
 	{
 		// コンポーネント取得
-		scoreCount = GameObject.Find("Score/Canvas/Score_1").gameObject.GetComponent<ScoreCount>();
+		scoreCount = GameObject.Find("Score/Score_1").gameObject.GetComponent<ScoreCount>();
 		gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
 
 		// ゲームが開始してエイリアンが出てくる時間

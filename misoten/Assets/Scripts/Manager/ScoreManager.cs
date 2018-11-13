@@ -34,7 +34,6 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             scoreText[pID] = playerScore[pID].GetComponent<Text>();
             playerRank[pID] = 1;
-            scoreText[pID].text = "Chip:"+ GetPlayerScore(pID).ToString()+"/"+playerRank[pID].ToString();
         }
     }
     
@@ -48,8 +47,8 @@ public class ScoreManager : Singleton<ScoreManager>
         // スコア加算
         //playerScore[pID].GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
         playerScore[pID].GetComponent<ScoreCount>().AddScore(score);
-        UpdatePlayerRank();     // 順位更新
-        UpdateScoreText();       // 表示テキスト更新
+        //UpdatePlayerRank();     // 順位更新
+        //UpdateScoreText();       // 表示テキスト更新
     }
 
     /// <summary>

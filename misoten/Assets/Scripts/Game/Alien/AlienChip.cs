@@ -106,7 +106,7 @@ public class AlienChip : MonoBehaviour
 						{
 							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
 							SetCuisineCame(false);
-
+                            alienOrder.SetIsOrder(false);
 							// チップをプレイヤーに渡した
 							chipOnFlag[chipId] = true;
 						}
