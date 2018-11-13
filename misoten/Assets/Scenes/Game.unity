@@ -9046,7 +9046,7 @@ CapsuleCollider:
   m_Radius: 2
   m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0.6, y: 0.6, z: 1.65}
+  m_Center: {x: 0.7, y: 0.6, z: 2}
 --- !u!33 &639568709
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19224,12 +19224,12 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 993675308}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 2
   m_Height: 4
   m_Direction: 1
-  m_Center: {x: -0.6, y: 0.6, z: 1.65}
+  m_Center: {x: -0.7, y: 0.6, z: 2}
 --- !u!33 &993675312
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23893,7 +23893,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 1}
-  m_Center: {x: 4.3, y: 0, z: -4.5}
+  m_Center: {x: 4.3, y: 0, z: -4.1}
 --- !u!65 &1156221829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23905,7 +23905,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 1}
-  m_Center: {x: -4.3, y: 0, z: -4.5}
+  m_Center: {x: -4.3, y: 0, z: -4.1}
 --- !u!1 &1178069206
 GameObject:
   m_ObjectHideFlags: 0
