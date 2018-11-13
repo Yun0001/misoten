@@ -9012,9 +9012,8 @@ GameObject:
   m_Component:
   - component: {fileID: 639568710}
   - component: {fileID: 639568709}
-  - component: {fileID: 639568707}
   - component: {fileID: 639568706}
-  - component: {fileID: 639568711}
+  - component: {fileID: 639568707}
   m_Layer: 0
   m_Name: boxRight
   m_TagString: DastBox
@@ -9035,8 +9034,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCollision: 0
   DastBoxUI: {fileID: 0}
---- !u!65 &639568707
-BoxCollider:
+--- !u!136 &639568707
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -9044,9 +9043,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0.5}
+  m_Radius: 2
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0.6, y: 0.6, z: 1.65}
 --- !u!33 &639568709
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9068,18 +9068,6 @@ Transform:
   m_Father: {fileID: 1156221827}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
---- !u!65 &639568711
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 639568705}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1.0265019}
-  m_Center: {x: 0, y: 0, z: 0.013250947}
 --- !u!1 &642066073
 GameObject:
   m_ObjectHideFlags: 0
@@ -13434,10 +13422,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2
-  m_Height: 4
+  m_Radius: 2.96188
+  m_Height: 8.88564
   m_Direction: 1
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Center: {x: -0.05658368, y: 3, z: 0}
 --- !u!54 &741324594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19207,9 +19195,8 @@ GameObject:
   m_Component:
   - component: {fileID: 993675313}
   - component: {fileID: 993675312}
-  - component: {fileID: 993675310}
   - component: {fileID: 993675309}
-  - component: {fileID: 993675314}
+  - component: {fileID: 993675310}
   m_Layer: 0
   m_Name: boxLeft
   m_TagString: DastBox
@@ -19230,18 +19217,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCollision: 0
   DastBoxUI: {fileID: 0}
---- !u!65 &993675310
-BoxCollider:
+--- !u!136 &993675310
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 993675308}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0.5}
+  m_Radius: 2
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: -0.6, y: 0.6, z: 1.65}
 --- !u!33 &993675312
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19263,18 +19251,6 @@ Transform:
   m_Father: {fileID: 1156221827}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!65 &993675314
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 993675308}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1.0405996}
-  m_Center: {x: 0, y: 0, z: 0.020299792}
 --- !u!1 &994954279
 GameObject:
   m_ObjectHideFlags: 0
@@ -23882,6 +23858,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1156221827}
+  - component: {fileID: 1156221828}
+  - component: {fileID: 1156221829}
   m_Layer: 0
   m_Name: DustBoxes
   m_TagString: Untagged
@@ -23904,6 +23882,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1156221828
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1156221826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1, z: 1}
+  m_Center: {x: 4.3, y: 0, z: -4.5}
+--- !u!65 &1156221829
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1156221826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1, z: 1}
+  m_Center: {x: -4.3, y: 0, z: -4.5}
 --- !u!1 &1178069206
 GameObject:
   m_ObjectHideFlags: 0
@@ -34328,8 +34330,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.1271029, y: 1, z: 2.292036}
+  m_Center: {x: -0.0098191, y: 0, z: -0.04123497}
 --- !u!1 &1645546754
 GameObject:
   m_ObjectHideFlags: 0
@@ -41643,6 +41645,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af69fc2f81814784a925fc837ea31356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebugMode: 0
+  isEnd: 0
+  canvasCamera: {fileID: 0}
+  microwaveGage_cs: {fileID: 0}
 --- !u!65 &2106090474
 BoxCollider:
   m_ObjectHideFlags: 0
