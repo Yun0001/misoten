@@ -1298,7 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 1
-  oneAnimPatternSwitchTime: 10
+  oneAnimPatternSwitchTime: 35
   animID: 0
 --- !u!114 &114864609393174928
 MonoBehaviour:
