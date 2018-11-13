@@ -5177,6 +5177,26 @@ Prefab:
       propertyPath: isDebugMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137878726236079224, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 19f2f3b8549958e4a9a07bc56be5d1da, type: 2}
+    - target: {fileID: 137205081495508584, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 19f2f3b8549958e4a9a07bc56be5d1da, type: 2}
+    - target: {fileID: 95373641487228264, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 5f897533f665af34790f9be6bffa1bbc, type: 3}
+    - target: {fileID: 137091000015388964, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 5f897533f665af34790f9be6bffa1bbc, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
   m_IsPrefabParent: 0

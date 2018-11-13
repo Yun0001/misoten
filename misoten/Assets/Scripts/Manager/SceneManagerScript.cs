@@ -60,7 +60,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "Game")
         {
-            Time = GameObject.Find("GameTimeManager");
+            Time = GameObject.Find("TimeManager");
             GameTime = Time.GetComponent<GameTimeManager>();
 
         } 
