@@ -327,7 +327,8 @@ public class Player : MonoBehaviour
         //CuisineControllerOfferCuisine();
         playerAnimation_cs.SetIsCatering(false);
 
-        SetHaveInHandCuisine();
+        //SetHaveInHandCuisine();
+        Destroy(haveInHandCusine);
         SetPlayerStatus(PlayerStatus.Normal);
     }
 

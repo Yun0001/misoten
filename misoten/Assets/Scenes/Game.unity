@@ -38094,11 +38094,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af69fc2f81814784a925fc837ea31356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 0
-  isEnd: 0
-  canvasCamera: {fileID: 24543913}
-  microwaveGage_cs: {fileID: 0}
-  basePoint: 0
 --- !u!65 &2106090474
 BoxCollider:
   m_ObjectHideFlags: 0
