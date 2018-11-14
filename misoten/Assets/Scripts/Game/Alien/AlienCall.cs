@@ -162,7 +162,7 @@ public class AlienCall : MonoBehaviour
 		richDegreeId = 0;
 
 		// 席管理用IDの初期化
-		seatAddId = 0;
+		seatAddId = Random.Range(0, GetCounterSeatsMax());
 
 		// エイリアンIDの保存用の初期化
 		idSave = 0;

@@ -18,6 +18,7 @@ public class AlienParticleCall : MonoBehaviour
 		MOVE = 0,		// 移動時
 		SATISFACTION,	// 満足時
 		CLAIM,			// クレーム時
+		CHIPHANDOVER,	// チップを渡した時
 		MAX				// 最大
 	}
 
@@ -66,6 +67,9 @@ public class AlienParticleCall : MonoBehaviour
 
 		// 怒り時(クレーム)時エフェクト
 		AngerEffectCall();
+
+		// チップを渡した時のエフェクト
+		ChipHandOverEffectCall();
 	}
 
 	/// <summary>
@@ -167,6 +171,37 @@ public class AlienParticleCall : MonoBehaviour
 
 					// 一度しか通らないようにする
 					effectFlag[(int)EParticlePattern.CLAIM] = true;
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// チップを渡した時のエフェクト呼び出し関数
+	/// </summary>
+	void ChipHandOverEffectCall()
+	{
+		// 一度しか通らない
+		if (!effectFlag[(int)EParticlePattern.CHIPHANDOVER])
+		{
+			// 満足状態の時
+			if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+			{
+				// 状態移行フラグが「ON」の時
+				if (GetComponent<AlienOrder>().GetStatusMoveFlag())
+				{
+					// パーティクル生成
+					particleSystems[(int)EParticlePattern.CHIPHANDOVER] = Instantiate(prefab[(int)EParticlePattern.CHIPHANDOVER], transform.position, Quaternion.identity) as ParticleSystem;
+					particleSystems[(int)EParticlePattern.CHIPHANDOVER].transform.SetParent(transform);
+
+					// 拡縮設定
+					ScaleConfiguration(EParticlePattern.CHIPHANDOVER, new Vector3(1.0f, 1.0f, 1.0f));
+
+					// パーティクル再生
+					particleSystems[(int)EParticlePattern.CHIPHANDOVER].Play();
+
+					// 一度しか通らないようにする
+					effectFlag[(int)EParticlePattern.CHIPHANDOVER] = true;
 				}
 			}
 		}
