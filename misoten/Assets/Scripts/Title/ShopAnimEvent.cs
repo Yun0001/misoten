@@ -7,11 +7,12 @@ public class ShopAnimEvent : MonoBehaviour {
     private GameObject _canvasWO;
     
 	void Start () {
-        _canvasWO = transform.GetChild(0).GetChild(0).gameObject;
+        _canvasWO = GameObject.Find("WO");
     }
 
     void IsOpened()
     {
+        Debug.Log("Opened");
         _canvasWO.GetComponent<WhiteOut>().OnWhiteOut();
     }
 
