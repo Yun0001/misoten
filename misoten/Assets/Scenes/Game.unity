@@ -34293,26 +34293,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114774842402740008, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: eatoyPos.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114068991496043886, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: eatoyPos.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114068991496043886, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: eatoyPos.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114774842402740008, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: eatoyPos.y
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
   m_IsPrefabParent: 0
@@ -37922,6 +37902,7 @@ MonoBehaviour:
   isEnd: 0
   canvasCamera: {fileID: 24543913}
   microwaveGage_cs: {fileID: 0}
+  basePoint: 0
 --- !u!65 &2106090474
 BoxCollider:
   m_ObjectHideFlags: 0
