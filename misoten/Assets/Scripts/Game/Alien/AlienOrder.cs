@@ -369,7 +369,7 @@ void Update ()
 		switch (orderType)
 		{
 			case (int)EOrderType.BASE:
-				if (individualOrderBaseType == (int)cuisine.GetComponent<Food>().GetCategory())
+				if (individualOrderBaseType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor())
 				{
 					GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
 					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());

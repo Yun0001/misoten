@@ -74,4 +74,5 @@ public class mwAnimCtrl : MonoBehaviour
 	public bool GetBool() => isLooping;
 
     public void SetIsOpen(bool b) => isOpen = b;
+    public bool GetIsOpen() => isOpen;
 }
