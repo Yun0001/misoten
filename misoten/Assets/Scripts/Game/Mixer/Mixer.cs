@@ -308,6 +308,14 @@ public class Mixer : KitchenwareBase {
 
     protected override int CalcEatoyPoint()
     {
-        return 0;
+        int sum = 0;
+        for (int i = 0; i < cuisines.Length; i++)
+        {
+            if (cuisines[i] != null)
+            {
+                sum += cuisines[i].GetComponent<Eatoy>().GetEatoyPoint();
+            }
+        }
+        return miniGameUI.GetComponent<MixerMiniGame>().GetPowerPoint() * sum;
     }
 }

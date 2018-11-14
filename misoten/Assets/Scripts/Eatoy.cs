@@ -12,7 +12,7 @@ public class Eatoy : MonoBehaviour {
     private EEatoyColor eatoyColor;
 
     [SerializeField]
-    private float eatoyPoint;
+    private int eatoyPoint;
 
     [SerializeField]
     private bool isIcing; 
@@ -35,6 +35,8 @@ public class Eatoy : MonoBehaviour {
     public void AddPoint(int p) => eatoyPoint += p;
 
     public void SubPoint(int p) => eatoyPoint = Mathf.Max(0, eatoyPoint - p);
+
+    public int GetEatoyPoint() => eatoyPoint;
 
     public EEatoyColor GetEatoyColor() => eatoyColor;
 
