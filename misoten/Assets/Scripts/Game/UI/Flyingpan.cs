@@ -2,12 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Flyingpan : KitchenwareBase
 {
     // 焼きゲージスクリプト
     private GrilledGage grilledGage_cs;
+    
+    private int[] eatoyPoint = Enumerable.Repeat(0, 4).ToArray();
 
+    private int basePoint;
+    private int chain;
 
     void Awake () {
         InstanceMiniGameUI();
@@ -30,6 +35,7 @@ public class Flyingpan : KitchenwareBase
     {
         miniGameUI.SetActive(true);
         grilledGage_cs.Init(1);
+        basePoint = 1;
 
         Vector3 gPos = transform.position;
         gPos.z -= 1f;
@@ -65,7 +71,7 @@ public class Flyingpan : KitchenwareBase
         grilledGage_cs.ResetSuccessArea();
         miniGameUI.gameObject.SetActive(false);
         SetIsCooking(false);
-        CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
+        //CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;
     }
 
@@ -78,7 +84,11 @@ public class Flyingpan : KitchenwareBase
     public void DecisionTimingPointCollision()
     {
         GameObject hitSuccessArea = grilledGage_cs.DecisionIsHit();
-        if (hitSuccessArea == null) return;
+        if (hitSuccessArea == null)
+        {
+            ResetChain();
+            return;
+        }
 
         cuisine.GetComponent<Food>().AddQualityTaste(hitSuccessArea.GetComponent<GrilledPoint>().GetPoint());
         switch (hitSuccessArea.tag)
@@ -86,22 +96,42 @@ public class Flyingpan : KitchenwareBase
             case "GrilledSuccessAreaNormal1":
                 hitSuccessArea.transform.parent.gameObject.SetActive(false);
                 grilledGage_cs.ResetIsHit(0);
+                AddEatoyPoint(0, 1);
+
                 break;
 
             case "GrilledSuccessAreaNormal2":
                 hitSuccessArea.transform.parent.gameObject.SetActive(false);
                 grilledGage_cs.ResetIsHit(1);
+                AddEatoyPoint(1, 2);
                 break;
 
             case "GrilledSuccessAreaHard":
                 hitSuccessArea.SetActive(false);
                 grilledGage_cs.ResetIsHit(2);
+                AddEatoyPoint(2, 2);
                 break;
 
             case "GrilledSuccessAreaHell":
                 hitSuccessArea.SetActive(false);
                 grilledGage_cs.ResetIsHit(3);
+                AddEatoyPoint(3, 3);
                 break;
         }
+        chain++;
     }
+
+    protected override int CalcEatoyPoint()
+    {
+        int sum = 0;
+        for (int i = 0; i < eatoyPoint.Length; i++)
+        {
+            sum += eatoyPoint[i];
+        }
+        return (int)(basePoint * chain * 0.25f * sum);
+    }
+
+    public void ResetChain() => chain = 1;
+
+    public void AddEatoyPoint(int e, int point) => eatoyPoint[e] += point;
 }

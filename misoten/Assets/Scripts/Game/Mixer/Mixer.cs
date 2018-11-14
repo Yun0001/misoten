@@ -305,4 +305,9 @@ public class Mixer : KitchenwareBase {
     }
 
     public GameObject GetMiniGameUI() => miniGameUI;
+
+    protected override int CalcEatoyPoint()
+    {
+        return 0;
+    }
 }

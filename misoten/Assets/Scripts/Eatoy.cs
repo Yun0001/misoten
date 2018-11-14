@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Eatoy : MonoBehaviour {
 
@@ -19,30 +21,14 @@ public class Eatoy : MonoBehaviour {
     {
         eatoyPoint = 0;
         isIcing = true;
+
         // enum設定
-        // 何かスマートな方法ないかなー
-        // .NET4.7.1ならなー
-        eatoyColor = ConversionID(colorID);
+        eatoyColor = (EEatoyColor)Enum.ToObject(typeof(EEatoyColor), colorID);
 
         // スプライト設定
         GetComponent<SpriteRenderer>().sprite = eatoySprite;
     }
 
-    private EEatoyColor ConversionID(int colorID)
-    {
-        switch (colorID)
-        {
-            case 1:     return EEatoyColor.Red;
-            case 2:     return EEatoyColor.Bule;
-            case 3:     return EEatoyColor.Yellow;
-            case 4:     return EEatoyColor.Purple;
-            case 5:     return EEatoyColor.Green;
-            case 6:     return EEatoyColor.Orange;
-            default:
-                Debug.LogError("不正なColorID");
-                return EEatoyColor.None;
-        }
-    }
 
     public void Thawing() => isIcing = false;
 

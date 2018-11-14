@@ -20,6 +20,9 @@ public class IraIraFrame : MonoBehaviour
 	[SerializeField, Range(0, 100.0f)]
 	private float speed;
 
+    [SerializeField]
+    private GameObject pot;
+
 	// ---------------------------------------------
 
 	// ローカル変数
@@ -34,13 +37,18 @@ public class IraIraFrame : MonoBehaviour
 	// 一回転したかのフラグ
 	private bool oneRotationFlag = false;
 
-	// ---------------------------------------------
+    // ---------------------------------------------
 
-	/// <summary>
-	/// 衝突していない時
-	/// </summary>
-	/// <param name="collision"></param>
-	private void OnTriggerExit2D(Collider2D collision)
+    private void Awake()
+    {
+        pot = GameObject.Find("nabe1");
+    }
+
+    /// <summary>
+    /// 衝突していない時
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerExit2D(Collider2D collision)
 	{
 		// Tagが「SecondHand」に設定されているオブジェクトのみ
 		if (collision.tag == "SecondHand")
@@ -56,6 +64,8 @@ public class IraIraFrame : MonoBehaviour
 
 			// 一回転したかのフラグ初期化
 			oneRotationFlag = false;
+
+            pot.GetComponent<Pot>().AddMissCount();
 		}
 	}
 
