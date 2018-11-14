@@ -31,7 +31,7 @@ public class mwAnimCtrl : MonoBehaviour
 
         OneAction();
         LoopAction();
-
+        
         if (isOpen)
         {
             openFrameCount++;
@@ -40,7 +40,7 @@ public class mwAnimCtrl : MonoBehaviour
                 isOpen = false;
             }
         }
-
+        
         _animator.SetBool("isLooping", isLooping);
         _animator.SetBool("isOpen", isOpen);
     }

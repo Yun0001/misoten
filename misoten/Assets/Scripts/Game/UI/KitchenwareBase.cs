@@ -27,19 +27,24 @@ public abstract class KitchenwareBase : MonoBehaviour
     /// 調理開始
     /// </summary>
     /// <returns></returns>
-    public bool CookingStart()
+    public bool CookingStart(GameObject eatoy)
     {
+        if (!eatoy.GetComponent<Eatoy>().IsIcing()) return false;
+
         if (isDebugMode)
         {
-            cuisine = SetCuisine();
+            // とりあえずデバッグモードはポイント１
+            cuisine = eatoy;
+            cuisine.GetComponent<Eatoy>().AddPoint(1);
+            cuisine.GetComponent<Eatoy>().Thawing();
             return true;
         }
 
         // 既に調理中なら抜ける
         if (isCooking) return false;
 
-        // ここにオーバーライドする関数を記述
-        cuisine = SetCuisine();
+        // イートイをセット
+        cuisine = eatoy;
 
         // 料理をコントローラーから取得できなければ抜ける
         if (cuisine == null) return false;
@@ -68,6 +73,7 @@ public abstract class KitchenwareBase : MonoBehaviour
             ResetMiniGameUI();
             SetIsCooking(false);
             SetIsEnd(true);
+            cuisine.GetComponent<Eatoy>().Thawing();
             return cuisine;
         }
 

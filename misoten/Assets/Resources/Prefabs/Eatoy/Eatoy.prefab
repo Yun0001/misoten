@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4147767857340058}
   - component: {fileID: 212806791201853184}
   - component: {fileID: 114078443395011952}
-  m_Layer: 18
+  m_Layer: 0
   m_Name: Eatoy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

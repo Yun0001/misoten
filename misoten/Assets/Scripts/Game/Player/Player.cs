@@ -71,6 +71,9 @@ public class Player : MonoBehaviour
     private PlayerInput playerInput_cs;
     private GameObject dastBoxGage;
 
+    [SerializeField]
+    private Vector3 eatoyPos;
+
 
     // Use this for initialization
     void Awake()
@@ -113,6 +116,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 pos = transform.position;
         switch (playerStatus)
         {
             case PlayerStatus.Microwave:
@@ -163,8 +167,8 @@ public class Player : MonoBehaviour
                     SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
                     GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
                     SetPlayerStatus(PlayerStatus.CateringIceEatoy);
+                    playerAnimation_cs.SetIsCatering(true);
                     GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(false);
-                    GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetIsOpen(true);
                 }
                 break;
 
@@ -181,6 +185,31 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.Hindrance:
                 UpdateHindrance();
+                break;
+
+            case PlayerStatus.Catering:
+                if (GetComponent<SpriteRenderer>().flipX)
+                {
+                    pos += eatoyPos;
+                }
+                else
+                {
+                    pos -= eatoyPos;
+                }
+                haveInHandCusine.transform.position = pos;
+                break;
+
+            case PlayerStatus.CateringIceEatoy:
+                if (GetComponent<SpriteRenderer>().flipX)
+                {
+                    pos.x += eatoyPos.x;
+                }
+                else
+                {
+                    pos.x -= eatoyPos.x;
+                }
+                pos.y += eatoyPos.y;
+                haveInHandCusine.transform.position = pos;
                 break;
 
             default:
@@ -295,7 +324,7 @@ public class Player : MonoBehaviour
         // エイリアンのスクリプトを取得して料理を渡す
         GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandCusine);
         // 料理コントローラーが新たに料理を出せるようにする
-        CuisineControllerOfferCuisine();
+        //CuisineControllerOfferCuisine();
         playerAnimation_cs.SetIsCatering(false);
 
         SetHaveInHandCuisine();
@@ -347,10 +376,13 @@ public class Player : MonoBehaviour
     private void AccessMicrowave()
     {
         if (GetHitObj((int)hitObjName.Microwave) == null) return;   // 電子レンジに当たっていなければreturn
-        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
+        if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
         if (GetHitObjComponentMicroWave().IsCooking()) return;
         StopMove(); // 移動値をリセット
         cookingMicrowave_cs.CookingStart();
+        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(true);
+
     }
 
     /// <summary>
@@ -360,7 +392,7 @@ public class Player : MonoBehaviour
     {
         // 鍋に当たっていなければ抜ける
         if (GetHitObj((int)hitObjName.Pot) == null) return;
-        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.Pot) return;
+        if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.Pot) return;
         StopMove();
 
         cookingPot_cs.CookingStart();
@@ -371,7 +403,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void AccessFlyingpan()
     {
-        if (GetPlayerStatus() != PlayerStatus.Normal && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
+        if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
         if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
         if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Flyingpan>().IsCooking()) return;
         StopMove();
@@ -573,6 +605,8 @@ public class Player : MonoBehaviour
     {
         haveInHandCusine = Cuisine;
     }
+
+    public GameObject GetHaveInHandCuisine() => haveInHandCusine;
 
     private void StopMove()
     {

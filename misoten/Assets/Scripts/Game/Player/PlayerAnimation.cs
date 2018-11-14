@@ -104,15 +104,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (direction == PlayerMove.EDirection.Right)
         {
-            Vector3 scale = transform.localScale;
-            scale.x = 0.3f;
-            transform.localScale = scale;
+            GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (direction == PlayerMove.EDirection.Left)
         {
-            Vector3 scale = transform.localScale;
-            scale.x = -0.3f;
-            transform.localScale = scale;
+            GetComponent<SpriteRenderer>().flipX = true;
         }
     } 
 

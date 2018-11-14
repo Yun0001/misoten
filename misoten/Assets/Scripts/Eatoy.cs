@@ -12,10 +12,13 @@ public class Eatoy : MonoBehaviour {
     [SerializeField]
     private float eatoyPoint;
 
+    [SerializeField]
+    private bool isIcing; 
+
     public void Init(int colorID, Sprite eatoySprite)
     {
         eatoyPoint = 0;
-
+        isIcing = true;
         // enum設定
         // 何かスマートな方法ないかなー
         // .NET4.7.1ならなー
@@ -41,9 +44,13 @@ public class Eatoy : MonoBehaviour {
         }
     }
 
+    public void Thawing() => isIcing = false;
+
     public void AddPoint(int p) => eatoyPoint += p;
 
     public void SubPoint(int p) => eatoyPoint = Mathf.Max(0, eatoyPoint - p);
 
     public EEatoyColor GetEatoyColor() => eatoyColor;
+
+    public bool IsIcing() => isIcing;
 }

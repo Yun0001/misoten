@@ -38,6 +38,9 @@ public class IceBox : MonoBehaviour {
     [SerializeField]
     int val;
 
+    [SerializeField]
+    private bool isDebugMode;
+
 	// Use this for initialization
 	void Awake () {
         eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
@@ -110,7 +113,7 @@ public class IceBox : MonoBehaviour {
 
         //int val = 100;
 
-        // 一番最初に入店してきたきゃじゅ
+        // 一番最初に入店してきた客
         if (IsChangeEatoy)
         {
             // チェンジイートイがある時
@@ -125,11 +128,13 @@ public class IceBox : MonoBehaviour {
     }
 
     public void ActionMiniGame()
-    {
-        if (MiniGameUI.GetComponent<IceBoxMiniGame>().AddPlayerBarrage())
+    { 
+        if (MiniGameUI.GetComponent<IceBoxMiniGame>().AddPlayerBarrage() || isDebugMode)
         {
             MiniGameUI.GetComponent<IceBoxMiniGame>().Init();
             putEatoy = Instantiate(eatoyPrefab, transform.position, Quaternion.identity);
+            Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
+            putEatoy.transform.localScale = scale;
             int eatoyID = DecisionPutEatoyElement();
             putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID]);
             status = Status.Take;
