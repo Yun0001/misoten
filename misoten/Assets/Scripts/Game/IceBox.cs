@@ -23,22 +23,24 @@ public class IceBox : MonoBehaviour {
     private int[] playerAccessOrder = Enumerable.Repeat(MAX_PLAYER, MAX_PLAYER).ToArray();
 
     [SerializeField]
-    private GameObject[] eatoys;
+    private GameObject eatoyPrefab;
+
+    [SerializeField]
+    private GameObject putEatoy;
 
     private System.Random random = new System.Random();
 
     [SerializeField]
     private GameObject MiniGameUI;
 
-    [SerializeField]
-    private GameObject putEatoy;
+    private Sprite[] eatoySprite;
 
     [SerializeField]
     int val;
 
 	// Use this for initialization
 	void Awake () {
-		
+        eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
 	}
 
 
@@ -127,7 +129,9 @@ public class IceBox : MonoBehaviour {
         if (MiniGameUI.GetComponent<IceBoxMiniGame>().AddPlayerBarrage())
         {
             MiniGameUI.GetComponent<IceBoxMiniGame>().Init();
-            putEatoy = eatoys[DecisionPutEatoyElement()];
+            putEatoy = Instantiate(eatoyPrefab, transform.position, Quaternion.identity);
+            int eatoyID = DecisionPutEatoyElement();
+            putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID]);
             status = Status.Take;
         }
     }

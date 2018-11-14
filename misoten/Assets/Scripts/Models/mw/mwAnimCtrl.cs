@@ -13,10 +13,16 @@ public class mwAnimCtrl : MonoBehaviour
     [SerializeField]
     private bool isOpen = false;
 
+    [SerializeField]
+    private int openFrame;
+
+    private int openFrameCount;
+
     // Use this for initialization
     void Start()
     {
         _animator = GetComponent<Animator>();
+        openFrameCount = 0;
     }
 
     // Update is called once per frame
@@ -25,6 +31,15 @@ public class mwAnimCtrl : MonoBehaviour
 
         OneAction();
         LoopAction();
+
+        if (isOpen)
+        {
+            openFrameCount++;
+            if (openFrameCount >= openFrame)
+            {
+                isOpen = false;
+            }
+        }
 
         _animator.SetBool("isLooping", isLooping);
         _animator.SetBool("isOpen", isOpen);
@@ -49,4 +64,6 @@ public class mwAnimCtrl : MonoBehaviour
 
     public void SetBool(bool b) => isLooping = b;
 	public bool GetBool() => isLooping;
+
+    public void SetIsOpen(bool b) => isOpen = b;
 }

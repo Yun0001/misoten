@@ -163,6 +163,8 @@ public class Player : MonoBehaviour
                     SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
                     GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
                     SetPlayerStatus(PlayerStatus.CateringIceEatoy);
+                    GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(false);
+                    GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetIsOpen(true);
                 }
                 break;
 
@@ -400,6 +402,7 @@ public class Player : MonoBehaviour
         if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().Access(playerID))
         {
             SetPlayerStatus(PlayerStatus.IceBox);
+            GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(true);
         }
     }
 

@@ -26,6 +26,7 @@ public class CookingMicrowave : MonoBehaviour {
         player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingStart();
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
+        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
     }
 
     /// <summary>
