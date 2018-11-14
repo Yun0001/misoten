@@ -74,6 +74,7 @@ public abstract class KitchenwareBase : MonoBehaviour
             SetIsCooking(false);
             SetIsEnd(true);
             cuisine.GetComponent<Eatoy>().Thawing();
+            cuisine.GetComponent<Eatoy>().AddPoint(CalcEatoyPoint());
             return cuisine;
         }
 
@@ -111,4 +112,6 @@ public abstract class KitchenwareBase : MonoBehaviour
     public abstract void CookingInterruption();
 
     protected abstract bool Cooking();
+
+    protected abstract int CalcEatoyPoint();
 }

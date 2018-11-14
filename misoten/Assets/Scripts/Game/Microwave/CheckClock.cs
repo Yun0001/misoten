@@ -57,13 +57,14 @@ public class CheckClock : MonoBehaviour {
             {
                 if (i == 0)
                 {
-                    microwave_cs.AddCuisinePoint(hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.GreatSuccessArea));
+                    microwave_cs.AddEatoyPoint(0,hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.GreatSuccessArea));
                 }
                 else if (i == 1)
                 {
-                    microwave_cs.AddCuisinePoint(hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.SuccessArea));
+                    microwave_cs.AddEatoyPoint(1,hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.SuccessArea));
 
                 }
+                microwave_cs.AddChain();
                 microwaveGage_cs.DecisionSuceesAreaPosition();
                 return;
             }
@@ -71,5 +72,6 @@ public class CheckClock : MonoBehaviour {
 
         // エリア外
         microwaveGage_cs.ChinMiss();
+        microwave_cs.ResetChain();
     }
 }

@@ -9,6 +9,13 @@ public class Microwave : KitchenwareBase
     [SerializeField]
     MicrowaveGage microwaveGage_cs;
 
+    private int chain;
+
+    private int[] eatoyPoint = new int[2];
+
+    [SerializeField]
+    private float basePoint;
+
 	// Use this for initialization
 	void Awake () {
         InstanceMiniGameUI();
@@ -26,6 +33,11 @@ public class Microwave : KitchenwareBase
     {
         miniGameUI.SetActive(true);
         microwaveGage_cs.ResetMicrowaveGage();  // ゲージの状態をリセット
+        chain = 0;
+        for (int i = 0; i < eatoyPoint.Length; i++)
+        {
+            eatoyPoint[i] = 0;
+        }
     }
 
     protected override void ResetMiniGameUI()
@@ -46,11 +58,20 @@ public class Microwave : KitchenwareBase
     {
         ResetMiniGameUI();
         SetIsCooking(false);
-        CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
+        //CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;
     }
 
-    public void AddCuisinePoint(int point) => cuisine.GetComponent<Food>().AddQualityTaste(point);
+    protected override int CalcEatoyPoint()
+    {
+        return (int)((basePoint + chain * 0.25f) * eatoyPoint[0] * eatoyPoint[1]);
+    }
+
+    public void AddEatoyPoint(int e, int point) => eatoyPoint[e] += point;
+
+    public void AddChain() => chain++;
+
+    public void ResetChain() => chain = 0;
 
     public void DecisionCheckClockCollision()
     {
