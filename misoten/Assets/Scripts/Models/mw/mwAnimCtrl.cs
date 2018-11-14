@@ -32,7 +32,10 @@ public class mwAnimCtrl : MonoBehaviour
         OneAction();
         LoopAction();
 
-        if (isOpen)
+        // 現在のアニメーションステートを取得
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        // "open"のときの処理
+        if (stateInfo.IsName("Base Layer.open"))
         {
             openFrameCount++;
             if (openFrameCount >= openFrame)
@@ -60,6 +63,11 @@ public class mwAnimCtrl : MonoBehaviour
         {
             _animator.Play("loopAction");
         }
+    }
+
+    void OnIsOpen()
+    {
+        isOpen = true;
     }
 
     public void SetBool(bool b) => isLooping = b;
