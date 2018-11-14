@@ -18,6 +18,8 @@ public class GrilledEffect : MonoBehaviour
 		GRILLED = 0,	// 焼き
 		SIMMER,			// 煮る
 		MICROWAVE,		// 電子レンジ
+		ICEBOX1,		// 冷蔵庫1
+		ICEBOX2,		// 冷蔵庫2
 		MAX				// 最大
 	}
 
@@ -40,7 +42,7 @@ public class GrilledEffect : MonoBehaviour
 	private mwAnimCtrl mwAnimCtrl;
 
 	// エフェクトフラグ
-	private bool[] effectFlag = { false, false, false };
+	private bool[] effectFlag = { false, false, false, false, false };
 
 	// ---------------------------------------------
 
@@ -62,6 +64,13 @@ public class GrilledEffect : MonoBehaviour
 			case EOrderType.MICROWAVE:
 				// コンポーネント取得
 				mwAnimCtrl = GameObject.Find("Stage/cookwares/microwaves/microwave1/microwave").gameObject.GetComponent<mwAnimCtrl>();
+				break;
+			case EOrderType.ICEBOX1:
+				// コンポーネント取得
+				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox 1").gameObject.GetComponent<mwAnimCtrl>();
+				break;
+			case EOrderType.ICEBOX2:
+				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox 1").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			default: break;
 		}
@@ -88,6 +97,14 @@ public class GrilledEffect : MonoBehaviour
 			case EOrderType.MICROWAVE:
 				if (mwAnimCtrl.GetBool() && !effectFlag[2]) { GetComponent<ParticleSystem>().Play(); effectFlag[2] = !effectFlag[2]; }
 				if (!mwAnimCtrl.GetBool() && effectFlag[2]) { GetComponent<ParticleSystem>().Stop(); effectFlag[2] = !effectFlag[2]; }
+				break;
+			case EOrderType.ICEBOX1:
+				if (mwAnimCtrl.GetIsOpen() && !effectFlag[3]) { GetComponent<ParticleSystem>().Play(); effectFlag[3] = !effectFlag[3]; }
+				if (!mwAnimCtrl.GetIsOpen() && effectFlag[3]) { GetComponent<ParticleSystem>().Stop(); effectFlag[3] = !effectFlag[3]; }
+				break;
+			case EOrderType.ICEBOX2:
+				if (mwAnimCtrl.GetIsOpen() && !effectFlag[4]) { GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4]; }
+				if (!mwAnimCtrl.GetIsOpen() && effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
 				break;
 			default: break;
 		}
