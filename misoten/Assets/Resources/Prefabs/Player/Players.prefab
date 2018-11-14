@@ -442,7 +442,7 @@ MonoBehaviour:
   - 0.5
   - 1
   - 1.5
-  isStartYummyBottleFull: 1
+  isStartYummyBottleFull: 0
   yummyBottle: 0
 --- !u!114 &114354825206645910
 MonoBehaviour:
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 198197539644988382, guid: 9b9834551907a8443a97c06ebce72412, type: 2}
   particleSystems: {fileID: 0}
-  speed: 4
+  speed: 8
   CateringCoefficient: 0.5
   TasteChargeCoefficient: 0.1
   adjustment: 4

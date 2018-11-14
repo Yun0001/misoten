@@ -355,39 +355,52 @@ void Update ()
 	/// <param name="cuisine"></param>
 	public void EatCuisine(GameObject cuisine)
 	{
+		// Debug用
+		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
+
 		// EAT状態が「ON」になる
 		AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
 
-		// Debug用
-		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
+		// 料理が来た判定
+		GetComponent<AlienChip>().SetCuisineCame(true);
 
 		// オーダーの種類管理
 		switch (orderType)
 		{
 			case (int)EOrderType.BASE:
-				if (individualOrderBaseType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor())
-				{
-					GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
-					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-					GetComponent<AlienChip>().SetCuisineCame(true);
-
-					// エイリアンが満足する
-					GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
-				}
-				else
-				{
-					GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
-					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-					GetComponent<AlienChip>().SetCuisineCame(true);
-
-					// エイリアンがクレームをする
-					GetComponent<AlienClaim>().SetIsClaim(true);
-				}
+				if (individualOrderBaseType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(); }
+				else { Claim(); }
 				break;
 			case (int)EOrderType.CHANGE:
+				if (individualOrderChangeType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(); }
+				else { Claim(); }
 				break;
 			default: break;
 		}
+	}
+
+	/// <summary>
+	/// 満足
+	/// </summary>
+	void Satisfaction()
+	{
+		// 通常の旨味係数
+		GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
+
+		// エイリアンが満足する
+		GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
+	}
+
+	/// <summary>
+	/// クレーム
+	/// </summary>
+	void Claim()
+	{
+		// 半分の旨味係数
+		GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
+
+		// エイリアンがクレームをする
+		GetComponent<AlienClaim>().SetIsClaim(true);
 	}
 
 	/// <summary>
