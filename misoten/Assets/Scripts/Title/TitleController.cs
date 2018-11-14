@@ -9,10 +9,11 @@ public class TitleController : MonoBehaviour {
     private bool isCameraMoved = false;
 
     private GameObject mainCamera;
-    private Animator shopAnimator;
+    private Animator doorrAnimator;
+    private Animator doorlAnimator;
 
     // カメラが移動した際の終点座標
-    private static readonly Vector3 endPosition = new Vector3(1.73f, -1.72f, -4.79f);
+    private static readonly Vector3 endPosition = new Vector3(0.0f, -1.5f, -4.5f);
 
     [SerializeField, Range(0.5f, 1)]
     float cameraMoveTime = 0.75f;
@@ -32,10 +33,10 @@ public class TitleController : MonoBehaviour {
         // メインカメラを取得
         mainCamera = Camera.main.gameObject;
         startPosition = mainCamera.transform.position;
-
-        // ショップオブジェクト取得
-        shopAnimator = GameObject.FindGameObjectWithTag("Shop").GetComponent<Animator>();
         
+        // ショップオブジェクト取得
+        doorrAnimator = GameObject.Find("doorr").GetComponent<Animator>();
+        doorlAnimator = GameObject.Find("doorl").GetComponent<Animator>();
 
     }
 
@@ -46,8 +47,16 @@ public class TitleController : MonoBehaviour {
 
     void Update () {
 
-        //if (Input.anyKeyDown)
-        if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (!isStartingGame)
+            {
+                startTime = Time.timeSinceLevelLoad;
+            }
+
+            isStartingGame = true;
+        }
+        else if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
         {
             if (!isStartingGame)
             {
@@ -77,7 +86,8 @@ public class TitleController : MonoBehaviour {
 
     void TitleAnimation()
     {
-        shopAnimator.Play("open");
+        doorrAnimator.Play("open");
+        doorlAnimator.Play("open");
     }
 
     void CameraMove()
@@ -90,14 +100,11 @@ public class TitleController : MonoBehaviour {
         }
 
         var rate = diff / cameraMoveTime;
-        //var pos = curve.Evaluate(rate);
-
+     
         mainCamera.transform.position = Vector3.Lerp(startPosition, endPosition, rate);
-        //transform.position = Vector3.Lerp (startPosition, endPosition, pos);
-
+      
         if (mainCamera.transform.position==endPosition) {
             isCameraMoved = true;
-            Debug.Log(mainCamera.transform);
         }
     }
 
