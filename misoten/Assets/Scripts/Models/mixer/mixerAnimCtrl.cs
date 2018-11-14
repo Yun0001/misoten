@@ -35,6 +35,14 @@ public class mixerAnimCtrl : MonoBehaviour
             Debug.Log(true);
         }
 
+        // 現在のアニメーションステートを取得
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        // "open"のときの処理
+        if (stateInfo.IsName("Base Layer.open"))
+        {
+
+        }
+
     }
 
     void LoopAction()
@@ -48,6 +56,11 @@ public class mixerAnimCtrl : MonoBehaviour
     void CompAnimFinish()
     {
         isComplete = false;
+    }
+
+    void OnIsOpen()
+    {
+        isOpen = true;
     }
 
     private void OnAnimationPlay()
