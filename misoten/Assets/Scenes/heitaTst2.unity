@@ -3905,6 +3905,7 @@ MonoBehaviour:
   putEatoy: {fileID: 1685462723434298, guid: 4c2edac843f6e5d4c9f6b47b115c3d77, type: 2}
   MiniGameUI: {fileID: 106282839}
   val: 0
+  isDebugMode: 0
 --- !u!65 &427328353
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9353,6 +9354,7 @@ MonoBehaviour:
   putEatoy: {fileID: 1685462723434298, guid: 4c2edac843f6e5d4c9f6b47b115c3d77, type: 2}
   MiniGameUI: {fileID: 445827218}
   val: 0
+  isDebugMode: 0
 --- !u!65 &671718050
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41866,6 +41868,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af69fc2f81814784a925fc837ea31356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebugMode: 0
+  isEnd: 0
+  canvasCamera: {fileID: 0}
+  microwaveGage_cs: {fileID: 0}
+  basePoint: 0
 --- !u!65 &2106090474
 BoxCollider:
   m_ObjectHideFlags: 0
