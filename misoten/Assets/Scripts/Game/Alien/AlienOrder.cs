@@ -25,7 +25,7 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	private enum EOrderBaseType
 	{
-		RED = 0,	// 赤
+		RED = 1,	// 赤
 		BLUE,		// 青
 		YELLOW,		// 黄
 		MAX			// 最大
@@ -36,7 +36,7 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	private enum EOrderChangeType
 	{
-		PURPLE = 0, // 紫
+		PURPLE = 4, // 紫
 		ORANGE,		// 橙
 		GREEN,		// 緑
 		MAX			// 最大
@@ -47,13 +47,9 @@ public class AlienOrder : MonoBehaviour
 	// インスペクター上で設定可能
 	// ---------------------------------------------
 
-	// オーダー内容描画用(ベース)
+	// オーダー内容描画用
 	[SerializeField]
-	GameObject[] orderBaseBalloon;
-
-	// オーダー内容描画用(チェンジ)
-	[SerializeField]
-	GameObject[] orderChangeBalloon;
+	GameObject[] orderBalloon = new GameObject[7];
 
 	// オーダーするまでの時間
 	[SerializeField]
@@ -343,11 +339,11 @@ void Update ()
 		{
 			case (int)EOrderType.BASE:
 				// 注文内容を描画・非描画する(ベース用)
-				orderBaseBalloon[orderBaseSave].SetActive(value);
+				orderBalloon[orderBaseSave].SetActive(value);
 				break;
 			case (int)EOrderType.CHANGE:
 				// 注文内容を描画・非描画する(チェンジ用)
-				orderChangeBalloon[orderChangeSave].SetActive(value);
+				orderBalloon[orderChangeSave].SetActive(value);
 				break;
 			default: break;
 		}

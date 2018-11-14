@@ -1206,16 +1206,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee114dddc4505748a7280e256b9b046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orderBaseBalloon:
+  orderBalloon:
+  - {fileID: 0}
   - {fileID: 1809511164187942}
   - {fileID: 1017502897018800}
   - {fileID: 1437119176176014}
-  orderChangeBalloon:
   - {fileID: 1553707983349592}
   - {fileID: 1931287598620532}
   - {fileID: 1893412738375830}
   orderTime: 1
-  orderPlanDispCount: 0.5
+  orderPlanDispCount: 1.5
   eatingCount: 2
   individualOrderBaseType: 0
   individualOrderChangeType: 0
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhenEnteringStoreMoveTime:
   - 2
-  - 2
+  - 4
   - 1
   - 2
   - 1
