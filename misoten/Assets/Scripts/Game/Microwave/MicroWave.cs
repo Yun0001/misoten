@@ -6,75 +6,76 @@ using System;
 
 public class Microwave : KitchenwareBase
 {
-    [SerializeField]
-    MicrowaveGage microwaveGage_cs;
+	[SerializeField]
+	MicrowaveGage microwaveGage_cs;
 
-    private int chain;
+	private int chain;
 
-    private int[] eatoyPoint = new int[2];
+	private int[] eatoyPoint = new int[2];
 
-    [SerializeField]
-    private float basePoint;
+	[SerializeField]
+	private float basePoint;
 
 	// Use this for initialization
-	void Awake () {
-        InstanceMiniGameUI();
-        microwaveGage_cs = miniGameUI.GetComponent<MicrowaveGage>();
-    }
+	void Awake()
+	{
+		InstanceMiniGameUI();
+		microwaveGage_cs = miniGameUI.GetComponent<MicrowaveGage>();
+	}
 
-    protected override void InstanceMiniGameUI()
-    {
-        miniGameUI = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
-        miniGameUI.SetActive(false);
-        miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
-    }
+	protected override void InstanceMiniGameUI()
+	{
+		miniGameUI = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
+		miniGameUI.SetActive(false);
+		miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
+	}
 
-    protected override void InitMiniGameUI()
-    {
-        miniGameUI.SetActive(true);
-        microwaveGage_cs.ResetMicrowaveGage();  // ゲージの状態をリセット
-        ResetChain();
-        for (int i = 0; i < eatoyPoint.Length; i++)
-        {
-            eatoyPoint[i] = 0;
-        }
-    }
+	protected override void InitMiniGameUI()
+	{
+		miniGameUI.SetActive(true);
+		microwaveGage_cs.ResetMicrowaveGage();  // ゲージの状態をリセット
+		ResetChain();
+		for (int i = 0; i < eatoyPoint.Length; i++)
+		{
+			eatoyPoint[i] = 0;
+		}
+	}
 
-    protected override void ResetMiniGameUI()
-    {
-        miniGameUI.SetActive(false);
-    }
-
-
-    protected override bool Cooking()
-    {
-        return microwaveGage_cs.UpdateMicrowaveGage();
-    }
+	protected override void ResetMiniGameUI()
+	{
+		miniGameUI.SetActive(false);
+	}
 
 
-    protected override GameObject SetCuisine() => CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
+	protected override bool Cooking()
+	{
+		return microwaveGage_cs.UpdateMicrowaveGage();
+	}
 
-    public override void CookingInterruption()
-    {
-        ResetMiniGameUI();
-        SetIsCooking(false);
-        //CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
-        cuisine = null;
-    }
 
-    protected override int CalcEatoyPoint()
-    {
-        return (int)((basePoint + chain * 0.25f) * eatoyPoint[0] + eatoyPoint[1]);
-    }
+	protected override GameObject SetCuisine() => CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
 
-    public void AddEatoyPoint(int e, int point) => eatoyPoint[e] += point;
+	public override void CookingInterruption()
+	{
+		ResetMiniGameUI();
+		SetIsCooking(false);
+		//CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
+		cuisine = null;
+	}
 
-    public void AddChain() => chain++;
+	protected override int CalcEatoyPoint()
+	{
+		return (int)((basePoint + chain * 0.25f) * eatoyPoint[0] + eatoyPoint[1]);
+	}
 
-    public void ResetChain() => chain = 1;
+	public void AddEatoyPoint(int e, int point) => eatoyPoint[e] += point;
 
-    public void DecisionCheckClockCollision()
-    {
-        microwaveGage_cs.DecisionCheckClockCollision();
-    }
+	public void AddChain() => chain++;
+
+	public void ResetChain() => chain = 1;
+
+	public void DecisionCheckClockCollision()
+	{
+		microwaveGage_cs.DecisionCheckClockCollision();
+	}
 }

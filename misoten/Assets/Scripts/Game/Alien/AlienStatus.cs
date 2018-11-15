@@ -38,7 +38,7 @@ public class AlienStatus : MonoBehaviour
 	// ---------------------------------------------
 
 	// 指定席に座るエイリアンのID(Debug用)
-	[SerializeField, Range(0, 9)]
+	[SerializeField, Range(0, 7)]
 	private int debugSeatId;
 
 	// エイリアンの状態を目視(Debug用)
@@ -51,7 +51,7 @@ public class AlienStatus : MonoBehaviour
 	// ---------------------------------------------
 
 	// 状態遷移フラグ
-	private static bool[,] counterStatusChangeFlag = new bool[9, (int)EStatus.MAX];
+	private static bool[,] counterStatusChangeFlag = new bool[7, (int)EStatus.MAX];
 
 	// ---------------------------------------------
 

@@ -67,10 +67,10 @@ public class GrilledEffect : MonoBehaviour
 				break;
 			case EOrderType.ICEBOX1:
 				// コンポーネント取得
-				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox 1").gameObject.GetComponent<mwAnimCtrl>();
+				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			case EOrderType.ICEBOX2:
-				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox 1").gameObject.GetComponent<mwAnimCtrl>();
+				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			default: break;
 		}
@@ -103,8 +103,8 @@ public class GrilledEffect : MonoBehaviour
 				if (!mwAnimCtrl.GetIsOpen() && effectFlag[3]) { GetComponent<ParticleSystem>().Stop(); effectFlag[3] = !effectFlag[3]; }
 				break;
 			case EOrderType.ICEBOX2:
-				if (mwAnimCtrl.GetIsOpen() && !effectFlag[4]) { GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4]; }
-				if (!mwAnimCtrl.GetIsOpen() && effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
+				if (mwAnimCtrl.GetIsOpen() && !mwAnimCtrl.GetBool() && !effectFlag[4]) { GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4]; }
+				if (!mwAnimCtrl.GetIsOpen() && !mwAnimCtrl.GetBool() && effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
 				break;
 			default: break;
 		}

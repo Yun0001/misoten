@@ -26,7 +26,7 @@ public class AlienMove : MonoBehaviour
 
 	// 指定終点座標
 	[SerializeField]
-	Vector3[,,] counterSeatsPosition = new Vector3[9, 4, 2];	// [最大席の数、移動回数、入店&退店時移動]
+	Vector3[,,] counterSeatsPosition = new Vector3[7, 4, 2];	// [最大席の数、移動回数、入店&退店時移動]
 
 	// 入店移動時間
 	[SerializeField]
@@ -120,26 +120,24 @@ public class AlienMove : MonoBehaviour
 
 		// 二つ目の終点座標の設定(入店時)
 		counterSeatsPosition[0, 1, 0] = counterSeatsPosition[1, 1, 0] = counterSeatsPosition[2, 1, 0] = counterSeatsPosition[3, 1, 0] = new Vector3(-7.0f, 0.8f, 5.0f);
-		counterSeatsPosition[4, 1, 0] = counterSeatsPosition[5, 1, 0] = counterSeatsPosition[6, 1, 0] = counterSeatsPosition[7, 1, 0] = counterSeatsPosition[8, 1, 0] = new Vector3(7.0f, 0.8f, 5.0f);
+		counterSeatsPosition[4, 1, 0] = counterSeatsPosition[5, 1, 0] = counterSeatsPosition[6, 1, 0] = new Vector3(7.0f, 0.8f, 5.0f);
 
 		// 三つ目の終点座標の設定(入店時)
 		counterSeatsPosition[0, 2, 0] = counterSeatsPosition[1, 2, 0] = counterSeatsPosition[2, 2, 0] = counterSeatsPosition[3, 2, 0] = new Vector3(-7.0f, 0.8f, 3.1f);
-		counterSeatsPosition[4, 2, 0] = counterSeatsPosition[5, 2, 0] = counterSeatsPosition[6, 2, 0] = counterSeatsPosition[7, 2, 0] = counterSeatsPosition[8, 2, 0] = new Vector3(7.0f, 0.8f, 3.1f);
+		counterSeatsPosition[4, 2, 0] = counterSeatsPosition[5, 2, 0] = counterSeatsPosition[6, 2, 0] = new Vector3(7.0f, 0.8f, 3.1f);
 
 		// 四つ目の終点座標の設定(入店時)&一つ目の終点座標の設定(退店時)
-		counterSeatsPosition[0, 3, 0] = new Vector3(-4.0f, 0.8f, 3.1f);
-		counterSeatsPosition[1, 3, 0] = new Vector3(-3.0f, 0.8f, 3.09f);
-		counterSeatsPosition[2, 3, 0] = new Vector3(-2.0f, 0.8f, 3.08f);
-		counterSeatsPosition[3, 3, 0] = new Vector3(-1.0f, 0.8f, 3.07f);
-		counterSeatsPosition[4, 3, 0] = new Vector3(0.0f, 0.8f, 3.06f);
-		counterSeatsPosition[5, 3, 0] = new Vector3(1.0f, 0.8f, 3.07f);
-		counterSeatsPosition[6, 3, 0] = new Vector3(2.0f, 0.8f, 3.08f);
-		counterSeatsPosition[7, 3, 0] = new Vector3(3.0f, 0.8f, 3.09f);
-		counterSeatsPosition[8, 3, 0] = new Vector3(4.0f, 0.8f, 3.1f);
+		counterSeatsPosition[0, 3, 0] = new Vector3(-3.35f, 0.8f, 3.1f);
+		counterSeatsPosition[1, 3, 0] = new Vector3(-2.25f, 0.8f, 3.09f);
+		counterSeatsPosition[2, 3, 0] = new Vector3(-1.15f, 0.8f, 3.08f);
+		counterSeatsPosition[3, 3, 0] = new Vector3(0.0f, 0.8f, 3.07f);
+		counterSeatsPosition[4, 3, 0] = new Vector3(3.35f, 0.8f, 3.06f);
+		counterSeatsPosition[5, 3, 0] = new Vector3(2.25f, 0.8f, 3.07f);
+		counterSeatsPosition[6, 3, 0] = new Vector3(1.15f, 0.8f, 3.08f);
 
 		// 二つ目の終点座標の設定(退店時)
 		counterSeatsPosition[0, 1, 1] = counterSeatsPosition[1, 1, 1] = counterSeatsPosition[2, 1, 1] = counterSeatsPosition[3, 1, 1] = new Vector3(-7.0f, 0.8f, 3.1f);
-		counterSeatsPosition[4, 1, 1] = counterSeatsPosition[5, 1, 1] = counterSeatsPosition[6, 1, 1] = counterSeatsPosition[7, 1, 1] = counterSeatsPosition[8, 1, 1] = new Vector3(7.0f, 0.8f, 3.1f);
+		counterSeatsPosition[4, 1, 1] = counterSeatsPosition[5, 1, 1] = counterSeatsPosition[6, 1, 1] = new Vector3(7.0f, 0.8f, 3.1f);
 	}
 
 	/// <summary>

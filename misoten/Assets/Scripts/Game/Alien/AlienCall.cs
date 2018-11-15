@@ -55,7 +55,7 @@ public class AlienCall : MonoBehaviour
 	private GameObject[] prefab;
 
 	// カウンター席の最大数指定
-	[SerializeField, Range(1, 9)]
+	[SerializeField, Range(1, 7)]
 	private int counterSeatsMax;
 
 	// エイリアン最大数指定
@@ -112,10 +112,10 @@ public class AlienCall : MonoBehaviour
 	// ---------------------------------------------
 
 	// エイリアンの種類設定
-	private EAlienPattern[] alienPattern = new EAlienPattern[9];
+	private EAlienPattern[] alienPattern = new EAlienPattern[7];
 
 	// カウンター専用オブジェ
-	private GameObject[] counterDesignatedObj = new GameObject[9];
+	private GameObject[] counterDesignatedObj = new GameObject[7];
 
 	// スコアカウント
 	private ScoreCount scoreCount;

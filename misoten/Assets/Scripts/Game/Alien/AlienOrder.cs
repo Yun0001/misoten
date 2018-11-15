@@ -25,7 +25,7 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	private enum EOrderBaseType
 	{
-		RED = 0,	// 赤
+		RED = 1,	// 赤
 		BLUE,		// 青
 		YELLOW,		// 黄
 		MAX			// 最大
@@ -36,7 +36,7 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	private enum EOrderChangeType
 	{
-		PURPLE = 0, // 紫
+		PURPLE = 4, // 紫
 		ORANGE,		// 橙
 		GREEN,		// 緑
 		MAX			// 最大
@@ -47,13 +47,9 @@ public class AlienOrder : MonoBehaviour
 	// インスペクター上で設定可能
 	// ---------------------------------------------
 
-	// オーダー内容描画用(ベース)
+	// オーダー内容描画用
 	[SerializeField]
-	GameObject[] orderBaseBalloon;
-
-	// オーダー内容描画用(チェンジ)
-	[SerializeField]
-	GameObject[] orderChangeBalloon;
+	GameObject[] orderBalloon = new GameObject[7];
 
 	// オーダーするまでの時間
 	[SerializeField]
@@ -343,11 +339,11 @@ void Update ()
 		{
 			case (int)EOrderType.BASE:
 				// 注文内容を描画・非描画する(ベース用)
-				orderBaseBalloon[orderBaseSave].SetActive(value);
+				orderBalloon[orderBaseSave].SetActive(value);
 				break;
 			case (int)EOrderType.CHANGE:
 				// 注文内容を描画・非描画する(チェンジ用)
-				orderChangeBalloon[orderChangeSave].SetActive(value);
+				orderBalloon[orderChangeSave].SetActive(value);
 				break;
 			default: break;
 		}
@@ -359,39 +355,52 @@ void Update ()
 	/// <param name="cuisine"></param>
 	public void EatCuisine(GameObject cuisine)
 	{
+		// Debug用
+		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
+
 		// EAT状態が「ON」になる
 		AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
 
-		// Debug用
-		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
+		// 料理が来た判定
+		GetComponent<AlienChip>().SetCuisineCame(true);
 
 		// オーダーの種類管理
 		switch (orderType)
 		{
 			case (int)EOrderType.BASE:
-				if (individualOrderBaseType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor())
-				{
-					GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
-					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-					GetComponent<AlienChip>().SetCuisineCame(true);
-
-					// エイリアンが満足する
-					GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
-				}
-				else
-				{
-					GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
-					GetComponent<AlienChip>().SetOpponentID(cuisine.GetComponent<Food>().GetOwnershipPlayerID());
-					GetComponent<AlienChip>().SetCuisineCame(true);
-
-					// エイリアンがクレームをする
-					GetComponent<AlienClaim>().SetIsClaim(true);
-				}
+				if (individualOrderBaseType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(); }
+				else { Claim(); }
 				break;
 			case (int)EOrderType.CHANGE:
+				if (individualOrderChangeType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(); }
+				else { Claim(); }
 				break;
 			default: break;
 		}
+	}
+
+	/// <summary>
+	/// 満足
+	/// </summary>
+	void Satisfaction()
+	{
+		// 通常の旨味係数
+		GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
+
+		// エイリアンが満足する
+		GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
+	}
+
+	/// <summary>
+	/// クレーム
+	/// </summary>
+	void Claim()
+	{
+		// 半分の旨味係数
+		GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
+
+		// エイリアンがクレームをする
+		GetComponent<AlienClaim>().SetIsClaim(true);
 	}
 
 	/// <summary>

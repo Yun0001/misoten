@@ -491,8 +491,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973840021897286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.45, y: 1, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalPosition: {x: -1.75, y: 1, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4896936010294612}
   - {fileID: 4261097984552500}
@@ -1281,16 +1281,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee114dddc4505748a7280e256b9b046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orderBaseBalloon:
+  orderBalloon:
+  - {fileID: 0}
   - {fileID: 1850609024798508}
   - {fileID: 1865178391905298}
   - {fileID: 1605366208205476}
-  orderChangeBalloon:
   - {fileID: 1968440635570440}
   - {fileID: 1382467566713248}
   - {fileID: 1204405764324536}
   orderTime: 1
-  orderPlanDispCount: 0.5
+  orderPlanDispCount: 1.5
   eatingCount: 2
   individualOrderBaseType: 0
   individualOrderChangeType: 0
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhenEnteringStoreMoveTime:
   - 2
-  - 2
+  - 4
   - 1
   - 2
   - 1
