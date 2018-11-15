@@ -27,12 +27,10 @@ public class MicrowaveGage : MonoBehaviour
     private int waitFrame = 20;
     private int waitCount;
 
-    [SerializeField]
     private GameObject checkClock;
 
     private CheckClock checkClock_cs;
 
-    [SerializeField]
     private GameObject clock;
 
     [SerializeField]
@@ -42,11 +40,11 @@ public class MicrowaveGage : MonoBehaviour
     MicrowaveState status = MicrowaveState.Wait;
 
     [SerializeField]
-    private float rotateSpped;
+    private float rotateSpeed;
 
     private System.Random rand = new System.Random();
 
-    private float[] successAreaRotation = { 112.5f, 157.5f, 202.5f, 247.5f, 292.5f };
+    private float[] successAreaRotation = { -90f, -45f, 0, 45f, 90f };
 
     int oldRand = 5;
 
@@ -117,7 +115,7 @@ public class MicrowaveGage : MonoBehaviour
                     return true;
                 }
 
-                checkClock.transform.Rotate(new Vector3(0, 0, rotateSpped));
+                checkClock.transform.Rotate(new Vector3(0, 0, rotateSpeed));
                 break;
 
             case MicrowaveState.Success:

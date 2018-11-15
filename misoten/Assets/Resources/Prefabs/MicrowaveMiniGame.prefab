@@ -514,11 +514,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missPoint: 2
   waitFrame: 20
-  checkClock: {fileID: 0}
-  clock: {fileID: 0}
   successAreaParent: {fileID: 0}
   status: 1
-  rotateSpped: 1
+  rotateSpeed: 2
   microwave: {fileID: 0}
 --- !u!114 &114659467146311950
 MonoBehaviour:

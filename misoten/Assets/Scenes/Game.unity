@@ -1313,6 +1313,36 @@ Prefab:
       propertyPath: isDebugMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 65179514791060166, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 4.7591124
+      objectReference: {fileID: 0}
+    - target: {fileID: 65179514791060166, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Center.z
+      value: -0.87955934
+      objectReference: {fileID: 0}
+    - target: {fileID: 65179514791060166, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Center.x
+      value: -0.100002706
+      objectReference: {fileID: 0}
+    - target: {fileID: 65930657625285764, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 4.804041
+      objectReference: {fileID: 0}
+    - target: {fileID: 65930657625285764, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0.24999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 65930657625285764, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: m_Center.z
+      value: -0.90201813
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
   m_IsPrefabParent: 0
