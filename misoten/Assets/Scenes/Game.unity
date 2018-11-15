@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44459075, g: 0.49409992, b: 0.5733671, a: 1}
+  m_IndirectSpecularColor: {r: 0.44459122, g: 0.49410093, b: 0.57336855, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -802,15 +802,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.65
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.11
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalRotation.x
@@ -916,15 +916,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.61
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 243d725bb9928a94fbb8666a3b4d3b56, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1141,21 +1141,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: m_ReceiveShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212215097549713522, guid: 14915348d9d16e842ba1a74fd476d84f,
-        type: 2}
-      propertyPath: m_CastShadows
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14915348d9d16e842ba1a74fd476d84f, type: 2}
   m_IsPrefabParent: 0
@@ -1360,6 +1345,16 @@ Prefab:
         type: 2}
       propertyPath: m_MotionVectors
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114521706271064624, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: isDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114452945723931176, guid: 4d6072833a311f94bb6274ef48de36af,
+        type: 2}
+      propertyPath: isDebugMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}

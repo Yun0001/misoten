@@ -180,6 +180,7 @@ public class Player : MonoBehaviour
                     SetPlayerStatus(PlayerStatus.Normal);
                     playerAnimation_cs.SetIsCatering(false);
                     GetDastBoxUI().SetActive(false);
+                    Destroy(haveInHandCusine);
                 }
                 break;
 
