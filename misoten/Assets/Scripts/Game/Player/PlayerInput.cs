@@ -97,7 +97,7 @@ public class PlayerInput : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionBranch();
 
 
-        if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().DecisionPutEatoyElement();
+        //if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().DecisionPutEatoyElement();
 
         // Yボタン入力（キャンセル）
         if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.CookingCancel();
