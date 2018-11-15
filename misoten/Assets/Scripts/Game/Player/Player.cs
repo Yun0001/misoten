@@ -176,7 +176,6 @@ public class Player : MonoBehaviour
                 playerInput_cs.InputDastBox();
                 if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
                 {
-                    haveInHandCusine = null;
                     SetPlayerStatus(PlayerStatus.Normal);
                     playerAnimation_cs.SetIsCatering(false);
                     GetDastBoxUI().SetActive(false);
