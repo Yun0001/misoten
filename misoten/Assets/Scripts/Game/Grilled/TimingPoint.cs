@@ -7,7 +7,7 @@ using System.Linq;
 public class TimingPoint : MonoBehaviour
 {
     private readonly Vector3 timingPointScale = new Vector3(0.2f, 0.4f, 1f);
-    private readonly float timingPointPositionDifference = -0.4f;
+    private readonly float timingPointPositionDifference = -0.2f;
 
     private bool[] isHit = Enumerable.Repeat(false, 4).ToArray();
     private GameObject[] isHitObj = Enumerable.Repeat<GameObject>(null, 4).ToArray();
@@ -18,10 +18,11 @@ public class TimingPoint : MonoBehaviour
         transform.localScale = timingPointScale;
         Vector3 pos = transform.position;
         pos.x += timingPointPositionDifference;
+        pos.y += 0.08f;
         transform.position = pos;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         switch (collision.tag)
         {
@@ -47,7 +48,7 @@ public class TimingPoint : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         switch (collision.tag)
         {

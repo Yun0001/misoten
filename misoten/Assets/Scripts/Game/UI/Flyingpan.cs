@@ -90,7 +90,7 @@ public class Flyingpan : KitchenwareBase
             return;
         }
 
-        cuisine.GetComponent<Food>().AddQualityTaste(hitSuccessArea.GetComponent<GrilledPoint>().GetPoint());
+        //cuisine.GetComponent<Eatoy>().AddPoint(hitSuccessArea.GetComponent<GrilledPoint>().GetPoint());
         switch (hitSuccessArea.tag)
         {
             case "GrilledSuccessAreaNormal1":

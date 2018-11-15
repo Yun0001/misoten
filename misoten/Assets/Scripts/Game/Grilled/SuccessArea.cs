@@ -96,7 +96,7 @@ public class SuccessArea : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         //ゲージの枠と会当たった時の処理
         if (collision.tag == "GrilledGage")

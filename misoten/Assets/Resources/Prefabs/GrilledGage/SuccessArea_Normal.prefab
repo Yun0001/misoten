@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4037586996678224}
   - component: {fileID: 33489260357610732}
   - component: {fileID: 23804491744743320}
-  - component: {fileID: 61963037748467190}
-  - component: {fileID: 50506841496413834}
   - component: {fileID: 114421575401148172}
   - component: {fileID: 114752581426369384}
+  - component: {fileID: 65774064348108306}
+  - component: {fileID: 54542221617308578}
   m_Layer: 17
   m_Name: SuccessArea_Normal2
   m_TagString: GrilledSuccessAreaNormal2
@@ -57,10 +57,10 @@ GameObject:
   - component: {fileID: 4609126613903212}
   - component: {fileID: 33587888844845460}
   - component: {fileID: 23352211166204932}
-  - component: {fileID: 50144881115989344}
   - component: {fileID: 114923071032567730}
   - component: {fileID: 114561990591691102}
-  - component: {fileID: 61523199002217022}
+  - component: {fileID: 54128149207154212}
+  - component: {fileID: 65483919799483230}
   m_Layer: 17
   m_Name: SuccessArea_Normal1
   m_TagString: GrilledSuccessAreaNormal1
@@ -191,96 +191,60 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1776082396770706}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!50 &50144881115989344
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!54 &54128149207154212
+Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1776082396770706}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  serializedVersion: 2
   m_Mass: 1
-  m_LinearDrag: 0
+  m_Drag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
   m_Constraints: 0
---- !u!50 &50506841496413834
-Rigidbody2D:
-  serializedVersion: 4
+  m_CollisionDetection: 0
+--- !u!54 &54542221617308578
+Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1048801783652616}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  serializedVersion: 2
   m_Mass: 1
-  m_LinearDrag: 0
+  m_Drag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61523199002217022
-BoxCollider2D:
+  m_CollisionDetection: 0
+--- !u!65 &65483919799483230
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1776082396770706}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!61 &61963037748467190
-BoxCollider2D:
+  m_Size: {x: 0.5, y: 1, z: 1}
+  m_Center: {x: -0.25, y: 0, z: 0}
+--- !u!65 &65774064348108306
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1048801783652616}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.5, y: 1, z: 1}
+  m_Center: {x: -0.25, y: 0, z: 0}
 --- !u!114 &114421575401148172
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -102,6 +102,7 @@ public class GrilledGage : MonoBehaviour {
             successAreaGroup[i] = allPatternSuccessArea[pRank - 1, i];
             Vector3 pos = successAreaGroup[i].transform.position;
             pos.x += i + 2f;
+            pos.y += 0.08f;
             successAreaGroup[i].transform.position = pos;
             successAreaGroup[i].SetActive(true);
         }
