@@ -96,17 +96,17 @@ public class PlayerMove : MonoBehaviour
     public void SetMove(EDirection direction)
     {
         MoveEffectCall();
-        playerAnimation_cs.SetPlayerStatus(1);
+        //playerAnimation_cs.SetPlayerStatus(1);
         switch (direction)
         {
             case EDirection.Up:
                 move.z = speed/ adjustment;
-                playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
+                GetComponent<PlayerAnimCtrl>().SetWalking(true);
                 break;
 
             case EDirection.Down:
                 move.z = -speed/ adjustment;
-                playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
+                GetComponent<PlayerAnimCtrl>().SetWalking(false);
                 break;
 
             case EDirection.Right:
@@ -126,14 +126,14 @@ public class PlayerMove : MonoBehaviour
         if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal || player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering || player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
         {
             move = vec;
-            if (move.x != 0 || move.z != 0) playerAnimation_cs.SetPlayerStatus(1);
-            else playerAnimation_cs.SetPlayerStatus(0);
+            if (move.x != 0 || move.z != 0) GetComponent<PlayerAnimCtrl>().SetWalking(true);
+            else GetComponent<PlayerAnimCtrl>().SetWalking(false);
 
             if (move.x < 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
             else if (move.x > 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
 
-            if (move.z < 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Down);
-            else if (move.z > 0) playerAnimation_cs.SetPlayerUDDirection(EDirection.Up);
+            if (move.z < 0) GetComponent<PlayerAnimCtrl>().SetFront(true);
+            else if (move.z > 0) GetComponent<PlayerAnimCtrl>().SetFront(false);
         }
 
     }

@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
                     GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
                     SetHaveInHandCuisine();
 
-                    playerAnimation_cs.SetIsCatering(false);
+                    GetComponent<PlayerAnimCtrl>().SetServing(false);
                 }
                 break;
 
@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
                     SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
                     GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
                     SetPlayerStatus(PlayerStatus.CateringIceEatoy);
-                    playerAnimation_cs.SetIsCatering(true);
+                    GetComponent<PlayerAnimCtrl>().SetServing(true);
                     GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(false);
                 }
                 break;
@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
                 if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
                 {
                     SetPlayerStatus(PlayerStatus.Normal);
-                    playerAnimation_cs.SetIsCatering(false);
+                    GetComponent<PlayerAnimCtrl>().SetServing(false);
                     GetDastBoxUI().SetActive(false);
                     Destroy(haveInHandCusine);
                 }
@@ -325,7 +325,7 @@ public class Player : MonoBehaviour
         GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandCusine);
         // 料理コントローラーが新たに料理を出せるようにする
         //CuisineControllerOfferCuisine();
-        playerAnimation_cs.SetIsCatering(false);
+        GetComponent<PlayerAnimCtrl>().SetServing(false);
 
         //SetHaveInHandCuisine();
         Destroy(haveInHandCusine);
@@ -536,7 +536,7 @@ public class Player : MonoBehaviour
 
         // 料理を持つ
         WithaCuisine(cuisine);
-        playerAnimation_cs.SetIsCatering(true);
+        GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
 
     }
@@ -552,7 +552,7 @@ public class Player : MonoBehaviour
 
         // 料理を持つ
         WithaCuisine(cuisine);
-        playerAnimation_cs.SetIsCatering(true);
+        GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
@@ -566,7 +566,7 @@ public class Player : MonoBehaviour
 
         // 焼く調理終了の処理
         WithaCuisine(cuisine);
-        playerAnimation_cs.SetIsCatering(true);
+        GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
@@ -613,7 +613,7 @@ public class Player : MonoBehaviour
     private void StopMove()
     {
         playerMove_cs.VelocityReset();
-        playerAnimation_cs.SetPlayerStatus(0);
+        GetComponent<PlayerAnimCtrl>().SetWalking(false);
     }
 
     public GameObject GetDastBoxUI() => dastBoxGage;
