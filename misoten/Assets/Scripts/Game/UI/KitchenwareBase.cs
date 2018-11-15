@@ -88,8 +88,6 @@ public abstract class KitchenwareBase : MonoBehaviour
 
     public bool IsCooking() => isCooking;
 
-    public GameObject GetCuisine() => cuisine;
-
 
     /// <summary>
     /// ミニゲームUIを実体化
@@ -114,4 +112,6 @@ public abstract class KitchenwareBase : MonoBehaviour
     protected abstract bool Cooking();
 
     protected abstract int CalcEatoyPoint();
+
+    public GameObject GetMiniGameUI() => miniGameUI;
 }

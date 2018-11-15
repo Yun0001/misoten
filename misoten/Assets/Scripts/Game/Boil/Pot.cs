@@ -34,7 +34,6 @@ public class Pot : KitchenwareBase
     protected override void InitMiniGameUI()
     {
         miniGameUI.SetActive(true);
-        miniGameUI.transform.Find("Canvas/JoyStick").GetComponent<Joystick>().Init(0);
         basePoint = 50;
         missCount = 0;
     }
@@ -65,4 +64,10 @@ public class Pot : KitchenwareBase
     }
 
     public void AddMissCount() => missCount++;
+
+    public void JoystickInit(int Id)
+    {
+        miniGameUI.transform.Find("Canvas/JoyStick").GetComponent<Joystick>().Init(Id);
+
+    }
 }

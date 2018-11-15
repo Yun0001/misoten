@@ -397,6 +397,7 @@ public class Player : MonoBehaviour
         if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.Pot) return;
         StopMove();
 
+        GetHitObj((int)hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
         cookingPot_cs.CookingStart();
     }
 
