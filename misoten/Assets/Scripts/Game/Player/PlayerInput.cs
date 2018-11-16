@@ -103,24 +103,6 @@ public class PlayerInput : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.CookingCancel();
     }
 
-    private void NormalStatus()
-    {
-        //Rトリガー入力（味の素）
-        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.DisplayTasteGage();
-    }
-
-    private void TasteChargeStatus()
-    {
-        if (GamePad.GetButton(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.UpgateTasteGage();
-        else if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, PlayerControllerNumber)) hindrance_cs.SprinkleTaste();
-    }
-
-    private void CateringStatus()
-    {
-        // Lトリガー入力（配膳）
-        if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder, PlayerControllerNumber)) player_cs.OfferCuisine();
-    }
-
     public void InputMicrowave()
     {
         if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))

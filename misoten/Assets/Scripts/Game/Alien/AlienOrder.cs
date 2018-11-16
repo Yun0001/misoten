@@ -31,16 +31,16 @@ public class AlienOrder : MonoBehaviour
 		MAX			// 最大
 	}
 
-	/// <summary>
-	/// 注文の種類(チェンジ用)
-	/// </summary>
-	private enum EOrderChangeType
-	{
-		PURPLE = 4, // 紫
-		GREEN=6,      // 緑
-        ORANGE=-2,     // 橙
-        MAX			// 最大
-	}
+    /// <summary>
+    /// 注文の種類(チェンジ用)
+    /// </summary>
+    private enum EOrderChangeType
+    {
+        PURPLE = 4, // 紫
+        GREEN = 6,      // 緑
+        ORANGE = 2,     // 橙
+        MAX         // 最大
+    }
 
 	// ---------------------------------------------
 

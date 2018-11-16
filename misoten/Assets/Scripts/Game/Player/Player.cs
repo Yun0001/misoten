@@ -4,6 +4,17 @@ using UnityEngine;
 using GamepadInput;
 using System.Linq;
 
+/*
+ * エイリアンにイートイを渡した時のスコア獲得演算式
+ * イートイポイント＊エイリアン満足度＝獲得スコア
+ * エイリアン満足度
+ * ロウ１
+ * ミドル２
+ * ハイ５
+ * オーバー１５
+ * */
+
+
 
 public class Player : MonoBehaviour
 {
@@ -21,7 +32,6 @@ public class Player : MonoBehaviour
         DastBox,
         CateringIceEatoy,
         Catering,           //配膳
-        Hindrance,          //邪魔
         Replenishment, // 補充
         TasteCharge,//Burstチャージ中
     }
@@ -145,8 +155,8 @@ public class Player : MonoBehaviour
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     // ミキサーに持っている料理を入れる
-                    GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
-                    Destroy(haveInHandCusine);
+                   // GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
+                    //Destroy(haveInHandCusine);
                     //SetHaveInHandCuisine();
 
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -182,10 +192,6 @@ public class Player : MonoBehaviour
                     GetDastBoxUI().SetActive(false);
                     Destroy(haveInHandCusine);
                 }
-                break;
-
-            case PlayerStatus.Hindrance:
-                UpdateHindrance();
                 break;
 
             case PlayerStatus.Catering:
@@ -251,12 +257,6 @@ public class Player : MonoBehaviour
 
             case "DastBox":
                 hitObj[(int)hitObjName.DastBox] = collision.gameObject;
-                break;
-            // 補充マシーン
-            case "TasteMachine":
-                // 味の素補充
-                hindrance_cs.ReplenishmentTaste();
-                hitObj[(int)hitObjName.TasteMachine] = collision.gameObject;
                 break;
             case "Alien":
                 hitObj[(int)hitObjName.Alien] = collision.gameObject;
@@ -477,7 +477,7 @@ public class Player : MonoBehaviour
             default:
                 return;
         }
-        SetPlayerStatus(PlayerStatus.Normal);
+        SetPlayerStatus(PlayerStatus.CateringIceEatoy);
     }
 
 
@@ -569,39 +569,6 @@ public class Player : MonoBehaviour
         WithaCuisine(cuisine);
         GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
-    }
-
-
-    /// <summary>
-    /// 邪魔状態の更新処理
-    /// </summary>
-    private void UpdateHindrance()
-    {
-        // 邪魔状態の時の処理
-        hindranceTime -= Time.deltaTime;
-        if (hindranceTime < 0)
-        {
-            hindranceTime = HINDRANCE_TIME;
-            SetPlayerStatus(PlayerStatus.Normal);
-        }
-    }
-
-    private void CuisineControllerOfferCuisine()
-    {
-        switch (haveInHandCusine.GetComponent<Food>().GetCategory())
-        {
-            case Food.Category.Grilled:
-                CuisineManager.GetInstance().GetGrilledController().OfferCuisine(haveInHandCusine.GetComponent<Food>().GetFoodID());
-                break;
-
-            case Food.Category.Pot:
-                CuisineManager.GetInstance().GetPotController().OfferCuisine(haveInHandCusine.GetComponent<Food>().GetFoodID());
-                break;
-
-            case Food.Category.Microwave:
-                CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(haveInHandCusine.GetComponent<Food>().GetFoodID());
-                break;
-        }
     }
 
     private void SetHaveInHandCuisine(GameObject Cuisine = null)

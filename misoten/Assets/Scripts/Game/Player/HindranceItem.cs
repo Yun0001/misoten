@@ -5,6 +5,7 @@ using GamepadInput;
 
 public class HindranceItem : MonoBehaviour
 {
+    /*
     // 定数
     public readonly static int MAXTASTE = 3;
     private readonly static float GAGESCALE = 0.015f;
@@ -154,4 +155,5 @@ public class HindranceItem : MonoBehaviour
     /// 味の素補充
     /// </summary>
     public void ReplenishmentTaste() => yummyBottle = MAXTASTE;
+    */
 }

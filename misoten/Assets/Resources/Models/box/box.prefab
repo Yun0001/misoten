@@ -333,7 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLooping: 0
   isOpen: 0
-  openFrame: 0
+  openFrame: 20
 --- !u!137 &137635423230218136
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

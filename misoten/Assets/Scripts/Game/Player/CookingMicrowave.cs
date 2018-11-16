@@ -35,5 +35,7 @@ public class CookingMicrowave : MonoBehaviour {
     public void CancelCooking()
     {
         player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingInterruption();
+        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
+
     }
 }

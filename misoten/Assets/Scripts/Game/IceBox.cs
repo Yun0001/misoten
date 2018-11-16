@@ -42,7 +42,9 @@ public class IceBox : MonoBehaviour {
     private bool isDebugMode;
 
 	// Use this for initialization
-	void Awake () {
+	void Awake ()
+    {
+        // テクスチャロード
         eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
 	}
 
@@ -111,7 +113,6 @@ public class IceBox : MonoBehaviour {
         // 客の注文している料理を参照する
         bool IsChangeEatoy = false;
 
-        //int val = 100;
 
         // 一番最初に入店してきた客
         if (IsChangeEatoy)
@@ -121,7 +122,8 @@ public class IceBox : MonoBehaviour {
         else
         {
             // ベースイートイだけの時
-            val = random.Next(0, 3);
+            val = random.Next(1, 7);
+
         }
 
         return val;
@@ -136,7 +138,7 @@ public class IceBox : MonoBehaviour {
             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
             putEatoy.transform.localScale = scale;
             int eatoyID = DecisionPutEatoyElement();
-            putEatoy.GetComponent<Eatoy>().Init(eatoyID + 1, eatoySprite[eatoyID]);
+            putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID - 1]);
             status = Status.Take;
         }
     }

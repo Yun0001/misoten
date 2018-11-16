@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TasteGage : MonoBehaviour
 {
+    /*
     enum ETasteGageStatus
     {
         Start,
@@ -128,4 +129,5 @@ public class TasteGage : MonoBehaviour
     }
 
     public ESmokeLevel GetSmokeLevel() => smokeLevel;
+    */
 }
