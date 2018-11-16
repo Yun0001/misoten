@@ -39,7 +39,7 @@ public class GrilledEffect : MonoBehaviour
 
 	// 焼き調理を行っているかの判定用に使う
 	private CookWareAnimCtrl[] cookWareAnimCtrl = new CookWareAnimCtrl[2];
-	private mwAnimCtrl mwAnimCtrl;
+	private mwAnimCtrl[] mwAnimCtrl = new mwAnimCtrl[3];
 
 	// エフェクトフラグ
 	private bool[] effectFlag = { false, false, false, false, false };
@@ -63,14 +63,14 @@ public class GrilledEffect : MonoBehaviour
 				break;
 			case EOrderType.MICROWAVE:
 				// コンポーネント取得
-				mwAnimCtrl = GameObject.Find("Stage/cookwares/microwaves/microwave1/microwave").gameObject.GetComponent<mwAnimCtrl>();
+				mwAnimCtrl[0] = GameObject.Find("Stage/cookwares/microwaves/microwave1/microwave").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			case EOrderType.ICEBOX1:
 				// コンポーネント取得
-				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox").gameObject.GetComponent<mwAnimCtrl>();
+				mwAnimCtrl[1] = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			case EOrderType.ICEBOX2:
-				mwAnimCtrl = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox").gameObject.GetComponent<mwAnimCtrl>();
+				mwAnimCtrl[2] = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox").gameObject.GetComponent<mwAnimCtrl>();
 				break;
 			default: break;
 		}
@@ -95,16 +95,16 @@ public class GrilledEffect : MonoBehaviour
 				if (!cookWareAnimCtrl[1].GetBool() && effectFlag[1]) { GetComponent<ParticleSystem>().Stop(); effectFlag[1] = !effectFlag[1]; }
 				break;
 			case EOrderType.MICROWAVE:
-				if (mwAnimCtrl.GetBool() && !effectFlag[2]) { GetComponent<ParticleSystem>().Play(); effectFlag[2] = !effectFlag[2]; }
-				if (!mwAnimCtrl.GetBool() && effectFlag[2]) { GetComponent<ParticleSystem>().Stop(); effectFlag[2] = !effectFlag[2]; }
+				if (mwAnimCtrl[0].GetBool() && !effectFlag[2]) { GetComponent<ParticleSystem>().Play(); effectFlag[2] = !effectFlag[2]; }
+				if (!mwAnimCtrl[0].GetBool() && effectFlag[2]) { GetComponent<ParticleSystem>().Stop(); effectFlag[2] = !effectFlag[2]; }
 				break;
 			case EOrderType.ICEBOX1:
-				if (mwAnimCtrl.GetIsOpen() && !effectFlag[3]) { GetComponent<ParticleSystem>().Play(); effectFlag[3] = !effectFlag[3]; }
-				if (!mwAnimCtrl.GetIsOpen() && effectFlag[3]) { GetComponent<ParticleSystem>().Stop(); effectFlag[3] = !effectFlag[3]; }
+				if (mwAnimCtrl[1].GetIsOpen() && !effectFlag[3]) { GetComponent<ParticleSystem>().Play(); effectFlag[3] = !effectFlag[3]; }
+				if (!mwAnimCtrl[1].GetIsOpen() && effectFlag[3]) { GetComponent<ParticleSystem>().Stop(); effectFlag[3] = !effectFlag[3]; }
 				break;
 			case EOrderType.ICEBOX2:
-				if (mwAnimCtrl.GetIsOpen() && !mwAnimCtrl.GetBool() && !effectFlag[4]) { GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4]; }
-				if (!mwAnimCtrl.GetIsOpen() && !mwAnimCtrl.GetBool() && effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
+				if (mwAnimCtrl[2].GetIsOpen() && !mwAnimCtrl[2].GetBool() && !effectFlag[4]) { GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4]; }
+				if (!mwAnimCtrl[2].GetIsOpen() && !mwAnimCtrl[2].GetBool() && effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
 				break;
 			default: break;
 		}

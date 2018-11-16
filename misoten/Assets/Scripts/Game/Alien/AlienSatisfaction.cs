@@ -44,6 +44,21 @@ public class AlienSatisfaction : MonoBehaviour
 	// ---------------------------------------------
 
 	/// <summary>
+	/// 開始関数
+	/// </summary>
+	void Start()
+	{
+		// 満足フラグ(チップ取得時用)の初期化
+		satisfactionChipFlag = false;
+
+		// 満足フラグの初期化
+		satisfactionFlag = false;
+
+		// 満足時間の初期化
+		satisfactionTimeAdd = 0.0f;
+	}
+
+	/// <summary>
 	/// 更新関数
 	/// </summary>
 	void Update ()

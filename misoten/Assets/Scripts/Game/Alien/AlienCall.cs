@@ -164,9 +164,18 @@ public class AlienCall : MonoBehaviour
 		// 席管理用IDの初期化
 		seatAddId = Random.Range(0, GetCounterSeatsMax());
 
+		// 待ち時間の加算の初期化
+		latencyAdd = 0.0f;
+
+		// 例外処理用の時間の初期化
+		exceptionTime = 0.0f;
+
 		// エイリアンIDの保存用の初期化
 		idSave = 0;
-}
+
+		// 最初にエイリアンが入ったかのフラグの初期化
+		inAlienFlag = false;
+	}
 
 	/// <summary>
 	/// 更新関数
@@ -238,6 +247,9 @@ public class AlienCall : MonoBehaviour
 
 				// エイリアンIDの保存
 				idSave = GetSeatAddId();
+
+				// ステータス初期化
+				GetComponent<AlienStatus>().StatusInit(idSave);
 			}
 		}
 		// 空いている席のIDになるまでこの処理を続ける
