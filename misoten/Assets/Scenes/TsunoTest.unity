@@ -4110,12 +4110,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114667951035243680, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 81011392}
-    - target: {fileID: 114636831898434350, guid: 4d6072833a311f94bb6274ef48de36af,
+    - target: {fileID: 114452945723931176, guid: 4d6072833a311f94bb6274ef48de36af,
         type: 2}
       propertyPath: canvasCamera
       value: 
@@ -4125,98 +4120,17 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 81011392}
-    - target: {fileID: 114452945723931176, guid: 4d6072833a311f94bb6274ef48de36af,
+    - target: {fileID: 114636831898434350, guid: 4d6072833a311f94bb6274ef48de36af,
         type: 2}
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 81011392}
-    - target: {fileID: 23389712024434142, guid: 4d6072833a311f94bb6274ef48de36af,
+    - target: {fileID: 114988758905019702, guid: 4d6072833a311f94bb6274ef48de36af,
         type: 2}
-      propertyPath: m_CastShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137810458375966778, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_UpdateWhenOffscreen
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 137810458375966778, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137810458375966778, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_ReflectionProbeUsage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137810458375966778, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_CastShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137810458375966778, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_ReceiveShadows
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137810458375966778, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_MotionVectors
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114521706271064624, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: isDebugMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114452945723931176, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: isDebugMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65179514791060166, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_Size.z
-      value: 4.7591124
-      objectReference: {fileID: 0}
-    - target: {fileID: 65179514791060166, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_Center.z
-      value: -0.87955934
-      objectReference: {fileID: 0}
-    - target: {fileID: 65179514791060166, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_Center.x
-      value: -0.100002706
-      objectReference: {fileID: 0}
-    - target: {fileID: 65930657625285764, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_Size.z
-      value: 4.804041
-      objectReference: {fileID: 0}
-    - target: {fileID: 65930657625285764, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_Center.x
-      value: 0.24999994
-      objectReference: {fileID: 0}
-    - target: {fileID: 65930657625285764, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: m_Center.z
-      value: -0.90201813
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636831898434350, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: isDebugMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114154737022152524, guid: 4d6072833a311f94bb6274ef48de36af,
-        type: 2}
-      propertyPath: isDebugMode
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114667951035243680, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 81011392}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4d6072833a311f94bb6274ef48de36af, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &770393531 stripped
@@ -4383,27 +4297,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
---- !u!1 &1047403504 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1804530135386412, guid: 4d6072833a311f94bb6274ef48de36af,
-    type: 2}
-  m_PrefabInternal: {fileID: 746076987}
---- !u!114 &1047403506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1047403504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bcd218fc3bee534984cdc749e5ac99e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDebugMode: 1
-  isEnd: 0
-  canvasCamera: {fileID: 81011392}
-  microwaveGage_cs: {fileID: 0}
-  basePoint: 0
 --- !u!1001 &1239043209
 Prefab:
   m_ObjectHideFlags: 0

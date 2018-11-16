@@ -3753,7 +3753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4414505961962066}
   - component: {fileID: 65595005387374832}
-  - component: {fileID: 114667951035243680}
+  - component: {fileID: 114988758905019702}
   m_Layer: 0
   m_Name: microwave1
   m_TagString: Microwave
@@ -6719,7 +6719,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1217961451294364}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15485,8 +15485,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8, y: 1, z: 3}
-  m_Center: {x: -0.1, y: 0, z: 0}
+  m_Size: {x: 2.8, y: 1, z: 4.7591124}
+  m_Center: {x: -0.100002706, y: 0, z: -0.87955934}
 --- !u!65 &65352977083044548
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -15581,8 +15581,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8, y: 1, z: 3}
-  m_Center: {x: 0.25, y: 0, z: 0}
+  m_Size: {x: 2.8, y: 1, z: 4.804041}
+  m_Center: {x: 0.24999994, y: 0, z: -0.90201813}
 --- !u!95 &95078413267741102
 Animator:
   serializedVersion: 3
@@ -15738,6 +15738,7 @@ MonoBehaviour:
   animCount: 0
   openFrame: 150
   accessNum: 0
+  eatoyPrefab: {fileID: 0}
   status: 0
   cuisines:
   - {fileID: 0}
@@ -15802,7 +15803,7 @@ MonoBehaviour:
   putEatoy: {fileID: 1685462723434298, guid: 4c2edac843f6e5d4c9f6b47b115c3d77, type: 2}
   MiniGameUI: {fileID: 1565872772208742}
   val: 0
-  isDebugMode: 0
+  isDebugMode: 1
 --- !u!114 &114166021657030440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15881,7 +15882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 0
+  isDebugMode: 1
   isEnd: 0
   canvasCamera: {fileID: 0}
 --- !u!114 &114521706271064624
@@ -15901,7 +15902,7 @@ MonoBehaviour:
   putEatoy: {fileID: 1685462723434298, guid: 4c2edac843f6e5d4c9f6b47b115c3d77, type: 2}
   MiniGameUI: {fileID: 1934823204876850}
   val: 0
-  isDebugMode: 0
+  isDebugMode: 1
 --- !u!114 &114566736782813172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15939,25 +15940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c97f1dec2d3c84489842d92ece30b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 0
+  isDebugMode: 1
   isEnd: 0
   canvasCamera: {fileID: 0}
---- !u!114 &114667951035243680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1804530135386412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bcd218fc3bee534984cdc749e5ac99e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDebugMode: 0
-  isEnd: 0
-  canvasCamera: {fileID: 0}
-  microwaveGage_cs: {fileID: 0}
-  basePoint: 0
 --- !u!114 &114670831510079562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16034,6 +16019,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038bc89f20b00394d9e9a00cda2be112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114988758905019702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1804530135386412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcd218fc3bee534984cdc749e5ac99e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDebugMode: 0
+  isEnd: 0
+  canvasCamera: {fileID: 0}
+  microwaveGage_cs: {fileID: 0}
+  basePoint: 0
 --- !u!136 &136032300347876144
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -19662,8 +19663,8 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920121312385788}
   serializedVersion: 5
-  lengthInSec: 5
-  simulationSpeed: 0.05
+  lengthInSec: 1
+  simulationSpeed: 0.2
   stopAction: 0
   looping: 1
   prewarm: 0
@@ -20111,7 +20112,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 10
+    maxNumParticles: 4
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -20275,7 +20276,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 3
       minScalar: 10
       maxCurve:
         serializedVersion: 2
