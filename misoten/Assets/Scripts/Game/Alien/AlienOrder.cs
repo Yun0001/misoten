@@ -25,9 +25,9 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	private enum EOrderBaseType
 	{
-		RED = 1,	// 赤
-		BLUE,		// 青
-		YELLOW,		// 黄
+		RED = 3,	// 赤
+		BLUE=5,		// 青
+		YELLOW=1,		// 黄
 		MAX			// 最大
 	}
 
@@ -37,9 +37,9 @@ public class AlienOrder : MonoBehaviour
 	private enum EOrderChangeType
 	{
 		PURPLE = 4, // 紫
-		ORANGE,		// 橙
-		GREEN,		// 緑
-		MAX			// 最大
+		GREEN=6,      // 緑
+        ORANGE=-2,     // 橙
+        MAX			// 最大
 	}
 
 	// ---------------------------------------------
@@ -103,6 +103,7 @@ public class AlienOrder : MonoBehaviour
 	private int orderType = 0;
 
 	// オーダー内容をセーブ(ベース)
+    [SerializeField]
 	private int orderBaseSave = 0;
 
 	// オーダー内容をセーブ(チェンジ)

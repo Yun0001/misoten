@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         SetScript();
         playerInput_cs.Init(inputXAxisName, inputYAxisName);
         playerMove_cs.Init();
-        dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity);
+        dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
         dastBoxGage.SetActive(false);
     }
 
@@ -146,7 +146,8 @@ public class Player : MonoBehaviour
                     SetPlayerStatus(PlayerStatus.Mixer);
                     // ミキサーに持っている料理を入れる
                     GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
-                    SetHaveInHandCuisine();
+                    Destroy(haveInHandCusine);
+                    //SetHaveInHandCuisine();
 
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
                 }

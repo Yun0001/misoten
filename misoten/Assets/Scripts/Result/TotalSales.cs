@@ -55,7 +55,7 @@ public class TotalSales : MonoBehaviour {
     {
         for (int pID = 0; pID < 1; pID++)
         {
-            ResultScore[pID] = scoreManager.GetPlayerScore(pID);
+            ResultScore[pID] = scoreManager.GetPlayerScore();
             //Debug.Log(pID + " : " + ResultScore[pID]);
             //Debug.Log(pID + " : " + scoreManager.GetPlayerScore(pID));
             MaxScore += ResultScore[pID];

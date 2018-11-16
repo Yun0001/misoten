@@ -8,10 +8,7 @@ public class ScoreManager : Singleton<ScoreManager>
     readonly static int playerNum = 1;                     // プレイヤーの数
 
     [SerializeField]
-    private GameObject[] playerScore;       // 各プレイヤースコアの参照
-
-    [SerializeField]
-    private GameObject[] player;             // 各プレイヤーの参照
+    private GameObject playerScore;       // 各プレイヤースコアの参照
 
     [SerializeField]
     private GameObject gameTimeManager; //タイムマネージャーの参照
@@ -32,11 +29,11 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         for (int pID = 0; pID < playerNum; pID++)
         {
-            scoreText[pID] = playerScore[pID].GetComponent<Text>();
+            scoreText[pID] = playerScore.GetComponent<Text>();
             playerRank[pID] = 1;
         }
     }
-    
+
     /// <summary>
     /// スコア加算
     /// </summary>
@@ -45,10 +42,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public void AddScore(int pID, int score)
     {
         // スコア加算
-        //playerScore[pID].GetComponent<ScoreCount>().AddScore(CalcAddScore(pID, score));
-        playerScore[pID].GetComponent<ScoreCount>().AddScore(score);
-        //UpdatePlayerRank();     // 順位更新
-        //UpdateScoreText();       // 表示テキスト更新
+        playerScore.GetComponent<ScoreCount>().AddScore(score);
     }
 
     /// <summary>
@@ -58,32 +52,8 @@ public class ScoreManager : Singleton<ScoreManager>
     /// <param name="score">減算ポイント</param>
     public void SubScore(int pID, int score)
     {
-        playerScore[pID].GetComponent<ScoreCount>().SubScore(score);
+        playerScore.GetComponent<ScoreCount>().SubScore(score);
 
-        UpdatePlayerRank();     // 順位更新
-        UpdateScoreText();      // 表示テキスト更新
-    }
-
-    /// <summary>
-    /// 順位更新
-    /// </summary>
-    private void UpdatePlayerRank()
-    {
-        var workArray = new int[playerNum]; //作業用配列
-
-        InitArray(workArray);       // 作業用配列初期化
-        BubbleSort(workArray);   // バブルソート
-        SetRank(workArray);      // 順位セット
-    }
-
-    /// <summary>
-    ///  作業用配列初期化
-    /// </summary>
-    /// <param name="workarray">作業用配列</param>
-    private void InitArray(int[] workarray)
-    {
-        for (int pID = 0; pID < playerNum; pID++)
-            workarray[pID] = GetPlayerScore(pID);
     }
 
     /// <summary>
@@ -106,24 +76,6 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
-    /// <summary>
-    ///  順位セット
-    /// </summary>
-    /// <param name="workarray">作業用配列</param>
-    private void SetRank(int[] workarray)
-    {
-        for (int i = 0; i < playerNum; i++)
-        {
-            for (int j = 0; j < playerNum; j++)
-            {
-                if (GetPlayerScore(i) == workarray[j])
-                {
-                    playerRank[i] = j + 1;
-                    break;
-                }
-            }
-        }
-    }
 
     /*
     /// <summary>
@@ -144,28 +96,12 @@ public class ScoreManager : Singleton<ScoreManager>
     */
 
     /// <summary>
-    ///  表示テキスト更新
-    /// </summary>
-    private void UpdateScoreText()
-    {
-        for (int i = 0; i < playerNum; i++)
-            scoreText[i].text = "Chip:" + GetPlayerScore(i).ToString();
-       // scoreText[i].text = "Chip:" + GetPlayerScore(i).ToString() + "/" + playerRank[i].ToString();
-    }
-
-    /// <summary>
     /// スコア取得
     /// </summary>
     /// <param name="pID"></param>
     /// <returns>スコア</returns>
-    public int GetPlayerScore(int pID) => playerScore[pID].GetComponent<ScoreCount>().GetScore();
-    //public int GetPlayerScore(int pID) {
-    //    return playerScore[pID].GetComponent<ScoreCount>().GetScore();
-    //}
-
-    public int GetPlayerRank(int ID) => playerRank[0];
-    //public int GetPlayerRank(int ID)
-    //{
-    //    return playerRank[ID];
-    //}
+    public int GetPlayerScore()
+    {
+        return ScoreCount.GetScore();
+    }
 }

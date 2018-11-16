@@ -121,7 +121,7 @@ public class IceBox : MonoBehaviour {
         else
         {
             // ベースイートイだけの時
-            val = (int)Mathf.Ceil(((random.Next(1, 100) / 33)));
+            val = random.Next(0, 3);
         }
 
         return val;
@@ -136,7 +136,7 @@ public class IceBox : MonoBehaviour {
             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
             putEatoy.transform.localScale = scale;
             int eatoyID = DecisionPutEatoyElement();
-            putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID]);
+            putEatoy.GetComponent<Eatoy>().Init(eatoyID + 1, eatoySprite[eatoyID]);
             status = Status.Take;
         }
     }

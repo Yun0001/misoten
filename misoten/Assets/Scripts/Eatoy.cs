@@ -6,8 +6,7 @@ using System.Linq;
 
 public class Eatoy : MonoBehaviour {
 
-    public enum EEatoyColor { None, Red, Bule, Yellow, Purple, Green, Orange, ColorMax }
-
+    public enum EEatoyColor { None, Yellow, Orange, Red, Purple, Bule, Green, ColorMax }
     [SerializeField]
     private EEatoyColor eatoyColor;
 

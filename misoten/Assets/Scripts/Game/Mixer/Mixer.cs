@@ -18,6 +18,13 @@ public class Mixer : KitchenwareBase {
         End
     }
 
+    private enum MixMode
+    {
+        None,
+        TwoParson,
+        ThreeParson
+    }
+
     [SerializeField]
     private int TIME;
 
@@ -41,8 +48,9 @@ public class Mixer : KitchenwareBase {
     private bool seFlg;
     private bool uiFlg;
 
-    private GameObject mixerEatoyPrefab;
-
+    [SerializeField]
+    private GameObject eatoyPrefab;
+    private Sprite[] eatoySprite;
 
     [SerializeField]
     private Status status = Status.Stand;
@@ -50,11 +58,12 @@ public class Mixer : KitchenwareBase {
     [SerializeField]
     private GameObject[] cuisines;
 
+    private MixMode mixMode;
 
 
     // Use this for initialization
     void Awake () {
-        mixerEatoyPrefab = Resources.Load("Prefabs/Eatoy/MixerEatoy") as GameObject;
+        mixMode = MixMode.None;
         miniGameUI = Instantiate(Resources.Load("Prefabs/MixerMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
     }
@@ -69,6 +78,7 @@ public class Mixer : KitchenwareBase {
                 {
                     // 調理開始
                     status = Status.Open;
+                    mixMode = MixMode.TwoParson;
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
                 }
                 break;
@@ -156,12 +166,29 @@ public class Mixer : KitchenwareBase {
                         if (!isEatoyPut)
                         {
                             miniGameUI.SetActive(false);
-                            GameObject eatoy = Instantiate(mixerEatoyPrefab, transform.position, Quaternion.identity);
-                            Vector3 pos = eatoy.transform.position;
+                            GameObject putEatoy = Instantiate(eatoyPrefab, transform.position, Quaternion.identity);
+                            Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
+                            putEatoy.transform.localScale = scale;
+                            Vector3 pos = putEatoy.transform.position;
                             pos.x = 0.4f;
                             pos.y = 1.3f;
                             pos.z = -0.5f;
-                            eatoy.transform.position = pos;
+                            putEatoy.transform.position = pos;
+
+                            // ToDo 人数と入れたイートイの判定をする
+                            switch (mixMode)
+                            {
+                                case MixMode.TwoParson:
+                                    break;
+                                case MixMode.ThreeParson:
+                                    break;
+                                default:
+                                    Debug.LogError("不正な状態");
+                                    break;
+                            }
+                            int eatoyID = 0;
+                            putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID]);
+                            //
                             isEatoyPut = true;
 
                             // 料理を無くす
@@ -172,15 +199,15 @@ public class Mixer : KitchenwareBase {
                                     switch (cuisines[i].GetComponent<Food>().GetCategory())
                                     {
                                         case Food.Category.Grilled:
-                                            CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisines[i].GetComponent<Food>().GetFoodID());
+                                            //CuisineManager.GetInstance().GetGrilledController().OfferCuisine(cuisines[i].GetComponent<Food>().GetFoodID());
                                             break;
 
                                         case Food.Category.Pot:
-                                            CuisineManager.GetInstance().GetPotController().OfferCuisine(cuisines[i].GetComponent<Food>().GetFoodID());
+                                           // CuisineManager.GetInstance().GetPotController().OfferCuisine(cuisines[i].GetComponent<Food>().GetFoodID());
                                             break;
 
                                         case Food.Category.Microwave:
-                                            CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisines[i].GetComponent<Food>().GetFoodID());
+                                          //  CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisines[i].GetComponent<Food>().GetFoodID());
                                             break;
                                     }
                                     cuisines[i] = null;
@@ -236,6 +263,7 @@ public class Mixer : KitchenwareBase {
         if (status == Status.AccessThree)
         {
             accessNum = 3;
+            mixMode = MixMode.ThreeParson;
             status = Status.Open;
             transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
         }

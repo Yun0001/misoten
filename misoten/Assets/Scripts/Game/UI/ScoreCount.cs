@@ -10,7 +10,7 @@ public class ScoreCount : MonoBehaviour
     /// <summary>
     /// プレイヤーのスコア
     /// </summary>
-    private static int score;
+    public static int score;
 
     private Sprite[] sprits;
 
@@ -54,7 +54,7 @@ public class ScoreCount : MonoBehaviour
     /// スコア取得’
     /// </summary>
     /// <returns>スコア</returns>
-    public int GetScore() => score;
+    public static int GetScore() => score;
 
     private void UpdateSprite()
     {
