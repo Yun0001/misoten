@@ -56,7 +56,7 @@ public class Result : MonoBehaviour
 	void Start ()
 	{
 		// 時間更新、オブジェクト描画用フラグの初期化
-		for (int i = 0; i < (int)EObjectType.MAX; i++) { objDrawflag[i] = true; timeAdd[i] = 0.0f; }
+		for (int i = 0; i < (int)EObjectType.MAX; i++) { obj[0].SetActive(false); objDrawflag[i] = true; timeAdd[i] = 0.0f; }
 	}
 	
 	/// <summary>
