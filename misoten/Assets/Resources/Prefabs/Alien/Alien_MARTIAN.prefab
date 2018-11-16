@@ -1283,17 +1283,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderBalloon:
   - {fileID: 0}
-  - {fileID: 1850609024798508}
-  - {fileID: 1865178391905298}
   - {fileID: 1605366208205476}
-  - {fileID: 1968440635570440}
   - {fileID: 1382467566713248}
+  - {fileID: 1850609024798508}
+  - {fileID: 1968440635570440}
+  - {fileID: 1865178391905298}
   - {fileID: 1204405764324536}
   orderTime: 1
   orderPlanDispCount: 1.5
   eatingCount: 2
   individualOrderBaseType: 0
   individualOrderChangeType: 0
+  orderBaseSave: 0
 --- !u!114 &114510335993466888
 MonoBehaviour:
   m_ObjectHideFlags: 1
