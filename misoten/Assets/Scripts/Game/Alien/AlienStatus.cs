@@ -64,19 +64,15 @@ public class AlienStatus : MonoBehaviour
 	// ---------------------------------------------
 
 	/// <summary>
-	/// 開始関数
+	/// ステータス初期化関数
 	/// </summary>
-	void Start()
+	public void StatusInit(int id)
 	{
-		// ステータスを初期化
-		for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
-		{
-			// 全ての状態を「OFF」にする
-			for (int j = 0; j < (int)EStatus.MAX; j++) { counterStatusChangeFlag[i, j] = false; }
+		// 全ての状態を「OFF」にする
+		for (int i = 0; i < (int)EStatus.MAX; i++) { counterStatusChangeFlag[id, i] = false; }
 
-			// 待機状態にする
-			counterStatusChangeFlag[i, (int)EStatus.STAND] = true;
-		}
+		// 待機状態にする
+		counterStatusChangeFlag[id, (int)EStatus.STAND] = true;
 	}
 
 	/// <summary>

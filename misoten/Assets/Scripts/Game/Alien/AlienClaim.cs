@@ -47,6 +47,15 @@ public class AlienClaim : MonoBehaviour
 		// 吹き出しを出さない
 		claimBalloon[0].SetActive(false);
 		claimBalloon[1].SetActive(false);
+
+		// クレーム時間の初期化
+		claimTimeAdd = 0.0f;
+
+		// クレーム中かの判定の初期化
+		isClaim = false;
+
+		// エイリアンが一体でもクレームをすると、他のエイリアンの注文内容が見えなくなる用の初期化
+		claimFlag = false;
 	}
 
 	/// <summary>

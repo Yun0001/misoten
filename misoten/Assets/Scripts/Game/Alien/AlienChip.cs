@@ -59,7 +59,7 @@ public class AlienChip : MonoBehaviour
 	private int chipId = 0;
 
 	// 料理の旨味係数
-	private float cisineTasteCoefficient = 0f;
+	private float cisineTasteCoefficient = 0.0f;
 
 	// ---------------------------------------------
 
@@ -80,9 +80,18 @@ public class AlienChip : MonoBehaviour
 		// ベースチップをセット
 		SetChipValue(AlienCall.GetRichDegree(chipId));
 
-		// Debug用
-		//Debug.Log("金持ち度"+ AlienCall.GetRichDegree(chipId));
-	}
+		// 料理が来たかの判定用の初期化
+		isCuisineCame = false;
+
+		// 料理を持ってきた相手のIDの初期化
+		opponentID = 0;
+
+		// 料理の旨味係数の初期化
+		cisineTasteCoefficient = 0.0f;
+
+	// Debug用
+	//Debug.Log("金持ち度"+ AlienCall.GetRichDegree(chipId));
+}
 
 	/// <summary>
 	/// 更新関数

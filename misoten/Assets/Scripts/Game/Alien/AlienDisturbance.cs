@@ -86,7 +86,10 @@ public class AlienDisturbance : MonoBehaviour
 		timeLimitDraw[setId] = gameObject.transform.Find("TextMesh").gameObject;
 		mood[setId] = EAlienMood.NORMAL;
 		latencyAdd[setId] = AlienCall.GetOrderLatencyAdd(AlienCall.GetRichDegreeId());
-	}
+
+		// エイリアンの残り時間
+		timeFont = 0;
+}
 
 	/// <summary>
 	/// 更新関数
