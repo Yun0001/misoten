@@ -99,17 +99,18 @@ public class AlienClaim : MonoBehaviour
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
 
 
-                    for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
-                    {
-                        if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
-                        {
-                            Sound.SetLoopFlgSe(GameSceneManager.seKey[5], true, 8);
-                            Sound.PlaySe(GameSceneManager.seKey[5], 8);
-                            break;
-                        }
-                    }
-                    // 退店時の移動開始
-                    GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+					for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
+					{
+						if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
+						{
+							Sound.SetLoopFlgSe(GameSceneManager.seKey[5], true, 8);
+							Sound.PlaySe(GameSceneManager.seKey[5], 8);
+							break;
+						}
+					}
+
+					// 退店時の移動開始
+					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 				}
 
 				// 毎フレームの時間を加算

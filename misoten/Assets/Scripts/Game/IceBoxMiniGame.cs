@@ -117,4 +117,6 @@ public class IceBoxMiniGame : MonoBehaviour {
         Sound.SetLoopFlgSe(GameSceneManager.seKey[11], false, 5);
         Sound.StopSe(GameSceneManager.seKey[11], 5);
     }
+
+	public bool GetMoveflg() => moveflg;
 }
