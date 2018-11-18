@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class DastBox : MonoBehaviour {
 
-    /*
-     * プレイヤーと当たり判定があればキー入力可能UIを表示
-     * Bボタン入力で味の素UIゲージ表示
-     * Bボタンを入力し続けることでゲージを進める
-     * Bボタンを離すとゲージを戻す
-     * ゲージがMaxでイートイを捨てる
-     * イートイのスプライトを縮小させながらゴミ箱に移動させる
-     * 移動後ゴミ箱のアニメーション
-     * アニメーション後プレイヤーの状態を通常状態に戻す
-     * */
-
     [SerializeField]
     private bool isCollision = false;
 
@@ -23,11 +12,12 @@ public class DastBox : MonoBehaviour {
 
     private int playerstatus;
 
-	// Use this for initialization
-	void Awake ()
-    {	
-	}
 
+    /// <summary>
+    /// プレイヤーアクセス
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="pos"></param>
     public void Access(int status, Vector3 pos)
     {
         SetPlayerStatus(status);

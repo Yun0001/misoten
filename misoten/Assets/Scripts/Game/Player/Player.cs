@@ -544,18 +544,19 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerStatus.DastBox:
-
+                UpdateDastBox();
                 break;
 
             case PlayerStatus.Catering:
                 if (GetComponent<SpriteRenderer>().flipX)
                 {
-                    pos += eatoyPos;
+                    pos.x += eatoyPos.x;
                 }
                 else
                 {
-                    pos -= eatoyPos;
+                    pos.x -= eatoyPos.x;
                 }
+                pos.y += eatoyPos.y;
                 haveInHandCusine.transform.position = pos;
                 break;
 
@@ -598,13 +599,16 @@ public class Player : MonoBehaviour
 
     private void UpdateDastBox()
     {
+        // ゴミ箱状態の時の入力
         playerInput_cs.InputDastBox();
+
+        //　ゴミ箱ゲージがMaxの時
         if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
         {
             SetPlayerStatus(PlayerStatus.Normal);
+            Destroy(haveInHandCusine);
             GetComponent<PlayerAnimCtrl>().SetServing(false);
             GetDastBoxUI().SetActive(false);
-            Destroy(haveInHandCusine);
             Sound.PlaySe(GameSceneManager.seKey[7]);
         }
     }
