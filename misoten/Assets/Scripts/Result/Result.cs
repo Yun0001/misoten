@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// リザルトエイリアンの描画用スクリプト
 /// </summary>
 public class Result : MonoBehaviour
 {
-	// 列挙型
+	// オブジェクトの種類列挙型
 	// ---------------------------------------------
 
 	/// <summary>
@@ -56,7 +57,8 @@ public class Result : MonoBehaviour
 	void Start ()
 	{
 		// 時間更新、オブジェクト描画用フラグの初期化
-		for (int i = 0; i < (int)EObjectType.MAX; i++) { obj[0].SetActive(false); objDrawflag[i] = true; timeAdd[i] = 0.0f; }
+		for (int i = 0; i < (int)EObjectType.MAX; i++) { obj[0].SetActive(false); objDrawflag[i] = false; timeAdd[i] = 0.0f; }
+		objDrawflag[0] = true;
 	}
 	
 	/// <summary>
@@ -67,46 +69,47 @@ public class Result : MonoBehaviour
 		// メニューの移動が終了すると、オブジェクトをアクティブ化
 		if (MenuMove.GetResultAlienFlag())
 		{
-			if (objDrawflag[0])
+			for (int i = 0; i < (int)EObjectType.MAX; i++)
 			{
-				if (timeAdd[0] >= time[0]) { obj[0].SetActive(true); objDrawflag[0] = !objDrawflag[0]; }
-				else { timeAdd[0] += Time.deltaTime; }
-			}
-
-			if (objDrawflag[1])
-			{
-				if (obj[0].activeSelf)
+				if (objDrawflag[i])
 				{
-					if (timeAdd[1] >= time[1]) { obj[1].SetActive(true); objDrawflag[1] = !objDrawflag[1]; }
-					else { timeAdd[1] += Time.deltaTime; }
-				}
-			}
-
-			if (objDrawflag[2])
-			{
-				if (obj[1].activeSelf)
-				{
-					if (timeAdd[2] >= time[2]) { obj[2].SetActive(true); objDrawflag[2] = !objDrawflag[2]; }
-					else { timeAdd[2] += Time.deltaTime; }
-				}
-			}
-
-			if (objDrawflag[3])
-			{
-				if(ScoreCount.GetScore() > 8500)
-				{
-					if (obj[2].activeSelf)
+					if(i < (int)EObjectType.MAX - 2)
 					{
-						if (timeAdd[3] >= time[3]) { obj[3].SetActive(true); objDrawflag[3] = !objDrawflag[3]; }
-						else { timeAdd[3] += Time.deltaTime; }
+						if (timeAdd[i] >= time[i])
+						{
+							obj[i].SetActive(true);
+							objDrawflag[i] = !objDrawflag[i];
+							objDrawflag[i + 1] = !objDrawflag[i + 1];
+						}
+						else { timeAdd[i] += Time.deltaTime; }
 					}
-				}
-				else
-				{
-					if (obj[2].activeSelf)
+					else
 					{
-						if (timeAdd[4] >= time[4]) { obj[4].SetActive(true); objDrawflag[4] = !objDrawflag[4]; }
-						else { timeAdd[4] += Time.deltaTime; }
+						if (ScoreCount.GetScore() > 8500)
+						{
+							if (obj[i - 1].activeSelf)
+							{
+								if (timeAdd[i] >= time[i]) { obj[i].SetActive(true); objDrawflag[i] = !objDrawflag[i]; objDrawflag[i + 1] = !objDrawflag[i + 1]; }
+								else { timeAdd[i] += Time.deltaTime; }
+							}
+						}
+						else
+						{
+							if (obj[i - 1].activeSelf)
+							{
+								if (timeAdd[i] >= time[i]) { obj[i + 1].SetActive(true); objDrawflag[i] = !objDrawflag[i]; objDrawflag[i + 1] = !objDrawflag[i + 1]; }
+								else { timeAdd[i] += Time.deltaTime; }
+							}
+						}
+
+						if (i == 4)
+						{
+							if (obj[i - 1].activeSelf || obj[i].activeSelf)
+							{
+								if (timeAdd[i] >= time[i]) { SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
+								else { timeAdd[i] += Time.deltaTime; }
+							}
+						}
 					}
 				}
 			}
