@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
 
+using UnityEngine.SceneManagement;
+
 public class TitleController : MonoBehaviour {
 
-    public bool isStartingGame = false;
-    private bool isCameraMoved = false;
+    [SerializeField] private bool isCompleteTitleLogoAnimation = false;
+    [SerializeField] private bool isStartingGame = false;
+
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip _clip;
 
     private GameObject mainCamera;
+    [SerializeField, Range(0.5f, 1)]
+    private bool isCameraMoved = false;
+    float cameraMoveTime = 0.75f;
+    private static readonly Vector3 endPosition = new Vector3(0.0f, -1.5f, -4.5f); // カメラが移動した際の終点座標
+
     private Animator doorrAnimator;
     private Animator doorlAnimator;
 
-    // カメラが移動した際の終点座標
-    private static readonly Vector3 endPosition = new Vector3(0.0f, -1.5f, -4.5f);
-
-    [SerializeField, Range(0.5f, 1)]
-    float cameraMoveTime = 0.75f;
+    private GameObject _canvasWIO;
 
     private float startTime;
     private Vector3 startPosition;
+
 
     void Start () {
 
@@ -38,14 +45,28 @@ public class TitleController : MonoBehaviour {
         doorrAnimator = GameObject.Find("doorr").GetComponent<Animator>();
         doorlAnimator = GameObject.Find("doorl").GetComponent<Animator>();
 
-    }
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.clip = _clip;
 
-    void OnEnable()
-    {
-      
+        _audioSource.Play();
+
+        _canvasWIO = GameObject.Find("WIO");
+
     }
 
     void Update () {
+
+        // タイトルBGMが終了でタイトルシーンの再ロード
+        if (!_audioSource.isPlaying)
+        {
+            _canvasWIO.GetComponent<WhiteIO>().OnRsWhiteOut();
+        }
+
+        // タイトルロゴのアニメーションが終わってない場合以下スルー
+        if (!isCompleteTitleLogoAnimation)
+        {
+            return;
+        }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -106,6 +127,11 @@ public class TitleController : MonoBehaviour {
         if (mainCamera.transform.position==endPosition) {
             isCameraMoved = true;
         }
+    }
+
+    public void OnIsCompleteTitleLogoAnimation()
+    {
+        isCompleteTitleLogoAnimation = true;
     }
 
 }

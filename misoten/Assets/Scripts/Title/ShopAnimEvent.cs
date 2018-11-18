@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class ShopAnimEvent : MonoBehaviour {
 
-    private GameObject _canvasWO;
+    private GameObject _canvasWIO;
     
 	void Start () {
-        _canvasWO = GameObject.Find("WO");
+        _canvasWIO = GameObject.Find("WIO");
     }
 
     void IsOpened()
     {
-        Debug.Log("Opened");
-        _canvasWO.GetComponent<WhiteOut>().OnWhiteOut();
+       _canvasWIO.GetComponent<WhiteIO>().OnWhiteOut();
     }
 
 }
