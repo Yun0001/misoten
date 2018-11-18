@@ -121,108 +121,15 @@ public class Player : MonoBehaviour
         dastBoxGage.SetActive(false);
     }
 
+    /// <summary>
+    /// プレイヤー移動
+    /// </summary>
     private void FixedUpdate() => playerMove_cs.Move();
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 pos = transform.position;
-        switch (playerStatus)
-        {
-            case PlayerStatus.Microwave:
-                playerInput_cs.InputMicrowave();
-                UpdateCookingMicrowave();
-                break;
-
-            //茹で料理中更新処理
-            case PlayerStatus.Pot:
-                UpdateCookingPot();
-                break;
-
-            // 焼き料理中更新処理
-            case PlayerStatus.GrilledTable:
-                playerInput_cs.InputGrilled();
-                UpdateCookingGrilled();
-                break;
-
-            case PlayerStatus.MixerAccess:
-                playerInput_cs.InputMixerAccess();
-                break;
-
-            case PlayerStatus.MixerWait:
-                playerInput_cs.InputMixerWait();
-                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
-                {
-                    SetPlayerStatus(PlayerStatus.Mixer);
-                    // ミキサーに持っている料理を入れる
-                   // GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
-                    //Destroy(haveInHandCusine);
-                    //SetHaveInHandCuisine();
-
-                    GetComponent<PlayerAnimCtrl>().SetServing(false);
-                }
-                break;
-
-            case PlayerStatus.Mixer:
-                playerInput_cs.InputMixer();
-                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
-                {
-                    SetPlayerStatus(PlayerStatus.Normal);
-                }
-                break;
-
-            case PlayerStatus.IceBox:
-                playerInput_cs.InputIceBox();
-                if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
-                {
-                    SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
-                    GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
-                    SetPlayerStatus(PlayerStatus.CateringIceEatoy);
-                    GetComponent<PlayerAnimCtrl>().SetServing(true);
-                    GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(false);
-                }
-                break;
-
-            case PlayerStatus.DastBox:
-                playerInput_cs.InputDastBox();
-                if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
-                {
-                    SetPlayerStatus(PlayerStatus.Normal);
-                    GetComponent<PlayerAnimCtrl>().SetServing(false);
-                    GetDastBoxUI().SetActive(false);
-                    Destroy(haveInHandCusine);
-                    Sound.PlaySe(GameSceneManager.seKey[7]);
-                }
-                break;
-
-            case PlayerStatus.Catering:
-                if (GetComponent<SpriteRenderer>().flipX)
-                {
-                    pos += eatoyPos;
-                }
-                else
-                {
-                    pos -= eatoyPos;
-                }
-                haveInHandCusine.transform.position = pos;
-                break;
-
-            case PlayerStatus.CateringIceEatoy:
-                if (GetComponent<SpriteRenderer>().flipX)
-                {
-                    pos.x += eatoyPos.x;
-                }
-                else
-                {
-                    pos.x -= eatoyPos.x;
-                }
-                pos.y += eatoyPos.y;
-                haveInHandCusine.transform.position = pos;
-                break;
-
-            default:
-                break;
-        }
+        UpdateBranch();
         playerInput_cs.UpdateInput();
     }
 
@@ -583,5 +490,122 @@ public class Player : MonoBehaviour
     }
 
     public GameObject GetDastBoxUI() => dastBoxGage;
-    
+
+    private void UpdateBranch()
+    {
+        Vector3 pos = transform.position;
+        switch (playerStatus)
+        {
+            case PlayerStatus.Microwave:
+                playerInput_cs.InputMicrowave();
+                UpdateCookingMicrowave();
+                break;
+
+            //茹で料理中更新処理
+            case PlayerStatus.Pot:
+                UpdateCookingPot();
+                break;
+
+            // 焼き料理中更新処理
+            case PlayerStatus.GrilledTable:
+                playerInput_cs.InputGrilled();
+                UpdateCookingGrilled();
+                break;
+
+            case PlayerStatus.MixerAccess:
+                playerInput_cs.InputMixerAccess();
+                break;
+
+            case PlayerStatus.MixerWait:
+                playerInput_cs.InputMixerWait();
+                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                {
+                    SetPlayerStatus(PlayerStatus.Mixer);
+                    // ミキサーに持っている料理を入れる
+                    // GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
+                    //Destroy(haveInHandCusine);
+                    //SetHaveInHandCuisine();
+
+                    GetComponent<PlayerAnimCtrl>().SetServing(false);
+                }
+                break;
+
+            case PlayerStatus.Mixer:
+                playerInput_cs.InputMixer();
+                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                {
+                    SetPlayerStatus(PlayerStatus.Normal);
+                }
+                break;
+
+            case PlayerStatus.IceBox:
+                UpdateIceBox();
+
+                break;
+
+            case PlayerStatus.DastBox:
+
+                break;
+
+            case PlayerStatus.Catering:
+                if (GetComponent<SpriteRenderer>().flipX)
+                {
+                    pos += eatoyPos;
+                }
+                else
+                {
+                    pos -= eatoyPos;
+                }
+                haveInHandCusine.transform.position = pos;
+                break;
+
+            case PlayerStatus.CateringIceEatoy:
+                if (GetComponent<SpriteRenderer>().flipX)
+                {
+                    pos.x += eatoyPos.x;
+                }
+                else
+                {
+                    pos.x -= eatoyPos.x;
+                }
+                pos.y += eatoyPos.y;
+                haveInHandCusine.transform.position = pos;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void UpdateGrilled()
+    {
+
+    }
+
+
+    private void UpdateIceBox()
+    {
+        playerInput_cs.InputIceBox();
+        if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
+        {
+            SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
+            GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
+            SetPlayerStatus(PlayerStatus.CateringIceEatoy);
+            GetComponent<PlayerAnimCtrl>().SetServing(true);
+            GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(false);
+        }
+    }
+
+    private void UpdateDastBox()
+    {
+        playerInput_cs.InputDastBox();
+        if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
+        {
+            SetPlayerStatus(PlayerStatus.Normal);
+            GetComponent<PlayerAnimCtrl>().SetServing(false);
+            GetDastBoxUI().SetActive(false);
+            Destroy(haveInHandCusine);
+            Sound.PlaySe(GameSceneManager.seKey[7]);
+        }
+    }
 }
