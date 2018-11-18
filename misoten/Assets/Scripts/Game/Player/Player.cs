@@ -191,6 +191,7 @@ public class Player : MonoBehaviour
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
                     GetDastBoxUI().SetActive(false);
                     Destroy(haveInHandCusine);
+                    Sound.PlaySe(GameSceneManager.seKey[7]);
                 }
                 break;
 
@@ -382,9 +383,6 @@ public class Player : MonoBehaviour
         if (GetHitObjComponentMicroWave().IsCooking()) return;
         StopMove(); // 移動値をリセット
         cookingMicrowave_cs.CookingStart();
-        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
-        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(true);
-
     }
 
     /// <summary>

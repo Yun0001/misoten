@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sound
+public class Sound:MonoBehaviour
 {
     /// SEチャンネル数
     const int SE_CHANNEL = 8;
@@ -26,7 +26,9 @@ public class Sound
     GameObject _object = null;
     // サウンドリソース
     AudioSource _sourceBgm = null; // BGM
+    [SerializeField]
     AudioSource _sourceSeDefault = null; // SE (デフォルト)
+    [SerializeField]
     AudioSource[] _sourceSeArray; // SE (チャンネル)
                                   // BGMにアクセスするためのテーブル
     Dictionary<string, _Data> _poolBgm = new Dictionary<string, _Data>();

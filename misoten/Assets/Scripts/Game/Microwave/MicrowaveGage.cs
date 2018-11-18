@@ -75,6 +75,7 @@ public class MicrowaveGage : MonoBehaviour
     // Update is called once per frame
     public bool UpdateMicrowaveGage()
     {
+
         switch (status)
         {
             case MicrowaveState.Wait:
@@ -82,6 +83,8 @@ public class MicrowaveGage : MonoBehaviour
                 if (waitCount >= waitFrame)
                 {
                     status = MicrowaveState.Roll;
+                    PlayStartSE();
+                    PlayTimerSE();
                     waitCount = 0;
                 }
                 break;
@@ -112,6 +115,9 @@ public class MicrowaveGage : MonoBehaviour
                 if (timerCount <= timerMin)
                 {
                     status = MicrowaveState.Wait;
+                    StopStartSE();
+                    StopTimerSE();
+                    PlayChinSE();
                     return true;
                 }
 
@@ -176,5 +182,35 @@ public class MicrowaveGage : MonoBehaviour
             checkClock_cs.GetComponent<CheckClock>().DecisionArea();
             status = MicrowaveState.Success;
         }
+    }
+
+    private void PlayTimerSE()
+    {
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], true, 6);
+        Sound.PlaySe(GameSceneManager.seKey[17], 6);
+    }
+
+    private void StopTimerSE()
+    {
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], false, 6);
+        Sound.StopSe(GameSceneManager.seKey[17], 6);
+    }
+
+
+    private void PlayStartSE()
+    {
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[18], true, 7);
+        Sound.PlaySe(GameSceneManager.seKey[18], 7);
+    }
+
+    private void StopStartSE()
+    {
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[18], false, 7);
+        Sound.StopSe(GameSceneManager.seKey[18], 7);
+    }
+
+    private void PlayChinSE()
+    {
+        Sound.PlaySe(GameSceneManager.seKey[16]);
     }
 }

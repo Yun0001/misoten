@@ -16,7 +16,9 @@ public class CookingPot : MonoBehaviour {
         if (!player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingStart(player_cs.GetHaveInHandCuisine())) return;
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
         player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
-
+        Sound.PlaySe(GameSceneManager.seKey[27]);
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[22], true, 4);
+        Sound.PlaySe(GameSceneManager.seKey[22], 4);
     }
 
     /// <summary>
@@ -32,5 +34,7 @@ public class CookingPot : MonoBehaviour {
     {
         player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingInterruption();
         player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[22], false, 4);
+        Sound.StopSe(GameSceneManager.seKey[22], 4);
     }
 }

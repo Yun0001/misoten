@@ -48,6 +48,8 @@ public class IceBoxMiniGame : MonoBehaviour {
         iceImage.SetActive(true);
         icePickImage.SetActive(true);
         isStart = true;
+        PlayIcePickSE();
+        Sound.PlaySe(GameSceneManager.seKey[13]);
     }
 	// Update is called once per frame
 	void Update () {
@@ -55,9 +57,10 @@ public class IceBoxMiniGame : MonoBehaviour {
         {
             freesResist += 0.1f;
             Vector3 scale = iceImage.transform.localScale;
-            scale.x += 0.001f;
-            scale.y += 0.001f;
-            iceImage.transform.localScale = scale;
+            float fval = ((playerBarrage - freesResist) / takeCount);
+            float Scale = 1f - fval;
+            if (Scale > 1) Scale = 1f;
+            iceImage.transform.localScale = new Vector3(Scale, Scale, Scale);
             MoveIcePick();
         }
 	}
@@ -66,9 +69,6 @@ public class IceBoxMiniGame : MonoBehaviour {
     {
         playerBarrage += addBarragePoint;
         Vector3 scale = iceImage.transform.localScale;
-        scale.x -= 0.01f;
-        scale.y -= 0.01f;
-        iceImage.transform.localScale = scale;
 
         return IsOverTakeCount(); 
     }
@@ -77,6 +77,9 @@ public class IceBoxMiniGame : MonoBehaviour {
     {
         iceImage.SetActive(false);
         icePickImage.SetActive(false);
+        StopIcePickSE();
+        Sound.PlaySe(GameSceneManager.seKey[14]);
+        Sound.PlaySe(GameSceneManager.seKey[12]);
     }
 
     private bool IsOverTakeCount() => (playerBarrage - freesResist) >= takeCount;
@@ -101,5 +104,17 @@ public class IceBoxMiniGame : MonoBehaviour {
             moveflg = !moveflg;
             moveframe = 0;
         }
+    }
+
+    private void PlayIcePickSE()
+    {
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[11], true, 5);
+        Sound.PlaySe(GameSceneManager.seKey[11], 5);
+    }
+
+    private void StopIcePickSE()
+    {
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[11], false, 5);
+        Sound.StopSe(GameSceneManager.seKey[11], 5);
     }
 }

@@ -59,8 +59,7 @@ public class Microwave : KitchenwareBase
 	{
 		ResetMiniGameUI();
 		SetIsCooking(false);
-		//CuisineManager.GetInstance().GetMicrowaveController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
-		cuisine = null;
+        cuisine = null;
 	}
 
 	protected override int CalcEatoyPoint()
