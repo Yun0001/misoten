@@ -54,6 +54,15 @@ public class Pause : MonoBehaviour
 
     private void PauseMode()
     {
+        // animatorのついたオブジェクトの停止
+        foreach (GameObject player in players)
+        {
+            player.GetComponent<PauseAnimation>().SetIsPause(false);
+        }
+        foreach (GameObject stageModel in stageModels)
+        {
+            stageModel.GetComponent<PauseAnimation>().SetIsPause(false);
+        }
         // Rigidbodyの停止
         // 子要素から有効かつ、このインスタンスでないもの、IgnoreGameObjectに含まれていないMonoBehaviourを抽出
         Predicate<Rigidbody> rigidbodyPredicate = obj => !obj.IsSleeping() && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
@@ -74,15 +83,7 @@ public class Pause : MonoBehaviour
             monoBehaviour.enabled = false;
         }
 
-        // animatorのついたオブジェクトの停止
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PauseAnimation>().SetIsPause(false);
-        }
-        foreach (GameObject stageModel in stageModels)
-        {
-            stageModel.GetComponent<PauseAnimation>().SetIsPause(false);
-        }
+
 
     }
 

@@ -17,6 +17,7 @@ public class CookingMicrowave : MonoBehaviour {
         return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().UpdateMiniGame();
     }
 
+
     /// <summary>
     /// 電子レンジを動かす
     /// </summary>
