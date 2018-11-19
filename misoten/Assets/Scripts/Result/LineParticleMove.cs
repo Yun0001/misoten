@@ -7,6 +7,30 @@ using UnityEngine;
 /// </summary>
 public class LineParticleMove : MonoBehaviour
 {
+	// ラインのID列挙型
+	// ---------------------------------------------
+
+	/// <summary>
+	/// オブジェクト種類
+	/// </summary>
+	private enum ELine
+	{
+		LINE1 = 0,  // ライン(1)
+		LINE2,      // ライン(2)
+		MAX         // 最大
+	}
+
+	// ---------------------------------------------
+
+	// インスペクター上で設定可能
+	// ---------------------------------------------
+
+	// ラインID
+	[SerializeField]
+	private ELine line;
+
+	// ---------------------------------------------
+
 	// ローカル変数
 	// ---------------------------------------------
 
@@ -20,8 +44,18 @@ public class LineParticleMove : MonoBehaviour
 	/// </summary>
 	void Start ()
 	{
-		// コンポーネント取得
-		lineMove = GameObject.Find("Result/BadEnd/Line/" + transform.root.name).gameObject.GetComponent<LineMove>();
+		switch (line)
+		{
+			case ELine.LINE1:
+				// コンポーネント取得
+				lineMove = GameObject.Find("Result/BadEnd/Line/1").gameObject.GetComponent<LineMove>();
+				break;
+			case ELine.LINE2:
+				// コンポーネント取得
+				lineMove = GameObject.Find("Result/BadEnd/Line/2").gameObject.GetComponent<LineMove>();
+				break;
+			default: break;
+		}
 	}
 	
 	/// <summary>

@@ -85,20 +85,20 @@ public class Result : MonoBehaviour
 					}
 					else
 					{
-						if (ScoreCount.GetScore() > 8500)
+						if (ScoreCount.GetScore() >= 8500)
 						{
-							if (obj[i - 1].activeSelf)
+							if (obj[2].activeSelf)
 							{
-								if (timeAdd[i] >= time[i]) { obj[i].SetActive(true); objDrawflag[i] = !objDrawflag[i]; objDrawflag[i + 1] = !objDrawflag[i + 1]; }
-								else { timeAdd[i] += Time.deltaTime; }
+								if (timeAdd[3] >= time[3]) { obj[3].SetActive(true); objDrawflag[3] = !objDrawflag[3]; objDrawflag[4] = !objDrawflag[4]; }
+								else { timeAdd[3] += Time.deltaTime; }
 							}
 						}
 						else
 						{
-							if (obj[i - 1].activeSelf)
+							if (obj[2].activeSelf)
 							{
-								if (timeAdd[i] >= time[i]) { obj[i + 1].SetActive(true); objDrawflag[i] = !objDrawflag[i]; objDrawflag[i + 1] = !objDrawflag[i + 1]; }
-								else { timeAdd[i] += Time.deltaTime; }
+								if (timeAdd[3] >= time[3]) { obj[4].SetActive(true); objDrawflag[3] = !objDrawflag[3]; objDrawflag[4] = !objDrawflag[4]; }
+								else { timeAdd[3] += Time.deltaTime; }
 							}
 						}
 
