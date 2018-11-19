@@ -19,10 +19,6 @@ public class PlayerAnimCtrl : MonoBehaviour {
 	
 	void Update () {
 
-        _animator.SetBool("IsFront", isFront);
-        _animator.SetBool("IsServing", isServing);
-        _animator.SetBool("IsWalking", isWalking);
-
         AnimationCtrl();
 
     }

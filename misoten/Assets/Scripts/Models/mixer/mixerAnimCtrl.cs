@@ -26,7 +26,6 @@ public class mixerAnimCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _animator.SetBool("isPlayAnimation", isPlayAnimation);
         _animator.SetBool("isLooping", isLooping);
         _animator.SetBool("isOpen", isOpen);
         _animator.SetBool("isComplete", isComplete);

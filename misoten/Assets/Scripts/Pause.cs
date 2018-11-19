@@ -23,8 +23,27 @@ public class Pause : MonoBehaviour
     private Rigidbody[] pauseingRigidbodies;
     private MonoBehaviour[] pausingMonoBehaviours;
 
+    private GameObject[] players;
+    private GameObject[] stageModels;
+
+    private void Start()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
+        stageModels = GameObject.FindGameObjectsWithTag("StageModel"); 
+    }
+
     private void Update()
     {
+      
+        foreach (GameObject player in players)
+        {
+            Debug.Log(player.name);
+        }
+        foreach (GameObject stageModel in stageModels)
+        {
+            Debug.Log(stageModel.name);
+        }
+
         if (prevPausing != pausing)
         {
             if (pausing) PauseMode();
@@ -50,10 +69,21 @@ public class Pause : MonoBehaviour
         // MonoBehaviourの停止
         Predicate<MonoBehaviour> monoBehaviourPredicate = obj => obj.enabled && obj != this && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
         pausingMonoBehaviours = Array.FindAll(transform.GetComponentsInChildren<MonoBehaviour>(), monoBehaviourPredicate);
-        foreach(var monoBehaviour in pausingMonoBehaviours)
+        foreach (var monoBehaviour in pausingMonoBehaviours)
         {
             monoBehaviour.enabled = false;
         }
+
+        // animatorのついたオブジェクトの停止
+        foreach (GameObject player in players)
+        {
+            player.GetComponent<PauseAnimation>().SetIsPause(false);
+        }
+        foreach (GameObject stageModel in stageModels)
+        {
+            stageModel.GetComponent<PauseAnimation>().SetIsPause(false);
+        }
+
     }
 
 
@@ -70,6 +100,17 @@ public class Pause : MonoBehaviour
         {
             monoBehaviour.enabled = true;
         }
+
+        // animatorのついたオブジェクトの復帰
+        foreach (GameObject player in players)
+        {
+            player.GetComponent<PauseAnimation>().SetIsPause(true);
+        }
+        foreach (GameObject stageModel in stageModels)
+        {
+            stageModel.GetComponent<PauseAnimation>().SetIsPause(true);
+        }
+
     }
 
 }
