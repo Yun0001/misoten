@@ -30,6 +30,14 @@ public class GameSceneManager : MonoBehaviour {
             else if (i < 23) Sound.LoadSe(seKey[i], FolderPass + FolderName[6] + seKey[i]);
             else if (i < 34) Sound.LoadSe(seKey[i], FolderPass + seKey[i]);
         }
+
+        Sound.LoadBgm("GameBGM", "GamePlay/Gameplay01");
+        if (Sound.PlayBgm("GameBGM"))
+        {
+            Debug.Log("BGM");
+        }
+
+
 	}
 
 }

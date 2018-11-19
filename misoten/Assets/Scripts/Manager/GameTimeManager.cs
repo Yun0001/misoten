@@ -97,6 +97,7 @@ public class GameTimeManager : MonoBehaviour {
         if (countTime<=0)
         {
             countTime = 0;
+            Sound.StopBgm();
             isTimeUp = true;
            // SpeedUpText.GetComponent<Text>().text = "Time Up" ;
         }

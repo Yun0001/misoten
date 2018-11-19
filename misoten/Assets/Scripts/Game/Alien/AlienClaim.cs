@@ -99,7 +99,7 @@ public class AlienClaim : MonoBehaviour
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
 
 
-                    for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
+                    for (int i = 0; i < GetComponent<AlienMove>().alienCall.GetCounterSeatsMax(); i++)
                     {
                         if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
                         {

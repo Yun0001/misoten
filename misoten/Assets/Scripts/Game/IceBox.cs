@@ -123,7 +123,10 @@ public class IceBox : MonoBehaviour {
         {
             // ベースイートイだけの時
             val = random.Next(1, 7);
-
+            if (val == 2 || val == 4 || val == 6)
+            {
+                val--;
+            }
         }
 
         return val;

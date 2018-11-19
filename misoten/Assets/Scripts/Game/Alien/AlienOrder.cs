@@ -338,7 +338,7 @@ public class AlienOrder : MonoBehaviour
 	/// エイリアンが注文した料理が来たかの判定関数
 	/// </summary>
 	/// <param name="cuisine"></param>
-	public void EatCuisine(GameObject cuisine)
+	public void EatCuisine(GameObject eatoy)
 	{
 		// Debug用
 		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
@@ -353,12 +353,12 @@ public class AlienOrder : MonoBehaviour
 		switch (orderType)
 		{
 			case (int)EOrderType.BASE:
-				if (individualOrderBaseType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(); }
-				else { Claim(); }
+				if (individualOrderBaseType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+				else { Claim(eatoy); }
 				break;
 			case (int)EOrderType.CHANGE:
-				if (individualOrderChangeType == (int)cuisine.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(); }
-				else { Claim(); }
+				if (individualOrderChangeType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+				else { Claim(eatoy); }
 				break;
 			default: break;
 		}
@@ -367,10 +367,10 @@ public class AlienOrder : MonoBehaviour
 	/// <summary>
 	/// 満足
 	/// </summary>
-	void Satisfaction()
+	void Satisfaction(GameObject eatoy)
 	{
 		// 通常の旨味係数
-		GetComponent<AlienChip>().SetCuisineCoefficient(1.0f);
+		GetComponent<AlienChip>().SetCuisineCoefficient(eatoy.GetComponent<Eatoy>().GetEatoyPoint());
 
 		// エイリアンが満足する
 		GetComponent<AlienSatisfaction>().SetSatisfactionFlag(true);
@@ -379,10 +379,10 @@ public class AlienOrder : MonoBehaviour
 	/// <summary>
 	/// クレーム
 	/// </summary>
-	void Claim()
+	void Claim(GameObject eatoy)
 	{
 		// 半分の旨味係数
-		GetComponent<AlienChip>().SetCuisineCoefficient(0.5f);
+		GetComponent<AlienChip>().SetCuisineCoefficient(eatoy.GetComponent<Eatoy>().GetEatoyPoint());
 
 		// エイリアンがクレームをする
 		GetComponent<AlienClaim>().SetIsClaim(true);

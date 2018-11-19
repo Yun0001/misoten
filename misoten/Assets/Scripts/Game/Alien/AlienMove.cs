@@ -50,7 +50,7 @@ public class AlienMove : MonoBehaviour
 	// ---------------------------------------------
 
 	// エイリアンの呼び出し
-	private AlienCall alienCall;
+	public AlienCall alienCall;
 
 	// 開始座標設定用
 	private Vector3 startPosition;
@@ -113,7 +113,7 @@ public class AlienMove : MonoBehaviour
 			// カウンター席への移動処理
 			CounterSeatsMove();
 
-            for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
+            for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++)
             {
                 if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
                 {
@@ -128,7 +128,7 @@ public class AlienMove : MonoBehaviour
 			// カウンター席側のエイリアンの退店時移動処理
 			CounterWhenLeavingStoreMove();
 
-            for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
+            for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++)
             {
                 if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
                 {
@@ -246,13 +246,13 @@ public class AlienMove : MonoBehaviour
 					// 右移動時のアニメーション
 					RightMoveAnimation();
 
-                    for (int i = 0; i < GetComponent<AlienCall>().GetCounterSeatsMax(); i++)
+                    for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++)
                     {
                         if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
                         {
                             break;
                         }
-                        if (i == GetComponent<AlienCall>().GetCounterSeatsMax())
+                        if (i == alienCall.GetCounterSeatsMax())
                         {
                             Sound.SetLoopFlgSe(GameSceneManager.seKey[6], false, 9);
                             Sound.PlaySe(GameSceneManager.seKey[6], 9);

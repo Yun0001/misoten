@@ -89,17 +89,17 @@ public class IceBoxMiniGame : MonoBehaviour {
         Vector3 pos = icePickImage.transform.position;
         if (moveflg)
         {
-            pos.x += 0.008f;
-            pos.y += 0.008f;
+            pos.x += 0.016f;
+            pos.y += 0.016f;
         }
         else
         {
-            pos.x -= 0.008f;
-            pos.y -= 0.008f;
+            pos.x -= 0.016f;
+            pos.y -= 0.016f;
         }
         icePickImage.transform.position = pos;
         moveframe++;
-        if (moveframe >= 10)
+        if (moveframe >= 5)
         {
             moveflg = !moveflg;
             moveframe = 0;

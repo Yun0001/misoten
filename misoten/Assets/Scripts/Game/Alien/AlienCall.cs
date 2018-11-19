@@ -267,9 +267,9 @@ public class AlienCall : MonoBehaviour
 		// エイリアンの金持ち度をランダムで設定及び、客の秒数設定
 		switch (Random.Range((int)ERichDegree.POVERTY, (int)ERichDegree.RAND))
 		{
-			case (int)ERichDegree.POVERTY: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[0]; richDegree[GetRichDegreeId()] = 100.0f; break;
-			case (int)ERichDegree.NORMAL: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[1]; richDegree[GetRichDegreeId()] = 200.0f; break;
-			case (int)ERichDegree.RICHMAN: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[2]; richDegree[GetRichDegreeId()] = 300.0f; break;
+			case (int)ERichDegree.POVERTY: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[0]; richDegree[GetRichDegreeId()] = 10.0f; break;
+			case (int)ERichDegree.NORMAL: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[1]; richDegree[GetRichDegreeId()] = 20.0f; break;
+			case (int)ERichDegree.RICHMAN: orderLatencyAdd[GetRichDegreeId()] = theRemainingTime[2]; richDegree[GetRichDegreeId()] = 30.0f; break;
 			default: Debug.Log("Error:カウンター客の秒数設定がされていません"); break;
 		}
 	}
