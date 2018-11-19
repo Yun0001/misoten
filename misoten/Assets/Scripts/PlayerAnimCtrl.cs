@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlayerAnimCtrl : MonoBehaviour {
 
     private Animator _animator;
+    private float _animSpeed;
 
-    [SerializeField]    private bool isFront =true;
-    [SerializeField]    private bool isServing = false;
-    [SerializeField]    private bool isWalking = false;
-
+    [SerializeField] private bool isFront =true;
+    [SerializeField] private bool isServing = false;
+    [SerializeField] private bool isWalking = false;
+    [SerializeField] private bool isPause = false;
 
     void Start () {
         _animator = GetComponent<Animator>();
+        _animSpeed = _animator.speed;
     }
 	
 	void Update () {
@@ -87,6 +89,25 @@ public class PlayerAnimCtrl : MonoBehaviour {
             }
         }
 
+        // Pause
+        if (isPause)
+        {
+            PauseAnimation();
+        }
+        else
+        {
+            _animator.speed = _animSpeed;
+        }
+
+    }
+
+    void PauseAnimation()
+    {
+        if (_animator.speed != 0)
+        {
+            _animSpeed = _animator.speed;
+            _animator.speed = 0;
+        }
     }
 
     public void SetFront(bool b) => isFront = b;
@@ -94,5 +115,7 @@ public class PlayerAnimCtrl : MonoBehaviour {
     public void SetServing(bool b) => isServing = b;
 
     public void SetWalking(bool b) => isWalking = b;
+
+    public void SetPause(bool b) => isPause = b;
 
 }
