@@ -118,4 +118,6 @@ public class PlayerAnimCtrl : MonoBehaviour {
 
     public void SetPause(bool b) => isPause = b;
 
+    public bool IsFront() => isFront;
+
 }
