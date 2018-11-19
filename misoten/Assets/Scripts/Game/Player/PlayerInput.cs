@@ -41,192 +41,55 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
    public void UpdateInput()
     {
-        switch (playerID)
-        {
-            case 0:
-                InputGamepad();
-                break;
-
-            case 1:
-                InputGamepad();
-                break;
-
-            case 2:
-                InputGamepad();
-                InputKeyBoard_Player3();
-                break;
-
-            case 3:
-                InputGamepad();
-                InputKeyBoard_Player4();
-                break;
-        }
-    }
-
-    private void InputGamepad()
-    {
-        AllStatus();
-
-        playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
-    }
-
-
-    private void InputKeyBoard_Player4()
-    {
-        if (Input.GetKey(KeyCode.A)) playerMove_cs.SetMove(PlayerMove.EDirection.Left);
-        if (Input.GetKey(KeyCode.D)) playerMove_cs.SetMove(PlayerMove.EDirection.Right);
-        if (Input.GetKey(KeyCode.W)) playerMove_cs.SetMove(PlayerMove.EDirection.Up);
-        if (Input.GetKey(KeyCode.S)) playerMove_cs.SetMove(PlayerMove.EDirection.Down);
-        if (Input.GetKeyDown(KeyCode.Z)) player_cs.ActionBranch();
-        if (Input.GetKeyDown(KeyCode.X)) player_cs.CookingCancel();
-    }
-
-    private void InputKeyBoard_Player3()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Left);
-        if (Input.GetKey(KeyCode.RightArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Right);
-        if (Input.GetKey(KeyCode.UpArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Up);
-        if (Input.GetKey(KeyCode.DownArrow)) playerMove_cs.SetMove(PlayerMove.EDirection.Down);
-        if (Input.GetKeyDown(KeyCode.K)) player_cs.ActionBranch();
-        if (Input.GetKeyDown(KeyCode.L)) player_cs.CookingCancel();
-    }
-
-    private void AllStatus()
-    {
         // アクション
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber)) player_cs.ActionBranch();
-
-
-        //if (GamePad.GetButtonDown(GamePad.Button.X, PlayerControllerNumber)) player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().DecisionPutEatoyElement();
+        if (InputDownButton(GamePad.Button.B)) player_cs.ActionBranch();
 
         // Yボタン入力（キャンセル）
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)) player_cs.CookingCancel();
+        if (InputDownButton(GamePad.Button.A)) player_cs.CookingCancel();
+
+        // 移動量セット
+        playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
     }
 
     public void InputMicrowave()
     {
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        if (InputDownButton(GamePad.Button.B))
         {
             player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
-        }
-
-        switch (PlayerControllerNumber)
-        {
-            case GamePad.Index.Three:
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
-                }
-                break;
-
-            case GamePad.Index.Four:
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
-                }
-                break;
         }
     }
 
     public void InputGrilled()
     {
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        if (InputDownButton(GamePad.Button.B))
         {
             player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
-        }
-
-        switch (PlayerControllerNumber)
-        {
-            case GamePad.Index.Three:
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
-                }
-                break;
-
-            case GamePad.Index.Four:
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
-                }
-                break;
         }
     }
 
     public void InputMixerAccess()
     {
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        if (InputDownButton(GamePad.Button.B))
         {
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
         }
 
 
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber))
+        if (InputDownButton(GamePad.Button.A))
         {
             player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
         }
-
-        switch (PlayerControllerNumber)
-        {
-            case GamePad.Index.Three:
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
-                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
-                }
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
-                }
-                break;
-
-            case GamePad.Index.Four:
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
-                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
-                }
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
-                }
-                break;
-        }
     }
 
     public void InputMixerWait()
     {
-        if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber))
+        if (InputDownButton(GamePad.Button.A))
         {
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
-        }
-
-        switch (PlayerControllerNumber)
-        {
-            case GamePad.Index.Three:
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
-                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
-                }
-                break;
-
-            case GamePad.Index.Four:
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
-                    player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
-                }
-
-                break;
         }
     }
 
@@ -282,27 +145,9 @@ public class PlayerInput : MonoBehaviour
 
     public void InputIceBox()
     {
-        if (GamePad.GetButtonDown(GamePad.Button.B, PlayerControllerNumber))
+        if (InputDownButton(GamePad.Button.B))
         {
             player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
-        }
-
-        switch (PlayerControllerNumber)
-        {
-            case GamePad.Index.Three:
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
-                }
-                break;
-
-            case GamePad.Index.Four:
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
-                }
-
-                break;
         }
     }
 
@@ -312,6 +157,7 @@ public class PlayerInput : MonoBehaviour
         {
             player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
         }
+        // 途中でボタンを離した時
         else if (GamePad.GetButtonUp(GamePad.Button.B, PlayerControllerNumber))
         {
             player_cs.GetDastBoxUI().SetActive(false);
@@ -325,51 +171,9 @@ public class PlayerInput : MonoBehaviour
                     break;
             }
         }
-
-        switch (PlayerControllerNumber)
-        {
-            case GamePad.Index.Three:
-                if (Input.GetKey(KeyCode.K))
-                {
-                    player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
-                }
-                else if (Input.GetKeyUp(KeyCode.K))
-                {
-                    player_cs.GetDastBoxUI().SetActive(false);
-                    switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
-                    {
-                        case 9:
-                            player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
-                            break;
-                        case 10:
-                            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
-                            break;
-                    }
-
-                }
-                break;
-
-            case GamePad.Index.Four:
-                if (Input.GetKey(KeyCode.Z))
-                {
-                    player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
-                }
-                else if (Input.GetKeyUp(KeyCode.Z))
-                {
-                    player_cs.GetDastBoxUI().SetActive(false);
-                    switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
-                    {
-                        case 9:
-                            player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
-                            break;
-                        case 10:
-                            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
-                            break;
-                    }
-                }
-                break;
-        }
     }
+
+    private bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, PlayerControllerNumber);
 }
 
 

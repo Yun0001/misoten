@@ -194,7 +194,7 @@ public class Mixer : KitchenwareBase {
                             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
                             putEatoy.transform.localScale = scale;
                             putEatoy.transform.position = lastAccessPlayer.transform.position;
-                            lastAccessPlayer.GetComponent<Player>().WithaCuisine(putEatoy);
+                            lastAccessPlayer.GetComponent<PlayerHaveInEatoy>().SetEatoy(putEatoy);
 
                             // 料理を無くす
                             for (int i = 0; i < eatoies.Length; i++)
@@ -252,7 +252,7 @@ public class Mixer : KitchenwareBase {
 
         status++;
         lastAccessPlayer = player;
-        PutCuisine(player.GetComponent<Player>().GetHaveInHandCuisine());
+        PutCuisine(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
         if (status == Status.AccessThree)
         {
             accessNum = 3;

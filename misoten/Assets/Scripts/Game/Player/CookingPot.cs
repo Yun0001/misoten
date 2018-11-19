@@ -13,7 +13,7 @@ public class CookingPot : MonoBehaviour {
 
     public void CookingStart()
     {
-        if (!player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingStart(player_cs.GetHaveInHandCuisine())) return;
+        if (!player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
         player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
         Sound.PlaySe(GameSceneManager.seKey[27]);

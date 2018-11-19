@@ -95,4 +95,6 @@ public class PlayerAnimCtrl : MonoBehaviour {
 
     public void SetWalking(bool b) => isWalking = b;
 
+    public bool IsFront() => isFront;
+
 }

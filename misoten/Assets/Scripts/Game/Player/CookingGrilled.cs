@@ -13,7 +13,7 @@ public class CookingGrilled : MonoBehaviour {
 
     public void CookingStart()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(player_cs.GetHaveInHandCuisine());
+        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
         Sound.PlaySe(GameSceneManager.seKey[27]);

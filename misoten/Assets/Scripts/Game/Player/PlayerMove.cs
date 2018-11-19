@@ -22,7 +22,6 @@ public class PlayerMove : MonoBehaviour
     private bool effectFlag = false;
 
     private Player player_cs;
-    private PlayerAnimation playerAnimation_cs;
     private Vector3 move;
     private Rigidbody rb;
     [SerializeField]    [Range(0.0f, 30.0f)]
@@ -31,113 +30,88 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]    [Range(0.0f, 1.0f)]
     private float CateringCoefficient;
 
-    [SerializeField]    [Range(0.0f, 1.0f)]
-    private float TasteChargeCoefficient;
-
     [SerializeField, Range(1, 50)]
     private int adjustment;
 
 
 
-
+    // 初期化
     public void Init()
     {
         player_cs = GetComponent<Player>();
-        playerAnimation_cs = GetComponent<PlayerAnimation>();
         rb = player_cs.gameObject.GetComponent<Rigidbody>();
-        // パーティクル生成
-        particleSystems = Instantiate(prefab, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), Quaternion.identity) as ParticleSystem;
-        particleSystems.transform.SetParent(transform);
+
+        // エフェクト生成
+        InstanceMoveEffect();
     }
 
+    // 更新処理
     private void Update()
     {
+        // 移動範囲制限
         Clamp();
-        if (move == Vector3.zero)
-        {
-            particleSystems.Stop();
 
-            // パーティクル削除
-            // Destroy(particleSystems);
-
-            // 退店時の時用に
-            effectFlag = false;
-        }
+        // エフェクトストップ
+        if (move == Vector3.zero) StopMoveEffect();
     }
 
     public void Move()
     {
-        Player.PlayerStatus pStatus = player_cs.GetPlayerStatus();
-        if (pStatus == Player.PlayerStatus.Microwave) return;
-        if (pStatus == Player.PlayerStatus.Pot) return;
-        if (pStatus == Player.PlayerStatus.GrilledTable) return;
-        if (pStatus == Player.PlayerStatus.DastBox) return;
-        if (pStatus == Player.PlayerStatus.IceBox) return;
-        if (pStatus == Player.PlayerStatus.Mixer) return;
+        // 移動可能状態でない場合抜ける
+        if (!IsMoveStatus()) return;
 
+        // 配膳中ならば移動量減少
+        if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering) move *= CateringCoefficient;
 
-        // 配膳中または味の素チャージ中ならば移動量減少
-        switch (pStatus)
-        {
-            case Player.PlayerStatus.Catering:
-                move *= CateringCoefficient;
-                break;
-
-        }
-
-        MoveEffectCall();
         rb.velocity = move * speed;
 
-        // コントローラー４つの場合は不要
-        move = Vector3.zero;
-        //
-    }
-
-    public void SetMove(EDirection direction)
-    {
+        // 移動エフェクト
         MoveEffectCall();
-        //playerAnimation_cs.SetPlayerStatus(1);
-        switch (direction)
-        {
-            case EDirection.Up:
-                move.z = speed/ adjustment;
-                GetComponent<PlayerAnimCtrl>().SetWalking(true);
-                break;
-
-            case EDirection.Down:
-                move.z = -speed/ adjustment;
-                GetComponent<PlayerAnimCtrl>().SetWalking(false);
-                break;
-
-            case EDirection.Right:
-                move.x = speed/ adjustment;
-                playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
-                break;
-
-            case EDirection.Left:
-                move.x = -speed/ adjustment;
-                playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
-                break;
-        }
     }
+
 
     public void SetMove(Vector3 vec)
     {
-        if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal || player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering || player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
-        {
-            move = vec;
-            if (move.x != 0 || move.z != 0) GetComponent<PlayerAnimCtrl>().SetWalking(true);
-            else GetComponent<PlayerAnimCtrl>().SetWalking(false);
+        if (!IsMoveStatus()) return;
 
-            if (move.x < 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Right);
-            else if (move.x > 0) playerAnimation_cs.SetPlayerRLDirection(EDirection.Left);
+        move = vec;
 
-            if (move.z < 0) GetComponent<PlayerAnimCtrl>().SetFront(true);
-            else if (move.z > 0) GetComponent<PlayerAnimCtrl>().SetFront(false);
-        }
+        // 歩行か待機か
+        GetComponent<PlayerAnimCtrl>().SetWalking(IsWalking());
 
+        // 前後設定
+        if (move.z != 0) GetComponent<PlayerAnimCtrl>().SetFront(IsFront());
+
+        //左右反転設定
+        if (move.x != 0) GetComponent<SpriteRenderer>().flipX = IsLeftDirection();
     }
 
+    /// <summary>
+    /// 移動可能状態か判定
+    /// </summary>
+    /// <returns></returns>
+    private bool IsMoveStatus()
+    {
+        //通常状態、配膳状態、氷配膳状態はtrue
+        return 
+            player_cs.GetPlayerStatus() == Player.PlayerStatus.Normal ||
+            player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering ||
+            player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy;
+    }
+
+    private bool IsWalking() => ((move.x != 0) || (move.z != 0));
+
+    /// <summary>
+    /// スティックの左入力があるか
+    /// </summary>
+    /// <returns></returns>
+    private bool IsLeftDirection() => move.x > 0;
+
+    private bool IsFront() => move.z < 0;   
+
+    /// <summary>
+    /// 移動範囲制限
+    /// </summary>
     private void Clamp()
     {
         float width = 5.0f;
@@ -152,8 +126,14 @@ public class PlayerMove : MonoBehaviour
         transform.position = pos;
     }
 
+    /// <summary>
+    /// Velocityのリセット
+    /// </summary>
     public void VelocityReset() => rb.velocity = Vector3.zero;
 
+    /// <summary>
+    /// 移動エフェクト発生
+    /// </summary>
     void MoveEffectCall()
     {
         // 一度しか通らない
@@ -166,7 +146,25 @@ public class PlayerMove : MonoBehaviour
 
             // 一度しか通らないようにする
             effectFlag = true;
-
         }
+    }
+
+    /// <summary>
+    /// エフェクト生成
+    /// </summary>
+    private void InstanceMoveEffect()
+    {
+        particleSystems = Instantiate(prefab, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), Quaternion.identity) as ParticleSystem;
+        particleSystems.transform.SetParent(transform);
+    }
+
+    /// <summary>
+    /// エフェクトストップ
+    /// </summary>
+    private void StopMoveEffect()
+    {
+        particleSystems.Stop();
+
+        effectFlag = false;
     }
 }

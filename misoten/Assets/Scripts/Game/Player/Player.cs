@@ -32,8 +32,6 @@ public class Player : MonoBehaviour
         DastBox,
         CateringIceEatoy,
         Catering,           //配膳
-        Replenishment, // 補充
-        TasteCharge,//Burstチャージ中
     }
 
     public enum hitObjName
@@ -44,9 +42,7 @@ public class Player : MonoBehaviour
         Mixer,
         IceBox,
         DastBox,
-        TasteMachine,//旨味成分補充マシーン
         Alien,//宇宙人
-        Taste,//旨味成分
         HitObjMax
     }
 
@@ -65,9 +61,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 7).ToArray();// 現在プレイヤーと当たっているオブジェクト
 
-    [SerializeField]
-    private GameObject haveInHandCusine;  // 持っている食材
-
     private readonly static float HINDRANCE_TIME = 3;
     private float hindranceTime = HINDRANCE_TIME; // 邪魔動作の時間
 
@@ -79,11 +72,8 @@ public class Player : MonoBehaviour
     private HindranceItem hindrance_cs;
     private PlayerAnimation playerAnimation_cs;
     private PlayerInput playerInput_cs;
+    private PlayerHaveInEatoy haveInEatoy_cs;
     private GameObject dastBoxGage;
-
-    [SerializeField]
-    private Vector3 eatoyPos;
-
 
     // Use this for initialization
     void Awake()
@@ -198,57 +188,27 @@ public class Player : MonoBehaviour
             case "DastBox":
                 hitObj[(int)hitObjName.DastBox] = null;
                 break;
-            case "TasteMachine":
-                hitObj[(int)hitObjName.TasteMachine] = null;
-                break;
-
             case "Alien":
                 hitObj[(int)hitObjName.Alien] = null;
                 break;
         }
     }
 
-    private void OnTriggerStay(Collider collision)
-    {
-        //ここに旨味成分に当たっているときの処理
-        if (playerStatus != PlayerStatus.Catering) return;
-        if (collision.tag != "Taste") return;
-        if (collision.gameObject.GetComponent<Taste>().playerID == playerID) return;
-
-        //配膳中かつ当たっているものが旨味成分かつ旨味成分が自分のものではないとき
-        // 配膳中の料理の旨味を向上させる
-        haveInHandCusine.GetComponent<Food>().SubQualityTaste();
-    }
-
-
     /// <summary>
     /// 料理を渡す
     /// </summary>
     public void OfferCuisine()
     {
-        if (haveInHandCusine == null) return;                             // 料理を持っていないならreturn
+        if (haveInEatoy_cs.GetHaveInEatoy() == null) return;                             // 料理を持っていないならreturn
         if (playerStatus != PlayerStatus.Catering) return;          // 配膳状態でないならreturn
         if (GetHitObj((int)hitObjName.Alien) == null) return;    // 宇宙人との当たり判定がなければreturn
 
         // エイリアンのスクリプトを取得して料理を渡す
-        GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInHandCusine);
-        // 料理コントローラーが新たに料理を出せるようにする
-        //CuisineControllerOfferCuisine();
+        GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
         GetComponent<PlayerAnimCtrl>().SetServing(false);
 
-        //SetHaveInHandCuisine();
-        Destroy(haveInHandCusine);
+        haveInEatoy_cs.RevocationHaveInEatoy();
         SetPlayerStatus(PlayerStatus.Normal);
-    }
-
-
-    /// <summary>
-    /// 料理を持つ
-    /// </summary>
-    public void WithaCuisine(GameObject cuisine)
-    {
-        SetHaveInHandCuisine(cuisine);
-        SetPlayerStatus(PlayerStatus.Catering);
     }
 
     public GameObject GetHitObj(int HitObjID)
@@ -429,6 +389,7 @@ public class Player : MonoBehaviour
         hindrance_cs = GetComponent<HindranceItem>();
         playerAnimation_cs = GetComponent<PlayerAnimation>();
         playerInput_cs = GetComponent<PlayerInput>();
+        haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
     }
 
     public string GetInputXAxisName() => inputXAxisName;
@@ -437,11 +398,12 @@ public class Player : MonoBehaviour
 
     private void UpdateCookingMicrowave()
     {
-        GameObject cuisine = cookingMicrowave_cs.UpdateMicrowave();
-        if (cuisine == null) return;
+        GameObject eatoy = cookingMicrowave_cs.UpdateMicrowave();
+        if (eatoy == null) return;
 
         // 料理を持つ
-        WithaCuisine(cuisine);
+        haveInEatoy_cs.SetEatoy(eatoy);
+        SetPlayerStatus(PlayerStatus.Catering);
         GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
 
@@ -453,11 +415,12 @@ public class Player : MonoBehaviour
     private void UpdateCookingPot()
     {
         // スティック一周ができればcuisineはnullでない
-        GameObject cuisine = cookingPot_cs.UpdatePot();
-        if (cuisine == null) return;
+        GameObject eatoy = cookingPot_cs.UpdatePot();
+        if (eatoy == null) return;
 
         // 料理を持つ
-        WithaCuisine(cuisine);
+        haveInEatoy_cs.SetEatoy(eatoy);
+        SetPlayerStatus(PlayerStatus.Catering);
         GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
@@ -467,21 +430,15 @@ public class Player : MonoBehaviour
     /// </summary>
     private void UpdateCookingGrilled()
     {
-        GameObject cuisine = cookingGrilled_cs.UpdateGrilled();
-        if (cuisine == null) return;
+        GameObject eatoy = cookingGrilled_cs.UpdateGrilled();
+        if (eatoy == null) return;
 
         // 焼く調理終了の処理
-        WithaCuisine(cuisine);
+        haveInEatoy_cs.SetEatoy(eatoy);
+        SetPlayerStatus(PlayerStatus.Catering);
         GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
-
-    private void SetHaveInHandCuisine(GameObject Cuisine = null)
-    {
-        haveInHandCusine = Cuisine;
-    }
-
-    public GameObject GetHaveInHandCuisine() => haveInHandCusine;
 
     private void StopMove()
     {
@@ -493,7 +450,6 @@ public class Player : MonoBehaviour
 
     private void UpdateBranch()
     {
-        Vector3 pos = transform.position;
         switch (playerStatus)
         {
             case PlayerStatus.Microwave:
@@ -548,29 +504,11 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerStatus.Catering:
-                if (GetComponent<SpriteRenderer>().flipX)
-                {
-                    pos.x += eatoyPos.x;
-                }
-                else
-                {
-                    pos.x -= eatoyPos.x;
-                }
-                pos.y += eatoyPos.y;
-                haveInHandCusine.transform.position = pos;
+                haveInEatoy_cs.SetHaveInEatoyPosition();
                 break;
 
             case PlayerStatus.CateringIceEatoy:
-                if (GetComponent<SpriteRenderer>().flipX)
-                {
-                    pos.x += eatoyPos.x;
-                }
-                else
-                {
-                    pos.x -= eatoyPos.x;
-                }
-                pos.y += eatoyPos.y;
-                haveInHandCusine.transform.position = pos;
+                haveInEatoy_cs.SetHaveInEatoyPosition();
                 break;
 
             default:
@@ -589,7 +527,7 @@ public class Player : MonoBehaviour
         playerInput_cs.InputIceBox();
         if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
         {
-            SetHaveInHandCuisine(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
+            haveInEatoy_cs.SetEatoy(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
             GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
             SetPlayerStatus(PlayerStatus.CateringIceEatoy);
             GetComponent<PlayerAnimCtrl>().SetServing(true);
@@ -606,7 +544,7 @@ public class Player : MonoBehaviour
         if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
         {
             SetPlayerStatus(PlayerStatus.Normal);
-            Destroy(haveInHandCusine);
+            haveInEatoy_cs.RevocationHaveInEatoy();
             GetComponent<PlayerAnimCtrl>().SetServing(false);
             GetDastBoxUI().SetActive(false);
             Sound.PlaySe(GameSceneManager.seKey[7]);
