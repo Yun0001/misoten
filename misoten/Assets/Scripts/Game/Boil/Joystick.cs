@@ -55,7 +55,7 @@ public class Joystick : MonoBehaviour
 
         pos = transform.position;
         pos.x += 0.1f;
-        pos.y -= 2.7f;
+        pos.y -= 2.4f;
         transform.position = pos;
     }
 
