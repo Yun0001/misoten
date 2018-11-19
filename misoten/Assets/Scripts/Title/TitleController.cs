@@ -113,6 +113,7 @@ public class TitleController : MonoBehaviour {
 
     void CameraMove()
     {
+
         var diff = Time.timeSinceLevelLoad - startTime;
         if (diff > cameraMoveTime)
         {
