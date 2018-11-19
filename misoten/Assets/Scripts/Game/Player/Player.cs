@@ -302,7 +302,6 @@ public class Player : MonoBehaviour
         if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().Access(playerID))
         {
             SetPlayerStatus(PlayerStatus.IceBox);
-            GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(true);
         }
     }
 
@@ -531,7 +530,7 @@ public class Player : MonoBehaviour
             GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
             SetPlayerStatus(PlayerStatus.CateringIceEatoy);
             GetComponent<PlayerAnimCtrl>().SetServing(true);
-            GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<mwAnimCtrl>().SetBool(false);
+            GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<iceboxAnimCtrl>().SetIsOpen(false);
         }
     }
 

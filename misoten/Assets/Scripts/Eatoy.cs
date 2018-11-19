@@ -14,7 +14,8 @@ public class Eatoy : MonoBehaviour {
     private int eatoyPoint;
 
     [SerializeField]
-    private bool isIcing; 
+    private bool isIcing;
+
 
     public void Init(int colorID, Sprite eatoySprite)
     {

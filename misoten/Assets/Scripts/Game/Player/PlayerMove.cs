@@ -107,8 +107,13 @@ public class PlayerMove : MonoBehaviour
     /// <returns></returns>
     private bool IsLeftDirection() => move.x > 0;
 
-    private bool IsFront() => move.z < 0;   
-
+    private bool IsFront()
+    {
+        return 
+            ((move.z < 0) ||
+            (GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering) ||
+            (GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy));
+    }
     /// <summary>
     /// 移動範囲制限
     /// </summary>

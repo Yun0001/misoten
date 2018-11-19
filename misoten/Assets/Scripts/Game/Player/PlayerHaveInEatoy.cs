@@ -13,7 +13,7 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <summary>
     /// 調整座標
     /// </summary>
-    private readonly Vector3 adjustmentPosition = new Vector3(0.3f, 0.1f, 0);
+    private readonly Vector3 adjustmentPosition = new Vector3(0.3f, 0.5f, -0.65f);
 
     public bool SetEatoy(GameObject eatoy)
     {
@@ -37,11 +37,11 @@ public class PlayerHaveInEatoy : MonoBehaviour
     public void SetHaveInEatoyPosition()
     {
         Vector3 pos = transform.position;
+        pos.z += adjustmentPosition.z;
         // 前向きの時
         if (GetComponent<PlayerAnimCtrl>().IsFront())
         {
             haveInEatoy.SetActive(true);
-            haveInEatoy.GetComponent<SpriteRenderer>().sortingOrder = 2;
             // 右向きの時
             if (GetComponent<SpriteRenderer>().flipX)
             {

@@ -75,6 +75,7 @@ public class IceBox : MonoBehaviour {
         }
 
         MiniGameUI.GetComponent<IceBoxMiniGame>().flgOn();
+        transform.Find("icebox").GetComponent<iceboxAnimCtrl>().SetIsOpen(true);
         return true;
     }
 
