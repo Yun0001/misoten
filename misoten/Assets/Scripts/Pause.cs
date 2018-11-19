@@ -23,28 +23,9 @@ public class Pause : MonoBehaviour
     private Rigidbody[] pauseingRigidbodies;
     private MonoBehaviour[] pausingMonoBehaviours;
 
-    private GameObject[] players;
-    private GameObject[] stageModels;
-
-    private void Start()
-    {
-        players = GameObject.FindGameObjectsWithTag("Player");
-        stageModels = GameObject.FindGameObjectsWithTag("StageModel"); 
-    }
-
     private void Update()
     {
-      
-        foreach (GameObject player in players)
-        {
-            Debug.Log(player.name);
-        }
-        foreach (GameObject stageModel in stageModels)
-        {
-            Debug.Log(stageModel.name);
-        }
-
-        if (prevPausing != pausing)
+       if (prevPausing != pausing)
         {
             if (pausing) PauseMode();
             else ResumeMode();
@@ -54,15 +35,6 @@ public class Pause : MonoBehaviour
 
     private void PauseMode()
     {
-        // animatorのついたオブジェクトの停止
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PauseAnimation>().SetIsPause(false);
-        }
-        foreach (GameObject stageModel in stageModels)
-        {
-            stageModel.GetComponent<PauseAnimation>().SetIsPause(false);
-        }
         // Rigidbodyの停止
         // 子要素から有効かつ、このインスタンスでないもの、IgnoreGameObjectに含まれていないMonoBehaviourを抽出
         Predicate<Rigidbody> rigidbodyPredicate = obj => !obj.IsSleeping() && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
@@ -82,9 +54,6 @@ public class Pause : MonoBehaviour
         {
             monoBehaviour.enabled = false;
         }
-
-
-
     }
 
 
@@ -101,17 +70,6 @@ public class Pause : MonoBehaviour
         {
             monoBehaviour.enabled = true;
         }
-
-        // animatorのついたオブジェクトの復帰
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PauseAnimation>().SetIsPause(true);
-        }
-        foreach (GameObject stageModel in stageModels)
-        {
-            stageModel.GetComponent<PauseAnimation>().SetIsPause(true);
-        }
-
     }
 
 }
