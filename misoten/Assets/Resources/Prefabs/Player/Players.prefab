@@ -26,14 +26,12 @@ GameObject:
   - component: {fileID: 114354825206645910}
   - component: {fileID: 114459875053534202}
   - component: {fileID: 114632651254910110}
-  - component: {fileID: 114315271183394806}
   - component: {fileID: 114021871723426940}
   - component: {fileID: 54220844587417372}
   - component: {fileID: 65416081060743830}
   - component: {fileID: 114717659485135674}
   - component: {fileID: 95554839972756852}
   - component: {fileID: 114986916743335454}
-  - component: {fileID: 114116109468717480}
   m_Layer: 8
   m_Name: Player1
   m_TagString: Player
@@ -56,7 +54,6 @@ GameObject:
   - component: {fileID: 114167715246098600}
   - component: {fileID: 114263969685116958}
   - component: {fileID: 114356068148011540}
-  - component: {fileID: 114646520432424580}
   - component: {fileID: 114516951412586924}
   - component: {fileID: 54982835077770966}
   - component: {fileID: 65042794151537584}
@@ -100,7 +97,6 @@ GameObject:
   - component: {fileID: 114933795570044844}
   - component: {fileID: 114492487738451230}
   - component: {fileID: 114899402177582600}
-  - component: {fileID: 114791330398138608}
   - component: {fileID: 114705456690529092}
   - component: {fileID: 54589577832541572}
   - component: {fileID: 65797235485658184}
@@ -129,7 +125,6 @@ GameObject:
   - component: {fileID: 114672254917904776}
   - component: {fileID: 114109808041861222}
   - component: {fileID: 114741292153112802}
-  - component: {fileID: 114846848831806194}
   - component: {fileID: 114757393110602614}
   - component: {fileID: 54795334833849748}
   - component: {fileID: 65268552331015006}
@@ -175,7 +170,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1531382744701612}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -381,7 +376,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 51642675211b87740b6755f101f024b4, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -466,20 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae25e9defc59d934b86c998544f03816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114116109468717480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1302862022227396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4772d4ecf600ef34e8eb134a795a34fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFront: 1
-  isServing: 0
-  isWalking: 0
 --- !u!114 &114167715246098600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -513,23 +494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d97a11b74c3174c89e2c5048f5cd05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114315271183394806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1302862022227396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f64c23ea3bccc849818fe7c9dd11c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hindranceAreaRange:
-  - 0.5
-  - 1
-  - 1.5
-  isStartYummyBottleFull: 0
-  yummyBottle: 0
 --- !u!114 &114354825206645910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -679,7 +643,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   haveInHandCusine: {fileID: 0}
-  eatoyPos: {x: 0, y: 0, z: 0}
+  eatoyPos: {x: 0.3, y: 0.1, z: 0}
 --- !u!114 &114593862450774150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -716,20 +680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb12da61c974a0d46a0e40212d4b266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114646520432424580
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1360060311980102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f64c23ea3bccc849818fe7c9dd11c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hindranceAreaRange: []
-  isStartYummyBottleFull: 0
-  yummyBottle: 0
 --- !u!114 &114672254917904776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -826,34 +776,6 @@ MonoBehaviour:
   Angle: 0
   AngleSum: 0
   rotationNum: 0
---- !u!114 &114791330398138608
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1548471019061302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f64c23ea3bccc849818fe7c9dd11c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hindranceAreaRange: []
-  isStartYummyBottleFull: 0
-  yummyBottle: 0
---- !u!114 &114846848831806194
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1594161226202544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f64c23ea3bccc849818fe7c9dd11c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hindranceAreaRange: []
-  isStartYummyBottleFull: 0
-  yummyBottle: 0
 --- !u!114 &114899402177582600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -932,7 +854,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   haveInHandCusine: {fileID: 0}
-  eatoyPos: {x: 0, y: 0, z: 0}
+  eatoyPos: {x: 0.3, y: 0.1, z: 0}
 --- !u!114 &114975087370925738
 MonoBehaviour:
   m_ObjectHideFlags: 1
