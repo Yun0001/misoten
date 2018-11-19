@@ -9,7 +9,7 @@ public class GameTimeManager : MonoBehaviour {
     private float timespeed;
     private Text TimeText;
     private GameObject SpeedUpText;
-    private bool isTimeUp=false;
+    private bool isTimeUp = false;
 
 
     [SerializeField]
@@ -18,6 +18,9 @@ public class GameTimeManager : MonoBehaviour {
     private Sprite[] sprits;
     // Use this for initialization
     void Start () {
+
+        isTimeUp = false;
+
         sprits = Resources.LoadAll<Sprite>("Textures/UI_Digital2");
         countTime = 180;
         int suu = (int)countTime;
@@ -130,5 +133,13 @@ public class GameTimeManager : MonoBehaviour {
         }
     }
 
+    public bool IsTimeUp()
+    {
+        if (countTime <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
 
 }

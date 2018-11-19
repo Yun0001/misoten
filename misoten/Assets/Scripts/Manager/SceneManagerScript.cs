@@ -87,10 +87,10 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
             IsLoadScene = false;
             KeyFalse();
         }
-        if (currentScene=="Game")
-        {            
-            timeUPloadResult();
-        }
+        //if (currentScene=="Game")
+        //{            
+        //    timeUPloadResult();
+        //}
     }
 
     //使ってない
