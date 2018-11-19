@@ -28,6 +28,7 @@ TagManager:
   - Mixer
   - IceBox
   - DastBox
+  - StageModel
   layers:
   - Default
   - TransparentFX
