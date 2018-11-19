@@ -50,6 +50,8 @@ public class WhiteIO : MonoBehaviour {
 
     void StartWhiteOut()
     {
+        _pushImg.enabled = false;
+
         _whiteOutImg.enabled = true;
         _color.a += fadeOutSpeed;
 
@@ -88,6 +90,7 @@ public class WhiteIO : MonoBehaviour {
     void RestartWhiteOut()
     {
         _pushImg.enabled = false;
+
         _whiteOutImg.enabled = true;
         _color.a += fadeOutSpeed;
 
@@ -108,7 +111,7 @@ public class WhiteIO : MonoBehaviour {
     {
         if (_pushImg.enabled)
         {
-            Color clr = new Color(0, 0, 0, _pushImgAlpha);
+            Color clr = new Color(1, 1, 1, _pushImgAlpha);
             _pushImg.color = clr;
 
             if (_retAlpha)
