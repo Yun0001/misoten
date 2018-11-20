@@ -36,7 +36,7 @@ public class Joystick : MonoBehaviour
 	private Vector2 imagePos = Vector2.zero;
 
 	// プレイヤー
-	private Player player;
+	private PlayerInput playerInput;
 
     private Vector3 pos;
 
@@ -62,7 +62,7 @@ public class Joystick : MonoBehaviour
 
     public void Init(int playerID)
     {
-        player = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<Player>();
+        playerInput = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<PlayerInput>();
     }
 
     /// <summary>
@@ -70,11 +70,6 @@ public class Joystick : MonoBehaviour
     /// </summary>
     void Update()
 	{
-        //プレイヤーの上に表示
-       // Vector3 pos = player.transform.position;
-      //  pos.y += 2;
-        //gameObject.transform.position = pos;
-
         // 現在のワールド座標をスクリーン座標に変換
         Vector3 Position;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(GetComponent<RectTransform>(), gameObject.transform.position, null, out Position);
@@ -82,7 +77,7 @@ public class Joystick : MonoBehaviour
         //スティックのベクトルに現在のスクリーン座標を加算して計算
         // スティックを動かすと座標変換される
         RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
-			new Vector2(Input.GetAxis(player.GetInputXAxisName()) + Position.x, -Input.GetAxis(player.GetInputYAxisName())+ Position.y), null, out imagePos);
+			new Vector2(Input.GetAxis(playerInput.GetInputXAxisName()) + Position.x, -Input.GetAxis(playerInput.GetInputYAxisName())+ Position.y), null, out imagePos);
 
 
         // 位置の更新

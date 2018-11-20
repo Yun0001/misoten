@@ -6,7 +6,7 @@ using GamepadInput;
 public class PlayerInput : MonoBehaviour
 {
     private int playerID;
-    private GamePad.Index PlayerControllerNumber;
+    private GamePad.Index playerControllerNumber;
     private string inputXAxisName;
     private string inputYAxisName;
     private Player player_cs;
@@ -27,15 +27,30 @@ public class PlayerInput : MonoBehaviour
     private int rotationNum = 0;
 
     // Use this for initialization
-    public void Init(string xaxisname,string yaxisdname)
+    public void Init()
     {
         player_cs = GetComponent<Player>();
         playerMove_cs = GetComponent<PlayerMove>();
-        hindrance_cs = GetComponent<HindranceItem>();
         playerID = player_cs.GetPlayerID();
-        PlayerControllerNumber = player_cs.GetPlayerControllerNumber();
-        inputXAxisName = xaxisname;
-        inputYAxisName = yaxisdname;
+        switch (LayerMask.LayerToName(gameObject.layer))
+        {
+            case "Player1":
+                SetInputAxisName("L_XAxis_1", "L_YAxis_1");
+                SetPlayerControllerNumber(GamePad.Index.One);
+                break;
+            case "Player2":
+                SetInputAxisName("L_XAxis_2", "L_YAxis_2");
+                SetPlayerControllerNumber(GamePad.Index.Two);
+                break;
+            case "Player3":
+                SetInputAxisName("L_XAxis_3", "L_YAxis_3");
+                SetPlayerControllerNumber(GamePad.Index.Three);
+                break;
+            case "Player4":
+                SetInputAxisName("L_XAxis_4", "L_YAxis_4");
+                SetPlayerControllerNumber(GamePad.Index.Four);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -44,7 +59,7 @@ public class PlayerInput : MonoBehaviour
         // アクション
         if (InputDownButton(GamePad.Button.B)) player_cs.ActionBranch();
 
-        // Yボタン入力（キャンセル）
+        // キャンセル
         if (InputDownButton(GamePad.Button.A)) player_cs.CookingCancel();
 
         // 移動量セット
@@ -67,28 +82,43 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ミキサーアクセス状態
+    /// </summary>
     public void InputMixerAccess()
     {
+        //　決定ボタン
         if (InputDownButton(GamePad.Button.B))
         {
+            // ミキサーのアクセス数を加算
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
+            // プレイヤーの状態をミキサー待機状態に変更
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
         }
 
-
+        // キャンセルボタン
         if (InputDownButton(GamePad.Button.A))
         {
-            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+            // ミキサーのアクセスポイントを復活
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
+            // ミキサーの状態を1段階戻す
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
+            // プレイヤーの状態を配膳状態に戻す
+            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
         }
     }
 
+    /// <summary>
+    /// ミキサー待機状態
+    /// </summary>
     public void InputMixerWait()
     {
+        // キャンセルボタン入力
         if (InputDownButton(GamePad.Button.A))
         {
+            // ミキサーのアクセス数を減算
             player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
+            // プレイヤーの状態をミキサーアクセスに戻す
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         }
     }
@@ -99,7 +129,7 @@ public class PlayerInput : MonoBehaviour
         if (stickframe >= 2)
         {
             stickframe = 0;
-            Vector2 stickVec = GamePad.GetAxis(GamePad.Axis.LeftStick, PlayerControllerNumber);
+            Vector2 stickVec = GamePad.GetAxis(GamePad.Axis.LeftStick, playerControllerNumber);
             Angle = AngleWithSign(oldStickVec, stickVec);
             if (Angle != 90)
             {
@@ -153,12 +183,12 @@ public class PlayerInput : MonoBehaviour
 
     public void InputDastBox()
     {
-        if (GamePad.GetButton(GamePad.Button.B, PlayerControllerNumber))
+        if (GamePad.GetButton(GamePad.Button.B, playerControllerNumber))
         {
             player_cs.GetDastBoxUI().GetComponent<DastBox>().Action();
         }
         // 途中でボタンを離した時
-        else if (GamePad.GetButtonUp(GamePad.Button.B, PlayerControllerNumber))
+        else if (GamePad.GetButtonUp(GamePad.Button.B, playerControllerNumber))
         {
             player_cs.GetDastBoxUI().SetActive(false);
             switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
@@ -173,7 +203,29 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, PlayerControllerNumber);
+    private bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
+
+    
+
+    private void SetInputAxisName(string x, string y)
+    {
+        inputXAxisName = x;
+        inputYAxisName = y;
+    }
+
+    public string GetInputXAxisName() => inputXAxisName;
+
+    public string GetInputYAxisName() => inputYAxisName;
+
+    private void SetPlayerControllerNumber(GamePad.Index index)
+    {
+        if (index < GamePad.Index.One || index > GamePad.Index.Four)
+        {
+            Debug.LogError("不正なコントローラindex");
+            return;
+        }
+        playerControllerNumber = index;
+    }
 }
 
 

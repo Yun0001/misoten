@@ -32,6 +32,7 @@ GameObject:
   - component: {fileID: 95554839972756852}
   - component: {fileID: 114986916743335454}
   - component: {fileID: 114206561709398322}
+  - component: {fileID: 114212578037235270}
   m_Layer: 8
   m_Name: Player1
   m_TagString: Player
@@ -60,6 +61,7 @@ GameObject:
   - component: {fileID: 95165544685029700}
   - component: {fileID: 114059645518055066}
   - component: {fileID: 114493222404778588}
+  - component: {fileID: 114183425512787024}
   m_Layer: 11
   m_Name: Player4
   m_TagString: Player
@@ -103,6 +105,7 @@ GameObject:
   - component: {fileID: 95380155715406520}
   - component: {fileID: 114371168291114136}
   - component: {fileID: 114516396891952588}
+  - component: {fileID: 114409535534597292}
   m_Layer: 9
   m_Name: Player2
   m_TagString: Player
@@ -131,6 +134,7 @@ GameObject:
   - component: {fileID: 95158867233092570}
   - component: {fileID: 114593862450774150}
   - component: {fileID: 114377709231520974}
+  - component: {fileID: 114270068998875308}
   m_Layer: 10
   m_Name: Player3
   m_TagString: Player
@@ -397,6 +401,7 @@ MonoBehaviour:
   isFront: 1
   isServing: 0
   isWalking: 0
+  isPause: 0
 --- !u!114 &114068991496043886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,6 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: 0
+  playerID: 2
   hitObj:
   - {fileID: 0}
   - {fileID: 0}
@@ -418,7 +424,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  eatoyPos: {x: 0.3, y: 0.1, z: 0}
 --- !u!114 &114085613592037000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -434,7 +439,6 @@ MonoBehaviour:
   particleSystems: {fileID: 0}
   speed: 4
   CateringCoefficient: 0.5
-  TasteChargeCoefficient: 0.1
   adjustment: 25
 --- !u!114 &114109808041861222
 MonoBehaviour:
@@ -458,6 +462,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb12da61c974a0d46a0e40212d4b266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114183425512787024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360060311980102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e108bee6ae55130439ca68839df61ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
 --- !u!114 &114206561709398322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -470,7 +486,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   haveInEatoy: {fileID: 0}
-  POSITION: {x: 0, y: 0, z: 0}
+--- !u!114 &114212578037235270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1302862022227396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e108bee6ae55130439ca68839df61ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
 --- !u!114 &114263969685116958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -482,6 +509,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096d024c8bca45c4d964b377a2c3b3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114270068998875308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594161226202544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e108bee6ae55130439ca68839df61ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
 --- !u!114 &114297036563490074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -529,6 +568,7 @@ MonoBehaviour:
   isFront: 1
   isServing: 0
   isWalking: 0
+  isPause: 0
 --- !u!114 &114377709231520974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -541,7 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   haveInEatoy: {fileID: 0}
-  POSITION: {x: 0, y: 0, z: 0}
 --- !u!114 &114384392665904358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,7 +610,6 @@ MonoBehaviour:
   particleSystems: {fileID: 0}
   speed: 4
   CateringCoefficient: 0.5
-  TasteChargeCoefficient: 0.1
   adjustment: 25
 --- !u!114 &114397476266272928
 MonoBehaviour:
@@ -584,6 +622,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d97a11b74c3174c89e2c5048f5cd05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114409535534597292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1548471019061302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e108bee6ae55130439ca68839df61ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPause: 0
 --- !u!114 &114436163069678894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -632,7 +682,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   haveInEatoy: {fileID: 0}
-  POSITION: {x: 0, y: 0, z: 0}
 --- !u!114 &114516396891952588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -645,7 +694,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   haveInEatoy: {fileID: 0}
-  POSITION: {x: 0, y: 0, z: 0}
 --- !u!114 &114580560952006912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -658,6 +706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: 0
+  playerID: 1
   hitObj:
   - {fileID: 0}
   - {fileID: 0}
@@ -667,7 +716,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  eatoyPos: {x: 0.3, y: 0.1, z: 0}
 --- !u!114 &114593862450774150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -682,6 +730,7 @@ MonoBehaviour:
   isFront: 1
   isServing: 0
   isWalking: 0
+  isPause: 0
 --- !u!114 &114596252147627114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -749,6 +798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: 0
+  playerID: 0
   hitObj:
   - {fileID: 0}
   - {fileID: 0}
@@ -758,7 +808,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  eatoyPos: {x: 0.3, y: 0.1, z: 0}
 --- !u!114 &114781208571623926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -799,7 +848,6 @@ MonoBehaviour:
   particleSystems: {fileID: 0}
   speed: 4
   CateringCoefficient: 0.5
-  TasteChargeCoefficient: 0.1
   adjustment: 4
 --- !u!114 &114926040611743222
 MonoBehaviour:
@@ -816,7 +864,6 @@ MonoBehaviour:
   particleSystems: {fileID: 0}
   speed: 4
   CateringCoefficient: 0.5
-  TasteChargeCoefficient: 0.1
   adjustment: 4
 --- !u!114 &114933795570044844
 MonoBehaviour:
@@ -841,6 +888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: 0
+  playerID: 3
   hitObj:
   - {fileID: 0}
   - {fileID: 0}
@@ -850,7 +898,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  eatoyPos: {x: 0.3, y: 0.1, z: 0}
 --- !u!114 &114975087370925738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -879,6 +926,7 @@ MonoBehaviour:
   isFront: 1
   isServing: 0
   isWalking: 0
+  isPause: 0
 --- !u!212 &212215097549713522
 SpriteRenderer:
   m_ObjectHideFlags: 1

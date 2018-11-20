@@ -46,23 +46,14 @@ public class Player : MonoBehaviour
         HitObjMax
     }
 
-    private string layerName;// レイヤーの名前
-
     [SerializeField]
     private PlayerStatus playerStatus;
 
-    // 左スティックの入力を取る用
-    private string inputXAxisName;
-    private string inputYAxisName;
-
-    private GamePad.Index playerControllerNumber;// コントローラーナンバー
+    [SerializeField]
     private int playerID;//プレイヤーID
 
     [SerializeField]
     private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 7).ToArray();// 現在プレイヤーと当たっているオブジェクト
-
-    private readonly static float HINDRANCE_TIME = 3;
-    private float hindranceTime = HINDRANCE_TIME; // 邪魔動作の時間
 
     private CookingMicrowave cookingMicrowave_cs;
     private CookingPot cookingPot_cs;
@@ -78,34 +69,9 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        layerName = LayerMask.LayerToName(gameObject.layer);
-        switch (layerName)
-        {
-            case "Player1":
-                SetPlayerID(0);
-                SetPlayerControllerNumber(GamePad.Index.One);
-                SetInputAxisName("L_XAxis_1", "L_YAxis_1");
-                break;
-            case "Player2":
-                SetPlayerID(1);
-                SetPlayerControllerNumber(GamePad.Index.Two);
-                SetInputAxisName("L_XAxis_2", "L_YAxis_2");
-                break;
-            case "Player3":
-                SetPlayerID(2);
-                SetPlayerControllerNumber(GamePad.Index.Three);
-                SetInputAxisName("L_XAxis_3", "L_YAxis_3");
-                break;
-            case "Player4":
-                SetPlayerID(3);
-                SetPlayerControllerNumber(GamePad.Index.Four);
-                SetInputAxisName("L_XAxis_4", "L_YAxis_4");
-                break;
-        }
-
         SetPlayerStatus(PlayerStatus.Normal);
         SetScript();
-        playerInput_cs.Init(inputXAxisName, inputYAxisName);
+        playerInput_cs.Init();
         playerMove_cs.Init();
         dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
         dastBoxGage.SetActive(false);
@@ -223,8 +189,6 @@ public class Player : MonoBehaviour
     public int GetPlayerID() => playerID;
 
     public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
-
-    public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
 
     /// <summary>
     /// Bボタン入力
@@ -361,23 +325,6 @@ public class Player : MonoBehaviour
     }
 
 
-    private void SetInputAxisName(string XAxisName, string YAxisName)
-    {
-        inputXAxisName = XAxisName;
-        inputYAxisName = YAxisName;
-    }
-
-    private void SetPlayerControllerNumber(GamePad.Index index)
-    {
-        if (index < GamePad.Index.One || index > GamePad.Index.Four)
-        {
-            Debug.LogError("不正なコントローラindex");
-            return;
-        }
-        playerControllerNumber = index;
-    }
-
-
     private void SetScript()
     {
         cookingMicrowave_cs = GetComponent<CookingMicrowave>();
@@ -391,9 +338,6 @@ public class Player : MonoBehaviour
         haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
     }
 
-    public string GetInputXAxisName() => inputXAxisName;
-
-    public string GetInputYAxisName() => inputYAxisName;
 
     private void UpdateCookingMicrowave()
     {
@@ -494,19 +438,23 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerStatus.IceBox:
+                // 冷蔵庫状態更新処理
                 UpdateIceBox();
 
                 break;
 
             case PlayerStatus.DastBox:
+                // ゴミ箱状態更新処理
                 UpdateDastBox();
                 break;
 
             case PlayerStatus.Catering:
+                // 持っているイートイの座標を更新
                 haveInEatoy_cs.SetHaveInEatoyPosition();
                 break;
 
             case PlayerStatus.CateringIceEatoy:
+                // 持っているイートイの座標を更新
                 haveInEatoy_cs.SetHaveInEatoyPosition();
                 break;
 
@@ -526,10 +474,13 @@ public class Player : MonoBehaviour
         playerInput_cs.InputIceBox();
         if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
         {
+            // イートイを持つ
             haveInEatoy_cs.SetEatoy(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
-            GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
             SetPlayerStatus(PlayerStatus.CateringIceEatoy);
             GetComponent<PlayerAnimCtrl>().SetServing(true);
+
+            // 冷蔵庫の後処理
+            GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
             GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<iceboxAnimCtrl>().SetIsOpen(false);
         }
     }

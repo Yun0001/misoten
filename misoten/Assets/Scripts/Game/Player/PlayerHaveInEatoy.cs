@@ -15,6 +15,11 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// </summary>
     private readonly Vector3 adjustmentPosition = new Vector3(0.3f, 0.5f, -0.65f);
 
+    /// <summary>
+    /// イートイセット
+    /// </summary>
+    /// <param name="eatoy"></param>
+    /// <returns></returns>
     public bool SetEatoy(GameObject eatoy)
     {
         // 持とうとしているものがnullなら抜ける
@@ -24,6 +29,9 @@ public class PlayerHaveInEatoy : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// イートイ破棄
+    /// </summary>
     public void RevocationHaveInEatoy() => Destroy(haveInEatoy);
 
 
@@ -34,29 +42,27 @@ public class PlayerHaveInEatoy : MonoBehaviour
     public GameObject GetHaveInEatoy() => haveInEatoy;
 
 
+    /// <summary>
+    /// イートイ座標更新
+    /// </summary>
     public void SetHaveInEatoyPosition()
     {
         Vector3 pos = transform.position;
-        pos.z += adjustmentPosition.z;
+        
         // 前向きの時
         if (GetComponent<PlayerAnimCtrl>().IsFront())
         {
             haveInEatoy.SetActive(true);
-            // 右向きの時
-            if (GetComponent<SpriteRenderer>().flipX)
-            {
-                pos.x += adjustmentPosition.x;
-            }
-            // 左向きの時
-            else
-            {
-                pos.x -= adjustmentPosition.x;
-            }
-            pos.y += adjustmentPosition.y;
+
+            if (GetComponent<SpriteRenderer>().flipX) pos.x += adjustmentPosition.x;            // 右向きの時
+            else pos.x -= adjustmentPosition.x;             // 左向きの時
+
+            pos.y += adjustmentPosition.y;                  // y座標調整
+            pos.z += adjustmentPosition.z;                  // z座標調整
         }
-        // 後向きの時
         else
         {
+            // 後向きの時は非表示
             haveInEatoy.SetActive(false);
         }
         haveInEatoy.transform.position = pos;
