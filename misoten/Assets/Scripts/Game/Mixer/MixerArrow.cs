@@ -5,9 +5,6 @@ using UnityEngine;
 public class MixerArrow : MonoBehaviour
 {
 
-    // 回転方向(trueなら時計周り)
-    private bool rotationDirection = true;
-
     [SerializeField]
     private float rotationSpeed;
 

@@ -325,8 +325,6 @@ public class Mixer : KitchenwareBase {
         return miniGameUI.GetComponent<MixerMiniGame>().AddPowerPoint();
     }
 
-    public GameObject GetMiniGameUI() => miniGameUI;
-
     protected override int CalcEatoyPoint()
     {
         int sum = 0;

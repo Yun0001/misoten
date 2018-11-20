@@ -48,10 +48,6 @@ public class MicrowaveGage : MonoBehaviour
 
     int oldRand = 5;
 
-    [SerializeField]
-    GameObject microwave;
-
-
     // Use this for initialization
     void Awake()
     {
@@ -61,7 +57,6 @@ public class MicrowaveGage : MonoBehaviour
         checkClock_cs = transform.Find("Canvas/Center/CheckClock/CheckClockImage").gameObject.GetComponent<CheckClock>();
         successAreaParent = transform.Find("Canvas/Center/SuccessAreaParent").gameObject;
 
-        microwave = GameObject.Find("microwave1");
 
         // 最初は非表示
         gameObject.SetActive(false);

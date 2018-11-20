@@ -12,16 +12,10 @@ public class iceboxAnimCtrl : MonoBehaviour {
     [SerializeField]
     private bool isOpen = false;
 
-    [SerializeField]
-    private int openFrame;
-
-    private int openFrameCount;
-
     // Use this for initialization
     void Start()
     {
         _animator = GetComponent<Animator>();
-        openFrameCount = 0;
     }
 
     // Update is called once per frame
@@ -30,9 +24,6 @@ public class iceboxAnimCtrl : MonoBehaviour {
 
         OneAction();
         LoopAction();
-
-        // 現在のアニメーションステートを取得
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         _animator.SetBool("isLooping", isLooping);
         _animator.SetBool("isOpen", isOpen);

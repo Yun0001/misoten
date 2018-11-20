@@ -47,7 +47,6 @@ public class Pot : KitchenwareBase
     {
         ResetMiniGameUI();
         SetIsCooking(false);
-        //CuisineManager.GetInstance().GetPotController().OfferCuisine(cuisine.GetComponent<Food>().GetFoodID());
         cuisine = null;
     }
 
@@ -60,7 +59,7 @@ public class Pot : KitchenwareBase
         {
             missPoint *= 0.9;
         }
-        return (int)(missPoint * missCount);
+        return (int)(basePoint* missPoint);
     }
 
     public void AddMissCount() => missCount++;

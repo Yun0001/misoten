@@ -60,8 +60,6 @@ public class Player : MonoBehaviour
     private CookingGrilled cookingGrilled_cs;
     private CookingMixer cookingMixer_cs;
     private PlayerMove playerMove_cs;
-    private HindranceItem hindrance_cs;
-    private PlayerAnimation playerAnimation_cs;
     private PlayerInput playerInput_cs;
     private PlayerHaveInEatoy haveInEatoy_cs;
     private GameObject dastBoxGage;
@@ -332,8 +330,6 @@ public class Player : MonoBehaviour
         cookingGrilled_cs = GetComponent<CookingGrilled>();
         cookingMixer_cs = GetComponent<CookingMixer>();
         playerMove_cs = GetComponent<PlayerMove>();
-        hindrance_cs = GetComponent<HindranceItem>();
-        playerAnimation_cs = GetComponent<PlayerAnimation>();
         playerInput_cs = GetComponent<PlayerInput>();
         haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
     }

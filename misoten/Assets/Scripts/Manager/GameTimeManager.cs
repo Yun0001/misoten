@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class GameTimeManager : MonoBehaviour {
 
     private float countTime;
-    private float timespeed;
-    private Text TimeText;
-    private GameObject SpeedUpText;
     private bool isTimeUp=false;
 
 
@@ -26,10 +23,6 @@ public class GameTimeManager : MonoBehaviour {
             time[i].GetComponent<SpriteRenderer>().sprite = sprits[suu % 10];
             suu = suu / 10;
         }
-        timespeed = 1;
-
-        TimeText = GetComponent<Text>();
-     //   SpeedUpText = GameObject.Find("SpeedUpText");
     }
 	
 	// Update is called once per frame
@@ -38,10 +31,8 @@ public class GameTimeManager : MonoBehaviour {
         {
             GameTimer();
             TimeOver();
-            UpdateText();
+            UpdateSprite();
         }
-
-
     }
 
     //時間管理
@@ -50,46 +41,6 @@ public class GameTimeManager : MonoBehaviour {
         countTime -= Time.deltaTime; //スタートしてからの秒数を格納
     }
 
-    //時間加速
-    private void TimerSpeed()
-    {
-        CountSpeed();
-        countTime -= Time.deltaTime * timespeed;
-    }
-
-    private void CountSpeed()
-    {
-        //ToDo:仮置き
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            timespeed += 0.5f;
-            //SpeedUpText.GetComponent<Text>().text = "スピードアップ:"+ timespeed.ToString();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            timespeed -= 0.5f;
-            //SpeedUpText.GetComponent<Text>().text = "スピードダウン:"+ timespeed.ToString();
-        }
-
-        //通常スピード
-        if (timespeed == 1.0f)
-        {
-           // SpeedUpText.GetComponent<Text>().text = " 通常スピード :" +timespeed.ToString();
-        }
-
-
-        //スピード限界
-        if (timespeed <= 0.5f)
-        {
-            timespeed = 0.5f;
-           // SpeedUpText.GetComponent<Text>().text = "スピードダウン:" + timespeed.ToString();
-        }
-        if (timespeed >= 10.0f)
-        {
-            timespeed = 10.0f;
-           // SpeedUpText.GetComponent<Text>().text = "スピードアップ:" + timespeed.ToString();
-        }
-    }
 
     //時間切れゲーム終了
     private void TimeOver()
@@ -109,7 +60,7 @@ public class GameTimeManager : MonoBehaviour {
     }
 
 
-    private void UpdateText()
+    private void UpdateSprite()
     {
         int suu = (int)countTime;
         int rement;

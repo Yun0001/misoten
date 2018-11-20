@@ -7,12 +7,7 @@ using GamepadInput;
 public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     private bool IsLoadScene = false;
-    private bool IsKeyEnter = false;
     private string currentScene;
-    //private bool IsKey1 = false;
-    //private bool IsKey2 = false;
-    //private bool IsKey3 = false;
-    //private bool IsKey4 = false;
     private GameObject Time;
     private GameTimeManager GameTime;
     private GameObject gamepad;
@@ -49,12 +44,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         SceneManager.LoadScene(ScenesFolderPass + m_sceneNameDictionary[sceneID]);
     }
 
-    // Use this for initialization
-    private void Start () {
-        KeyFalse();
-    }
-
-    private void Awake()
+    private new void Awake()
     {
         // 現在読み込んでいるシーンの名前を取得
         currentScene = SceneManager.GetActiveScene().name;
@@ -85,7 +75,6 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         {
             LoadNextScene();
             IsLoadScene = false;
-            KeyFalse();
         }
         if (currentScene=="Game")
         {            
@@ -96,16 +85,6 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
     //使ってない
     private void ReloadScene()    {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        //if (IsKeyEnter)
-        //{
-        //    currentSceneIndex++;
-        //}
-        //if ((SceneName)SceneManager.GetActiveScene().buildIndex==SceneName.MaxCount)
-        //{
-        //    currentSceneIndex = 0;
-        //}
-        //currentSceneIndex = 2;
-        //Debug.Log("currentSceneIndex"+currentSceneIndex);
 
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
@@ -197,14 +176,8 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Debug.Log("Space");
-            IsKeyEnter = true;
             LoadSceneFlg();
         }
-    }
-
-    private void KeyFalse()
-    {
-        IsKeyEnter = false;
     }
 
     private void timeUPloadResult()

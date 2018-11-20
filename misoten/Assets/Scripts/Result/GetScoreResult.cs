@@ -11,7 +11,6 @@ public class GetScoreResult : MonoBehaviour
     private GameObject scoreManager;
     private GameObject Score;
     private GameObject ScoreCanvas;
-    private bool contrue=true;
 
     void Awake()
     {
@@ -24,12 +23,6 @@ public class GetScoreResult : MonoBehaviour
         }
         DontDestroyOnLoad(Score);
         DontDestroyOnLoad(scoreManager);
-        //if (currentScene == "Result")
-        //{
-        //    Score_1 = GameObject.Find("Score/Canvas");
-        //    Score_2.transform.gameObject.SetActive(false);
-        //  }
-        //contrue = true;
         ScoreCanvas = GameObject.Find("Score/Canvas");
     }
 

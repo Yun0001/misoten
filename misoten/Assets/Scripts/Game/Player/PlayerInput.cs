@@ -5,7 +5,6 @@ using GamepadInput;
 
 public class PlayerInput : MonoBehaviour
 {
-    private int playerID;
     private GamePad.Index playerControllerNumber;
     private string inputXAxisName;
     private string inputYAxisName;
@@ -31,7 +30,6 @@ public class PlayerInput : MonoBehaviour
     {
         player_cs = GetComponent<Player>();
         playerMove_cs = GetComponent<PlayerMove>();
-        playerID = player_cs.GetPlayerID();
         switch (LayerMask.LayerToName(gameObject.layer))
         {
             case "Player1":
