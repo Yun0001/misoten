@@ -25,6 +25,9 @@ public class IceBoxMiniGame : MonoBehaviour {
     [SerializeField]
     private GameObject icePickImage;
 
+    [SerializeField]
+    private Vector3 icePickInitPosition;
+
     bool moveflg =false;
     int moveframe=0;
 
@@ -41,12 +44,14 @@ public class IceBoxMiniGame : MonoBehaviour {
         HiddenSprite();
         moveflg = false;
         moveframe = 0;
+      
     }
 
-    public void flgOn()
+    public void Display()
     {
         iceImage.SetActive(true);
         icePickImage.SetActive(true);
+        icePickImage.gameObject.transform.position = transform.position + icePickInitPosition;
         isStart = true;
         PlayIcePickSE();
         Sound.PlaySe(GameSceneManager.seKey[13]);
