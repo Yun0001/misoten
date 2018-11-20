@@ -42,7 +42,6 @@ public class Result : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-
 	// オブジェクト描画用フラグ
 	private bool[] objDrawflag = new bool[(int)EObjectType.MAX];
 

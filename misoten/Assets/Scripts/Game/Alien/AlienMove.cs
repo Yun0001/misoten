@@ -186,11 +186,14 @@ public class AlienMove : MonoBehaviour
 			case 0:
 				// 一つ目の終点座標に到着(画面外に向かって歩いている状態「ON」)
 				if (timeAdd > WhenEnteringStoreMoveTime[0])
-                {
-                    Sound.PlaySe(GameSceneManager.seKey[1]);
-                    setEndPositionId = 1; timeAdd = 0.0f;
-                    AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.WALK_SIDE);
-                }
+				{
+					Sound.PlaySe(GameSceneManager.seKey[1]);
+					setEndPositionId = 1; timeAdd = 0.0f;
+					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.WALK_SIDE);
+
+					// ドアのアニメーションを行う
+					AlienCall.SetdoorAnimationFlag(false);
+				}
 				transform.position = Vector3.Lerp(new Vector3(0.0f, 0.8f, 7.0f), counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 0, 0], rate);
 
 				// 右移動アニメーション
@@ -209,9 +212,6 @@ public class AlienMove : MonoBehaviour
 
 				if (GetComponent<AlienOrder>().GetSetId() < 4) { RightMoveAnimation(); }
 				else { LeftMoveAnimation(); }
-
-				// ドアのアニメーションを行う
-				AlienCall.SetdoorAnimationFlag(false);
 				break;
 			case 2:
 				// 三つ目の終点座標に到着(客席に向かって歩いている「ON」)

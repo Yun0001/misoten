@@ -7,16 +7,36 @@ using UnityEngine;
 /// </summary>
 public class AlienClaim : MonoBehaviour
 {
+	// クレームパターン列挙型
+	// ---------------------------------------------
+
+	/// <summary>
+	/// クレームパターン
+	/// </summary>
+	private enum EClaimPattern
+	{
+		ANGER1 = 0,
+		ANGER2,
+		SURPRISE,
+		MAX
+	}
+
+	// ---------------------------------------------
+
 	// インスペクター上で設定可能
 	// ---------------------------------------------
 
 	// クレーム描画用
 	[SerializeField]
-	GameObject[] claimBalloon;
+	GameObject[] claimBalloon = new GameObject[(int)EClaimPattern.MAX];
 
 	// クレームを行う時間
 	[SerializeField, Range(1.0f, 10.0f)]
 	float claimTime;
+
+	// オブジェクト描画開始時間
+	[SerializeField]
+	private float time;
 
 	// ---------------------------------------------
 
@@ -37,6 +57,15 @@ public class AlienClaim : MonoBehaviour
 	// クレーム中かの判定
 	private bool isClaim = false;
 
+	// アニメーションフラグ
+	private bool AnimationFlag = false;
+
+	// 切り替えフラグ
+	private bool changeFlag = false;
+
+	// 時間更新
+	private float timeAdd = 0.0f;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -45,17 +74,19 @@ public class AlienClaim : MonoBehaviour
 	void Start()
 	{
 		// 吹き出しを出さない
-		claimBalloon[0].SetActive(false);
-		claimBalloon[1].SetActive(false);
-
-		// クレーム時間の初期化
-		claimTimeAdd = 0.0f;
+		for(int i = 0; i < (int)EClaimPattern.MAX; i++) { claimBalloon[i].SetActive(false); }
 
 		// クレーム中かの判定の初期化
 		isClaim = false;
 
-		// エイリアンが一体でもクレームをすると、他のエイリアンの注文内容が見えなくなる用の初期化
-		claimFlag = false;
+		// アニメーションフラグの初期化
+		AnimationFlag = false;
+
+		// 切り替えフラグの初期化
+		changeFlag = false;
+
+		// 時間更新の初期化
+		timeAdd = 0.0f;
 	}
 
 	/// <summary>
@@ -72,16 +103,30 @@ public class AlienClaim : MonoBehaviour
 				// エイリアンの注文内容が見えている状態の時
 				if (!claimFlag)
 				{
-                    Sound.PlaySe(GameSceneManager.seKey[2]);
+					// SEを鳴らす
+					Sound.PlaySe(GameSceneManager.seKey[2]);
 
 					// 怒りアニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.ANGER);
 
 					// クレーム吹き出しを出す
-					claimBalloon[0].SetActive(true);
+					//claimBalloon[0].SetActive(true);
+					AnimationFlag = true;
 
 					// エイリアンの注文内容が見えなくなる
 					claimFlag = true;
+				}
+
+				// クレームアニメーション
+				if(AnimationFlag)
+				{
+					if (timeAdd >= time)
+					{
+						if (!changeFlag) { claimBalloon[0].SetActive(true); claimBalloon[1].SetActive(false); changeFlag = true; }
+						else { claimBalloon[1].SetActive(true); claimBalloon[0].SetActive(false); changeFlag = false; }
+						timeAdd = 0.0f;
+					}
+					else { timeAdd += Time.deltaTime; }
 				}
 
 				// クレーム時間が指定時間を超えた場合
@@ -93,23 +138,23 @@ public class AlienClaim : MonoBehaviour
 					SetIsClaim(false);
 
 					// ビックリマーク吹き出しを出さない
-					claimBalloon[1].SetActive(false);
+					claimBalloon[2].SetActive(false);
 
 					// 帰る(悪)状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
 
+					for (int i = 0; i < GetComponent<AlienMove>().alienCall.GetCounterSeatsMax(); i++)
+					{
+						if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
+						{
+							Sound.SetLoopFlgSe(GameSceneManager.seKey[5], true, 8);
+							Sound.PlaySe(GameSceneManager.seKey[5], 8);
+							break;
+						}
+					}
 
-                    for (int i = 0; i < GetComponent<AlienMove>().alienCall.GetCounterSeatsMax(); i++)
-                    {
-                        if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
-                        {
-                            Sound.SetLoopFlgSe(GameSceneManager.seKey[5], true, 8);
-                            Sound.PlaySe(GameSceneManager.seKey[5], 8);
-                            break;
-                        }
-                    }
-                    // 退店時の移動開始
-                    GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+					// 退店時の移動開始
+					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 				}
 
 				// 毎フレームの時間を加算
@@ -118,24 +163,18 @@ public class AlienClaim : MonoBehaviour
 		}
 		else
 		{
-			// 状態移行フラグが「ON」の時
-			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
+			// エイリアンの注文内容が見えている状態の時
+			if (!claimFlag)
 			{
-				// エイリアンの注文内容が見えている状態の時
-				if (!claimFlag)
+				// 吹き出しを出さない
+				for (int i = 0; i < (int)EClaimPattern.MAX; i++) { claimBalloon[i].SetActive(false); }
+			}
+			else
+			{
+				if (!GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag())
 				{
-					// クレームを終えた場合は、クレーム用の吹き出しを消す
-					claimBalloon[0].SetActive(false);
-					claimBalloon[1].SetActive(false);
-				}
-				// エイリアンの注文内容が見えていない状態の時
-				else
-				{
-					if (!GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag())
-					{
-						// ビックリマークをアクティブにする(吹き出し)
-						claimBalloon[1].SetActive(true);
-					}
+					// ビックリマークをアクティブにする(吹き出し)
+					claimBalloon[2].SetActive(true);
 				}
 			}
 		}
