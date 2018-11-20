@@ -117,6 +117,7 @@ MonoBehaviour:
   eatoyColor: 0
   eatoyPoint: 0
   isIcing: 0
+  iceEffect: {fileID: 198611183072200172}
 --- !u!198 &198611183072200172
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -177,7 +178,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2081499975
+  randomSeed: 1400544291
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3538,7 +3539,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 865305455
+  randomSeed: -934103637
   InitialModule:
     serializedVersion: 3
     enabled: 1
