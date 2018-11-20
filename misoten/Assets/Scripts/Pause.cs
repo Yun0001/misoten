@@ -81,7 +81,7 @@ public class Pause : MonoBehaviour
 
 		for (int i = 0; i < pauseingParticleSystem.Length; i++)
 		{
-			if(pauseingParticleSystem[i].isPlaying)
+			if(pauseingParticleSystem[i].isPaused)
 			{
 				pauseingParticleSystem[i].Play();
 			}
