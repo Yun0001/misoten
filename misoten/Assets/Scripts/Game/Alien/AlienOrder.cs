@@ -191,6 +191,13 @@ public class AlienOrder : MonoBehaviour
 				OrderType(true);
 			}
 
+			// 食べる状態の時
+			if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
+			{
+				// 注文したものを非アクティブにする(吹き出し)
+				OrderType(false);
+			}
+
 			// エイリアンが席に座って、注文するまでの時間
 			if (orderTimeAdd >= orderTime)
 			{
@@ -387,6 +394,13 @@ public class AlienOrder : MonoBehaviour
 		// エイリアンがクレームをする
 		GetComponent<AlienClaim>().SetIsClaim(true);
 	}
+
+	/// <summary>
+	/// 状態移行フラグの格納
+	/// </summary>
+	/// <param name="_statusMoveFlag"></param>
+	/// <returns></returns>
+	public bool SetStatusMoveFlag(bool _statusMoveFlag) => statusMoveFlag = _statusMoveFlag;
 
 	/// <summary>
 	/// 状態移行フラグの取得

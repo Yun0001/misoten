@@ -89,7 +89,7 @@ public class AlienDisturbance : MonoBehaviour
 
 		// エイリアンの残り時間
 		timeFont = 0;
-}
+	}
 
 	/// <summary>
 	/// 更新関数
@@ -137,28 +137,10 @@ public class AlienDisturbance : MonoBehaviour
 				}
 				break;
 			case EAlienMood.ANGER:  // 怒り状態
-				// エイリアンの種類管理
-				switch (alienCall.GetAlienPattern(setId))
-				{
-					case 0: // 火星人の場合
 
-						// 火星人特有の邪魔行為
-						//MartianDisturbance();
-						break;
-					case 1: // 水星人の場合
-
-						// 水星人特有の邪魔行為
-						//MercuryDisturbance();
-						break;
-					case 2:// 金星人の場合
-
-						// 金星人特有の邪魔行為
-						//VenusianDisturbance();
-						break;
-					default:
-						// 例外処理
-						break;
-				}
+				//// エイリアンがクレームをする
+				//GetComponent<AlienClaim>().SetIsClaim(true);
+				//GetComponent<AlienOrder>().SetStatusMoveFlag(true);
 
 				// 退店時の移動開始
 				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
