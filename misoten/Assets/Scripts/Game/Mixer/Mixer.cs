@@ -94,7 +94,6 @@ public class Mixer : KitchenwareBase {
                 UpdateMiniGame();
                 break;
             case Status.End:
-                // サイズを初期状態に戻す
                 endFrame++;
                 if (endFrame < 5)
                 {

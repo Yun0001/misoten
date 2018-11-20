@@ -406,11 +406,6 @@ public class Player : MonoBehaviour
                 if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
-                    // ミキサーに持っている料理を入れる
-                    // GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
-                    //Destroy(haveInHandCusine);
-                    //SetHaveInHandCuisine();
-
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
                 }
                 break;
@@ -420,11 +415,6 @@ public class Player : MonoBehaviour
                 if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
-                    // ミキサーに持っている料理を入れる
-                    // GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().PutCuisine(haveInHandCusine);
-                    //Destroy(haveInHandCusine);
-                    //SetHaveInHandCuisine();
-
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
                 }
                 break;

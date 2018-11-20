@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 199097933609711662}
   - component: {fileID: 114959303052529350}
   m_Layer: 0
-  m_Name: IceFragment
+  m_Name: IceFragment_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

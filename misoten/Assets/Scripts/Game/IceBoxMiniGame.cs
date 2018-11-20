@@ -28,6 +28,11 @@ public class IceBoxMiniGame : MonoBehaviour {
     [SerializeField]
     private Vector3 icePickInitPosition;
 
+    [SerializeField]
+    private ParticleSystem iceFragment;
+
+  
+
     bool moveflg =false;
     int moveframe=0;
 
@@ -74,7 +79,7 @@ public class IceBoxMiniGame : MonoBehaviour {
     {
         playerBarrage += addBarragePoint;
         Vector3 scale = iceImage.transform.localScale;
-
+        iceFragment.GetComponent<IceFragment>().EffectPlay();
         return IsOverTakeCount(); 
     }
 
