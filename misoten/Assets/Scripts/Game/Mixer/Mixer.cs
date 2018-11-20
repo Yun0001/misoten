@@ -49,6 +49,8 @@ public class Mixer : KitchenwareBase {
 
     private MixerEatoyManager mixerEatoyM_cs;
 
+    private int endFrame;
+
 
     // Use this for initialization
     void Awake () {
@@ -91,7 +93,15 @@ public class Mixer : KitchenwareBase {
             case Status.Put:
                 UpdateMiniGame();
                 break;
-
+            case Status.End:
+                // サイズを初期状態に戻す
+                endFrame++;
+                if (endFrame < 5)
+                {
+                    status = Status.Stand;
+                    endFrame = 0;
+                }
+                break;
         }
 
 
@@ -108,6 +118,8 @@ public class Mixer : KitchenwareBase {
         time = TIME;
         isEatoyPut = false;
         status = Status.Stand;
+        endFrame = 0;
+
     }
 
     protected override void ResetMiniGameUI()
@@ -116,6 +128,7 @@ public class Mixer : KitchenwareBase {
         time = 0;
         isEatoyPut = false;
         status = Status.Stand;
+       endFrame = 0;
     }
 
     protected override GameObject SetCuisine()
@@ -205,7 +218,7 @@ public class Mixer : KitchenwareBase {
             accessNum = 3;
             mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.ThreeParson);
             status = Status.Open;
-            lastAccessPlayer.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Normal);
+            lastAccessPlayer.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Mixer);
             transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
         }
         return true;

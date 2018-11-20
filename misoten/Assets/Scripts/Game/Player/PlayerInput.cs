@@ -98,7 +98,7 @@ public class PlayerInput : MonoBehaviour
         if (InputDownButton(GamePad.Button.A))
         {
             // ミキサーへのアクセスを切断
-            if(player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<MixerAccessPoint>().DecisionAccessPoint(transform.position))
+            if(player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<MixerAccessPoint>().AccessDiscconnection(transform.position))
             {
                 // プレイヤーの状態を配膳状態に戻す
                 player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);

@@ -19918,6 +19918,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114959303052529350, guid: 2c3f15bd5cb37c84cb573c2f0217b6e2,
+        type: 2}
+      propertyPath: id
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c3f15bd5cb37c84cb573c2f0217b6e2, type: 2}
   m_IsPrefabParent: 0
@@ -29775,11 +29780,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114959303052529350, guid: 2c3f15bd5cb37c84cb573c2f0217b6e2,
-        type: 2}
-      propertyPath: id
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c3f15bd5cb37c84cb573c2f0217b6e2, type: 2}
   m_IsPrefabParent: 0
@@ -39195,7 +39195,7 @@ MonoBehaviour:
   IceBox: {fileID: 1385358144}
   iceImage: {fileID: 2117475601}
   icePickImage: {fileID: 390154960}
-  icePickInitPosition: {x: -1.2, y: 4, z: 0}
+  icePickInitPosition: {x: -0.32, y: 1.22, z: 0}
 --- !u!1 &1718459102
 GameObject:
   m_ObjectHideFlags: 0
@@ -43667,8 +43667,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1808322589}
   - component: {fileID: 1808322591}
-  - component: {fileID: 1808322590}
   - component: {fileID: 1808322592}
+  - component: {fileID: 1808322590}
   m_Layer: 0
   m_Name: icebox
   m_TagString: StageModel
@@ -43696,18 +43696,16 @@ Transform:
 --- !u!114 &1808322590
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114166021657030440, guid: 4d6072833a311f94bb6274ef48de36af,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1808322588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dd523aa6194b0947806a40b56b2afc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 84a192b857ce0064c92f1f1a8f12a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isLooping: 0
   isOpen: 0
-  openFrame: 20
 --- !u!95 &1808322591
 Animator:
   serializedVersion: 3

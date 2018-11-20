@@ -104,7 +104,10 @@ public class GrilledEffect : MonoBehaviour
 				if (!ibAnimCtrl[0].GetIsOpen() && effectFlag[3]) { GetComponent<ParticleSystem>().Stop(); effectFlag[3] = !effectFlag[3]; }
 				break;
 			case EOrderType.ICEBOX2:
-				if (ibAnimCtrl[1].GetIsOpen() &&  !effectFlag[4]) { GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4]; }
+				if (ibAnimCtrl[1].GetIsOpen() &&  !effectFlag[4])
+                {
+                    GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4];
+                }
 				if (!ibAnimCtrl[1].GetIsOpen() &&  effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
 				break;
 			default: break;
