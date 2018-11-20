@@ -76,10 +76,10 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
             LoadNextScene();
             IsLoadScene = false;
         }
-        if (currentScene=="Game")
-        {            
-            timeUPloadResult();
-        }
+        //if (currentScene=="Game")
+        //{            
+        //    timeUPloadResult();
+        //}
     }
 
     //使ってない

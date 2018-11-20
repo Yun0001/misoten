@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class GameTimeManager : MonoBehaviour {
 
     private float countTime;
-    private bool isTimeUp=false;
+    private float timespeed;
+    private Text TimeText;
+    private GameObject SpeedUpText;
+    private bool isTimeUp = false;
 
 
     [SerializeField]
@@ -15,6 +18,9 @@ public class GameTimeManager : MonoBehaviour {
     private Sprite[] sprits;
     // Use this for initialization
     void Start () {
+
+        isTimeUp = false;
+
         sprits = Resources.LoadAll<Sprite>("Textures/UI_Digital2");
         countTime = 180;
         int suu = (int)countTime;
@@ -23,6 +29,10 @@ public class GameTimeManager : MonoBehaviour {
             time[i].GetComponent<SpriteRenderer>().sprite = sprits[suu % 10];
             suu = suu / 10;
         }
+        timespeed = 1;
+
+        TimeText = GetComponent<Text>();
+     //   SpeedUpText = GameObject.Find("SpeedUpText");
     }
 	
 	// Update is called once per frame
@@ -31,8 +41,10 @@ public class GameTimeManager : MonoBehaviour {
         {
             GameTimer();
             TimeOver();
-            UpdateSprite();
+            UpdateText();
         }
+
+
     }
 
     //時間管理
@@ -41,6 +53,46 @@ public class GameTimeManager : MonoBehaviour {
         countTime -= Time.deltaTime; //スタートしてからの秒数を格納
     }
 
+    //時間加速
+    private void TimerSpeed()
+    {
+        CountSpeed();
+        countTime -= Time.deltaTime * timespeed;
+    }
+
+    private void CountSpeed()
+    {
+        //ToDo:仮置き
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            timespeed += 0.5f;
+            //SpeedUpText.GetComponent<Text>().text = "スピードアップ:"+ timespeed.ToString();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            timespeed -= 0.5f;
+            //SpeedUpText.GetComponent<Text>().text = "スピードダウン:"+ timespeed.ToString();
+        }
+
+        //通常スピード
+        if (timespeed == 1.0f)
+        {
+           // SpeedUpText.GetComponent<Text>().text = " 通常スピード :" +timespeed.ToString();
+        }
+
+
+        //スピード限界
+        if (timespeed <= 0.5f)
+        {
+            timespeed = 0.5f;
+           // SpeedUpText.GetComponent<Text>().text = "スピードダウン:" + timespeed.ToString();
+        }
+        if (timespeed >= 10.0f)
+        {
+            timespeed = 10.0f;
+           // SpeedUpText.GetComponent<Text>().text = "スピードアップ:" + timespeed.ToString();
+        }
+    }
 
     //時間切れゲーム終了
     private void TimeOver()
@@ -60,7 +112,7 @@ public class GameTimeManager : MonoBehaviour {
     }
 
 
-    private void UpdateSprite()
+    private void UpdateText()
     {
         int suu = (int)countTime;
         int rement;
@@ -81,5 +133,13 @@ public class GameTimeManager : MonoBehaviour {
         }
     }
 
+    public bool IsTimeUp()
+    {
+        if (countTime <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
 
 }
