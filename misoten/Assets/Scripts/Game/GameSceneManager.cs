@@ -32,6 +32,7 @@ public class GameSceneManager : MonoBehaviour {
         }
 
         Sound.LoadBgm("GameBGM", "GamePlay/Gameplay01");
+        Sound.SetVolumeBgm("GameBGM", 0.01f);
         if (Sound.PlayBgm("GameBGM"))
         {
             Debug.Log("BGM");

@@ -485,7 +485,8 @@ public class Player : MonoBehaviour
             haveInEatoy_cs.RevocationHaveInEatoy();
             GetComponent<PlayerAnimCtrl>().SetServing(false);
             GetDastBoxUI().SetActive(false);
-            Sound.PlaySe(GameSceneManager.seKey[7]);
+            Sound.SetVolumeSe(GameSceneManager.seKey[7], 0.3f, 8);
+            Sound.PlaySe(GameSceneManager.seKey[7],8);
         }
     }
 }
