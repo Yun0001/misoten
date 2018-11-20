@@ -20,6 +20,7 @@ public class GrilledEffect : MonoBehaviour
 		MICROWAVE,		// 電子レンジ
 		ICEBOX1,		// 冷蔵庫1
 		ICEBOX2,		// 冷蔵庫2
+		MIXER,			// ミキサー
 		MAX				// 最大
 	}
 
@@ -37,13 +38,14 @@ public class GrilledEffect : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-	// 焼き調理を行っているかの判定用に使う
+	// 各調理のアニメーション判定用
 	private CookWareAnimCtrl[] cookWareAnimCtrl = new CookWareAnimCtrl[2];
 	private mwAnimCtrl[] mwAnimCtrl = new mwAnimCtrl[3];
-    private iceboxAnimCtrl[] ibAnimCtrl = new iceboxAnimCtrl[2];
+	private iceboxAnimCtrl[] ibAnimCtrl = new iceboxAnimCtrl[2];
+	private mixerAnimCtrl mixerAnimCtrl;
 
 	// エフェクトフラグ
-	private bool[] effectFlag = { false, false, false, false, false };
+	private bool effectFlag = false;
 
 	// ---------------------------------------------
 
@@ -52,29 +54,20 @@ public class GrilledEffect : MonoBehaviour
 	/// </summary>
 	void Start ()
 	{
-		switch(orderType)
+		// コンポーネント取得
+		switch (orderType)
 		{
-			case EOrderType.GRILLED:
-				// コンポーネント取得
-				cookWareAnimCtrl[0] = GameObject.Find("Stage/cookwares/pans/pan1/pan").gameObject.GetComponent<CookWareAnimCtrl>();
-				break;
-			case EOrderType.SIMMER:
-				// コンポーネント取得
-				cookWareAnimCtrl[1] = GameObject.Find("Stage/cookwares/nabes/nabe1/nabe").gameObject.GetComponent<CookWareAnimCtrl>();
-				break;
-			case EOrderType.MICROWAVE:
-				// コンポーネント取得
-				mwAnimCtrl[0] = GameObject.Find("Stage/cookwares/microwaves/microwave1/microwave").gameObject.GetComponent<mwAnimCtrl>();
-				break;
-			case EOrderType.ICEBOX1:
-                // コンポーネント取得
-                ibAnimCtrl[0] = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox").gameObject.GetComponent<iceboxAnimCtrl>();
-				break;
-			case EOrderType.ICEBOX2:
-                ibAnimCtrl[1] = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox").gameObject.GetComponent<iceboxAnimCtrl>();
-				break;
+			case EOrderType.GRILLED: cookWareAnimCtrl[0] = GameObject.Find("Stage/cookwares/pans/pan1/pan").gameObject.GetComponent<CookWareAnimCtrl>(); break;
+			case EOrderType.SIMMER: cookWareAnimCtrl[1] = GameObject.Find("Stage/cookwares/nabes/nabe1/nabe").gameObject.GetComponent<CookWareAnimCtrl>(); break;
+			case EOrderType.MICROWAVE: mwAnimCtrl[0] = GameObject.Find("Stage/cookwares/microwaves/microwave1/microwave").gameObject.GetComponent<mwAnimCtrl>(); break;
+			case EOrderType.ICEBOX1: ibAnimCtrl[0] = GameObject.Find("Stage/cookwares/iceboxes/icebox1/icebox").gameObject.GetComponent<iceboxAnimCtrl>(); break;
+			case EOrderType.ICEBOX2: ibAnimCtrl[1] = GameObject.Find("Stage/cookwares/iceboxes/icebox2/icebox").gameObject.GetComponent<iceboxAnimCtrl>(); break;
+			case EOrderType.MIXER: mixerAnimCtrl = GameObject.Find("Stage/cookwares/mixer/mixer").gameObject.GetComponent<mixerAnimCtrl>(); break;
 			default: break;
 		}
+
+		// エフェクトフラグの初期化
+		effectFlag = false;
 
 		// パーティクル停止
 		GetComponent<ParticleSystem>().Stop();
@@ -88,27 +81,28 @@ public class GrilledEffect : MonoBehaviour
 		switch (orderType)
 		{
 			case EOrderType.GRILLED:
-				if (cookWareAnimCtrl[0].GetBool() && !effectFlag[0]) { GetComponent<ParticleSystem>().Play(); effectFlag[0] = !effectFlag[0]; }
-				if (!cookWareAnimCtrl[0].GetBool() && effectFlag[0]) { GetComponent<ParticleSystem>().Stop(); effectFlag[0] = !effectFlag[0]; }
+				if (cookWareAnimCtrl[0].GetBool() && !effectFlag) { GetComponent<ParticleSystem>().Play(); effectFlag = !effectFlag; }
+				if (!cookWareAnimCtrl[0].GetBool() && effectFlag) { GetComponent<ParticleSystem>().Stop(); effectFlag = !effectFlag; }
 				break;
 			case EOrderType.SIMMER:
-				if (cookWareAnimCtrl[1].GetBool() && !effectFlag[1]) { GetComponent<ParticleSystem>().Play(); effectFlag[1] = !effectFlag[1]; }
-				if (!cookWareAnimCtrl[1].GetBool() && effectFlag[1]) { GetComponent<ParticleSystem>().Stop(); effectFlag[1] = !effectFlag[1]; }
+				if (cookWareAnimCtrl[1].GetBool() && !effectFlag) { GetComponent<ParticleSystem>().Play(); effectFlag = !effectFlag; }
+				if (!cookWareAnimCtrl[1].GetBool() && effectFlag) { GetComponent<ParticleSystem>().Stop(); effectFlag = !effectFlag; }
 				break;
 			case EOrderType.MICROWAVE:
-				if (mwAnimCtrl[0].GetBool() && !effectFlag[2]) { GetComponent<ParticleSystem>().Play(); effectFlag[2] = !effectFlag[2]; }
-				if (!mwAnimCtrl[0].GetBool() && effectFlag[2]) { GetComponent<ParticleSystem>().Stop(); effectFlag[2] = !effectFlag[2]; }
+				if (mwAnimCtrl[0].GetBool() && !effectFlag) { GetComponent<ParticleSystem>().Play(); effectFlag = !effectFlag; }
+				if (!mwAnimCtrl[0].GetBool() && effectFlag) { GetComponent<ParticleSystem>().Stop(); effectFlag = !effectFlag; }
 				break;
 			case EOrderType.ICEBOX1:
-				if (ibAnimCtrl[0].GetIsOpen() && !effectFlag[3]) { GetComponent<ParticleSystem>().Play(); effectFlag[3] = !effectFlag[3]; }
-				if (!ibAnimCtrl[0].GetIsOpen() && effectFlag[3]) { GetComponent<ParticleSystem>().Stop(); effectFlag[3] = !effectFlag[3]; }
+				if (ibAnimCtrl[0].GetIsOpen() && !effectFlag) { GetComponent<ParticleSystem>().Play(); effectFlag = !effectFlag; }
+				if (!ibAnimCtrl[0].GetIsOpen() && effectFlag) { GetComponent<ParticleSystem>().Stop(); effectFlag = !effectFlag; }
 				break;
 			case EOrderType.ICEBOX2:
-				if (ibAnimCtrl[1].GetIsOpen() &&  !effectFlag[4])
-                {
-                    GetComponent<ParticleSystem>().Play(); effectFlag[4] = !effectFlag[4];
-                }
-				if (!ibAnimCtrl[1].GetIsOpen() &&  effectFlag[4]) { GetComponent<ParticleSystem>().Stop(); effectFlag[4] = !effectFlag[4]; }
+				if (ibAnimCtrl[1].GetIsOpen() && !effectFlag) { GetComponent<ParticleSystem>().Play(); effectFlag = !effectFlag; }
+				if (!ibAnimCtrl[1].GetIsOpen() &&  effectFlag) { GetComponent<ParticleSystem>().Stop(); effectFlag = !effectFlag; }
+				break;
+			case EOrderType.MIXER:
+				if (mixerAnimCtrl.GetBool() && !effectFlag) { GetComponent<ParticleSystem>().Play(); effectFlag = !effectFlag; }
+				if (!mixerAnimCtrl.GetBool() && effectFlag) { GetComponent<ParticleSystem>().Stop(); effectFlag = !effectFlag; }
 				break;
 			default: break;
 		}
