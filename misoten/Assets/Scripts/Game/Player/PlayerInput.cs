@@ -97,12 +97,13 @@ public class PlayerInput : MonoBehaviour
         // キャンセルボタン
         if (InputDownButton(GamePad.Button.A))
         {
-            // ミキサーのアクセスポイントを復活
-            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().DecisionAccessPoint(transform.position);
-            // ミキサーの状態を1段階戻す
-            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().ReturnStatus();
-            // プレイヤーの状態を配膳状態に戻す
-            player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+            // ミキサーへのアクセスを切断
+            if(player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<MixerAccessPoint>().DecisionAccessPoint(transform.position))
+            {
+                // プレイヤーの状態を配膳状態に戻す
+                player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
+            }
+
         }
     }
 

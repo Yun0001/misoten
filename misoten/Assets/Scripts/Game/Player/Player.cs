@@ -342,8 +342,6 @@ public class Player : MonoBehaviour
 
         // 料理を持つ
         haveInEatoy_cs.SetEatoy(eatoy);
-        SetPlayerStatus(PlayerStatus.Catering);
-        GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
 
     }
@@ -359,8 +357,6 @@ public class Player : MonoBehaviour
 
         // 料理を持つ
         haveInEatoy_cs.SetEatoy(eatoy);
-        SetPlayerStatus(PlayerStatus.Catering);
-        GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
@@ -374,8 +370,6 @@ public class Player : MonoBehaviour
 
         // 焼く調理終了の処理
         haveInEatoy_cs.SetEatoy(eatoy);
-        SetPlayerStatus(PlayerStatus.Catering);
-        GetComponent<PlayerAnimCtrl>().SetServing(true);
         GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
@@ -472,8 +466,6 @@ public class Player : MonoBehaviour
         {
             // イートイを持つ
             haveInEatoy_cs.SetEatoy(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
-            SetPlayerStatus(PlayerStatus.CateringIceEatoy);
-            GetComponent<PlayerAnimCtrl>().SetServing(true);
 
             // 冷蔵庫の後処理
             GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();

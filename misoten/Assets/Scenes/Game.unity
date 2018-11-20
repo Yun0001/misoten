@@ -265,6 +265,8 @@ GameObject:
   - component: {fileID: 12722539}
   - component: {fileID: 12722538}
   - component: {fileID: 12722537}
+  - component: {fileID: 12722541}
+  - component: {fileID: 12722542}
   m_Layer: 0
   m_Name: mixer
   m_TagString: Mixer
@@ -302,18 +304,12 @@ MonoBehaviour:
   isDebugMode: 0
   isEnd: 0
   canvasCamera: {fileID: 24543913}
-  TIME: 5
+  TIME: 3
   time: 0
   animCount: 0
   openFrame: 100
   accessNum: 0
-  eatoyPrefab: {fileID: 1713259920004544, guid: f2792a6bddad6c141afee6fbcbd84fc6,
-    type: 2}
   status: 0
-  eatoies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!65 &12722538
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -353,6 +349,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: -3}
+--- !u!114 &12722541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 12722535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4b1456406f9834ebd7564d8f6e39f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &12722542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 12722535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a128ea393494c234c8de913bf2d6e720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatoyPrefab: {fileID: 1713259920004544, guid: f2792a6bddad6c141afee6fbcbd84fc6,
+    type: 2}
+  eatoies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &18353317
 GameObject:
   m_ObjectHideFlags: 0
@@ -32445,7 +32469,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLooping: 0
   isOpen: 0
-  openFrame: 20
 --- !u!95 &1319968380
 Animator:
   serializedVersion: 3

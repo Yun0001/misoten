@@ -26,6 +26,15 @@ public class PlayerHaveInEatoy : MonoBehaviour
         if (eatoy == null) return false;
 
         haveInEatoy = eatoy;
+        if (haveInEatoy.GetComponent<Eatoy>().IsIcing())
+        {
+            GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+        }
+        else
+        {
+            GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
+        }
+        GetComponent<PlayerAnimCtrl>().SetServing(true);
         return true;
     }
 

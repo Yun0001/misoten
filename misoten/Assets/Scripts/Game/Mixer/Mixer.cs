@@ -18,13 +18,6 @@ public class Mixer : KitchenwareBase {
         End
     }
 
-    private enum MixMode
-    {
-        None,
-        TwoParson,
-        ThreeParson
-    }
-
     [SerializeField]
     private int TIME;
 
@@ -48,27 +41,20 @@ public class Mixer : KitchenwareBase {
     private bool seFlg;
     private bool uiFlg;
 
-    [SerializeField]
-    private GameObject eatoyPrefab;
-    private Sprite[] eatoySprite;
 
     [SerializeField]
     private Status status = Status.Stand;
 
-    [SerializeField]
-    private GameObject[] eatoies;
-
-    private MixMode mixMode;
-
     private GameObject lastAccessPlayer;
+
+    private MixerEatoyManager mixerEatoyM_cs;
 
 
     // Use this for initialization
     void Awake () {
-        mixMode = MixMode.None;
         miniGameUI = Instantiate(Resources.Load("Prefabs/MixerMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
-        eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+        mixerEatoyM_cs = GetComponent<MixerEatoyManager>();
     }
 
     private void Update()
@@ -81,7 +67,7 @@ public class Mixer : KitchenwareBase {
                 {
                     // 調理開始
                     status = Status.Open;
-                    mixMode = MixMode.TwoParson;
+                    mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.TwoParson);
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
                 }
                 break;
@@ -151,7 +137,6 @@ public class Mixer : KitchenwareBase {
                 break;
 
             case Status.Put:
-                // 置かれていればOpenアニメーションを再生
                 if (transform.Find("mixer").GetComponent<mixerAnimCtrl>().GetIsOpen())
                 {
                     animCount++;
@@ -168,48 +153,14 @@ public class Mixer : KitchenwareBase {
                         if (!isEatoyPut)
                         {
                             miniGameUI.SetActive(false);
-                            GameObject putEatoy = Instantiate(eatoyPrefab, transform.position, Quaternion.identity);
 
-                            int eatoyID = 0;
-                            // ToDo 人数と入れたイートイの判定をする
-                            switch (mixMode)
-                            {
-                                case MixMode.TwoParson:
-                                    eatoyID = DecisionTwoParonPutEatoyID();
-                                    break;
-
-                                case MixMode.ThreeParson:
-                                    eatoyID = DecisionThreeParsonPutEatoyID();
-                                    break;
-
-                                default:
-                                    Debug.LogError("不正な状態");
-                                    break;
-                            }
-
-                            putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID - 1]);
-                            //
+                            // イートイを生成し、最後にアクセスしたプレイヤーに渡す
+                            lastAccessPlayer.GetComponent<PlayerHaveInEatoy>().SetEatoy(
+                                GetComponent<MixerEatoyManager>().MixEatoy());
                             isEatoyPut = true;
 
-                            Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
-                            putEatoy.transform.localScale = scale;
-                            putEatoy.transform.position = lastAccessPlayer.transform.position;
-                            lastAccessPlayer.GetComponent<PlayerHaveInEatoy>().SetEatoy(putEatoy);
-
-                            // 料理を無くす
-                            for (int i = 0; i < eatoies.Length; i++)
-                            {
-                                if (eatoies[i] != null)
-                                {
-                                    Destroy(eatoies[i]);
-                                }
-                            }
-                            // 当たり判定復活
-                            BoxCollider[] bc = GetComponents<BoxCollider>();
-                            for (int i = 0; i < bc.Length; i++)
-                            {
-                                bc[i].enabled = true;
-                            }
+                            // 全ての当たり判定を復活
+                            GetComponent<MixerAccessPoint>().RevivalAllAccessPoint();
                         }                 
                     }
                 }
@@ -236,14 +187,8 @@ public class Mixer : KitchenwareBase {
     /// <summary>
     /// 調理準備
     /// </summary>
-    public bool Access(Vector3 accesspos, GameObject player)
+    public bool Access(GameObject player)
     {
-        if (!DecisionAccessPoint(accesspos))
-        {
-            Debug.LogError("アクセスポイントがおかしい");
-            return false;
-        }
-
         if (status >= Status.AccessThree)
         {
             Debug.LogError("これ以上アクセスできません！");
@@ -252,53 +197,20 @@ public class Mixer : KitchenwareBase {
 
         status++;
         lastAccessPlayer = player;
-        PutCuisine(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
+        GetComponent<MixerEatoyManager>().SetEatoy(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
+
+        // 三人アクセスした時
         if (status == Status.AccessThree)
         {
             accessNum = 3;
-            mixMode = MixMode.ThreeParson;
+            mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.ThreeParson);
             status = Status.Open;
+            lastAccessPlayer.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Normal);
             transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
         }
         return true;
     }
 
-    /// <summary>
-    /// アクセスポイント判定
-    /// </summary>
-    /// <param name="accesspos"></param>
-    /// <returns></returns>
-    public bool DecisionAccessPoint(Vector3 accesspos)
-    {
-        float border = transform.position.z - 0.5f;
-
-        if (accesspos.z < border)
-        {
-            ChangeBoxColliderEnable(0);
-            return true;
-        }
-        else if (accesspos.x > transform.position.x)
-        {
-            ChangeBoxColliderEnable(1);
-            return true;
-        }
-        else if (accesspos.x < transform.position.x)
-        {
-            ChangeBoxColliderEnable(2);
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// 当たり判定のOnOffを切り替え
-    /// </summary>
-    /// <param name="element"></param>
-    private void ChangeBoxColliderEnable(int element)
-    {
-        BoxCollider[] bc = GetComponents<BoxCollider>();
-        bc[element].enabled = !bc[element].enabled;
-    }
 
     public void ReturnStatus() => status--;
 
@@ -308,98 +220,19 @@ public class Mixer : KitchenwareBase {
 
     public Status GetStatus() => status;
 
-    public void PutCuisine(GameObject playerHaveCuisine)
-    {
-        for (int i = 0; i < eatoies.Length; i++)
-        {
-            if (eatoies[i] == null)
-            {
-                eatoies[i] = playerHaveCuisine;
-                break;
-            }
-        }
-    }
-
     public bool OneRotation()
     {
         return miniGameUI.GetComponent<MixerMiniGame>().AddPowerPoint();
     }
 
+    /// <summary>
+    /// 使ってない
+    /// </summary>
+    /// <returns></returns>
     protected override int CalcEatoyPoint()
     {
-        int sum = 0;
-        for (int i = 0; i < eatoies.Length; i++)
-        {
-            if (eatoies[i] != null)
-            {
-                sum += eatoies[i].GetComponent<Eatoy>().GetEatoyPoint();
-            }
-        }
-        return miniGameUI.GetComponent<MixerMiniGame>().GetPowerPoint() * sum;
-    }
-
-    private int DecisionTwoParonPutEatoyID()
-    {
-        Eatoy.EEatoyColor[] eatoyColor = new Eatoy.EEatoyColor[2];
-        for (int i = 0; i < 2; i++)
-        {
-            eatoyColor[i] = eatoies[i].GetComponent<Eatoy>().GetEatoyColor();
-        }
-
-        // 同じ色だった場合
-        if (eatoyColor[0] == eatoyColor[1])
-        {
-            return (int)eatoyColor[0];
-        }
-        // 違う色
-        else
-        {
-            switch ((int)eatoyColor[0] + (int)eatoyColor[1])
-            {
-                // オレンジ
-                case 4:
-                    return  (int)Eatoy.EEatoyColor.Orange;
-                // 緑
-                case 6:
-                    return  (int)Eatoy.EEatoyColor.Green;
-                // 紫
-                case 8:
-                    return  (int)Eatoy.EEatoyColor.Purple;
-            }
-        }
-
-        Debug.LogError("不正な値");
         return 0;
     }
 
-    private int DecisionThreeParsonPutEatoyID()
-    {
-        Eatoy.EEatoyColor[] eatoyColor = new Eatoy.EEatoyColor[3];
-        for (int i = 0; i < 3; i++)
-        {
-            eatoyColor[i] = eatoies[i].GetComponent<Eatoy>().GetEatoyColor();
-        }
-
-        if ((eatoyColor[0] == eatoyColor[1]) && (eatoyColor[0] == eatoyColor[2]))
-        {
-            return (int)eatoyColor[0];
-        }
-        else
-        {
-            switch (eatoyColor[2])
-            {
-                case Eatoy.EEatoyColor.Yellow:
-                    return (int)Eatoy.EEatoyColor.Orange;
-
-                case Eatoy.EEatoyColor.Red:
-                    return (int)Eatoy.EEatoyColor.Purple;
-
-                case Eatoy.EEatoyColor.Bule:
-                    return (int)Eatoy.EEatoyColor.Green;
-            }
-        }
-
-        Debug.LogError("不正な値");
-        return 0;
-    }
+    public int GetMiniGamePoint() => miniGameUI.GetComponent<MixerMiniGame>().GetPowerPoint();
 }
