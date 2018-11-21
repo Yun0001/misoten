@@ -1,40 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class DebugManager : MonoBehaviour {
 
-	// Use this for initialization
 	void Start () {
-		
-	}
+        Cursor.visible = false;
+    }
 	
-	// Update is called once per frame
 	void Update () {
 
-        Exit();
+        ForcedTermination();
+
     }
 
-    /// <summary>
-    /// exe終了処理
-    /// </summary>
-    private void Exit()
+    private void ForcedTermination()
     {        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //Debug.Log("Exit");
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#endif
             Application.Quit();
         }
     }
-
-    
-    //private void VisualArea()
-    //{
-    //}
-
-    //private void VisualLog()
-    //{
-    //}
-
 
 }

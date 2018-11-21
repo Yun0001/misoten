@@ -54,6 +54,11 @@ public class TitleController : MonoBehaviour {
 
     }
 
+    private void OnDisable()
+    {
+        _audioSource.Stop();
+    }
+
     void Update () {
 
         // タイトルBGMが終了でタイトルシーンの再ロード

@@ -8,7 +8,7 @@ public class MenuAnimCtrl : MonoBehaviour {
 
     [SerializeField] private bool isOver = false;
     [SerializeField] private bool isOpen = false;
-    [SerializeField] private bool isLooping = false;
+    private bool isOverPage = false;
     
     void Start () {
         _animator = GetComponent<Animator>();
@@ -18,22 +18,23 @@ public class MenuAnimCtrl : MonoBehaviour {
   
         _animator.SetBool("isOver", isOver);
         _animator.SetBool("isOpen", isOpen);
-        _animator.SetBool("isLooping", isLooping);
 
         if (isOver)
         {
+            isOverPage = true;
             _animator.Play("over");
         }
 
     }
-
-    void OffIsOver()
-    {
-        isOver = false;
-    }
+   
 
     public void OverPage() => isOver = true;
-    public void OpenMenu() => isOpen = true;
+    public void OpenMenu() => isOpen = isOverPage = true;
     public void CloseMenu() => isOpen = false;
+    public bool IsOpen() => isOpen;
+    public bool IsOverPage() => isOverPage;
+
+    void OverPageFinish() => isOverPage = false;
+    void OffIsOver() => isOver = false;
 
 }
