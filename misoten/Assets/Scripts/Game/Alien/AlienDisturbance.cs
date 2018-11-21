@@ -43,15 +43,6 @@ public class AlienDisturbance : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-	// エイリアンのオーダー
-	private AlienOrder alienOrder;
-
-	// エイリアンのチップ
-	private AlienChip alienChip;
-
-	// エイリアンの呼び出し
-	private AlienCall alienCall;
-
 	// エイリアンのタイムリミット用
 	private GameObject[] timeLimitDraw = new GameObject[7];
 
@@ -77,18 +68,23 @@ public class AlienDisturbance : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// コンポーネント取得
-		alienOrder = GetComponent<AlienOrder>();
-		alienChip = GetComponent<AlienChip>();
-		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
-
+		// エイリアン毎のID設定
 		setId = AlienCall.GetIdSave();
-		timeLimitDraw[setId] = gameObject.transform.Find("TextMesh").gameObject;
-		mood[setId] = EAlienMood.NORMAL;
-		latencyAdd[setId] = AlienCall.GetOrderLatencyAdd(AlienCall.GetRichDegreeId());
 
-		// エイリアンの残り時間
+		// エイリアンのタイムリミット用の設定
+		timeLimitDraw[setId] = gameObject.transform.Find("TextMesh").gameObject;
+
+		// エイリアンの機嫌の設定
+		mood[setId] = EAlienMood.NORMAL;
+
+		// テキストメッシュフラグの初期化
+		textMeshFlag = true;
+
+		// エイリアンの残り時間の初期化
 		timeFont = 0;
+
+		// 待ち時間の加算の設定
+		latencyAdd[setId] = AlienCall.GetOrderLatencyAdd(AlienCall.GetRichDegreeId());
 	}
 
 	/// <summary>
@@ -97,7 +93,7 @@ public class AlienDisturbance : MonoBehaviour
 	void Update()
 	{
 		// エイリアンが注文している時
-		if (alienOrder.GetIsOrder()) { Mood(); }
+		if (GetComponent<AlienOrder>().GetIsOrder()) { Mood(); }
 	}
 
 	/// <summary>

@@ -90,8 +90,8 @@ public class AlienOrder : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
-	// エイリアンの呼び出し
-	private AlienCall alienCall;
+	// プレイヤーから渡されたイートイの管理用
+	private GameObject eatoyObj;
 
 	// オーダー中かの判定
 	private bool isOrder = false;
@@ -102,10 +102,6 @@ public class AlienOrder : MonoBehaviour
 	// オーダーの種類
 	private int orderType = 0;
 
-	// オーダー内容をセーブ(ベース)
-    [SerializeField]
-	private int orderBaseSave = 0;
-
 	// オーダー内容をセーブ(チェンジ)
 	private int orderChangeSave = 0;
 
@@ -115,8 +111,10 @@ public class AlienOrder : MonoBehaviour
 	// 注文傾向
 	private int orderTrend = 0;
 
+	// オーダー内容をセーブ(ベース)
+	private int orderBaseSave = 0;
+
 	// 注文するまでの時間を測る
-	[SerializeField]
 	private float orderTimeAdd = 0.0f;
 
 	// ---------------------------------------------
@@ -129,11 +127,11 @@ public class AlienOrder : MonoBehaviour
 		// IDの保存
 		setId = AlienCall.GetIdSave();
 
-		// コンポーネント取得
-		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
-
 		// 3種のエイリアンの色に合わせてテーブルを作成しテーブルを決定
 		OrderTable();
+
+		// オーダー中かの判定の初期化
+		isOrder = false;
 
 		// 状態移行フラグの初期化
 		statusMoveFlag = false;
@@ -286,7 +284,7 @@ public class AlienOrder : MonoBehaviour
 	void OrderTable()
 	{
 		// エイリアンの種類によって、注文傾向が変わる
-		switch ((AlienCall.EAlienPattern)alienCall.GetAlienPattern(GetSetId()))
+		switch ((AlienCall.EAlienPattern)AlienCall.alienCall.GetAlienPattern(GetSetId()))
 		{
 			case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
 				OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE,
@@ -394,6 +392,19 @@ public class AlienOrder : MonoBehaviour
 		// エイリアンがクレームをする
 		GetComponent<AlienClaim>().SetIsClaim(true);
 	}
+
+	/// <summary>
+	/// プレイヤーから渡されたイートイの管理用格納
+	/// </summary>
+	/// <param name="_eatoyObj"></param>
+	/// <returns></returns>
+	public GameObject SetEatoyObj(GameObject _eatoyObj) => eatoyObj = _eatoyObj;
+
+	/// <summary>
+	/// プレイヤーから渡されたイートイの管理用取得
+	/// </summary>
+	/// <returns></returns>
+	public GameObject GetEatoyObj() => eatoyObj;
 
 	/// <summary>
 	/// 状態移行フラグの格納

@@ -39,15 +39,12 @@ public class AlienChip : MonoBehaviour
 	// ---------------------------------------------
 
 	// チップをプレイヤーに渡したかのフラグ
-	private static bool[] chipOnFlag = { false, false, false, false, false, false, false, false, false };
+	private static bool[] chipOnFlag = { false, false, false, false, false, false, false };
 
 	// ---------------------------------------------
 
 	// ローカル変数
 	// ---------------------------------------------
-
-	// エイリアンのオーダー
-	private AlienOrder alienOrder;
 
 	// 料理が来たかの判定用
 	private bool isCuisineCame = false;
@@ -71,9 +68,6 @@ public class AlienChip : MonoBehaviour
 		// チップIDへの受け渡し
 		chipId = AlienCall.GetIdSave();
 
-		// コンポーネント取得
-		alienOrder = GetComponent<AlienOrder>();
-
 		// プロトでは手渡し
 		chipPattern = EChipPattern.HANDOVER;
 
@@ -89,9 +83,16 @@ public class AlienChip : MonoBehaviour
 		// 料理の旨味係数の初期化
 		cisineTasteCoefficient = 0.0f;
 
-	// Debug用
-	//Debug.Log("金持ち度"+ AlienCall.GetRichDegree(chipId));
-}
+		// カウンター席の最大数指定分ループ
+		for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
+		{
+			// チップをプレイヤーに渡したかのフラグ
+			chipOnFlag[i] = false;
+		}
+
+		// Debug用
+		//Debug.Log("金持ち度"+ AlienCall.GetRichDegree(chipId));
+	}
 
 	/// <summary>
 	/// 更新関数
@@ -99,23 +100,24 @@ public class AlienChip : MonoBehaviour
 	void Update ()
 	{
 		// エイリアンが注文している時
-		if (alienOrder.GetIsOrder())
+		if (GetComponent<AlienOrder>().GetIsOrder())
 		{
 			if (isCuisineCame)
 			{
 				// チップの渡し方の管理
 				switch (chipPattern)
 				{
-					case EChipPattern.PUT:      // チップを置いていく
-
+					case EChipPattern.PUT:		// チップを置いていく
+						// 多分もう使わない
 						break;
-					case EChipPattern.HANDOVER: // チップを直接渡す
+					case EChipPattern.HANDOVER:	// チップを直接渡す
 						// 満足状態の時
 						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 						{
 							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
 							SetCuisineCame(false);
-                            alienOrder.SetIsOrder(false);
+							GetComponent<AlienOrder>().SetIsOrder(false);
+
 							// チップをプレイヤーに渡した
 							chipOnFlag[chipId] = true;
 						}

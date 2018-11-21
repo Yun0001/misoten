@@ -43,7 +43,8 @@ public class AlienClaim : MonoBehaviour
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
 	// ---------------------------------------------
 
-	// エイリアンが一体でもクレームをすると、他のエイリアンの注文内容が見えなくなる用
+	// エイリアンが一体でもクレームをすると
+	// 他のエイリアンの注文内容が見えなくなる用
 	private static bool claimFlag = false;
 
 	// クレーム時間
@@ -87,6 +88,13 @@ public class AlienClaim : MonoBehaviour
 
 		// 時間更新の初期化
 		timeAdd = 0.0f;
+
+		// エイリアンが一体でもクレームをすると
+		// 他のエイリアンの注文内容が見えなくなる用の初期化
+		claimFlag = false;
+
+		// クレーム時間
+		claimTimeAdd = 0.0f;
 	}
 
 	/// <summary>
@@ -143,7 +151,7 @@ public class AlienClaim : MonoBehaviour
 					// 帰る(悪)状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
 
-					for (int i = 0; i < GetComponent<AlienMove>().alienCall.GetCounterSeatsMax(); i++)
+					for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
 					{
 						if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
 						{

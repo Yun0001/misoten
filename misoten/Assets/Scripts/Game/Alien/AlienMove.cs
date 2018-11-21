@@ -44,13 +44,10 @@ public class AlienMove : MonoBehaviour
 	// ---------------------------------------------
 
 	// 退店完了判定
-	private static bool[] counterClosedCompletion = { false, false, false, false, false, false, false, false, false };
+	private static bool[] counterClosedCompletion = { false, false, false, false, false, false, false };
 
 	// ローカル変数
 	// ---------------------------------------------
-
-	// エイリアンの呼び出し
-	public AlienCall alienCall;
 
 	// 開始座標設定用
 	private Vector3 startPosition;
@@ -77,9 +74,6 @@ public class AlienMove : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// コンポーネント取得
-		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
-
 		// カウンター席に座る為の座標設定
 		CounterSeatsMoveInit();
 
@@ -100,6 +94,13 @@ public class AlienMove : MonoBehaviour
 
 		// 予定時間を割る用の初期化
 		rate = 0.0f;
+
+		// カウンター席の最大数指定分ループ
+		for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
+		{
+			// 退店完了判定
+			counterClosedCompletion[i] = false;
+		}
 	}
 
 	/// <summary>
@@ -113,22 +114,23 @@ public class AlienMove : MonoBehaviour
 			// カウンター席への移動処理
 			CounterSeatsMove();
 
-            for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++)
-            {
-                if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
-                {
-                    PlayWalkSE();
-                    break;
-                }
-            }
-        }
+			for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
+			{
+				if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
+				{
+					PlayWalkSE();
+					break;
+				}
+			}
+		}
+
 		// 退店時移動状態の時
 		if (GetWhenLeavingStoreFlag())
 		{
 			// カウンター席側のエイリアンの退店時移動処理
 			CounterWhenLeavingStoreMove();
 
-            for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++)
+            for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
             {
                 if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
                 {
@@ -145,7 +147,7 @@ public class AlienMove : MonoBehaviour
 	void CounterSeatsMoveInit()
 	{
 		// 一つ目の終点座標の設定(入店時)
-		for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++) { counterSeatsPosition[i, 0, 0] = new Vector3(0.0f, 0.8f, 5.0f); }
+		for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++) { counterSeatsPosition[i, 0, 0] = new Vector3(0.0f, 0.8f, 5.0f); }
 
 		// 二つ目の終点座標の設定(入店時)
 		counterSeatsPosition[0, 1, 0] = counterSeatsPosition[1, 1, 0] = counterSeatsPosition[2, 1, 0] = counterSeatsPosition[3, 1, 0] = new Vector3(-7.0f, 0.8f, 5.0f);
@@ -246,22 +248,23 @@ public class AlienMove : MonoBehaviour
 					// 右移動時のアニメーション
 					RightMoveAnimation();
 
-                    for (int i = 0; i < alienCall.GetCounterSeatsMax(); i++)
-                    {
-                        if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
-                        {
-                            break;
-                        }
-                        if (i == alienCall.GetCounterSeatsMax())
-                        {
-                            Sound.SetLoopFlgSe(GameSceneManager.seKey[6], false, 9);
-                            Sound.PlaySe(GameSceneManager.seKey[6], 9);
-                        }
-                    }
+					for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
+					{
+						if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
+						{
+							break;
+						}
+						if (i == AlienCall.alienCall.GetCounterSeatsMax())
+						{
+							Sound.SetLoopFlgSe(GameSceneManager.seKey[6], false, 9);
+							Sound.PlaySe(GameSceneManager.seKey[6], 9);
+						}
+					}
 
-                    // スクリプトを切る
-                    //enabled = false;
-                }
+					// スクリプトを切る
+					//enabled = false;
+				}
+
 				transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 2, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 3, 0], rate);
 				break;
 			default: break;

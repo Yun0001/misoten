@@ -95,13 +95,13 @@ public class AlienCall : MonoBehaviour
 	private static int idSave = 0;
 
 	// 金持ち度
-	private static float[] richDegree = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+	private static float[] richDegree = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// オーダー待ち時間
-	private static float[] orderLatencyAdd = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+	private static float[] orderLatencyAdd = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// 座っているかの判定(カウンター用)
-	private static bool[] orSitting = { false, false, false, false, false, false, false, false, false };
+	private static bool[] orSitting = { false, false, false, false, false, false, false };
 
 	// ドアのアニメーションフラグ
 	private static bool doorAnimationFlag = true;
@@ -110,6 +110,9 @@ public class AlienCall : MonoBehaviour
 
 	// ローカル変数
 	// ---------------------------------------------
+
+	// エイリアンの呼び出し
+	static public AlienCall alienCall;
 
 	// エイリアンの種類設定
 	private EAlienPattern[] alienPattern = new EAlienPattern[7];
@@ -143,6 +146,7 @@ public class AlienCall : MonoBehaviour
 	void Start()
 	{
 		// コンポーネント取得
+		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
 		scoreCount = GameObject.Find("Score").gameObject.GetComponent<ScoreCount>();
 		gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
 
@@ -175,6 +179,22 @@ public class AlienCall : MonoBehaviour
 
 		// 最初にエイリアンが入ったかのフラグの初期化
 		inAlienFlag = false;
+
+		// ドアのアニメーションフラグ
+		doorAnimationFlag = true;
+
+		// カウンター席の最大数指定分ループ
+		for (int i = 0; i < GetCounterSeatsMax(); i++)
+		{
+			// 金持ち度
+			richDegree[i] = 0.0f;
+
+			// オーダー待ち時間
+			orderLatencyAdd[i] = 0.0f;
+
+			// 座っているかの判定(カウンター用)
+			orSitting[i] = false;
+		}
 	}
 
 	/// <summary>
