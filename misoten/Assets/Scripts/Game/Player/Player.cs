@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     private PlayerStatus playerStatus;
 
     [SerializeField]
-    private int playerID;//プレイヤーID
+    private int playerID;//プレイヤーID(インスペクターで設定)
 
     [SerializeField]
     private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 7).ToArray();// 現在プレイヤーと当たっているオブジェクト
@@ -62,7 +62,11 @@ public class Player : MonoBehaviour
     private PlayerMove playerMove_cs;
     private PlayerInput playerInput_cs;
     private PlayerHaveInEatoy haveInEatoy_cs;
+    private PlayerAccessController playerAccessController_cs;
+    private PlayerAccessPossiblAnnounce playerAccessPosssiblAnnounce_cs;
     private GameObject dastBoxGage;
+
+   
 
     // Use this for initialization
     void Awake()
@@ -99,26 +103,32 @@ public class Player : MonoBehaviour
             // レンジ
             case "Microwave":
                 hitObj[(int)hitObjName.Microwave] = collision.gameObject;
+                playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.Microwave);
                 break;
             // 鍋
             case "Pot":
                 hitObj[(int)hitObjName.Pot] = collision.gameObject;
+                playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.Pot);
                 break;
             // 焼き台
             case "Fryingpan":
                 hitObj[(int)hitObjName.GrilledTable] = collision.gameObject;
+                playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.GrilledTable);
                 break;
             // ミキサー
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = collision.gameObject;
+                playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.Mixer);
                 break;
 
             case "IceBox":
                 hitObj[(int)hitObjName.IceBox] = collision.gameObject;
+                playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.IceBox);
                 break;
 
             case "DastBox":
                 hitObj[(int)hitObjName.DastBox] = collision.gameObject;
+                playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.DastBox);
                 break;
             case "Alien":
                 hitObj[(int)hitObjName.Alien] = collision.gameObject;
@@ -136,21 +146,27 @@ public class Player : MonoBehaviour
         {
             case "Microwave":
                 hitObj[(int)hitObjName.Microwave] = null;
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 break;
             case "Pot":
                 hitObj[(int)hitObjName.Pot] = null;
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 break;
             case "Fryingpan":
                 hitObj[(int)hitObjName.GrilledTable] = null;
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 break;
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = null;
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 break;
             case "IceBox":
                 hitObj[(int)hitObjName.IceBox] = null;
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 break;
             case "DastBox":
                 hitObj[(int)hitObjName.DastBox] = null;
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 break;
             case "Alien":
                 hitObj[(int)hitObjName.Alien] = null;
@@ -163,10 +179,6 @@ public class Player : MonoBehaviour
     /// </summary>
     public void OfferCuisine()
     {
-        if (haveInEatoy_cs.GetHaveInEatoy() == null) return;                             // 料理を持っていないならreturn
-        if (playerStatus != PlayerStatus.Catering) return;          // 配膳状態でないならreturn
-        if (GetHitObj((int)hitObjName.Alien) == null) return;    // 宇宙人との当たり判定がなければreturn
-
         // エイリアンのスクリプトを取得して料理を渡す
         GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
         GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -182,10 +194,6 @@ public class Player : MonoBehaviour
         return hitObj[HitObjID].gameObject;
     }
 
-    private Microwave GetHitObjComponentMicroWave() => GetHitObj((int)hitObjName.Microwave).GetComponent<Microwave>();
-
-    public int GetPlayerID() => playerID;
-
     public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
     /// <summary>
@@ -193,37 +201,38 @@ public class Player : MonoBehaviour
     /// </summary>
     public void ActionBranch()
     {
-        AccessMicrowave();
-        AccessPot();
-        AccessFlyingpan();
-        AccessMixer();
-        AccessIceBox();
-        AccessDastBox();
-        OfferCuisine();
+        foreach (var Name in playerAccessController_cs.GetAccessObjectName())
+        {
+            // アクセス可能なオブジェクトが見つかった！！
+            if (playerAccessController_cs.IsAccessPossible(Name))
+            {
+                StopMove(); // 移動値をリセット
+                switch (Name)
+                {
+                    case PlayerAccessController.AccessObjectName.Microwave:      AccessMicrowave();       break;
+                    case PlayerAccessController.AccessObjectName.Pot:                 AccessPot();                 break;
+                    case PlayerAccessController.AccessObjectName.Flyingpan:        AccessFlyingpan();        break;
+                    case PlayerAccessController.AccessObjectName.Mixer:              AccessMixer();              break;
+                    case PlayerAccessController.AccessObjectName.IceBox:            AccessIceBox();            break;
+                    case PlayerAccessController.AccessObjectName.DastBox:          AccessDastBox();         break;
+                    case PlayerAccessController.AccessObjectName.Alien:              OfferCuisine();              break;
+                }
+                break;
+            }
+        }
     }
 
     /// <summary>
     /// 電子レンジへのアクション
     /// </summary>
-    private void AccessMicrowave()
-    {
-        if (GetHitObj((int)hitObjName.Microwave) == null) return;   // 電子レンジに当たっていなければreturn
-        if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.Microwave) return;// 通常状態かレンチン操作状態でなければreturn
-        if (GetHitObjComponentMicroWave().IsCooking()) return;
-        StopMove(); // 移動値をリセット
-        cookingMicrowave_cs.CookingStart();
-    }
+    private void AccessMicrowave() => cookingMicrowave_cs.CookingStart();
+    
 
     /// <summary>
     /// 鍋へのアクション
     /// </summary>
     private void AccessPot()
     {
-        // 鍋に当たっていなければ抜ける
-        if (GetHitObj((int)hitObjName.Pot) == null) return;
-        if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.Pot) return;
-        StopMove();
-
         GetHitObj((int)hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
         cookingPot_cs.CookingStart();
     }
@@ -231,36 +240,15 @@ public class Player : MonoBehaviour
     /// <summary>
     /// フライパンへのアクション
     /// </summary>
-    private void AccessFlyingpan()
-    {
-        if (GetPlayerStatus() != PlayerStatus.CateringIceEatoy && GetPlayerStatus() != PlayerStatus.GrilledTable) return;
-        if (GetHitObj((int)hitObjName.GrilledTable) == null) return;
-        if (GetHitObj((int)hitObjName.GrilledTable).GetComponent<Flyingpan>().IsCooking()) return;
-        StopMove();
-
-        cookingGrilled_cs.CookingStart();
-    }
+    private void AccessFlyingpan() => cookingGrilled_cs.CookingStart();
 
     /// <summary>
     /// ミキサーへのアクション
     /// </summary>
-    private void AccessMixer()
-    {
-        if (GetPlayerStatus() != PlayerStatus.Catering) return;
-        if (GetHitObj((int)hitObjName.Mixer) == null) return;
-        if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus()>= Mixer.Status.AccessThree) return;
-        if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().IsCooking()) return;
-        StopMove();
-
-        cookingMixer_cs.Preparation();
-    }
+    private void AccessMixer() => cookingMixer_cs.Preparation();
 
     private void AccessIceBox()
     {
-        if (GetPlayerStatus() != PlayerStatus.Normal) return;
-        if (GetHitObj((int)hitObjName.IceBox) == null) return;
-        StopMove();
-
         if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().Access(playerID))
         {
             SetPlayerStatus(PlayerStatus.IceBox);
@@ -269,10 +257,6 @@ public class Player : MonoBehaviour
 
     private void AccessDastBox()
     {
-        if (GetPlayerStatus() != PlayerStatus.Catering && GetPlayerStatus() != PlayerStatus.CateringIceEatoy) return;
-        if (GetHitObj((int)hitObjName.DastBox) == null) return;
-        StopMove();
-
         dastBoxGage.SetActive(true);
         dastBoxGage.GetComponent<DastBox>().Access((int)playerStatus, transform.position);
         SetPlayerStatus(PlayerStatus.DastBox);
@@ -307,22 +291,6 @@ public class Player : MonoBehaviour
     }
 
 
-
-    /// <summary>
-    /// プレイヤーIDセット
-    /// </summary>
-    /// <param name="pID"></param>
-    private void SetPlayerID(int pID)
-    {
-        if (pID < 0 || pID > 3)
-        {
-            Debug.LogError("不正なplayerID");
-            return;
-        }
-        playerID = pID;
-    }
-
-
     private void SetScript()
     {
         cookingMicrowave_cs = GetComponent<CookingMicrowave>();
@@ -332,46 +300,10 @@ public class Player : MonoBehaviour
         playerMove_cs = GetComponent<PlayerMove>();
         playerInput_cs = GetComponent<PlayerInput>();
         haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
+        playerAccessController_cs = GetComponent<PlayerAccessController>();
+        playerAccessPosssiblAnnounce_cs = GetComponent<PlayerAccessPossiblAnnounce>();
     }
 
-
-    private void UpdateCookingMicrowave()
-    {
-        GameObject eatoy = cookingMicrowave_cs.UpdateMicrowave();
-        if (eatoy == null) return;
-
-        // 料理を持つ
-        haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
-
-    }
-
-    /// <summary>
-    /// 茹で料理の更新処理
-    /// </summary>
-    private void UpdateCookingPot()
-    {
-        // スティック一周ができればcuisineはnullでない
-        GameObject eatoy = cookingPot_cs.UpdatePot();
-        if (eatoy == null) return;
-
-        // 料理を持つ
-        haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
-    }
-
-    /// <summary>
-    /// 焼き料理の更新処理
-    /// </summary>
-    private void UpdateCookingGrilled()
-    {
-        GameObject eatoy = cookingGrilled_cs.UpdateGrilled();
-        if (eatoy == null) return;
-
-        // 焼く調理終了の処理
-        haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
-    }
 
     private void StopMove()
     {
@@ -453,9 +385,44 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void UpdateGrilled()
-    {
 
+    private void UpdateCookingMicrowave()
+    {
+        GameObject eatoy = cookingMicrowave_cs.UpdateMicrowave();
+        if (eatoy == null) return;
+
+        // 料理を持つ
+        haveInEatoy_cs.SetEatoy(eatoy);
+        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
+        // レンジOpenSE
+        //Sound.PlaySe(GameSceneManager.seKey[16], 4);
+    }
+
+    /// <summary>
+    /// 茹で料理の更新処理
+    /// </summary>
+    private void UpdateCookingPot()
+    {
+        // スティック一周ができればcuisineはnullでない
+        GameObject eatoy = cookingPot_cs.UpdatePot();
+        if (eatoy == null) return;
+
+        // 料理を持つ
+        haveInEatoy_cs.SetEatoy(eatoy);
+        GetHitObj((int)hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+    }
+
+    /// <summary>
+    /// 焼き料理の更新処理
+    /// </summary>
+    private void UpdateCookingGrilled()
+    {
+        GameObject eatoy = cookingGrilled_cs.UpdateGrilled();
+        if (eatoy == null) return;
+
+        // 焼く調理終了の処理
+        haveInEatoy_cs.SetEatoy(eatoy);
+        GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
 
@@ -481,6 +448,7 @@ public class Player : MonoBehaviour
         //　ゴミ箱ゲージがMaxの時
         if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
         {
+            GetHitObj((int)hitObjName.DastBox).transform.Find("box").GetComponent<mwAnimCtrl>().SetIsOpen(true);
             SetPlayerStatus(PlayerStatus.Normal);
             haveInEatoy_cs.RevocationHaveInEatoy();
             GetComponent<PlayerAnimCtrl>().SetServing(false);

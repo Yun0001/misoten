@@ -13,13 +13,11 @@ public class CookingMixer : MonoBehaviour {
 
     public void Preparation()
     {
-        if (player_cs.GetHitObj((int)Player.hitObjName.Mixer) != null)
-        {
             if (!player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<MixerAccessPoint>().Access(gameObject))
             {
                 Debug.LogError("アクセス失敗");
             }
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         }
-    }
+    
 }

@@ -81,6 +81,7 @@ public class Mixer : KitchenwareBase {
                     InitMiniGameUI();
                     status = Status.Play;
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetBool(true);
                     miniGameUI.SetActive(true);
                     animCount = 0;
                 }
@@ -173,12 +174,14 @@ public class Mixer : KitchenwareBase {
 
                             // 全ての当たり判定を復活
                             GetComponent<MixerAccessPoint>().RevivalAllAccessPoint();
-                        }                 
-                    }
+                            transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetBool(false);
+                        }
+                    }                
+                    
                 }
                 else
                 {
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
                 }
 
                 break;

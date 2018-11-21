@@ -79,7 +79,6 @@ public class MicrowaveGage : MonoBehaviour
                 {
                     status = MicrowaveState.Roll;
                     PlayStartSE();
-                    PlayTimerSE();
                     waitCount = 0;
                 }
                 break;
@@ -111,7 +110,6 @@ public class MicrowaveGage : MonoBehaviour
                 {
                     status = MicrowaveState.Wait;
                     StopStartSE();
-                    StopTimerSE();
                     PlayChinSE();
                     return true;
                 }
@@ -179,33 +177,22 @@ public class MicrowaveGage : MonoBehaviour
         }
     }
 
-    private void PlayTimerSE()
-    {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], true, 6);
-        Sound.PlaySe(GameSceneManager.seKey[17], 6);
-    }
-
-    private void StopTimerSE()
-    {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], false, 6);
-        Sound.StopSe(GameSceneManager.seKey[17], 6);
-    }
 
 
     private void PlayStartSE()
     {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[18], true, 7);
-        Sound.PlaySe(GameSceneManager.seKey[18], 7);
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], true, 4);
+        Sound.PlaySe(GameSceneManager.seKey[17], 4);
     }
 
-    private void StopStartSE()
+    public void StopStartSE()
     {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[18], false, 7);
-        Sound.StopSe(GameSceneManager.seKey[18], 7);
+        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], false, 4);
+        Sound.StopSe(GameSceneManager.seKey[17], 4);
     }
 
     private void PlayChinSE()
     {
-        Sound.PlaySe(GameSceneManager.seKey[16]);
+        Sound.PlaySe(GameSceneManager.seKey[15],4);
     }
 }

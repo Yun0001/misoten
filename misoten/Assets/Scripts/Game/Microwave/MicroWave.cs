@@ -60,7 +60,10 @@ public class Microwave : KitchenwareBase
 		ResetMiniGameUI();
 		SetIsCooking(false);
         cuisine = null;
-	}
+        microwaveGage_cs.StopStartSE();
+        // レンジOpenSE
+        Sound.PlaySe(GameSceneManager.seKey[16], 4);
+    }
 
 	protected override int CalcEatoyPoint()
 	{

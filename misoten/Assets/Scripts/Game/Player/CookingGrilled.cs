@@ -13,10 +13,15 @@ public class CookingGrilled : MonoBehaviour {
 
     public void CookingStart()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
+        if (!player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
+        {
+            return;
+        }
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
-        Sound.PlaySe(GameSceneManager.seKey[27]);
+
+        //着火SE
+        Sound.PlaySe(GameSceneManager.seKey[26], 14);
     }
 
     public GameObject UpdateGrilled()

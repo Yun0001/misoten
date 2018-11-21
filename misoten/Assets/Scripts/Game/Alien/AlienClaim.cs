@@ -103,8 +103,8 @@ public class AlienClaim : MonoBehaviour
 				// エイリアンの注文内容が見えている状態の時
 				if (!claimFlag)
 				{
-					// SEを鳴らす
-					Sound.PlaySe(GameSceneManager.seKey[2]);
+                    // SEを鳴らす
+                    Sound.PlaySe(GameSceneManager.seKey[27], 3);
 
 					// 怒りアニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.ANGER);
@@ -142,16 +142,6 @@ public class AlienClaim : MonoBehaviour
 
 					// 帰る(悪)状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
-
-					for (int i = 0; i < GetComponent<AlienMove>().alienCall.GetCounterSeatsMax(); i++)
-					{
-						if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
-						{
-							Sound.SetLoopFlgSe(GameSceneManager.seKey[5], true, 8);
-							Sound.PlaySe(GameSceneManager.seKey[5], 8);
-							break;
-						}
-					}
 
 					// 退店時の移動開始
 					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);

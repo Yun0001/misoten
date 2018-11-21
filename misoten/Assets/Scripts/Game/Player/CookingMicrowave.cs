@@ -24,12 +24,14 @@ public class CookingMicrowave : MonoBehaviour {
     public void CookingStart()
     {
         // 電子レンジ調理開始
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
+        if (!player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
         player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
         player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(true);
-        Sound.PlaySe(GameSceneManager.seKey[16]);
+
+        // レンジOpenSE
+        Sound.PlaySe(GameSceneManager.seKey[16], 4);
     }
 
     /// <summary>

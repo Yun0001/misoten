@@ -94,4 +94,6 @@ public class mixerAnimCtrl : MonoBehaviour
     public void SetIsOpen(bool flg) => isOpen = flg;
     public bool GetIsOpen() => isOpen;
 
+    public void SetIsComplete(bool b) => isComplete = b;
+
 }
