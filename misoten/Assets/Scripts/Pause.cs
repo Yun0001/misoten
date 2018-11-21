@@ -21,7 +21,8 @@ public class Pause : MonoBehaviour
     private bool prevPausing;
     private RigidbodyVelocity[] rbVelocities;
     private Rigidbody[] pauseingRigidbodies;
-    private MonoBehaviour[] pausingMonoBehaviours;
+	private ParticleSystem[] pauseingParticleSystem;
+	private MonoBehaviour[] pausingMonoBehaviours;
 
     private void Update()
     {
@@ -38,8 +39,12 @@ public class Pause : MonoBehaviour
         // Rigidbodyの停止
         // 子要素から有効かつ、このインスタンスでないもの、IgnoreGameObjectに含まれていないMonoBehaviourを抽出
         Predicate<Rigidbody> rigidbodyPredicate = obj => !obj.IsSleeping() && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
-        pauseingRigidbodies = Array.FindAll(transform.GetComponentsInChildren<Rigidbody>(), rigidbodyPredicate);
-        rbVelocities = new RigidbodyVelocity[pauseingRigidbodies.Length];
+		Predicate<ParticleSystem> particleSystemPredicate = obj => Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
+
+		pauseingRigidbodies = Array.FindAll(transform.GetComponentsInChildren<Rigidbody>(), rigidbodyPredicate);
+		pauseingParticleSystem = Array.FindAll(transform.GetComponentsInChildren<ParticleSystem>(), particleSystemPredicate);
+
+		rbVelocities = new RigidbodyVelocity[pauseingRigidbodies.Length];
         for (int i = 0; i < pauseingRigidbodies.Length; i++)
         {
             // 速度、角速度も保存しておく
@@ -47,8 +52,16 @@ public class Pause : MonoBehaviour
             pauseingRigidbodies[i].Sleep();
         }
 
-        // MonoBehaviourの停止
-        Predicate<MonoBehaviour> monoBehaviourPredicate = obj => obj.enabled && obj != this && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
+		for (int i = 0; i < pauseingParticleSystem.Length; i++)
+		{
+			if (pauseingParticleSystem[i].isPlaying)
+			{
+				pauseingParticleSystem[i].Pause();
+			}
+		}
+
+		// MonoBehaviourの停止
+		Predicate<MonoBehaviour> monoBehaviourPredicate = obj => obj.enabled && obj != this && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
         pausingMonoBehaviours = Array.FindAll(transform.GetComponentsInChildren<MonoBehaviour>(), monoBehaviourPredicate);
         foreach (var monoBehaviour in pausingMonoBehaviours)
         {
@@ -66,7 +79,16 @@ public class Pause : MonoBehaviour
             pauseingRigidbodies[i].angularVelocity = rbVelocities[i].angularVelocity;
         }
 
-        foreach (var monoBehaviour in pausingMonoBehaviours)
+		for (int i = 0; i < pauseingParticleSystem.Length; i++)
+		{
+			if(pauseingParticleSystem[i].isPaused)
+			{
+				pauseingParticleSystem[i].Play();
+			}
+		}
+
+
+		foreach (var monoBehaviour in pausingMonoBehaviours)
         {
             monoBehaviour.enabled = true;
         }

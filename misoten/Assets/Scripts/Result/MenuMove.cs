@@ -85,7 +85,7 @@ public class MenuMove : MonoBehaviour
 			}
 
 			// 終点座標への移動処理
-			transform.position = Vector3.Lerp(new Vector3(-6.5f, 19.5f, 0.0f), endPos, rate);
+			transform.position = Vector3.Lerp(new Vector3(-6.5f, 19.5f, -0.1f), endPos, rate);
 		}
 	}
 

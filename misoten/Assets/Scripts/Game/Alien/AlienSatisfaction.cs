@@ -48,11 +48,11 @@ public class AlienSatisfaction : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		// 満足フラグ(チップ取得時用)の初期化
-		satisfactionChipFlag = false;
-
 		// 満足フラグの初期化
 		satisfactionFlag = false;
+
+		// 満足フラグ(チップ取得時用)の初期化
+		satisfactionChipFlag = false;
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
@@ -72,7 +72,8 @@ public class AlienSatisfaction : MonoBehaviour
 				// 満足を指定ない時
 				if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD))
 				{
-                    Sound.PlaySe(GameSceneManager.seKey[4]);
+					// 満足時のSE
+					Sound.PlaySe(GameSceneManager.seKey[4]);
 
 					// 満足アニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
