@@ -114,6 +114,48 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &2595424
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 892514306}
+    m_Modifications:
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &4833549
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +888,7 @@ GameObject:
   - component: {fileID: 66829581}
   m_Layer: 18
   m_Name: iti
-  m_TagString: Untagged
+  m_TagString: GameUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4540,7 +4582,7 @@ GameObject:
   - component: {fileID: 74449036}
   m_Layer: 18
   m_Name: nokori
-  m_TagString: Untagged
+  m_TagString: GameUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4834,7 +4876,7 @@ GameObject:
   - component: {fileID: 132170919}
   m_Layer: 18
   m_Name: jyuu
-  m_TagString: Untagged
+  m_TagString: GameUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8953,6 +8995,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 214162524}
   m_Mesh: {fileID: 4300002, guid: 83941df9a18b6284baf61f3b65b64256, type: 3}
+--- !u!4 &218817276 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4934886519839240, guid: 3f5e51f6bd586534086b7da1a587ab31,
+    type: 2}
+  m_PrefabInternal: {fileID: 2595424}
 --- !u!1 &230777858
 GameObject:
   m_ObjectHideFlags: 0
@@ -13638,6 +13685,22 @@ Prefab:
       propertyPath: m_Name
       value: Score
       objectReference: {fileID: 0}
+    - target: {fileID: 1605575113853762, guid: c360e655989a17048a60d6a6495eb01e, type: 2}
+      propertyPath: m_TagString
+      value: GameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945750148617490, guid: c360e655989a17048a60d6a6495eb01e, type: 2}
+      propertyPath: m_TagString
+      value: GameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340459549625182, guid: c360e655989a17048a60d6a6495eb01e, type: 2}
+      propertyPath: m_TagString
+      value: GameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1641970644328476, guid: c360e655989a17048a60d6a6495eb01e, type: 2}
+      propertyPath: m_TagString
+      value: GameUI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c360e655989a17048a60d6a6495eb01e, type: 2}
   m_IsPrefabParent: 0
@@ -14555,6 +14618,14 @@ Prefab:
         type: 2}
       propertyPath: m_RenderingPath
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912111810183060, guid: 50292cb25f53b5042938c15b47a45370, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 7.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912111810183060, guid: 50292cb25f53b5042938c15b47a45370, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -12.14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50292cb25f53b5042938c15b47a45370, type: 2}
@@ -23565,7 +23636,7 @@ GameObject:
   - component: {fileID: 720325849}
   m_Layer: 18
   m_Name: hyaku
-  m_TagString: Untagged
+  m_TagString: GameUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28214,6 +28285,7 @@ Transform:
   - {fileID: 1041527511}
   - {fileID: 380617847}
   - {fileID: 1520788357}
+  - {fileID: 218817276}
   m_Father: {fileID: 1572124215}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
