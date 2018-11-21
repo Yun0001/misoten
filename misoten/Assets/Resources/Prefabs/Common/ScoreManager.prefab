@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1429843441845356}
+  m_RootGameObject: {fileID: 1338492832027270}
   m_IsPrefabParent: 1
---- !u!1 &1429843441845356
+--- !u!1 &1338492832027270
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4764218896639990}
-  - component: {fileID: 114810963736383568}
+  - component: {fileID: 4965010232114610}
+  - component: {fileID: 114276850863795302}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -27,12 +27,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4764218896639990
+--- !u!4 &4965010232114610
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429843441845356}
+  m_GameObject: {fileID: 1338492832027270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,27 +40,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114810963736383568
+--- !u!114 &114276850863795302
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429843441845356}
+  m_GameObject: {fileID: 1338492832027270}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74ddd84c88ee5e549806a8c6a3cba415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerScore:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  player:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  playerScore: {fileID: 0}
   gameTimeManager: {fileID: 0}
   timeCoefficient: 1.25
   rankCoefficient:
