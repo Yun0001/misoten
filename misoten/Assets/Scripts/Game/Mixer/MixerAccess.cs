@@ -38,7 +38,7 @@ public class MixerAccess : MonoBehaviour
 			GetComponent<LineRenderer>().SetPosition(0, transform.parent.position);
 
 			// ラインの描画
-			GetComponent<LineRenderer>().SetWidth(0.05f, 0.05f);
+			GetComponent<LineRenderer>().SetWidth(0.03f, 0.03f);
 		}
 		// ミキサーにアクセスしていない時は、ラインを見えなくする
 		else { GetComponent<LineRenderer>().SetWidth(0.0f, 0.0f); }

@@ -1622,7 +1622,7 @@ MonoBehaviour:
   - {fileID: 1505318795289422}
   - {fileID: 1027118445251194}
   claimTime: 3
-  time: 0.5
+  time: 0.25
 --- !u!114 &114425219009444764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1694,8 +1694,6 @@ MonoBehaviour:
   eatingCount: 2
   individualOrderBaseType: 0
   individualOrderChangeType: 0
-  orderBaseSave: 0
-  orderTimeAdd: 0
 --- !u!114 &114510335993466888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1714,7 +1712,6 @@ MonoBehaviour:
   - 2
   - 1
   WhenLeavingStoreMoveTime: 1
-  alienCall: {fileID: 0}
 --- !u!114 &114636147802159312
 MonoBehaviour:
   m_ObjectHideFlags: 1
