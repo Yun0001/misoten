@@ -181,10 +181,11 @@ public class Player : MonoBehaviour
     public void OfferCuisine()
     {
         // エイリアンのスクリプトを取得して料理を渡す
+        haveInEatoy_cs.SetHaveInEatoyPosition(GetHitObj((int)hitObjName.Alien).transform.position);
         GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
         GetComponent<PlayerAnimCtrl>().SetServing(false);
 
-        haveInEatoy_cs.RevocationHaveInEatoy();
+        //haveInEatoy_cs.RevocationHaveInEatoy();
         SetPlayerStatus(PlayerStatus.Normal);
     }
 
@@ -374,12 +375,12 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.Catering:
                 // 持っているイートイの座標を更新
-                haveInEatoy_cs.SetHaveInEatoyPosition();
+                haveInEatoy_cs.UpdateHaveInEatoyPosition();
                 break;
 
             case PlayerStatus.CateringIceEatoy:
                 // 持っているイートイの座標を更新
-                haveInEatoy_cs.SetHaveInEatoyPosition();
+                haveInEatoy_cs.UpdateHaveInEatoyPosition();
                 break;
 
             default:

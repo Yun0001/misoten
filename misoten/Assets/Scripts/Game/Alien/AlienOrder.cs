@@ -367,7 +367,10 @@ public class AlienOrder : MonoBehaviour
 				break;
 			default: break;
 		}
-	}
+
+        SetEatoyObj(eatoy);
+
+    }
 
 	/// <summary>
 	/// 満足

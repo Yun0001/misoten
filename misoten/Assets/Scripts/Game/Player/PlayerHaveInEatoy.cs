@@ -41,7 +41,7 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <summary>
     /// イートイ破棄
     /// </summary>
-    public void RevocationHaveInEatoy() => Destroy(haveInEatoy);
+    public void RevocationHaveInEatoy() => haveInEatoy = null;
 
 
     /// <summary>
@@ -54,7 +54,7 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <summary>
     /// イートイ座標更新
     /// </summary>
-    public void SetHaveInEatoyPosition()
+    public void UpdateHaveInEatoyPosition()
     {
         Vector3 pos = transform.position;
         
@@ -75,5 +75,13 @@ public class PlayerHaveInEatoy : MonoBehaviour
             haveInEatoy.SetActive(false);
         }
         haveInEatoy.transform.position = pos;
+    }
+
+    public void SetHaveInEatoyPosition(Vector3 alienPos)
+    {
+        alienPos.y += 0.3f;
+        alienPos.z -= 1f;
+        haveInEatoy.transform.position = alienPos;
+        
     }
 }
