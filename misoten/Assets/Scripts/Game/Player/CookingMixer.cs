@@ -18,6 +18,7 @@ public class CookingMixer : MonoBehaviour {
                 Debug.LogError("アクセス失敗");
             }
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
-        }
+        transform.Find("Line").gameObject.SetActive(true);
+    }
     
 }

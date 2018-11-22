@@ -35,7 +35,7 @@ public class ScoreCount : MonoBehaviour
     /// <param name="addscore">加算分スコア</param>
     public void AddScore(int addscore)
     {
-        score += addscore;
+        score = Mathf.Min(score + addscore, 999999);  
         UpdateSprite();
     }
     /// <summary>
@@ -60,7 +60,7 @@ public class ScoreCount : MonoBehaviour
     {
         int suu = score;
         int rement;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < spriteObj.Length; i++)
         {
             rement = suu % 10;
             spriteObj[i].GetComponent<SpriteRenderer>().sprite = sprits[rement];
