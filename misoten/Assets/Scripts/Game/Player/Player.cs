@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         playerMove_cs.Init();
         dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
         dastBoxGage.SetActive(false);
-        transform.Find("Line").gameObject.SetActive(false);
+        //transform.Find("Line").gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -369,7 +369,7 @@ public class Player : MonoBehaviour
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
-                    transform.Find("Line").gameObject.SetActive(false);
+                    //transform.Find("Line").gameObject.SetActive(false);
                 }
                 break;
 

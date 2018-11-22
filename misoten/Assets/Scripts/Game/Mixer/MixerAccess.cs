@@ -34,13 +34,14 @@ public class MixerAccess : MonoBehaviour
 		if(transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerWait
 			|| transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerAccess)
 		{
-			// ラインの始点座標を更新
-			GetComponent<LineRenderer>().SetPosition(0, transform.parent.position);
-
+			//Line
 			// ラインの描画
 			GetComponent<LineRenderer>().SetWidth(0.03f, 0.03f);
 		}
 		// ミキサーにアクセスしていない時は、ラインを見えなくする
 		else { GetComponent<LineRenderer>().SetWidth(0.0f, 0.0f); }
+
+		// ラインの始点座標を更新
+		GetComponent<LineRenderer>().SetPosition(0, transform.parent.position);
 	}
 }
