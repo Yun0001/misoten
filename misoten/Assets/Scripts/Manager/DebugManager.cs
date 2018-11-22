@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class DebugManager : MonoBehaviour {
 
@@ -19,9 +19,9 @@ public class DebugManager : MonoBehaviour {
     {        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-#if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-#endif
+//#if UNITY_EDITOR
+          //  EditorApplication.isPlaying = false;
+//#endif
             Application.Quit();
         }
     }
