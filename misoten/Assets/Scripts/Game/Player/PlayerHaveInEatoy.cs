@@ -66,7 +66,7 @@ public class PlayerHaveInEatoy : MonoBehaviour
             if (GetComponent<SpriteRenderer>().flipX) pos.x += adjustmentPosition.x;            // 右向きの時
             else pos.x -= adjustmentPosition.x;             // 左向きの時
 
-            //pos.y += adjustmentPosition.y;                  // y座標調整
+            pos.y += adjustmentPosition.y;                  // y座標調整
             pos.z += adjustmentPosition.z;                  // z座標調整
         }
         else

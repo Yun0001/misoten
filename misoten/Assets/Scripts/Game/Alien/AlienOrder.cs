@@ -189,7 +189,8 @@ public class AlienOrder : MonoBehaviour
 			if (GetIsOrder() && !AlienClaim.GetClaimFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag()
 				&& !GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
 				&& !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag()
-				&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
+				&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag()
+				&& !AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.CLAIM))
 			{
 				// 注文したものをアクティブにする(吹き出し)
 				OrderType(true);

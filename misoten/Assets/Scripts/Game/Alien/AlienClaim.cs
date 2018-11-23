@@ -117,6 +117,9 @@ public class AlienClaim : MonoBehaviour
 					// 怒りアニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.ANGER);
 
+					// クレーム「ON」
+					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.CLAIM);
+
 					// クレーム吹き出しを出す
 					//claimBalloon[0].SetActive(true);
 					AnimationFlag = true;
@@ -175,7 +178,10 @@ public class AlienClaim : MonoBehaviour
 			if (!claimFlag)
 			{
 				// 吹き出しを出さない
-				for (int i = 0; i < (int)EClaimPattern.MAX; i++) { claimBalloon[i].SetActive(false); }
+				if (!GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
+				{
+					for (int i = 0; i < (int)EClaimPattern.MAX; i++) { claimBalloon[i].SetActive(false); }
+				}
 			}
 			else
 			{
@@ -183,6 +189,21 @@ public class AlienClaim : MonoBehaviour
 				{
 					// ビックリマークをアクティブにする(吹き出し)
 					claimBalloon[2].SetActive(true);
+				}
+			}
+
+			if(GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD))
+			{
+				// クレームアニメーション
+				if (AnimationFlag)
+				{
+					if (timeAdd >= time)
+					{
+						if (!changeFlag) { claimBalloon[0].SetActive(true); claimBalloon[1].SetActive(false); changeFlag = true; }
+						else { claimBalloon[1].SetActive(true); claimBalloon[0].SetActive(false); changeFlag = false; }
+						timeAdd = 0.0f;
+					}
+					else { timeAdd += Time.deltaTime; }
 				}
 			}
 		}
