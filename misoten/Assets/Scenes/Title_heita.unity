@@ -4065,11 +4065,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4a359d8edb4788459aa8b1f20456b32, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &359063508 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4186894988486160, guid: f4a359d8edb4788459aa8b1f20456b32,
-    type: 2}
-  m_PrefabInternal: {fileID: 359063507}
 --- !u!1 &367504496
 GameObject:
   m_ObjectHideFlags: 0
@@ -4804,6 +4799,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e32b569ae4c23804e94b6eda8fd426d1, type: 3}
   m_IsPrefabParent: 0
+--- !u!4 &818941188 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4322135322031820, guid: f4a359d8edb4788459aa8b1f20456b32,
+    type: 2}
+  m_PrefabInternal: {fileID: 359063507}
 --- !u!1 &835938092
 GameObject:
   m_ObjectHideFlags: 0
@@ -5539,7 +5539,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 359063508}
+  - {fileID: 818941188}
   - {fileID: 71723591}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -5933,7 +5933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCompleteTitleLogoAnimation: 0
   isStartingGame: 0
-  _clip: {fileID: 8300000, guid: ce97a935d257ad941821e18ed6e3f53a, type: 3}
+  _clip: {fileID: 8300000, guid: 9c735582a5365bb4e846a664ffb12ab2, type: 3}
   isCameraMoved: 0
 --- !u!4 &1264918428
 Transform:
@@ -5958,7 +5958,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9c735582a5365bb4e846a664ffb12ab2, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
