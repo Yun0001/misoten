@@ -58,7 +58,8 @@ public class PlayerInput : MonoBehaviour
         // アクション
         if (InputDownButton(GamePad.Button.B)) player_cs.ActionBranch();
 
-        if (InputDownButton(GamePad.Button.X)) Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire));
+        // test
+      //  if (InputDownButton(GamePad.Button.X)) Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire));
       
 
         // キャンセル
