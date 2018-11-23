@@ -98,13 +98,5 @@ public class GameTimeManager : MonoBehaviour {
         }
     }
 
-    public bool IsTimeUp()
-    {
-        if (countTime <= 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
+    public bool IsTimeUp() => countTime <= 0 ? true : false;
 }

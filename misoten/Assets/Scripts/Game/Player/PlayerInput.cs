@@ -54,8 +54,12 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
    public void UpdateInput()
     {
+
         // アクション
         if (InputDownButton(GamePad.Button.B)) player_cs.ActionBranch();
+
+        if (InputDownButton(GamePad.Button.X)) Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire));
+      
 
         // キャンセル
         if (InputDownButton(GamePad.Button.A)) player_cs.CookingCancel();

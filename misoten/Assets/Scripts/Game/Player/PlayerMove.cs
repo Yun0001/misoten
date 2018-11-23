@@ -33,6 +33,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField, Range(1, 50)]
     private int adjustment;
 
+    [SerializeField]
+    private GameObject timeManager;
+
 
 
     // 初期化
@@ -57,6 +60,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
+        if (timeManager.GetComponent<GameTimeManager>().IsTimeUp()) return;
         // 移動可能状態でない場合抜ける
         if (!IsMoveStatus()) return;
 
@@ -120,7 +124,7 @@ public class PlayerMove : MonoBehaviour
     private void Clamp()
     {
         float width = 5.0f;
-        Vector3 min = new Vector3(-width, 0, -4.6f);
+        Vector3 min = new Vector3(-width, 0, -3.45f);
         Vector3 max = new Vector3(width, 0,2.0f);
 
         Vector3 pos = transform.position;

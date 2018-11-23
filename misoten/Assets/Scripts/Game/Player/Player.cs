@@ -66,6 +66,9 @@ public class Player : MonoBehaviour
     private PlayerAccessPossiblAnnounce playerAccessPosssiblAnnounce_cs;
     private GameObject dastBoxGage;
 
+    [SerializeField]
+    private GameObject timeManager;
+
    
 
     // Use this for initialization
@@ -88,6 +91,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (timeManager.GetComponent<GameTimeManager>().IsTimeUp())
+        {
+            StopMove();
+            return;
+        } 
         UpdateBranch();
         playerInput_cs.UpdateInput();
     }

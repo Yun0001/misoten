@@ -21,11 +21,16 @@ public class MixerMiniGame : MonoBehaviour {
 
     private bool rotationFlg = false;
 
+    [SerializeField]
+    GameObject timeManager;
+
 
     // Use this for initialization
     void Awake () {
 
     }
+
+
 
     void Init()
     {

@@ -30,6 +30,8 @@ public class Sound:MonoBehaviour
     AudioSource _sourceSeDefault = null; // SE (デフォルト)
     [SerializeField]
     AudioSource[] _sourceSeArray; // SE (チャンネル)
+
+    List<AudioSource> seArray;
                                   // BGMにアクセスするためのテーブル
     Dictionary<string, _Data> _poolBgm = new Dictionary<string, _Data>();
     // SEにアクセスするためのテーブル 
@@ -63,6 +65,7 @@ public class Sound:MonoBehaviour
     {
         // チャンネル確保
         _sourceSeArray = new AudioSource[SE_CHANNEL];
+        seArray = new List<AudioSource>();
     }
 
     /// AudioSourceを取得する
@@ -79,6 +82,11 @@ public class Sound:MonoBehaviour
             _sourceSeDefault = _object.AddComponent<AudioSource>();
             for (int i = 0; i < SE_CHANNEL; i++)
             {
+                seArray.Add(new AudioSource());
+                seArray[i]= _object.AddComponent<AudioSource>();
+            }
+            for (int i = 0; i < SE_CHANNEL; i++)
+            {
                 _sourceSeArray[i] = _object.AddComponent<AudioSource>();
             }
         }
@@ -90,6 +98,19 @@ public class Sound:MonoBehaviour
         }
         else
         {
+            // SEのAudioSoruce数ループ
+            for (int i = 0; i < seArray.Count; i++)
+            {
+                // 再生中でないAudioSoruceがあったらそのAudioSoruceを返す
+                if (!seArray[i].isPlaying) return seArray[i];            
+            }
+
+            // seArrayのAudioSoruceが全て再生中だったならば
+            // AudioSourceを追加
+            seArray.Add(new AudioSource());
+            seArray[seArray.Count - 1] = _object.AddComponent<AudioSource>();
+            return seArray[seArray.Count - 1];
+
             // SE
             if (0 <= channel && channel < SE_CHANNEL)
             {
@@ -98,9 +119,11 @@ public class Sound:MonoBehaviour
             }
             else
             {
+
                 // デフォルト
                 return _sourceSeDefault;
             }
+
         }
     }
 
