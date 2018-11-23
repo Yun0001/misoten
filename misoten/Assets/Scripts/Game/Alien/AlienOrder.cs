@@ -152,7 +152,13 @@ public class AlienOrder : MonoBehaviour
 			GetComponent<BoxCollider>().enabled = false;
 
 			// 「0」になると、クレーム状態or満足状態に移行
-			if (eatingCount <= 0.0f) { statusMoveFlag = true; AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT); }
+			if (eatingCount <= 0.0f)
+			{
+				// イートイオブジェクトを削除
+				Destroy(GetEatoyObj());
+				statusMoveFlag = true;
+				AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+			}
 			else { eatingCount -= Time.deltaTime; }
 		}
 
@@ -368,9 +374,9 @@ public class AlienOrder : MonoBehaviour
 			default: break;
 		}
 
-        SetEatoyObj(eatoy);
-
-    }
+		// イートイのセット
+		SetEatoyObj(eatoy);
+	}
 
 	/// <summary>
 	/// 満足

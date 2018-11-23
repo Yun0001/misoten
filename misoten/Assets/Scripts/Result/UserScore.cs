@@ -21,7 +21,7 @@ public class UserScore : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// 残存時間可視化
-		GetComponent<TextMesh>().text = ScoreCount.GetScore().ToString("ユーザースコア" + "\n" + "         " + "0000");
+		//// 残存時間可視化
+		//GetComponent<TextMesh>().text = ScoreCount.GetScore().ToString("ユーザースコア" + "\n" + "         " + "000000");
 	}
 }
