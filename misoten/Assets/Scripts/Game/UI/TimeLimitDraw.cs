@@ -14,6 +14,9 @@ public class TimeLimitDraw : MonoBehaviour
 	// エイリアンの邪魔行動スクリプト変数
 	AlienDisturbance alienDisturbance;
 
+	// ゲーム制限時間スクリプト変数
+	GameTimeManager gameTimeManager;
+
 	// テキストフラグ
 	private bool textFlag = true;
 
@@ -33,6 +36,8 @@ public class TimeLimitDraw : MonoBehaviour
 		// コンポーネント取得
 		alienDisturbance = gameObject.transform.parent.gameObject.GetComponent<AlienDisturbance>();
 
+		gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
+
 		// 残存時間の位置指定
 		transform.position = new Vector3(transform.position.x + 0.2f, transform.position.y, transform.position.z - 0.4f);
 
@@ -45,23 +50,27 @@ public class TimeLimitDraw : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// 残存時間可視化
-		GetComponent<TextMesh>().text = alienDisturbance.GetTimeFont().ToString("00");
-
-		// 10秒を切ると、文字が黄色くなる
-		if (alienDisturbance.GetTimeFont() <= 10.0f)
+		if(gameTimeManager.GetCountTime() > 0)
 		{
-			color.r = color.g = 255.0f;
-		}
-		// 5秒を切ると、文字が赤くなる
-		if (alienDisturbance.GetTimeFont() <= 5.0f)
-		{
-			color.r = 255.0f;
-			color.g = 0.0f;
-		}
+			// 残存時間可視化
+			GetComponent<TextMesh>().text = alienDisturbance.GetTimeFont().ToString("00");
 
-		// カラー更新
-		GetComponent<TextMesh>().color = color;
+			// 10秒を切ると、文字が黄色くなる
+			if (alienDisturbance.GetTimeFont() <= 10.0f)
+			{
+				color.r = color.g = 255.0f;
+			}
+			// 5秒を切ると、文字が赤くなる
+			if (alienDisturbance.GetTimeFont() <= 5.0f)
+			{
+				color.r = 255.0f;
+				color.g = 0.0f;
+			}
+
+			// カラー更新
+			GetComponent<TextMesh>().color = color;
+		}
+		else { GetComponent<TextMesh>().text = ""; }
 	}
 
 	/// <summary>

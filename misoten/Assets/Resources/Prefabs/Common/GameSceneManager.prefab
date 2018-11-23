@@ -8456,7 +8456,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1927172282733898}
   m_LocalRotation: {x: -0.043619405, y: -0, z: -0, w: 0.9990483}
-  m_LocalPosition: {x: -4.441, y: 0.02, z: -5.245}
+  m_LocalPosition: {x: -4.4360003, y: 0.02, z: -5.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4723972381819562}
@@ -9186,7 +9186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653541374972806}
   m_LocalRotation: {x: -0.043619405, y: -0, z: -0, w: 0.9990483}
-  m_LocalPosition: {x: -3.8209999, y: 0.02, z: -5.245}
+  m_LocalPosition: {x: -3.8160002, y: 0.02, z: -5.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4871198204116974}
@@ -13128,7 +13128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1525607572065830}
   m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: -5.061, y: 0.02, z: -5.245}
+  m_LocalPosition: {x: -5.056, y: 0.02, z: -5.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4631171538495490}
@@ -23170,12 +23170,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteObj:
-  - {fileID: 1716229736840870}
-  - {fileID: 1319680828268496}
-  - {fileID: 1808183644531518}
-  - {fileID: 1832181597268336}
-  - {fileID: 1447678882545166}
   - {fileID: 1921220351612002}
+  - {fileID: 1447678882545166}
+  - {fileID: 1832181597268336}
+  - {fileID: 1808183644531518}
+  - {fileID: 1319680828268496}
+  - {fileID: 1716229736840870}
 --- !u!114 &114133925661968650
 MonoBehaviour:
   m_ObjectHideFlags: 1
