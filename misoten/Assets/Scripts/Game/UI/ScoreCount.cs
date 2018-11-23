@@ -35,7 +35,8 @@ public class ScoreCount : MonoBehaviour
     /// <param name="addscore">加算分スコア</param>
     public void AddScore(int addscore)
     {
-        score = Mathf.Min(score + addscore, 999999);  
+        score = Mathf.Min(score + addscore, 999999);
+
         UpdateSprite();
     }
     /// <summary>
@@ -66,5 +67,8 @@ public class ScoreCount : MonoBehaviour
             spriteObj[i].GetComponent<SpriteRenderer>().sprite = sprits[rement];
             suu = suu / 10;
         }
+        // スコア獲得SE
+        Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Addcoins), 0.5f, 9);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Addcoins), 9);
     }
 }

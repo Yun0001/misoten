@@ -19,9 +19,9 @@ public class CookingPot : MonoBehaviour {
               
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
         player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
-        Sound.PlaySe(GameSceneManager.seKey[27]);
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[22], true, 4);
-        Sound.PlaySe(GameSceneManager.seKey[22], 4);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire),16);
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), true, 13);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
     }
 
     /// <summary>
@@ -30,14 +30,22 @@ public class CookingPot : MonoBehaviour {
     /// <param name="stickVec"></param>
     public GameObject UpdatePot()
     {
-        return player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateMiniGame();
+        GameObject obj = player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateMiniGame();
+        if (obj == null)
+        {
+            return null;
+        }
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Success_share), 11);
+        return obj;
     }
 
     public void CancelCooking()
     {
         player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingInterruption();
         player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[22], false, 4);
-        Sound.StopSe(GameSceneManager.seKey[22], 4);
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), false, 13);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 16);
     }
 }

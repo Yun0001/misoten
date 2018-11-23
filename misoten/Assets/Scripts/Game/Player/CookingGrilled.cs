@@ -21,17 +21,30 @@ public class CookingGrilled : MonoBehaviour {
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
 
         //着火SE
-        Sound.PlaySe(GameSceneManager.seKey[26], 14);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
+        Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 0.1f, 14);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
+        Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 0.3f, 12);
     }
 
     public GameObject UpdateGrilled()
     {
-        return player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().UpdateMiniGame();
+        GameObject obj = player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().UpdateMiniGame();
+        if (obj == null)
+        {
+            return null;
+        }
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Success_share), 11);
+        return obj;
     }
 
     public void CancelCooking()
     {
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingInterruption();
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
     }
 }

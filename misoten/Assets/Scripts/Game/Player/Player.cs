@@ -377,7 +377,7 @@ public class Player : MonoBehaviour
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
-                    //transform.Find("Line").gameObject.SetActive(false);
+                    transform.Find("Line").gameObject.SetActive(false);
                 }
                 break;
 
@@ -486,7 +486,7 @@ public class Player : MonoBehaviour
             playerAccessPosssiblAnnounce_cs.HiddenSprite();
             GetHitObj((int)hitObjName.DastBox).transform.Find("box").GetComponent<mwAnimCtrl>().SetIsOpen(true);
             SetPlayerStatus(PlayerStatus.Normal);
-            haveInEatoy_cs.RevocationHaveInEatoy();
+            haveInEatoy_cs.RevocationHaveInEatoy(true);
             GetComponent<PlayerAnimCtrl>().SetServing(false);
             GetDastBoxUI().SetActive(false);
             Sound.SetVolumeSe(GameSceneManager.seKey[7], 0.3f, 8);

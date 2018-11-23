@@ -112,6 +112,7 @@ public class SoundController : MonoBehaviour {
         { ResultSE.register,"register"},
     };
 
+    
 
 
     private void Awake()
@@ -140,7 +141,7 @@ public class SoundController : MonoBehaviour {
 
     public void PlayGameSE(GameSE name, bool Loop = false, float Valume = 1.0f)
     {
-        //Sound.SetLoopFlgSe(name, Loop,);
-        //Sound.PlaySe();
+       // Sound.SetLoopFlgSe(name, Loop,);
+       // Sound.PlaySe();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sound:MonoBehaviour
 {
     /// SEチャンネル数
-    const int SE_CHANNEL = 10;
+    const int SE_CHANNEL = 16;
 
     /// サウンド種別
     enum eType
@@ -31,7 +31,8 @@ public class Sound:MonoBehaviour
     [SerializeField]
     AudioSource[] _sourceSeArray; // SE (チャンネル)
 
-    List<AudioSource> seArray;
+   // List<AudioSource> seArray;
+    //List<_Data2> data2Array;
                                   // BGMにアクセスするためのテーブル
     Dictionary<string, _Data> _poolBgm = new Dictionary<string, _Data>();
     // SEにアクセスするためのテーブル 
@@ -60,12 +61,25 @@ public class Sound:MonoBehaviour
         }
     }
 
+    class _Data2
+    {
+        public string key;
+        public int element;
+
+        public _Data2(string _key, int _element)
+        {
+            key = _key;
+            element = _element;
+        }
+    }
+
     /// コンストラクタ
     public Sound()
     {
         // チャンネル確保
         _sourceSeArray = new AudioSource[SE_CHANNEL];
-        seArray = new List<AudioSource>();
+     //   seArray = new List<AudioSource>();
+    //    data2Array = new List<_Data2>();
     }
 
     /// AudioSourceを取得する
@@ -80,11 +94,11 @@ public class Sound:MonoBehaviour
             // AudioSourceを作成
             _sourceBgm = _object.AddComponent<AudioSource>();
             _sourceSeDefault = _object.AddComponent<AudioSource>();
-            for (int i = 0; i < SE_CHANNEL; i++)
-            {
-                seArray.Add(new AudioSource());
-                seArray[i]= _object.AddComponent<AudioSource>();
-            }
+       //     for (int i = 0; i < SE_CHANNEL; i++)
+           // {
+          //      seArray.Add(new AudioSource());
+          //      seArray[i]= _object.AddComponent<AudioSource>();
+       //     }
             for (int i = 0; i < SE_CHANNEL; i++)
             {
                 _sourceSeArray[i] = _object.AddComponent<AudioSource>();
@@ -99,17 +113,21 @@ public class Sound:MonoBehaviour
         else
         {
             // SEのAudioSoruce数ループ
-            for (int i = 0; i < seArray.Count; i++)
-            {
+        //    for (int i = 0; i < seArray.Count; i++)
+         //   {
                 // 再生中でないAudioSoruceがあったらそのAudioSoruceを返す
-                if (!seArray[i].isPlaying) return seArray[i];            
-            }
+          //      if (!seArray[i].isPlaying)
+          //      {
+
+          //          return seArray[i];
+          //      }
+        //    }
 
             // seArrayのAudioSoruceが全て再生中だったならば
             // AudioSourceを追加
-            seArray.Add(new AudioSource());
-            seArray[seArray.Count - 1] = _object.AddComponent<AudioSource>();
-            return seArray[seArray.Count - 1];
+          //  seArray.Add(new AudioSource());
+           // seArray[seArray.Count - 1] = _object.AddComponent<AudioSource>();
+          //  return seArray[seArray.Count - 1];
 
             // SE
             if (0 <= channel && channel < SE_CHANNEL)
