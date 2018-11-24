@@ -114,7 +114,7 @@ public class AlienChip : MonoBehaviour
 						// 満足状態の時
 						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 						{
-							Debug.Log(CalcChipValue());
+							Debug.Log(cisineTasteCoefficient + "a");
 							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
 							SetCuisineCame(false);
 							GetComponent<AlienOrder>().SetIsOrder(false);
@@ -162,6 +162,12 @@ public class AlienChip : MonoBehaviour
 	/// </summary>
 	/// <param name="coefficient">料理の旨味係数</param>
 	public void SetCuisineCoefficient(float coefficient) => cisineTasteCoefficient = coefficient;
+
+	/// <summary>
+	/// ベースチップに掛ける旨味係数取得
+	/// </summary>
+	/// <returns></returns>
+	public float GetCuisineCoefficient() => cisineTasteCoefficient;
 
 	/// <summary>
 	/// チップをプレイヤーに渡したかのフラグの格納
