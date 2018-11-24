@@ -78,8 +78,8 @@ public class AlienSatisfaction : MonoBehaviour
 					// 満足アニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
 
-					// 満足した吹き出しを出す
-					satisfactionBalloon[0].SetActive(true);
+					// 満足吹き出しの描画を行う
+					BalloonDraw();
 
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
@@ -102,6 +102,18 @@ public class AlienSatisfaction : MonoBehaviour
 				satisfactionTimeAdd += Time.deltaTime;
 			}
 		}
+	}
+
+	/// <summary>
+	/// 満足吹き出しの描画
+	/// </summary>
+	void BalloonDraw()
+	{
+		// 満足した吹き出しを出す
+		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 1) { satisfactionBalloon[0].SetActive(true); }
+		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 2) { satisfactionBalloon[1].SetActive(true); }
+		if (3 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 15) { satisfactionBalloon[2].SetActive(true); }
+		if (16 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 40) { satisfactionBalloon[3].SetActive(true); }
 	}
 
 	/// <summary>
