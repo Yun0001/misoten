@@ -136,7 +136,7 @@ public class MicrowaveGage : MonoBehaviour
     /// </summary>
     public void DecisionSuceesAreaPosition()
     {
-
+        timer = (int)(timer / 1.25);
         int arrayElement = rand.Next(5);
         while (arrayElement == oldRand)
         {

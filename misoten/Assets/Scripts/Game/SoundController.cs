@@ -5,6 +5,24 @@ using System;
 
 public class SoundController : MonoBehaviour {
 
+    public enum BGM
+    {
+        Title,
+        Menu,
+        Gameplay,
+        Result
+    }
+
+    private static Dictionary<BGM, string> BGMDictionary = new Dictionary<BGM, string>
+    {
+            { BGM.Title,"Title"},
+                { BGM.Menu,"Gamemenu02"},
+                    { BGM.Gameplay,"Gameplay01"},
+                        { BGM.Result,"Gameresult"},
+    };
+
+
+
     public enum MenuSE
     {
         Fadeout,
@@ -17,7 +35,7 @@ public class SoundController : MonoBehaviour {
         tutorial_success
     }
 
-    private Dictionary<MenuSE, string> menuSEDictionary = new Dictionary<MenuSE, string>
+    private static Dictionary<MenuSE, string> menuSEDictionary = new Dictionary<MenuSE, string>
     {
         { MenuSE.Fadeout,"Fadeout"},
         { MenuSE.Cancelkey_share,"Cancelkey_share"},
@@ -44,7 +62,6 @@ public class SoundController : MonoBehaviour {
         Boil,
         // EnterShop/
         Open,
-        Entershop,
         Bell,
         // Gameend/
         Countdown,
@@ -66,7 +83,6 @@ public class SoundController : MonoBehaviour {
         RefrigeratorSuccess,
         // Refusebox/
         Dustshoot,
-        MAXGameSE
     }
 
     private static Dictionary<GameSE, string> gameSEDictionary = new Dictionary<GameSE, string>
@@ -82,6 +98,7 @@ public class SoundController : MonoBehaviour {
         { GameSE.Open,"Open"},
         { GameSE.Bell,"Bell"},
         { GameSE.Countdown,"Countdown"},
+        { GameSE.Endannouncement,"Endannouncement"},
         { GameSE.Grilled_During,"Grilled_During"},
         { GameSE.Stirfry,"Stirfry"},
         { GameSE.Microwave,"Microwave"},
@@ -104,7 +121,7 @@ public class SoundController : MonoBehaviour {
         register
     }
 
-    private Dictionary<ResultSE, string> resultSEDictionary = new Dictionary<ResultSE, string>
+    private static Dictionary<ResultSE, string> resultSEDictionary = new Dictionary<ResultSE, string>
     {
         { ResultSE.applause,"applause"},
         { ResultSE.cracker_repeated,"cracker_repeated"},
@@ -115,33 +132,51 @@ public class SoundController : MonoBehaviour {
     
 
 
-    private void Awake()
+    public static void SoundLoad()
     {
+        foreach (var bgm in Enum.GetValues(typeof(BGM)))
+        {
+            string fileName = GetBGMName((BGM)Enum.ToObject(typeof(BGM), bgm));
+            Sound.LoadBgm(fileName, "BGM/" + fileName);
+        }
+
         foreach (var se in Enum.GetValues(typeof(MenuSE)))
         {
-            Sound.LoadSe(Enum.GetName(typeof(MenuSE), se), "Menu/" + Enum.GetName(typeof(MenuSE), se).ToString());
+            string fileName = GetMenuSEName((MenuSE)Enum.ToObject(typeof(MenuSE), se));
+            Sound.LoadSe(fileName, "Menu/" + fileName);
         }
 
         foreach (var se in Enum.GetValues(typeof(GameSE)))
         {
-            Sound.LoadSe(Enum.GetName(typeof(GameSE), se), "Gameplay/" + Enum.GetName(typeof(GameSE), se).ToString());
+            string fileName = GetGameSEName((GameSE)Enum.ToObject(typeof(GameSE), se));
+            Sound.LoadSe(fileName, "Gameplay/" + fileName);
         }
 
+        
         foreach (var se in Enum.GetValues(typeof(ResultSE)))
         {
-            Sound.LoadSe(Enum.GetName(typeof(ResultSE), se), "Result/" + Enum.GetName(typeof(ResultSE), se).ToString());
+            string fileName = GetResultSEName((ResultSE)Enum.ToObject(typeof(ResultSE), se));
+            Sound.LoadSe(fileName, "Result/" + fileName);
         }
+        
+    }
 
+    public static string GetMenuSEName(MenuSE name)
+    {
+        return menuSEDictionary[name];
     }
 
     public static string GetGameSEName(GameSE name)
     {
         return gameSEDictionary[name];
     }
-
-    public void PlayGameSE(GameSE name, bool Loop = false, float Valume = 1.0f)
+    public static string GetResultSEName(ResultSE name)
     {
-       // Sound.SetLoopFlgSe(name, Loop,);
-       // Sound.PlaySe();
+        return resultSEDictionary[name];
+    }
+
+    public static string GetBGMName(BGM name)
+    {
+        return BGMDictionary[name];
     }
 }
