@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 1
-  oneAnimPatternSwitchTime: 30
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &136782970
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -908,7 +908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 0
-  oneAnimPatternSwitchTime: 15
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &181959733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1917,7 +1917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 2
-  oneAnimPatternSwitchTime: 30
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &383022402
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8915,7 +8915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 1
-  oneAnimPatternSwitchTime: 30
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &471230522
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14008,7 +14008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 2
-  oneAnimPatternSwitchTime: 30
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &896809531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14454,7 +14454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 1
-  oneAnimPatternSwitchTime: 30
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &1030739396
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18975,7 +18975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 0
-  oneAnimPatternSwitchTime: 15
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &1230665992
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27673,7 +27673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 2
-  oneAnimPatternSwitchTime: 30
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &1937757541
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27947,7 +27947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alienPattern: 0
-  oneAnimPatternSwitchTime: 15
+  oneAnimPatternSwitchTime: 45
 --- !u!212 &2020605670
 SpriteRenderer:
   m_ObjectHideFlags: 0

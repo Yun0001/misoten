@@ -93,5 +93,4 @@ public class Pause : MonoBehaviour
             monoBehaviour.enabled = true;
         }
     }
-
 }
