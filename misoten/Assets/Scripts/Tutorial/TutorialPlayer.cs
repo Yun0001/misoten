@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using GamepadInput;
+using System.Linq;
+
 public class TutorialPlayer : MonoBehaviour {
 
     [SerializeField] private bool isComplete = false;
-
-    void Start()
-    {
-    }
-
-    void Update() {
-    }
-
-    public bool IsComplete()
-    {
-        return isComplete;
-    }
-
+    public bool IsComplete() => isComplete;
     public void UnComplete() => isComplete = false;
-
+    public void SetPlayerReder(bool b) => GetComponent<SpriteRenderer>().enabled = b;
 }

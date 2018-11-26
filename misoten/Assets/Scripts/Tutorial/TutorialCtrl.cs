@@ -15,6 +15,8 @@ public class TutorialCtrl : MonoBehaviour
     private GameObject      _tutorialMenuUI;
     private SpriteRenderer  _menuSprite;
 
+    private TutorialFrow    _tutorialFrow;
+
     private GameObject[]    _players;
 
 
@@ -30,6 +32,8 @@ public class TutorialCtrl : MonoBehaviour
         _menuSprite = _tutorialMenuUI.GetComponent<SpriteRenderer>();
         _menuSprite.color = MyColor.ALPHA_0;
 
+        _tutorialFrow = GameObject.Find("TutorialFrow").GetComponent<TutorialFrow>();
+       
         _players = GameObject.FindGameObjectsWithTag("Player");
         
     }
@@ -37,7 +41,7 @@ public class TutorialCtrl : MonoBehaviour
     void Update()
     {
         TutorialState();
-        TutorialMenuUIRenderer();
+        TutorialRenderer();
     }
 
     private IEnumerator OpenMenu()
@@ -47,7 +51,7 @@ public class TutorialCtrl : MonoBehaviour
     }
 
     float alpha = 0.0f;
-    void TutorialMenuUIRenderer()
+    void TutorialRenderer()
     {
         // メニューを開けていないならば非表示
         if (!(_menuAnimCtrl.IsOpen()))
@@ -63,11 +67,19 @@ public class TutorialCtrl : MonoBehaviour
             alpha = 0.0f;
             return;
         }
+
         if (_menuSprite.color.a <= 1.0f)
         {
             alpha += 0.1f;
             _menuSprite.color = new Color(1, 1, 1, alpha);
+
+            _tutorialFrow.SetTutorial(CURRENT_TUTORIAL_STATE, true);
+
+            foreach (GameObject player in _players) player.GetComponent<TutorialPlayer>().SetPlayerReder(true);
+            
+            return;
         }
+
     }
 
     void TutorialState()
@@ -103,8 +115,15 @@ public class TutorialCtrl : MonoBehaviour
         {
             player.GetComponent<TutorialPlayer>().UnComplete();
         }
+
+        _tutorialFrow.SetTutorial(CURRENT_TUTORIAL_STATE, false);
+        foreach (GameObject player in _players) player.GetComponent<TutorialPlayer>().SetPlayerReder(false);
+
         CURRENT_TUTORIAL_STATE++;
-        Debug.Log(CURRENT_TUTORIAL_STATE);
+        if (Tutorial.ERROR <= CURRENT_TUTORIAL_STATE)
+        {
+            CURRENT_TUTORIAL_STATE = (Tutorial.ERROR - 1);
+        }
 
         OverPage();
     }
