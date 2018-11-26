@@ -25,7 +25,12 @@ ModelImporter:
     7400000: Armature|action
     9500000: //RootNode
     13700000: Cylinder
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: btn
+    second: {fileID: 2100000, guid: 7299d5d536e62e14da34b241657fc6af, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

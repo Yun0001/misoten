@@ -26,7 +26,12 @@ ModelImporter:
     7400002: Armature|rSpin
     9500000: //RootNode
     13700000: Cylinder
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stick
+    second: {fileID: 2100000, guid: 5a1eba9581ec24c42acf1ca27b73a9e3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
