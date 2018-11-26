@@ -16,6 +16,9 @@ public class Flyingpan : KitchenwareBase
 
 	static public bool effectFlag = false;
 
+    [SerializeField]
+    private GameObject missText;
+
     void Awake () {
 		effectFlag = false;
 		InstanceMiniGameUI();
@@ -90,6 +93,7 @@ public class Flyingpan : KitchenwareBase
         {
 			effectFlag = false;
 			ResetChain();
+            missText.GetComponent<MissAnnounce>().DisplayText();
             return;
         }
 

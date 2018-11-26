@@ -48,6 +48,9 @@ public class MicrowaveGage : MonoBehaviour
 
     int oldRand = 5;
 
+    [SerializeField]
+    private GameObject missText;
+
     // Use this for initialization
     void Awake()
     {
@@ -177,6 +180,7 @@ public class MicrowaveGage : MonoBehaviour
     {
         timerCount += missPoint;
         clock.transform.Rotate(new Vector3(0, 0, -missPoint));
+        missText.GetComponent<MissAnnounce>().DisplayText();
     }
 
     public void DecisionCheckClockCollision()

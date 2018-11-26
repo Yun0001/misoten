@@ -31,6 +31,7 @@ TagManager:
   - StageModel
   - GameUI
   - MiniGame
+  - Shop
   layers:
   - Default
   - TransparentFX
@@ -70,4 +71,7 @@ TagManager:
     locked: 0
   - name: AnnounceUI
     uniqueID: 958390675
+    locked: 0
+  - name: MISSAnnouce
+    uniqueID: 1065993071
     locked: 0
