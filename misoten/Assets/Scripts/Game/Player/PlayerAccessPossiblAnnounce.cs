@@ -9,6 +9,7 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
     [SerializeField]
     private GameObject announceUI;
 
+
     private void Awake()
     {
         announceUISprits= Resources.LoadAll<Sprite>("Textures/AccessUI/AccessUI_Re");
@@ -21,5 +22,7 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
     }
 
     public void HiddenSprite() => announceUI.GetComponent<SpriteRenderer>().sprite = null;
-	
+
+
+
 }

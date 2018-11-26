@@ -51,6 +51,9 @@ public class MicrowaveGage : MonoBehaviour
     [SerializeField]
     private GameObject missText;
 
+    [SerializeField]
+    private GameObject pointText;
+
     // Use this for initialization
     void Awake()
     {
@@ -114,6 +117,7 @@ public class MicrowaveGage : MonoBehaviour
                     status = MicrowaveState.Wait;
                     StopStartSE();
                     PlayChinSE();
+                    HiddenText();
                     return true;
                 }
 
@@ -129,6 +133,7 @@ public class MicrowaveGage : MonoBehaviour
                     status = MicrowaveState.Wait;
                     StopStartSE();
                     PlayChinSE();
+                    HiddenText();
                     return true;
                 }
                 if (successWaitFrame >= SUCCESS_WAIT_FRAME)
@@ -209,5 +214,16 @@ public class MicrowaveGage : MonoBehaviour
     private void PlayChinSE()
     {
         Sound.PlaySe(GameSceneManager.seKey[15],4);
+    }
+
+    public void DisplayPoint(int point)
+    {
+        pointText.GetComponent<PointAnnouce>().DisplayText(point);
+    }
+
+    public void HiddenText()
+    {
+        pointText.SetActive(false);
+        missText.SetActive(false);
     }
 }

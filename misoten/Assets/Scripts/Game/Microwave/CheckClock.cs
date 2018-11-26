@@ -58,10 +58,12 @@ public class CheckClock : MonoBehaviour {
                 if (i == 0)
                 {
                     microwave_cs.AddEatoyPoint(0,hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.GreatSuccessArea));
+                    microwaveGage_cs.DisplayPoint(hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.GreatSuccessArea));
                 }
                 else if (i == 1)
                 {
                     microwave_cs.AddEatoyPoint(1,hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.SuccessArea));
+                    microwaveGage_cs.DisplayPoint(hitObj[i].GetComponent<MicrowaveMiniGameSuccessArea>().GetAreaPoint(MicrowaveMiniGameSuccessArea.EArea.SuccessArea));
 
                 }
                 microwave_cs.AddChain();

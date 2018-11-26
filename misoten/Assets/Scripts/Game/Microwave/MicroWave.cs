@@ -61,6 +61,7 @@ public class Microwave : KitchenwareBase
 		SetIsCooking(false);
         cuisine = null;
         microwaveGage_cs.StopStartSE();
+        microwaveGage_cs.HiddenText();
         // レンジOpenSE
         Sound.PlaySe(GameSceneManager.seKey[16], 4);
     }

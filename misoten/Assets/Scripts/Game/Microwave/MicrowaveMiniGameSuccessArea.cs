@@ -11,8 +11,8 @@ public class MicrowaveMiniGameSuccessArea : MonoBehaviour {
     }
 
     private Dictionary<EArea, int> areaPoint = new Dictionary<EArea, int> {
-        { EArea.SuccessArea, 2},        //"Aseets/Scenes/Title.unity"
-        { EArea.GreatSuccessArea,5 },  //"Aseets/Scenes/Tutorial.unity"
+        { EArea.SuccessArea, 5},        //"Aseets/Scenes/Title.unity"
+        { EArea.GreatSuccessArea,2 },  //"Aseets/Scenes/Tutorial.unity"
     };
 
     public int GetAreaPoint(EArea areaname) => areaPoint[areaname];
