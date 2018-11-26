@@ -114,7 +114,6 @@ public class AlienChip : MonoBehaviour
 						// 満足状態の時
 						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 						{
-							Debug.Log(cisineTasteCoefficient + "a");
 							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
 							SetCuisineCame(false);
 							GetComponent<AlienOrder>().SetIsOrder(false);

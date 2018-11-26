@@ -43,6 +43,7 @@ public class AlienAccessEffect : MonoBehaviour
 			// エフェクト生成
 			accessObj[i] = Instantiate(prefab, dishObj[i].transform.position, Quaternion.identity) as ParticleSystem;
 			accessObj[i].transform.SetParent(transform);
+			accessObj[i].GetComponent<ParticleSystem>().Stop();
 		}
 	}
 
@@ -51,29 +52,28 @@ public class AlienAccessEffect : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		if (playerObj[0].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-			|| playerObj[1].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-			|| playerObj[2].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-			|| playerObj[3].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
+		for (int i = 0; i < playerObj.Length; i++)
 		{
-			for(int i = 0; i < dishObj.Length; i++)
+			if (playerObj[i].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
 			{
-				if (HitDish.hitDish[i])
+				for (int j = 0; j < dishObj.Length; j++)
 				{
-					accessObj[i].GetComponent<ParticleSystem>().Play();
+					if (HitDish.hitDish[j])
+					{
+						accessObj[j].GetComponent<ParticleSystem>().Play();
+					}
+					else { accessObj[j].GetComponent<ParticleSystem>().Stop(); }
 				}
-				else { accessObj[i].GetComponent<ParticleSystem>().Stop(); }
 			}
-		}
-
-		if (!playerObj[0].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-			&& !playerObj[1].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-			&& !playerObj[2].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-			&& !playerObj[3].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
-		{
-			for (int i = 0; i < 7; i++)
+			else
 			{
-				accessObj[i].GetComponent<ParticleSystem>().Stop();
+				for (int j = 0; j < dishObj.Length; j++)
+				{
+					if (!HitDish.hitDish[j])
+					{
+						accessObj[j].GetComponent<ParticleSystem>().Stop();
+					}
+				}
 			}
 		}
 	}

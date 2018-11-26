@@ -23739,7 +23739,7 @@ MonoBehaviour:
   putEatoy: {fileID: 1685462723434298, guid: 4c2edac843f6e5d4c9f6b47b115c3d77, type: 2}
   MiniGameUI: {fileID: 1804702274139390}
   val: 0
-  isDebugMode: 0
+  isDebugMode: 1
 --- !u!114 &114224754586567574
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -23,6 +23,8 @@ public class HitDish : MonoBehaviour
 	// アクセス時の当たり判定フラグ
 	static public bool[] hitDish = new bool[7];
 
+	private bool[] saveObj = new bool[4];
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -49,13 +51,6 @@ public class HitDish : MonoBehaviour
 	/// <param name="collision"></param>
 	private void OnTriggerStay(Collider collision)
 	{
-		// プレイヤーからエイリアンへアクセス可能時
-		if (playerObj[0].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-	|| playerObj[1].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-	|| playerObj[2].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
-	|| playerObj[3].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
-		{
-			hitDish[id] = true;
-		}
+		hitDish[id] = true;
 	}
 }

@@ -18,7 +18,7 @@ public class SoundController : MonoBehaviour {
             { BGM.Title,"Title"},
                 { BGM.Menu,"Gamemenu02"},
                     { BGM.Gameplay,"Gameplay01"},
-                        { BGM.Result,"Gameresult"},
+                        { BGM.Result,"Gameresult01"},
     };
 
 

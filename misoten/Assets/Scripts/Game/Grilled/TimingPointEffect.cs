@@ -8,30 +8,36 @@ using UnityEngine;
 /// </summary>
 public class TimingPointEffect : MonoBehaviour
 {
+	// 時間更新
+	private float timeAdd = 0.0f;
 
 	/// <summary>
 	/// 開始関数
 	/// </summary>
-	void Start () {
-		
+	void Start()
+	{
+		// 時間更新の初期化
+		timeAdd = 0.0f;
 	}
-	
+
 	/// <summary>
 	/// 更新関数
 	/// </summary>
 	void Update ()
 	{
-		for(int i = 0; i < 4 ;i++)
+		if (Flyingpan.effectFlag)
 		{
-			if (GetComponent<TimingPoint>().IsHit(i))
+			GetComponent<ParticleSystem>().startSize = 0.8f;
+			if (timeAdd >= 0.8f)
 			{
-				GetComponent<ParticleSystem>().startSize = 0.8f;
-				break;
+				timeAdd = 0.0f;
+				Flyingpan.effectFlag = false;
 			}
-			else
-			{
-				GetComponent<ParticleSystem>().startSize = 0.3f;
-			}
+			else { timeAdd += Time.deltaTime; }
+		}
+		else
+		{
+			GetComponent<ParticleSystem>().startSize = 0.3f;
 		}
 	}
 }

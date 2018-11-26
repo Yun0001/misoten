@@ -118,6 +118,9 @@ public class AlienDisturbance : MonoBehaviour
 				// 残存時間が「-1」以下になると入る
 				if(timeFont <= -1)
 				{
+					// イートイオブジェクトを削除
+					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+
 					// テキストメッシュが消える
 					TextMeshBalloon.SetActive(false);
 
