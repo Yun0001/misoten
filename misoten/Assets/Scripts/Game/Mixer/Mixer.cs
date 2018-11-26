@@ -175,6 +175,8 @@ public class Mixer : KitchenwareBase {
                             // 全ての当たり判定を復活
                             GetComponent<MixerAccessPoint>().RevivalAllAccessPoint();
                             transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetBool(false);
+                            Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Mixer), false, 7);
+                            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Mixerend), 7);
                         }
                     }                
                     

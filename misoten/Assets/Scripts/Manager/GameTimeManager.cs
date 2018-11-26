@@ -13,18 +13,21 @@ public class GameTimeManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] time;
 
-    private Sprite[] sprits;
-    // Use this for initialization
+    private Sprite[] spritsIn;
+    private Sprite[] spritsOut;    // Use this for initialization
     void Start () {
 
         isTimeUp = false;
 
-        sprits = Resources.LoadAll<Sprite>("Textures/UI_Digital2");
+        spritsIn = Resources.LoadAll<Sprite>("Textures/Time/Time_UI_Inner");
+        spritsOut = Resources.LoadAll<Sprite>("Textures/Time/Time_UI_Outer");
         countTime = 180;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {
-            time[i].GetComponent<SpriteRenderer>().sprite = sprits[suu % 10];
+            time[i].GetComponent<SpriteRenderer>().sprite = spritsIn[suu % 10];
+            time[i].GetComponent<SpriteRenderer>().color = new Color(0.9725f, 0.7098f, 0.9019f, 1.0f);
+            time[i + 3].GetComponent<SpriteRenderer>().sprite = spritsOut[suu % 10];
             suu = suu / 10;
         }
 
@@ -49,6 +52,10 @@ public class GameTimeManager : MonoBehaviour {
         countTime -= Time.deltaTime; //スタートしてからの秒数を格納
         if (countTime < oneSecond && countTime > 0)
         {
+            for (int i = 0; i < 3; i++)
+            {
+                time[i].GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+            }
             oneSecond = (int)Mathf.Floor(countTime);
             Sound.SetVolumeSe(GameSceneManager.seKey[24], 0.5f, 10);
             Sound.PlaySe(GameSceneManager.seKey[24], 10);
@@ -67,7 +74,16 @@ public class GameTimeManager : MonoBehaviour {
             Sound.PlaySe(GameSceneManager.seKey[25], 10);
             Sound.StopBgm();
             isTimeUp = true;
-           // SpeedUpText.GetComponent<Text>().text = "Time Up" ;
+
+            // 表示中のミニゲームUIを非表示にする
+            GameObject[] work = GameObject.FindGameObjectsWithTag("MiniGame");
+            foreach (var minigame in work)
+            {
+                minigame.SetActive(false);
+            }
+
+            // 再生中のSEを止める
+            SoundController.StopAllSE();
         }
     }
 
@@ -84,12 +100,8 @@ public class GameTimeManager : MonoBehaviour {
         for (int i = 0; i < 3; i++)
         {
             rement = suu % 10;
-            if (i == 2 && countTime < 100)
-            {
-                time[i].GetComponent<SpriteRenderer>().sprite = null;
-                break;
-            }
-            time[i].GetComponent<SpriteRenderer>().sprite = sprits[rement];
+            time[i].GetComponent<SpriteRenderer>().sprite = spritsIn[rement];
+            time[i + 3].GetComponent<SpriteRenderer>().sprite = spritsOut[rement];
             if (rement == 0)
             {
                 break;

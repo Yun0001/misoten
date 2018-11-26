@@ -45,10 +45,12 @@ public class TitleController : MonoBehaviour {
         doorrAnimator = GameObject.Find("doorr").GetComponent<Animator>();
         doorlAnimator = GameObject.Find("doorl").GetComponent<Animator>();
 
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = _clip;
-
-        _audioSource.Play();
+        // BGM再生
+        if (!SoundController.Loadflg)
+        {
+            SoundController.SoundLoad();
+        }
+        Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Title));
 
         _canvasWIO = GameObject.Find("WIO");
 

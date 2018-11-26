@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114079823275505810}
   m_Layer: 18
   m_Name: MixerMiniGame
-  m_TagString: Untagged
+  m_TagString: MiniGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
   mixerArrow: {fileID: 1651836275785510}
   powerBorder: 50
   power: 0
+  timeManager: {fileID: 0}
 --- !u!114 &114423153826155668
 MonoBehaviour:
   m_ObjectHideFlags: 1

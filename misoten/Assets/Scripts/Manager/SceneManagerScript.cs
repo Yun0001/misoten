@@ -73,6 +73,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
         if (IsLoadScene)
         {
+            Sound.StopBgm();
             LoadNextScene();
             IsLoadScene = false;
         }
@@ -91,33 +92,9 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
     public void LoadNextScene()
     {
-        /*　ToDo： バグ中
-        switch ((SceneName)SceneManager.GetActiveScene().buildIndex)
-        {
-            case SceneName.Title:
-                //LoadScene(SceneName.Tutorial); チュートリアルができたらコッチ
-                LoadScene(SceneName.Game); // 今だけ
-                break;
-
-            case SceneName.Tutorial:
-                LoadScene(SceneName.Game);
-                break;
-
-            case SceneName.Game:
-                LoadScene(SceneName.Result);
-                break;
-
-            case SceneName.Result:
-                LoadScene(SceneName.Title);
-                break;
-
-            default:
-                Debug.LogError("不正なシーン");
-                break;
-        }
-        */
-
-        switch(currentScene){
+        Sound.StopBgm();
+        SoundController.StopAllSE();
+          switch(currentScene){
             case "Title_heita":
                 SceneManager.LoadScene("Game", LoadSceneMode.Single);
                 break;

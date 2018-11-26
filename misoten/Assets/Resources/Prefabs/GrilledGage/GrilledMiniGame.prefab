@@ -80,8 +80,8 @@ GameObject:
   - component: {fileID: 4237214508193298}
   - component: {fileID: 114548002482966052}
   m_Layer: 17
-  m_Name: GrilledGage
-  m_TagString: Untagged
+  m_Name: GrilledMiniGame
+  m_TagString: MiniGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  areaSpeed: 0.01
+  areaSpeed: 0.03
   STAY_TIME: 0
   stayTime: 0
 --- !u!114 &114576367699442070

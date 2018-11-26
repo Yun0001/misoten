@@ -58,19 +58,23 @@ public class IceBoxMiniGame : MonoBehaviour {
         icePickImage.SetActive(true);
         icePickImage.gameObject.transform.position = transform.position + icePickInitPosition;
         isStart = true;
-        PlayIcePickSE();
-        Sound.PlaySe(GameSceneManager.seKey[13]);
     }
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        // ミニゲームを開始しているとき
         if(isStart)
         {
-            freesResist += 0.1f;
-            Vector3 scale = iceImage.transform.localScale;
-            float fval = ((playerBarrage - freesResist) / takeCount);
-            float Scale = 1f - fval;
-            if (Scale > 1) Scale = 1f;
-            iceImage.transform.localScale = new Vector3(Scale, Scale, Scale);
+            // プレイヤーの入力Pointのほうが
+            // freesResistより大きいとき
+            if (playerBarrage > freesResist)
+            {
+                // freesResist加算
+                AddFreesResist();
+
+            }
+            // 氷のスケールをセット
+            SetIceImageScale();
             MoveIcePick();
         }
 	}
@@ -87,9 +91,6 @@ public class IceBoxMiniGame : MonoBehaviour {
     {
         iceImage.SetActive(false);
         icePickImage.SetActive(false);
-        StopIcePickSE();
-        Sound.PlaySe(GameSceneManager.seKey[14]);
-        Sound.PlaySe(GameSceneManager.seKey[12]);
     }
 
     private bool IsOverTakeCount() => (playerBarrage - freesResist) >= takeCount;
@@ -116,16 +117,15 @@ public class IceBoxMiniGame : MonoBehaviour {
         }
     }
 
-    private void PlayIcePickSE()
-    {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[11], true, 5);
-        Sound.PlaySe(GameSceneManager.seKey[11], 5);
-    }
+    private void AddFreesResist() => freesResist += 0.1f;
 
-    private void StopIcePickSE()
+    private void SetIceImageScale()
     {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[11], false, 5);
-        Sound.StopSe(GameSceneManager.seKey[11], 5);
+        Vector3 scale = iceImage.transform.localScale;
+        float fval = ((playerBarrage - freesResist) / takeCount);
+        float Scale = 1f - fval;
+        if (Scale > 1) Scale = 1f;
+        iceImage.transform.localScale = new Vector3(Scale, Scale, Scale);
     }
 
 	public bool GetMoveflg() => moveflg;

@@ -6,6 +6,9 @@ using GamepadInput;
 public class CookingMicrowave : MonoBehaviour {
 
     private Player player_cs;
+
+    [SerializeField]
+    private ParticleSystem microwaveEffect;
 	// Use this for initialization
 	void Awake ()
     {
@@ -14,7 +17,12 @@ public class CookingMicrowave : MonoBehaviour {
 
     public GameObject UpdateMicrowave()
     {
-        return player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().UpdateMiniGame();
+        GameObject eatoy = player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().UpdateMiniGame();
+        if (eatoy != null)
+        {
+            microwaveEffect.Stop();
+        }
+        return eatoy;
     }
 
 
@@ -28,10 +36,10 @@ public class CookingMicrowave : MonoBehaviour {
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
         player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(true);
 
         // レンジOpenSE
         Sound.PlaySe(GameSceneManager.seKey[16], 4);
+        microwaveEffect.Play();
     }
 
     /// <summary>
@@ -40,7 +48,7 @@ public class CookingMicrowave : MonoBehaviour {
     public void CancelCooking()
     {
         player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingInterruption();
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
-
+        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(false);
+        microwaveEffect.Stop();
     }
 }

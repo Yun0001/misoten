@@ -99,7 +99,7 @@ public class SoundController : MonoBehaviour {
         { GameSE.Bell,"Bell"},
         { GameSE.Countdown,"Countdown"},
         { GameSE.Endannouncement,"Endannouncement"},
-        { GameSE.Grilled_During,"Grilled_During"},
+        { GameSE.Grilled_During,"Grilled_ During"},
         { GameSE.Stirfry,"Stirfry"},
         { GameSE.Microwave,"Microwave"},
         { GameSE.MicrowaveOpen,"MicrowaveOpen"},
@@ -129,8 +129,8 @@ public class SoundController : MonoBehaviour {
         { ResultSE.register,"register"},
     };
 
-    
 
+    public static bool Loadflg = false;
 
     public static void SoundLoad()
     {
@@ -152,13 +152,14 @@ public class SoundController : MonoBehaviour {
             Sound.LoadSe(fileName, "Gameplay/" + fileName);
         }
 
-        
+
         foreach (var se in Enum.GetValues(typeof(ResultSE)))
         {
             string fileName = GetResultSEName((ResultSE)Enum.ToObject(typeof(ResultSE), se));
             Sound.LoadSe(fileName, "Result/" + fileName);
         }
-        
+
+        Loadflg = true;
     }
 
     public static string GetMenuSEName(MenuSE name)
@@ -178,5 +179,21 @@ public class SoundController : MonoBehaviour {
     public static string GetBGMName(BGM name)
     {
         return BGMDictionary[name];
+    }
+
+    public static bool GetIsPlaySE(int Channel)
+    {
+        return Sound.GetInstance().GetAudioSource(Channel).isPlaying;
+    }
+
+    public static void StopAllSE()
+    {
+        for (int i = 0; i < Sound.GetInstance().GetChannelNum(); i++)
+        {
+            if (GetIsPlaySE(i))
+            {
+                Sound.GetInstance().GetAudioSource(i).Stop();
+            }
+        }
     }
 }

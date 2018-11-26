@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 114564725938521720}
   m_Layer: 18
   m_Name: MicrowaveMiniGame
-  m_TagString: Untagged
+  m_TagString: MiniGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,7 +517,6 @@ MonoBehaviour:
   successAreaParent: {fileID: 0}
   status: 1
   rotateSpeed: 2
-  microwave: {fileID: 0}
 --- !u!114 &114659467146311950
 MonoBehaviour:
   m_ObjectHideFlags: 1

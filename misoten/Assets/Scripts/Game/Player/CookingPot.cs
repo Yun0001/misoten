@@ -19,7 +19,7 @@ public class CookingPot : MonoBehaviour {
               
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
         player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
-        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire),16);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire),17);
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), true, 13);
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
     }

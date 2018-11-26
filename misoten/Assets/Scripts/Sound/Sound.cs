@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sound:MonoBehaviour
 {
     /// SEチャンネル数
-    const int SE_CHANNEL = 16;
+    readonly int SE_CHANNEL = 20;
 
     /// サウンド種別
     enum eType
@@ -80,6 +80,11 @@ public class Sound:MonoBehaviour
         _sourceSeArray = new AudioSource[SE_CHANNEL];
      //   seArray = new List<AudioSource>();
     //    data2Array = new List<_Data2>();
+    }
+
+    public AudioSource GetAudioSource(int channel)
+    {
+        return _sourceSeArray[channel];
     }
 
     /// AudioSourceを取得する
@@ -559,8 +564,9 @@ public class Sound:MonoBehaviour
         }
 
         return true;
-
     }
+
+    public int GetChannelNum() => SE_CHANNEL;
 
 }
 

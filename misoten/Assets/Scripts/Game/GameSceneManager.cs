@@ -25,7 +25,12 @@ public class GameSceneManager : MonoBehaviour
 	string[] FolderName = { "AlienSounds/", "DastBoxSounds/", "FlyingpanSounds/", "IceBoxSounds/", "MicrowaveSounds/", "MixerSounds/", "PotSounds/" };
 	// Use this for initialization
 	void Awake () {
-        SoundController.SoundLoad();
+
+        if (!SoundController.Loadflg)
+        {
+            SoundController.SoundLoad();
+        }
+
         Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Gameplay));
 	}
 }

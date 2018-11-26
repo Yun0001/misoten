@@ -30,6 +30,7 @@ TagManager:
   - DastBox
   - StageModel
   - GameUI
+  - MiniGame
   layers:
   - Default
   - TransparentFX

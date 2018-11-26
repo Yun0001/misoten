@@ -119,6 +119,15 @@ public class MicrowaveGage : MonoBehaviour
 
             case MicrowaveState.Success:
                 successWaitFrame++;
+                timerCount -= TIMER_COUNT / timer;
+                clock.transform.Rotate(new Vector3(0, 0, TIMER_COUNT / timer));
+                if (timerCount <= timerMin)
+                {
+                    status = MicrowaveState.Wait;
+                    StopStartSE();
+                    PlayChinSE();
+                    return true;
+                }
                 if (successWaitFrame >= SUCCESS_WAIT_FRAME)
                 {
                     status = MicrowaveState.Start;
@@ -137,6 +146,7 @@ public class MicrowaveGage : MonoBehaviour
     public void DecisionSuceesAreaPosition()
     {
         timer = (int)(timer / 1.25);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Grilled_During), 16);
         int arrayElement = rand.Next(5);
         while (arrayElement == oldRand)
         {
@@ -153,6 +163,7 @@ public class MicrowaveGage : MonoBehaviour
 
     public void ResetMicrowaveGage()
     {
+        timer = 600;
         status = MicrowaveState.Wait;
         waitCount = 0;
         timerCount = 0;

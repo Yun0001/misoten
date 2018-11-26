@@ -24,7 +24,7 @@ public class Flyingpan : KitchenwareBase
    /// </summary>
     protected override void InstanceMiniGameUI()
     {
-        miniGameUI = Instantiate(Resources.Load("Prefabs/GrilledGage/GrilledGage") as GameObject, transform.position, Quaternion.identity);
+        miniGameUI = Instantiate(Resources.Load("Prefabs/GrilledGage/GrilledMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
    }
 
@@ -89,34 +89,33 @@ public class Flyingpan : KitchenwareBase
             return;
         }
 
+
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Grilled_During), 15);
         switch (hitSuccessArea.tag)
         {
             case "GrilledSuccessAreaNormal1":
                 hitSuccessArea.transform.parent.gameObject.SetActive(false);
                 grilledGage_cs.ResetIsHit(0);
                 AddEatoyPoint(0, 1);
-                Sound.PlaySe(GameSceneManager.seKey[8]);
+             
                 break;
 
             case "GrilledSuccessAreaNormal2":
                 hitSuccessArea.transform.parent.gameObject.SetActive(false);
                 grilledGage_cs.ResetIsHit(1);
                 AddEatoyPoint(1, 2);
-                Sound.PlaySe(GameSceneManager.seKey[9]);
                 break;
 
             case "GrilledSuccessAreaHard":
                 hitSuccessArea.SetActive(false);
                 grilledGage_cs.ResetIsHit(2);
                 AddEatoyPoint(2, 2);
-                Sound.PlaySe(GameSceneManager.seKey[9]);
                 break;
 
             case "GrilledSuccessAreaHell":
                 hitSuccessArea.SetActive(false);
                 grilledGage_cs.ResetIsHit(3);
                 AddEatoyPoint(3, 3);
-                Sound.PlaySe(GameSceneManager.seKey[10]);
                 break;
         }
         chain++;

@@ -41,6 +41,9 @@ public class IceBox : MonoBehaviour {
     [SerializeField]
     private bool isDebugMode;
 
+    [SerializeField]
+    private int iceBoxID;
+
 	// Use this for initialization
 	void Awake ()
     {
@@ -84,6 +87,14 @@ public class IceBox : MonoBehaviour {
         if (status == Status.AccessOne)
         {
             MiniGameUI.GetComponent<IceBoxMiniGame>().Display();
+            if (iceBoxID == 0)
+            {
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Refrigeratoropen), 5);
+            }
+            else
+            {
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Refrigeratoropen), 6);
+            }
             transform.Find("icebox").GetComponent<iceboxAnimCtrl>().SetIsOpen(true);
         }
 
@@ -192,7 +203,20 @@ public class IceBox : MonoBehaviour {
         // まだアクセスしているプレイヤーがいるならミニゲーム開始
         if (status > Status.AccessOn)
         {
+            if (iceBoxID == 0)
+            {
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Refrigeratoropen), 5);
+            }
+            else
+            {
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Refrigeratoropen), 6);
+            }
+
             MiniGameUI.GetComponent<IceBoxMiniGame>().Display();
+        }
+        else
+        {
+            transform.Find("icebox").GetComponent<iceboxAnimCtrl>().SetIsOpen(false);
         }
     }
     public bool IsPutEatoy() => status == Status.Take;
@@ -215,4 +239,6 @@ public class IceBox : MonoBehaviour {
         int eatoyID = DecisionPutEatoyElement();
         putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID - 1]);
     }
+
+    public int GetIceBoxID() => iceBoxID; 
 }

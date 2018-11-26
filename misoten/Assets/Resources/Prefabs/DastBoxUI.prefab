@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 114526389605384996}
   m_Layer: 17
   m_Name: DastBoxUI
-  m_TagString: Untagged
+  m_TagString: MiniGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

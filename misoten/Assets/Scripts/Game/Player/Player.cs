@@ -425,7 +425,7 @@ public class Player : MonoBehaviour
         // 料理を持つ
         playerAccessPosssiblAnnounce_cs.HiddenSprite();
         haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetBool(false);
+        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
         // レンジOpenSE
         //Sound.PlaySe(GameSceneManager.seKey[16], 4);
     }
@@ -453,7 +453,7 @@ public class Player : MonoBehaviour
         GameObject eatoy = cookingGrilled_cs.UpdateGrilled();
         if (eatoy == null) return;
 
-        // 焼く調理終了の処理
+        // 焼く調理終了の処理 
         playerAccessPosssiblAnnounce_cs.HiddenSprite();
         haveInEatoy_cs.SetEatoy(eatoy);
         GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
@@ -471,7 +471,14 @@ public class Player : MonoBehaviour
 
             // 冷蔵庫の後処理
             GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
-            GetHitObj((int)hitObjName.IceBox).transform.Find("icebox").GetComponent<iceboxAnimCtrl>().SetIsOpen(false);
+            if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
+            {
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess), 5);
+            }
+            else
+            {
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess), 6);
+            }
         }
     }
 

@@ -182,6 +182,15 @@ public class PlayerInput : MonoBehaviour
     {
         if (InputDownButton(GamePad.Button.B))
         {
+            if (player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
+            {
+                    Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Icebreak),18);
+            }
+            else
+            {
+                    Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Icebreak),19);
+            }
+            
             player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
         }
     }

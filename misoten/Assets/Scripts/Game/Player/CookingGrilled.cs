@@ -21,10 +21,10 @@ public class CookingGrilled : MonoBehaviour {
         player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
 
         //着火SE
-        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
-        Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 0.1f, 14);
-        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
-        Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 0.3f, 12);
+       // Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
+      //  Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 0.1f, 14);
+     // //  Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
+//Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 0.3f, 12);
     }
 
     public GameObject UpdateGrilled()
