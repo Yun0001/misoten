@@ -364,35 +364,14 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198456108900754832, guid: 5d4ec6bab1990734cb8c76fb4b208056,
-        type: 2}
-      propertyPath: InitialModule.maxNumParticles
-      value: 500
+    - target: {fileID: 1551815232440856, guid: 5d4ec6bab1990734cb8c76fb4b208056, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198900768714126926, guid: 5d4ec6bab1990734cb8c76fb4b208056,
+    - target: {fileID: 114969901811414884, guid: 5d4ec6bab1990734cb8c76fb4b208056,
         type: 2}
-      propertyPath: randomSeed
-      value: 758976995
-      objectReference: {fileID: 0}
-    - target: {fileID: 198900768714126926, guid: 5d4ec6bab1990734cb8c76fb4b208056,
-        type: 2}
-      propertyPath: InitialModule.maxNumParticles
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 198456108900754832, guid: 5d4ec6bab1990734cb8c76fb4b208056,
-        type: 2}
-      propertyPath: randomSeed
-      value: 1428226117
-      objectReference: {fileID: 0}
-    - target: {fileID: 198456108900754832, guid: 5d4ec6bab1990734cb8c76fb4b208056,
-        type: 2}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 198900768714126926, guid: 5d4ec6bab1990734cb8c76fb4b208056,
-        type: 2}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 10
+      propertyPath: score
+      value: 3000000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d4ec6bab1990734cb8c76fb4b208056, type: 2}

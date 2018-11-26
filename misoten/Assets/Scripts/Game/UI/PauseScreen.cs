@@ -72,7 +72,7 @@ public class PauseScreen : MonoBehaviour
 			}
 
 			// ポーズ中の処理
-			if (pauseObj.GetComponent<Pause>().pausing && id[i])
+			else if (pauseObj.GetComponent<Pause>().pausing && id[i])
 			{
 				// セレクトカーソルの更新
 				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == 1.0f)
@@ -86,14 +86,26 @@ public class PauseScreen : MonoBehaviour
 					selectCursorObj.transform.localPosition = new Vector3(0.0f, -31.0f, 0.1f);
 				}
 
+				// ゲーム画面へ戻る
+				if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+				{
+					pauseObj.GetComponent<Pause>().pausing = false;
+
+					// 初期化処理
+					Init();
+				}
+
 				// 決定
 				if (GamePad.GetButtonDown(GamePad.Button.B, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
 				{
 					// ポーズ中の項目
 					switch(selectCursor)
 					{
-						case 0: pauseObj.GetComponent<Pause>().pausing = false; break;				// ゲーム画面へ戻る
-						case 1: SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); break;	// タイトルへ戻る
+						case 0: pauseObj.GetComponent<Pause>().pausing = false; break;	// ゲーム画面へ戻る
+						case 1: // タイトルへ戻る
+							Sound.StopBgm();
+							SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
+							break;	
 						default: Debug.LogError("だから言ったじゃないか！"); break;
 					}
 

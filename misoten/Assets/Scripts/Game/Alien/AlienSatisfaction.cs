@@ -41,6 +41,9 @@ public class AlienSatisfaction : MonoBehaviour
 	// 満足フラグ
 	private bool satisfactionFlag = false;
 
+	// アニメーションフラグ
+	private bool AnimationFlag = false;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -53,6 +56,9 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足フラグ(チップ取得時用)の初期化
 		satisfactionChipFlag = false;
+
+		// アニメーションフラグの初期化
+		AnimationFlag = false;
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
@@ -113,7 +119,7 @@ public class AlienSatisfaction : MonoBehaviour
 		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 1) { satisfactionBalloon[0].SetActive(true); }
 		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 2) { satisfactionBalloon[1].SetActive(true); }
 		if (3 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 15) { satisfactionBalloon[2].SetActive(true); }
-		if (16 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 10000) { satisfactionBalloon[3].SetActive(true); }
+		if (16 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 99999999) { satisfactionBalloon[3].SetActive(true); }
 	}
 
 	/// <summary>
