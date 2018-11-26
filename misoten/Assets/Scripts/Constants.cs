@@ -7,12 +7,13 @@ namespace Constants
     public static class Tutorial
     {
         public const float WAIT_TIME = 2.0f;
-        public const int NO_1 = 1;
-        public const int NO_2 = 2;
-        public const int NO_3 = 3;
-        public const int NO_4 = 4;
-        public const int NO_5 = 5;
-        public const int NO_6 = 6;
+        public const int NO_1 = 0;
+        public const int NO_2 = 1;
+        public const int NO_3 = 2;
+        public const int NO_4 = 3;
+        public const int NO_5 = 4;
+        public const int NO_6 = 5;
+        public const int ERROR = 6;
     }
 
     public static class MyColor

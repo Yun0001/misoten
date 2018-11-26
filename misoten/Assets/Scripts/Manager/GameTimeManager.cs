@@ -13,6 +13,8 @@ public class GameTimeManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] time;
 
+    [SerializeField] bool _tutorialFlg = false;
+
     private Sprite[] sprits;
     // Use this for initialization
     void Start () {
@@ -33,6 +35,9 @@ public class GameTimeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (_tutorialFlg) return;
+
         if (!isTimeUp)
         {
             GameTimer();
