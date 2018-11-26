@@ -35,8 +35,7 @@ public class ScoreCount : MonoBehaviour
     /// <param name="addscore">加算分スコア</param>
     public void AddScore(int addscore)
     {
-        score = Mathf.Min(score + addscore, 999999);
-
+        score = Mathf.Min(score + addscore, 99999999);
         UpdateSprite();
     }
     /// <summary>
