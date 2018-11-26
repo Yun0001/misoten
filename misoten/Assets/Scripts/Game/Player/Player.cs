@@ -238,6 +238,7 @@ public class Player : MonoBehaviour
             // アクセス可能なオブジェクトが見つかった！！
             if (playerAccessController_cs.IsAccessPossible(Name))
             {
+                playerAccessPosssiblAnnounce_cs.HiddenSprite();
                 StopMove(); // 移動値をリセット
                 switch (Name)
                 {
