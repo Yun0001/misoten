@@ -42,6 +42,9 @@ public class Result : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
+	private bool seFlag = true;
+	private bool seFlag2 = true;
+
 	// オブジェクト描画用フラグ
 	private bool[] objDrawflag = new bool[(int)EObjectType.MAX];
 
@@ -59,7 +62,11 @@ public class Result : MonoBehaviour
 		for (int i = 0; i < (int)EObjectType.MAX; i++) { obj[0].SetActive(false); objDrawflag[i] = false; timeAdd[i] = 0.0f; }
 		objDrawflag[0] = true;
 
+		// リザルトから始めた時に呼ばれる
+		if (!SoundController.Loadflg) { SoundController.SoundLoad(); }
+
 		Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Result));
+		seFlag = seFlag2 = true;
 	}
 	
 	/// <summary>
@@ -70,6 +77,7 @@ public class Result : MonoBehaviour
 		// メニューの移動が終了すると、オブジェクトをアクティブ化
 		if (MenuMove.GetResultAlienFlag())
 		{
+			if (seFlag) { seFlag = false; Sound.PlaySe(SoundController.GetResultSEName(SoundController.ResultSE.drumroll), 5); }
 			for (int i = 0; i < (int)EObjectType.MAX; i++)
 			{
 				if (objDrawflag[i])
@@ -78,6 +86,9 @@ public class Result : MonoBehaviour
 					{
 						if (timeAdd[i] >= time[i])
 						{
+							if (i <= 1) { Sound.PlaySe(SoundController.GetResultSEName(SoundController.ResultSE.register), 4); }
+							if (i == 2) { Sound.PlaySe(SoundController.GetResultSEName(SoundController.ResultSE.applause), 0); }
+
 							obj[i].SetActive(true);
 							objDrawflag[i] = !objDrawflag[i];
 							objDrawflag[i + 1] = !objDrawflag[i + 1];
@@ -86,11 +97,15 @@ public class Result : MonoBehaviour
 					}
 					else
 					{
-						if (ScoreCount.GetScore() >= 900000)
+						if (ScoreCount.GetScore() >= 0)
 						{
 							if (obj[2].activeSelf)
 							{
-								if (timeAdd[3] >= time[3]) { obj[3].SetActive(true); objDrawflag[3] = !objDrawflag[3]; objDrawflag[4] = !objDrawflag[4]; }
+								if (timeAdd[3] >= time[3])
+								{
+									if (seFlag2) { seFlag2 = false; Sound.PlaySe(SoundController.GetResultSEName(SoundController.ResultSE.cracker_repeated), 0); }
+									obj[3].SetActive(true); objDrawflag[3] = !objDrawflag[3]; objDrawflag[4] = !objDrawflag[4];
+								}
 								else { timeAdd[3] += Time.deltaTime; }
 							}
 						}
