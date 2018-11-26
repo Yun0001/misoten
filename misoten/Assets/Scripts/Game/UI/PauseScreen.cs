@@ -32,7 +32,7 @@ public class PauseScreen : MonoBehaviour
 	// オブジェクト取得用
 	private GameObject childObj;
 
-	// ポーズを開いたプレイヤーのみ操作出来なくする
+	// ポーズを開いたプレイヤーのみ操作可能
 	private bool[] id = new bool[4];
 
 	// 選択時のカーソル
@@ -46,7 +46,7 @@ public class PauseScreen : MonoBehaviour
 	void Start()
 	{
 		// 指定オブジェクト取得
-		childObj = transform.FindChild("Canvas").gameObject;
+		childObj = transform.Find("Canvas").gameObject;
 
 		// 初期化処理
 		Init();
@@ -64,7 +64,7 @@ public class PauseScreen : MonoBehaviour
 			if (!pauseObj.GetComponent<Pause>().pausing
 				&& GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
 			{
-				// ポーズ「ON」、ポーズを開いたプレイヤーのみ操作出来なくする
+				// ポーズ「ON」、ポーズを開いたプレイヤーのみ操作可能
 				pauseObj.GetComponent<Pause>().pausing = id[i] = true;
 
 				// ポーズオブジェクトを非アクティブ化に設定
@@ -118,7 +118,7 @@ public class PauseScreen : MonoBehaviour
 		// 初期位置保存
 		selectCursorObj.transform.localPosition = new Vector3(0.0f, 30.0f, 0.1f);
 
-		// ポーズを開いたプレイヤーのみ操作出来なくするの初期化
+		// ポーズを開いたプレイヤーのみ操作可能の初期化
 		for (int i = 0; i < playerObj.Length; i++) { id[i] = false; }
 	}
 }
