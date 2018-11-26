@@ -175,6 +175,7 @@ MonoBehaviour:
   Start2: {fileID: 1561171006062820}
   Start3: {fileID: 1419002251854568}
   GameStart: {fileID: 1044816839970624}
+  pauseObj: {fileID: 0}
 --- !u!212 &212087442200377682
 SpriteRenderer:
   m_ObjectHideFlags: 1

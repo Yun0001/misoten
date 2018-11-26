@@ -14,6 +14,8 @@ public class StartSignal : MonoBehaviour {
     private GameObject Start3;
     [SerializeField]
     private GameObject GameStart;
+	[SerializeField]
+	private GameObject pauseObj;
     
 
 	// Use this for initialization
@@ -25,6 +27,7 @@ public class StartSignal : MonoBehaviour {
 
         Sound.LoadSe("StartCount", "GamePlay/Countdown");
         Sound.LoadSe("Start", "GamePlay/Endannouncement");
+		pauseObj.GetComponent<Pause>().pausing = true;
 	}
 	
 	// Update is called once per frame
@@ -64,7 +67,8 @@ public class StartSignal : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         GameStart.SetActive(false);
-    }
+		pauseObj.GetComponent<Pause>().pausing = false;
+	}
 
 
 }
