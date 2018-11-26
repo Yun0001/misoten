@@ -24,7 +24,7 @@ public class GameTimeManager : MonoBehaviour {
 
         spritsInner = Resources.LoadAll<Sprite>("Textures/Time/Time_UI_Inner");
         spritsOuter = Resources.LoadAll<Sprite>("Textures/Time/Time_UI_Outer");
-        countTime = 18;
+        countTime = 180;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {

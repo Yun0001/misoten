@@ -32,9 +32,11 @@ public class MixerMiniGame : MonoBehaviour {
 
 
 
-    void Init()
+    public void Init()
     {
         power = 0;
+        rotationFlg = false;
+        mixerArrow.GetComponent<MixerArrow>().Init();
     }
 
     // Update is called once per frame

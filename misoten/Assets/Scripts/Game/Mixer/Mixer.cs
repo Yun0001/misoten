@@ -66,6 +66,13 @@ public class Mixer : KitchenwareBase {
     {
         switch (status)
         {
+
+            case Status.Stand:
+                if (transform.Find("mixer").GetComponent<mixerAnimCtrl>().GetIsOpen())
+                {
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                }
+                break;
             case Status.AccessTwo:
 
                 if (accessNum == (int)Status.AccessTwo)
@@ -101,11 +108,12 @@ public class Mixer : KitchenwareBase {
                 break;
             case Status.End:
                 endFrame++;
-                if (endFrame < 5)
+                if (endFrame > 5)
                 {
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
                     status = Status.Stand;
                     endFrame = 0;
+                    InitMiniGameUI();
                 }
                 break;
         }
@@ -125,7 +133,9 @@ public class Mixer : KitchenwareBase {
         isEatoyPut = false;
         status = Status.Stand;
         endFrame = 0;
-
+        accessNum = 0;
+        animCount = 0;
+        miniGameUI.GetComponent<MixerMiniGame>().Init();
     }
 
     protected override void ResetMiniGameUI()
@@ -135,6 +145,8 @@ public class Mixer : KitchenwareBase {
         isEatoyPut = false;
         status = Status.Stand;
        endFrame = 0;
+        accessNum = 0;
+        animCount = 0;
     }
 
     protected override GameObject SetCuisine()
@@ -149,10 +161,13 @@ public class Mixer : KitchenwareBase {
             case Status.Play:
 
                 time++;
+                // 矢印UIとスティックの回転方向を合わせる
                 if (miniGameUI.GetComponent<MixerMiniGame>().GetRotation())
                 {
                     stickObj.GetComponent<Animator>().Play("lSpin");
                 }
+
+                // 一定時間になるとイートイを渡す
                 if (time >= timeBorder)
                 {
                     status = Status.Put;
@@ -170,7 +185,7 @@ public class Mixer : KitchenwareBase {
                         // statusをEndに変更
                         status = Status.End;
                     }
-                    else if (animCount >= openFrame / 2)
+                    else if (animCount >= openFrame / 3)
                     {
                         // イートイを出す
                         if (!isEatoyPut)
@@ -192,11 +207,6 @@ public class Mixer : KitchenwareBase {
                             Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Mixerend), 7);
                         }
                     }                
-                    
-                }
-                else
-                {
-                  
                 }
 
                 break;
@@ -209,6 +219,8 @@ public class Mixer : KitchenwareBase {
     
         return false;
     }
+
+    
 
     public override void CookingInterruption()
     {
