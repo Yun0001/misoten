@@ -154,4 +154,6 @@ public class WhiteIO : MonoBehaviour {
         isRsWhiteOut = true;
     }
 
+    public bool GetRsWhiteOut() => isRsWhiteOut;
+
 }

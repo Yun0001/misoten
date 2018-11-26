@@ -73,23 +73,25 @@ public class TitleController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (!isStartingGame)
+        if (!_canvasWIO.GetComponent<WhiteIO>().GetRsWhiteOut()) {
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                startTime = Time.timeSinceLevelLoad;
-            }
+                if (!isStartingGame)
+                {
+                    startTime = Time.timeSinceLevelLoad;
+                }
 
-            isStartingGame = true;
-        }
-        else if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
-        {
-            if (!isStartingGame)
+                isStartingGame = true;
+            }
+            else if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
             {
-                startTime = Time.timeSinceLevelLoad;
-            }
+                if (!isStartingGame)
+                {
+                    startTime = Time.timeSinceLevelLoad;
+                }
 
-            isStartingGame = true;
+                isStartingGame = true;
+            }
         }
 
         // ゲームスタートじゃない場合、以下はスルー

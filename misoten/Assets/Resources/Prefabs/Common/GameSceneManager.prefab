@@ -303,8 +303,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4246745046438948}
-  - component: {fileID: 65491820628116440}
-  - component: {fileID: 65246833676496094}
   m_Layer: 0
   m_Name: DustBoxes
   m_TagString: Untagged
@@ -2069,6 +2067,7 @@ GameObject:
   - component: {fileID: 4538774773285586}
   - component: {fileID: 114286190060292630}
   - component: {fileID: 114094513359293050}
+  - component: {fileID: 114423454885423296}
   m_Layer: 0
   m_Name: GameSceneManager
   m_TagString: Untagged
@@ -5579,8 +5578,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4042357589267072}
-  - component: {fileID: 114885557071371328}
   - component: {fileID: 136054404806347908}
+  - component: {fileID: 114647042967045618}
   m_Layer: 0
   m_Name: microwave1
   m_TagString: Microwave
@@ -7486,7 +7485,7 @@ Transform:
   m_GameObject: {fileID: 1793426851517810}
   m_LocalRotation: {x: 0, y: 0.17364816, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 2.6, y: 0.77, z: -4.45}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4818959912401882}
   m_Father: {fileID: 4820387100678454}
@@ -22596,18 +22595,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: -2.5}
---- !u!65 &65246833676496094
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1053097568383744}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 1, z: 1}
-  m_Center: {x: -4.3, y: 0, z: -4.1}
 --- !u!65 &65256617247840426
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -22644,18 +22631,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1271029, y: 1, z: 2.292036}
   m_Center: {x: -0.0098191, y: 0, z: -0.04123497}
---- !u!65 &65491820628116440
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1053097568383744}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 1, z: 1}
-  m_Center: {x: 4.3, y: 1, z: -4.1}
 --- !u!65 &65568817621772962
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -23000,6 +22975,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114029489709637688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23016,6 +22992,7 @@ MonoBehaviour:
   speed: 4
   CateringCoefficient: 0.5
   adjustment: 4
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114050476567028904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23113,6 +23090,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114094513359293050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23426,6 +23404,7 @@ MonoBehaviour:
   speed: 4
   CateringCoefficient: 0.5
   adjustment: 25
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114299791775947954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23453,6 +23432,7 @@ MonoBehaviour:
   speed: 4
   CateringCoefficient: 0.5
   adjustment: 4
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114330503888718726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23464,7 +23444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 1
+  isDebugMode: 0
   isEnd: 0
   canvasCamera: {fileID: 0}
 --- !u!114 &114331168040131626
@@ -23570,6 +23550,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114407706148517508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23609,6 +23590,17 @@ MonoBehaviour:
   isServing: 0
   isWalking: 0
   isPause: 0
+--- !u!114 &114423454885423296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1324766904366932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38be4de4326491446ac2c24375de602d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114426244635112964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23823,6 +23815,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb12da61c974a0d46a0e40212d4b266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114647042967045618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793426851517810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b489b22bcbc55d46ad3b6f02239be3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDebugMode: 0
+  isEnd: 0
+  canvasCamera: {fileID: 0}
+  microwaveGage_cs: {fileID: 0}
+  basePoint: 0
 --- !u!114 &114686881714534328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24012,6 +24020,7 @@ MonoBehaviour:
   speed: 4
   CateringCoefficient: 0.5
   adjustment: 25
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114789858739947568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24155,22 +24164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d97a11b74c3174c89e2c5048f5cd05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114885557071371328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1793426851517810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bcd218fc3bee534984cdc749e5ac99e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDebugMode: 0
-  isEnd: 0
-  canvasCamera: {fileID: 0}
-  microwaveGage_cs: {fileID: 0}
-  basePoint: 0
 --- !u!114 &114891590281184612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24266,6 +24259,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114941990405956836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83407,8 +83401,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 958390675
+  m_SortingLayer: 1
   m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -83495,8 +83489,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 958390675
+  m_SortingLayer: 1
   m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -83627,8 +83621,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 958390675
+  m_SortingLayer: 1
   m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -83671,8 +83665,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 958390675
+  m_SortingLayer: 1
   m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
