@@ -84,7 +84,15 @@ public class GameTimeManager : MonoBehaviour {
             Sound.PlaySe(GameSceneManager.seKey[25], 10);
             SoundController.StopAllSE();
             isTimeUp = true;
-           // SpeedUpText.GetComponent<Text>().text = "Time Up" ;
+
+            GameObject[] minigame = GameObject.FindGameObjectsWithTag("MiniGame");
+            foreach (var ui in minigame)
+            {
+                if (ui.activeInHierarchy)
+                {
+                    ui.SetActive(false);
+                }
+            }
         }
     }
 
