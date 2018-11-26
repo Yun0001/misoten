@@ -207,13 +207,16 @@ public class Player : MonoBehaviour
     /// </summary>
     public void OfferCuisine()
     {
-        // エイリアンのスクリプトを取得して料理を渡す
-        haveInEatoy_cs.SetHaveInEatoyPosition(GetHitObj((int)hitObjName.Alien).transform.position);
-        GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
-        GetComponent<PlayerAnimCtrl>().SetServing(false);
+		if (!AlienStatus.GetCounterStatusChangeFlag(GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT))
+		{
+			// エイリアンのスクリプトを取得して料理を渡す
+			haveInEatoy_cs.SetHaveInEatoyPosition(GetHitObj((int)hitObjName.Alien).transform.position);
+			GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
+			GetComponent<PlayerAnimCtrl>().SetServing(false);
 
-        //haveInEatoy_cs.RevocationHaveInEatoy();
-        SetPlayerStatus(PlayerStatus.Normal);
+			//haveInEatoy_cs.RevocationHaveInEatoy();
+			SetPlayerStatus(PlayerStatus.Normal);
+		}
     }
 
     public GameObject GetHitObj(int HitObjID)
@@ -223,7 +226,7 @@ public class Player : MonoBehaviour
         return hitObj[HitObjID].gameObject;
     }
 
-    public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
+	public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
     /// <summary>
     /// Bボタン入力

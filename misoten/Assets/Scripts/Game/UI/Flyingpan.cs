@@ -14,8 +14,11 @@ public class Flyingpan : KitchenwareBase
     private int basePoint;
     private int chain;
 
+	static public bool effectFlag = false;
+
     void Awake () {
-        InstanceMiniGameUI();
+		effectFlag = false;
+		InstanceMiniGameUI();
         grilledGage_cs = miniGameUI.GetComponent<GrilledGage>();
     }
 	
@@ -82,10 +85,11 @@ public class Flyingpan : KitchenwareBase
 
     public void DecisionTimingPointCollision()
     {
-        GameObject hitSuccessArea = grilledGage_cs.DecisionIsHit();
+			GameObject hitSuccessArea = grilledGage_cs.DecisionIsHit();
         if (hitSuccessArea == null)
         {
-            ResetChain();
+			effectFlag = false;
+			ResetChain();
             return;
         }
 
@@ -119,7 +123,8 @@ public class Flyingpan : KitchenwareBase
                 break;
         }
         chain++;
-    }
+		effectFlag = true;
+	}
 
     protected override int CalcEatoyPoint()
     {

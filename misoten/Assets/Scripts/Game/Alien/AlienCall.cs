@@ -248,7 +248,7 @@ public class AlienCall : MonoBehaviour
 
 				// エイリアン生成
 				counterDesignatedObj[GetSeatAddId()] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
-				//counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
+				counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
 
 				// 待機状態終了
 				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);

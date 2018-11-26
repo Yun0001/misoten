@@ -113,7 +113,7 @@ public class AlienSatisfaction : MonoBehaviour
 		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 1) { satisfactionBalloon[0].SetActive(true); }
 		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 2) { satisfactionBalloon[1].SetActive(true); }
 		if (3 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 15) { satisfactionBalloon[2].SetActive(true); }
-		if (16 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 40) { satisfactionBalloon[3].SetActive(true); }
+		if (16 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 10000) { satisfactionBalloon[3].SetActive(true); }
 	}
 
 	/// <summary>

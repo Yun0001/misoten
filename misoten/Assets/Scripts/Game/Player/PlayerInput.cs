@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     private int stickframe = 0;
 
-    [SerializeField]
+	[SerializeField]
     private float Angle;
 
     [SerializeField]
@@ -25,8 +25,8 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     private int rotationNum = 0;
 
-    // Use this for initialization
-    public void Init()
+	// Use this for initialization
+	public void Init()
     {
         player_cs = GetComponent<Player>();
         playerMove_cs = GetComponent<PlayerMove>();
@@ -219,9 +219,10 @@ public class PlayerInput : MonoBehaviour
 
     private bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
 
-    
 
-    private void SetInputAxisName(string x, string y)
+	public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
+
+	private void SetInputAxisName(string x, string y)
     {
         inputXAxisName = x;
         inputYAxisName = y;

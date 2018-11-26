@@ -58,6 +58,8 @@ public class Result : MonoBehaviour
 		// 時間更新、オブジェクト描画用フラグの初期化
 		for (int i = 0; i < (int)EObjectType.MAX; i++) { obj[0].SetActive(false); objDrawflag[i] = false; timeAdd[i] = 0.0f; }
 		objDrawflag[0] = true;
+
+		Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Result));
 	}
 	
 	/// <summary>
@@ -84,7 +86,7 @@ public class Result : MonoBehaviour
 					}
 					else
 					{
-						if (ScoreCount.GetScore() >= 200)
+						if (ScoreCount.GetScore() >= 900000)
 						{
 							if (obj[2].activeSelf)
 							{
