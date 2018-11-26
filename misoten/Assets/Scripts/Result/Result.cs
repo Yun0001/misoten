@@ -97,7 +97,7 @@ public class Result : MonoBehaviour
 					}
 					else
 					{
-						if (ScoreCount.GetScore() >= 0)
+						if (ScoreCount.GetScore() >= 3000000)
 						{
 							if (obj[2].activeSelf)
 							{
@@ -122,7 +122,7 @@ public class Result : MonoBehaviour
 						{
 							if (obj[i - 1].activeSelf || obj[i].activeSelf)
 							{
-								if (timeAdd[i] >= time[i]) { SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
+								if (timeAdd[i] >= time[i]) { Sound.StopBgm(); SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
 								else { timeAdd[i] += Time.deltaTime; }
 							}
 						}
