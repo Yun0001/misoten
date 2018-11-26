@@ -15,18 +15,22 @@ public class GameTimeManager : MonoBehaviour {
 
     [SerializeField] bool _tutorialFlg = false;
 
-    private Sprite[] sprits;
+    private Sprite[] spritsInner;
+    private Sprite[] spritsOuter;
     // Use this for initialization
     void Start () {
 
         isTimeUp = false;
 
-        sprits = Resources.LoadAll<Sprite>("Textures/UI_Digital2");
-        countTime = 180;
+        spritsInner = Resources.LoadAll<Sprite>("Textures/Time/Time_UI_Inner");
+        spritsOuter = Resources.LoadAll<Sprite>("Textures/Time/Time_UI_Outer");
+        countTime = 18;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {
-            time[i].GetComponent<SpriteRenderer>().sprite = sprits[suu % 10];
+            time[i].GetComponent<SpriteRenderer>().sprite = spritsInner[suu % 10];
+            time[i].GetComponent<SpriteRenderer>().color = new Color(0.9f, 0.4f, 0.7f, 1.0f);
+            time[i+3].GetComponent<SpriteRenderer>().sprite = spritsOuter[suu % 10];
             suu = suu / 10;
         }
 
@@ -57,6 +61,14 @@ public class GameTimeManager : MonoBehaviour {
             oneSecond = (int)Mathf.Floor(countTime);
             Sound.SetVolumeSe(GameSceneManager.seKey[24], 0.5f, 10);
             Sound.PlaySe(GameSceneManager.seKey[24], 10);
+            // 赤い色に変更
+            if (countTime < 11)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    time[i].GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+                }
+            }
         }
     }
 
@@ -70,7 +82,7 @@ public class GameTimeManager : MonoBehaviour {
             countTime = 0;
             Sound.SetVolumeSe(GameSceneManager.seKey[25], 0.5f, 10);
             Sound.PlaySe(GameSceneManager.seKey[25], 10);
-            Sound.StopBgm();
+            SoundController.StopAllSE();
             isTimeUp = true;
            // SpeedUpText.GetComponent<Text>().text = "Time Up" ;
         }
@@ -89,12 +101,10 @@ public class GameTimeManager : MonoBehaviour {
         for (int i = 0; i < 3; i++)
         {
             rement = suu % 10;
-            if (i == 2 && countTime < 100)
-            {
-                time[i].GetComponent<SpriteRenderer>().sprite = null;
-                break;
-            }
-            time[i].GetComponent<SpriteRenderer>().sprite = sprits[rement];
+            time[i].GetComponent<SpriteRenderer>().sprite = spritsInner[rement];
+
+
+            time[i+3].GetComponent<SpriteRenderer>().sprite = spritsOuter[rement];
             if (rement == 0)
             {
                 break;
