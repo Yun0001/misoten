@@ -50,7 +50,10 @@ public class TitleController : MonoBehaviour {
         {
             SoundController.SoundLoad();
         }
-        Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Title));
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.clip = _clip;
+
+        _audioSource.Play();
 
         _canvasWIO = GameObject.Find("WIO");
 

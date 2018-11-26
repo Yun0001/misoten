@@ -51,6 +51,9 @@ public class Mixer : KitchenwareBase {
 
     private int endFrame;
 
+    [SerializeField]
+    private GameObject stickObj;
+
 
     // Use this for initialization
     void Awake () {
@@ -80,6 +83,8 @@ public class Mixer : KitchenwareBase {
                 {
                     InitMiniGameUI();
                     status = Status.Play;
+                    stickObj.SetActive(true);
+                    stickObj.GetComponent<Animator>().Play("rSpin");
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetBool(true);
                     miniGameUI.SetActive(true);
@@ -98,6 +103,7 @@ public class Mixer : KitchenwareBase {
                 endFrame++;
                 if (endFrame < 5)
                 {
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
                     status = Status.Stand;
                     endFrame = 0;
                 }
@@ -143,6 +149,10 @@ public class Mixer : KitchenwareBase {
             case Status.Play:
 
                 time++;
+                if (miniGameUI.GetComponent<MixerMiniGame>().GetRotation())
+                {
+                    stickObj.GetComponent<Animator>().Play("lSpin");
+                }
                 if (time >= timeBorder)
                 {
                     status = Status.Put;
@@ -165,7 +175,10 @@ public class Mixer : KitchenwareBase {
                         // イートイを出す
                         if (!isEatoyPut)
                         {
+                            // ミニゲームUI非表示
                             miniGameUI.SetActive(false);
+                            // スティック非表示
+                            stickObj.SetActive(false);
 
                             // イートイを生成し、最後にアクセスしたプレイヤーに渡す
                             lastAccessPlayer.GetComponent<PlayerHaveInEatoy>().SetEatoy(
@@ -183,12 +196,13 @@ public class Mixer : KitchenwareBase {
                 }
                 else
                 {
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                  
                 }
 
                 break;
 
             case Status.End:
+
                 // サイズを初期状態に戻す
                 return true;
         }

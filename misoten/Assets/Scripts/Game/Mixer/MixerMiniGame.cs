@@ -57,6 +57,7 @@ public class MixerMiniGame : MonoBehaviour {
     {
         rotationFlg = true;
         mixerArrow.GetComponent<MixerArrow>().ReverseDirection();
+
     }
 
 
