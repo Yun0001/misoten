@@ -4,17 +4,6 @@ using UnityEngine;
 using GamepadInput;
 using System.Linq;
 
-/*
- * エイリアンにイートイを渡した時のスコア獲得演算式
- * イートイポイント＊エイリアン満足度＝獲得スコア
- * エイリアン満足度
- * ロウ１
- * ミドル２
- * ハイ５
- * オーバー１５
- * */
-
-
 
 public class Player : MonoBehaviour
 {
@@ -80,7 +69,6 @@ public class Player : MonoBehaviour
         playerMove_cs.Init();
         dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
         dastBoxGage.SetActive(false);
-        //transform.Find("Line").gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -390,6 +378,7 @@ public class Player : MonoBehaviour
                 if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
                 {
                     playerAccessPosssiblAnnounce_cs.HiddenSprite();
+                    playerInput_cs.InputMixer();
                     SetPlayerStatus(PlayerStatus.Normal);
                 }
                 break;

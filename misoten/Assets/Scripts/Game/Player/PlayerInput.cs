@@ -241,6 +241,13 @@ public class PlayerInput : MonoBehaviour
         }
         playerControllerNumber = index;
     }
+
+    public void InitMixerVariable()
+    {
+        rotationNum = 0;
+        AngleSum = 0;
+        AngleSum = 0;
+    }
 }
 
 
