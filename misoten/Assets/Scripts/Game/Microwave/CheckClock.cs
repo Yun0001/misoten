@@ -11,13 +11,13 @@ public class CheckClock : MonoBehaviour {
 
     private MicrowaveGage microwaveGage_cs;
 
-    private Microwave microwave_cs;
+    private CookWareMw microwave_cs;
 
     private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 2).ToArray();
 
     private void Awake()
     {
-        microwave_cs= GameObject.Find("microwave1").GetComponent<Microwave>();
+        microwave_cs= GameObject.Find("microwave1").GetComponent<CookWareMw>();
         microwaveGage_cs = MicrowaveGage.GetComponent<MicrowaveGage>();
     }
 

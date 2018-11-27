@@ -284,6 +284,27 @@ Camera:
   m_PrefabParentObject: {fileID: 20968258506782094, guid: 50292cb25f53b5042938c15b47a45370,
     type: 2}
   m_PrefabInternal: {fileID: 430315091}
+--- !u!1 &1326000154 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1793426851517810, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1797644646}
+--- !u!114 &1326000157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1326000154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b489b22bcbc55d46ad3b6f02239be3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDebugMode: 0
+  isEnd: 0
+  canvasCamera: {fileID: 24543913}
+  microwaveGage_cs: {fileID: 0}
+  basePoint: 1
 --- !u!1 &1573959172 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1102859739124382, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
@@ -450,6 +471,19 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1299872908}
-    m_RemovedComponents: []
+    - target: {fileID: 1201346819079334, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1745267075972698, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121196433524830, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114885557071371328, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
