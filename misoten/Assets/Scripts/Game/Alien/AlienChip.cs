@@ -112,7 +112,7 @@ public class AlienChip : MonoBehaviour
 						break;
 					case EChipPattern.HANDOVER:	// チップを直接渡す
 						// 満足状態の時
-						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 						{
 							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
 							SetCuisineCame(false);

@@ -1996,7 +1996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1841293645242472
 GameObject:
   m_ObjectHideFlags: 0
@@ -5247,6 +5247,7 @@ MonoBehaviour:
   - {fileID: 1337517475019718}
   - {fileID: 1837232648240584}
   - {fileID: 1551815232440856}
+  DevelopmentTeamScoreBoardObj: {fileID: 1143692854041592}
   time:
   - 5
   - 1
@@ -5528,7 +5529,7 @@ MonoBehaviour:
   - {fileID: 1786564156131316}
   - {fileID: 1443692905979802}
   - {fileID: 1456124340617296}
-  score: 0
+  score: 3000000
 --- !u!120 &120138738252196704
 LineRenderer:
   m_ObjectHideFlags: 1
