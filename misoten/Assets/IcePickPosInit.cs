@@ -5,16 +5,20 @@ using UnityEngine;
 public class IcePickPosInit : MonoBehaviour {
 
     private Vector3 _position;
+    private IceBoxMiniGame _iceBoxMiniGame;
 
     // Use this for initialization
     void Start()
     {
-        _position = this.transform.parent.gameObject.transform.position;
-        this.transform.position = _position;
+        _position = this.transform.localPosition;
+        _iceBoxMiniGame = GetComponent<IceBoxMiniGame>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+        //_iceBoxMiniGame.SetInitPos(_position);
+
+    }
+
 }
