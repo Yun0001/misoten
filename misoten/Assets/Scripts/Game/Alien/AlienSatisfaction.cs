@@ -78,6 +78,9 @@ public class AlienSatisfaction : MonoBehaviour
 				// 満足を指定ない時
 				if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD))
 				{
+					// イートイオブジェクトを削除
+					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+
 					// 満足時のSE
 					Sound.PlaySe(GameSceneManager.seKey[4]);
 

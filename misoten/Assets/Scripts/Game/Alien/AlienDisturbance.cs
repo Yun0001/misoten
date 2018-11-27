@@ -105,31 +105,35 @@ public class AlienDisturbance : MonoBehaviour
 		switch (mood[setId])
 		{
 			case EAlienMood.NORMAL: // 通常状態
-
-				// 毎フレームの時間を加算
-				latencyAdd[setId] -= Time.deltaTime;
-
-				// 残存時間の可視化準備完了
-				if (textMeshFlag) { TextMeshBalloon.SetActive(true); textMeshFlag = !textMeshFlag; }
-
-				// 残存時間更新
-				timeFont = (int)latencyAdd[setId];
-
-				// 残存時間が「-1」以下になると入る
-				if(timeFont <= -1)
+				if (!GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
+					&& !GetComponent<AlienClaim>().GetIsClaim())
 				{
-					// イートイオブジェクトを削除
-					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+					// 毎フレームの時間を加算
+					latencyAdd[setId] -= Time.deltaTime;
 
-					// テキストメッシュが消える
-					TextMeshBalloon.SetActive(false);
+					// 残存時間の可視化準備完了
+					if (textMeshFlag) { TextMeshBalloon.SetActive(true); textMeshFlag = !textMeshFlag; }
 
-					// 怒り状態になる
-					mood[setId] = EAlienMood.ANGER;
+					// 残存時間更新
+					timeFont = (int)latencyAdd[setId];
+
+					// 食べる状態ではない時
+					if (!AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
+					{
+						// 残存時間が「-1」以下になると入る
+						if (timeFont <= -1)
+						{
+							// テキストメッシュが消える
+							TextMeshBalloon.SetActive(false);
+
+							// 怒り状態になる
+							mood[setId] = EAlienMood.ANGER;
+						}
+					}
 				}
 
 				// クレームor満足状態になった時
-				if(GetComponent<AlienClaim>().GetIsClaim() || GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
+				if (GetComponent<AlienClaim>().GetIsClaim() || GetComponent<AlienSatisfaction>().GetSatisfactionFlag())
 				{
 					// テキストメッシュが消える
 					TextMeshBalloon.SetActive(false);
@@ -137,9 +141,11 @@ public class AlienDisturbance : MonoBehaviour
 				break;
 			case EAlienMood.ANGER:  // 怒り状態
 
-				//// エイリアンがクレームをする
-				//GetComponent<AlienClaim>().SetIsClaim(true);
-				//GetComponent<AlienOrder>().SetStatusMoveFlag(true);
+				// イートイオブジェクトを削除
+				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+
+				// BoxColliderを「OFF」にする
+				GetComponent<BoxCollider>().enabled = false;
 
 				// 退店時の移動開始
 				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);

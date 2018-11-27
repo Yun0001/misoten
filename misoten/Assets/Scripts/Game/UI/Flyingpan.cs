@@ -20,7 +20,6 @@ public class Flyingpan : KitchenwareBase
     private GameObject missText;
 
     void Awake () {
-		effectFlag = false;
 		InstanceMiniGameUI();
         grilledGage_cs = miniGameUI.GetComponent<GrilledGage>();
     }
@@ -30,7 +29,7 @@ public class Flyingpan : KitchenwareBase
    /// </summary>
     protected override void InstanceMiniGameUI()
     {
-        miniGameUI = Instantiate(Resources.Load("Prefabs/GrilledGage/GrilledMiniGame") as GameObject, transform.position, Quaternion.identity);
+		miniGameUI = Instantiate(Resources.Load("Prefabs/GrilledGage/GrilledMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
    }
 
@@ -42,8 +41,9 @@ public class Flyingpan : KitchenwareBase
         miniGameUI.SetActive(true);
         grilledGage_cs.Init(1);
         basePoint = 1;
+		effectFlag = false;
 
-        Vector3 gPos = transform.position;
+		Vector3 gPos = transform.position;
         gPos.z -= 1f;
         miniGameUI.transform.position = gPos;
     }
