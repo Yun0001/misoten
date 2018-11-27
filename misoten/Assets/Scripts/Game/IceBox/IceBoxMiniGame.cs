@@ -31,15 +31,14 @@ public class IceBoxMiniGame : MonoBehaviour {
     [SerializeField]
     private ParticleSystem iceFragment;
 
+    [SerializeField]
+    private GameObject UIButton;
+
   
 
     bool moveflg =false;
     int moveframe=0;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
 
     public void Init()
     {
@@ -49,7 +48,7 @@ public class IceBoxMiniGame : MonoBehaviour {
         HiddenSprite();
         moveflg = false;
         moveframe = 0;
-      
+        UIButton.SetActive(false);
     }
 
     public void Display()
@@ -58,6 +57,7 @@ public class IceBoxMiniGame : MonoBehaviour {
         icePickImage.SetActive(true);
         icePickImage.gameObject.transform.position = transform.position + icePickInitPosition;
         isStart = true;
+        UIButton.SetActive(true);
     }
 	// Update is called once per frame
 	void Update ()

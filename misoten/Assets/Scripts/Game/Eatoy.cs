@@ -76,4 +76,9 @@ public class Eatoy : MonoBehaviour
             eatoyColor == EEatoyColor.Purple ||
             eatoyColor == EEatoyColor.Green;
     }
+
+    public void HiddenSprite()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
 }

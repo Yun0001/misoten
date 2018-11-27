@@ -9,6 +9,9 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
     [SerializeField]
     private GameObject announceUI;
 
+    [SerializeField]
+    private GameObject buttonUI;
+
 
     private void Awake()
     {
@@ -19,9 +22,14 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
     public void SetSprite(int spriteID)
     {
         announceUI.GetComponent<SpriteRenderer>().sprite = announceUISprits[spriteID];
+        buttonUI.SetActive(true);
     }
 
-    public void HiddenSprite() => announceUI.GetComponent<SpriteRenderer>().sprite = null;
+    public void HiddenSprite()
+    {
+        announceUI.GetComponent<SpriteRenderer>().sprite = null;
+        buttonUI.SetActive(false);
+    }
 
 
 

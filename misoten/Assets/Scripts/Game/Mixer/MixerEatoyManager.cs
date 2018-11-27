@@ -194,4 +194,15 @@ public class MixerEatoyManager : MonoBehaviour
     }
 
     public void SetMixMode(MixMode mode) => mixMode = mode;
+
+    public void HieenEatoySprite()
+    {
+        for (int i = 0; i < eatoies.Length; i++)
+        {
+            if (eatoies[i] != null)
+            {
+                eatoies[i].GetComponent<Eatoy>().HiddenSprite();
+            }
+        }
+    }
 }

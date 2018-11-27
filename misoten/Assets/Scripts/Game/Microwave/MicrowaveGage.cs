@@ -226,4 +226,9 @@ public class MicrowaveGage : MonoBehaviour
         pointText.SetActive(false);
         missText.SetActive(false);
     }
+
+    public void SetCheckClockInMicrowave_cs(CookWareMw cs)
+    {
+        checkClock_cs.SetMicrowave_cs(cs);
+    }
 }

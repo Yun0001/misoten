@@ -141,8 +141,10 @@ public class AlienDisturbance : MonoBehaviour
 				break;
 			case EAlienMood.ANGER:  // 怒り状態
 
-				// イートイオブジェクトを削除
-				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+                AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.RETURN_BAD);
+
+                // イートイオブジェクトを削除
+                Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 
 				// BoxColliderを「OFF」にする
 				GetComponent<BoxCollider>().enabled = false;

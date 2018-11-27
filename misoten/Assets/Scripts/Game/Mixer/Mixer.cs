@@ -81,6 +81,7 @@ public class Mixer : KitchenwareBase {
                     status = Status.Open;
                     mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.TwoParson);
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+                    mixerEatoyM_cs.HieenEatoySprite();
                 }
                 break;
 
@@ -250,6 +251,7 @@ public class Mixer : KitchenwareBase {
             status = Status.Open;
             lastAccessPlayer.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Mixer);
             transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+            mixerEatoyM_cs.HieenEatoySprite();
         }
         return true;
     }

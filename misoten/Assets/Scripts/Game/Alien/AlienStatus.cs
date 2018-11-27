@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// エイリアンの状態管理スクリプト
@@ -105,4 +106,5 @@ public class AlienStatus : MonoBehaviour
 	/// <param name="id"></param>
 	/// <returns></returns>
 	public static bool GetCounterStatusChangeFlag(int numId, int statusId) => counterStatusChangeFlag[numId, statusId];
+
 }

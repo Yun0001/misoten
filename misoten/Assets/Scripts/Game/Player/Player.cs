@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void OfferCuisine()
     {
-		if (!AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT))
+		if (!IsOffer())
 		{
 			// エイリアンのスクリプトを取得して料理を渡す
 			haveInEatoy_cs.SetHaveInEatoyPosition(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).transform.position);
@@ -93,8 +93,18 @@ public class Player : MonoBehaviour
 		}
     }
 
+    public bool IsOffer()
+    {
+        return
+            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT) ||
+            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.CLAIM) ||
+            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD) ||
+            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
+    }
 
-	public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
+
+
+    public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
     /// <summary>
     /// Bボタン入力
@@ -238,6 +248,8 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.MixerAccess:
                 playerInput_cs.InputMixerAccess();
+
+                // 自分が3人目としてアクセスした時用
                 if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
@@ -247,6 +259,8 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.MixerWait:
                 playerInput_cs.InputMixerWait();
+
+                // 二人でミキサーを利用する時
                 if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);

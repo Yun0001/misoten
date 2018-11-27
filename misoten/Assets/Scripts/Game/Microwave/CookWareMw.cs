@@ -14,6 +14,9 @@ public class CookWareMw : KitchenwareBase
     private int[] eatoyPoint = new int[2];
 
     [SerializeField]
+    private GameObject UIButton;
+
+    [SerializeField]
     private float basePoint;
 
     // Use this for initialization
@@ -21,6 +24,7 @@ public class CookWareMw : KitchenwareBase
     {
         InstanceMiniGameUI();
         microwaveGage_cs = miniGameUI.GetComponent<MicrowaveGage>();
+        miniGameUI.GetComponent<MicrowaveGage>().SetCheckClockInMicrowave_cs(GetComponent<CookWareMw>());
     }
 
     protected override void InstanceMiniGameUI()
@@ -39,6 +43,8 @@ public class CookWareMw : KitchenwareBase
         {
             eatoyPoint[i] = 0;
         }
+
+        UIButton.SetActive(true);
     }
 
     protected override void ResetMiniGameUI()
@@ -49,7 +55,12 @@ public class CookWareMw : KitchenwareBase
 
     protected override bool Cooking()
     {
-        return microwaveGage_cs.UpdateMicrowaveGage();
+        bool result = microwaveGage_cs.UpdateMicrowaveGage();
+        if (result)
+        {
+            UIButton.SetActive(true);
+        }
+        return result;
     }
 
 
@@ -63,6 +74,7 @@ public class CookWareMw : KitchenwareBase
         microwaveGage_cs.StopStartSE();
         // レンジOpenSE
         Sound.PlaySe(GameSceneManager.seKey[16], 4);
+        UIButton.SetActive(false);
     }
 
     protected override int CalcEatoyPoint()
