@@ -15,10 +15,10 @@ public class CookingPot : MonoBehaviour {
     public void CookingStart()
     {
 
-        if (!player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
+        if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
               
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
-        player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire),17);
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), true, 13);
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
@@ -30,7 +30,7 @@ public class CookingPot : MonoBehaviour {
     /// <param name="stickVec"></param>
     public GameObject UpdatePot()
     {
-        GameObject obj = player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().UpdateMiniGame();
+        GameObject obj = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().UpdateMiniGame();
         if (obj == null)
         {
             return null;
@@ -42,8 +42,8 @@ public class CookingPot : MonoBehaviour {
 
     public void CancelCooking()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.Pot).GetComponent<Pot>().CookingInterruption();
-        player_cs.GetHitObj((int)Player.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().CookingInterruption();
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), false, 13);
         Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
         Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 16);

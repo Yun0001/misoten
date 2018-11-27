@@ -55,7 +55,7 @@ public class PlayerAccessController : MonoBehaviour
     private bool IsMicrowaveAccessPossible()
     {
         // 電子レンジに当たっていなければfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.Microwave) == null) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave) == null) return false;
 
         // アイスイートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
@@ -70,7 +70,7 @@ public class PlayerAccessController : MonoBehaviour
     private bool IsPotAccessPossible()
     {
         // 鍋に当たっていなければfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.Pot) == null) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot) == null) return false;
 
         // アイスイートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
@@ -85,7 +85,7 @@ public class PlayerAccessController : MonoBehaviour
     private bool IsFlyingpanAccessPossible()
     {
         // フライパンに当たっていなければfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.GrilledTable) == null) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable) == null) return false;
 
         // アイスイートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
@@ -100,7 +100,7 @@ public class PlayerAccessController : MonoBehaviour
     private bool IsMixerAccessPossible()
     {
         // ミキサーに当たっていなければfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.Mixer) == null) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer) == null) return false;
 
         // イートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.Catering) return false;
@@ -110,7 +110,7 @@ public class PlayerAccessController : MonoBehaviour
         if (colorID != 0 && colorID % 2 == 0) return false;
 
         // ミキサーの状態が3人アクセスより進んでいればfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() >= Mixer.Status.AccessThree) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() >= Mixer.Status.AccessThree) return false;
 
         return true;
     }
@@ -125,7 +125,7 @@ public class PlayerAccessController : MonoBehaviour
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.Normal) return false;
 
         // 冷蔵庫に当たっていなければfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.IceBox) == null) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.IceBox) == null) return false;
 
         return true;
     }
@@ -141,7 +141,7 @@ public class PlayerAccessController : MonoBehaviour
             player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
 
         //ダストボックスとの当たり判定がなければfalse
-        if (player_cs.GetHitObj((int)Player.hitObjName.DastBox) == null) return false;
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.DastBox) == null) return false;
 
         return true;
     }
@@ -150,7 +150,7 @@ public class PlayerAccessController : MonoBehaviour
     {
         if (GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() == null) return false;                             // 料理を持っていないならreturn
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.Catering) return false;          // 配膳状態でないならreturn
-        if (player_cs.GetHitObj((int)Player.hitObjName.Alien) == null) return false;    // 宇宙人との当たり判定がなければreturn
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Alien) == null) return false;    // 宇宙人との当たり判定がなければreturn
 
         return true;
     }

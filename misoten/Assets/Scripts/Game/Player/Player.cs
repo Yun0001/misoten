@@ -23,17 +23,6 @@ public class Player : MonoBehaviour
         Catering,           //配膳
     }
 
-    public enum hitObjName
-    {
-        Microwave, //レンジ
-        Pot,//鍋
-        GrilledTable,//焼き台
-        Mixer,
-        IceBox,
-        DastBox,
-        Alien,//宇宙人
-        HitObjMax
-    }
 
     [SerializeField]
     private PlayerStatus playerStatus;
@@ -41,8 +30,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int playerID;//プレイヤーID(インスペクターで設定)
 
-    [SerializeField]
-    private GameObject[] hitObj = Enumerable.Repeat<GameObject>(null, 7).ToArray();// 現在プレイヤーと当たっているオブジェクト
 
     private CookingMicrowave cookingMicrowave_cs;
     private CookingPot cookingPot_cs;
@@ -53,6 +40,7 @@ public class Player : MonoBehaviour
     private PlayerHaveInEatoy haveInEatoy_cs;
     private PlayerAccessController playerAccessController_cs;
     private PlayerAccessPossiblAnnounce playerAccessPosssiblAnnounce_cs;
+    private PlayerCollision collision_cs;
     private GameObject dastBoxGage;
 
     [SerializeField]
@@ -88,118 +76,16 @@ public class Player : MonoBehaviour
         playerInput_cs.UpdateInput();
     }
 
-
-    /// <summary>
-    /// 当たり判定
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            // レンジ
-            case "Microwave":
-                hitObj[(int)hitObjName.Microwave] = collision.gameObject;
-                if (GetComponent<Player>().GetPlayerStatus() == PlayerStatus.CateringIceEatoy)
-                {
-                    playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.Microwave);
-                }
-                break;
-            // 鍋
-            case "Pot":
-                hitObj[(int)hitObjName.Pot] = collision.gameObject;
-                if (GetComponent<Player>().GetPlayerStatus() == PlayerStatus.CateringIceEatoy)
-                {
-                    playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.Pot);
-                }        
-                break;
-            // 焼き台
-            case "Fryingpan":
-                hitObj[(int)hitObjName.GrilledTable] = collision.gameObject;
-                if (GetComponent<Player>().GetPlayerStatus() == PlayerStatus.CateringIceEatoy)
-                {
-                    playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.GrilledTable);
-                }           
-                break;
-            // ミキサー
-            case "Mixer":
-                hitObj[(int)hitObjName.Mixer] = collision.gameObject;
-                if (GetComponent<Player>().GetPlayerStatus() == PlayerStatus.Catering)
-                {
-                    playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.Mixer);
-                }
-                break;
-
-            case "IceBox":
-                hitObj[(int)hitObjName.IceBox] = collision.gameObject;
-                if (GetComponent<Player>().GetPlayerStatus() == PlayerStatus.Normal)
-                {
-                    playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.IceBox);
-                }
-                break;
-
-            case "DastBox":
-                hitObj[(int)hitObjName.DastBox] = collision.gameObject;
-                if (GetComponent<Player>().GetPlayerStatus() == PlayerStatus.Catering ||
-                    GetComponent<Player>().GetPlayerStatus() == PlayerStatus.CateringIceEatoy)
-                {
-                    playerAccessPosssiblAnnounce_cs.SetSprite((int)hitObjName.DastBox);
-                }
-                break;
-            case "Alien":
-                hitObj[(int)hitObjName.Alien] = collision.gameObject;
-                break;
-        }
-    }
-
-    /// <summary>
-    /// 当たり判定がなくなるとき
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerExit(Collider collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Microwave":
-                hitObj[(int)hitObjName.Microwave] = null;
-                playerAccessPosssiblAnnounce_cs.HiddenSprite();
-                break;
-            case "Pot":
-                hitObj[(int)hitObjName.Pot] = null;
-                playerAccessPosssiblAnnounce_cs.HiddenSprite();
-                break;
-            case "Fryingpan":
-                hitObj[(int)hitObjName.GrilledTable] = null;
-                playerAccessPosssiblAnnounce_cs.HiddenSprite();
-                break;
-            case "Mixer":
-                hitObj[(int)hitObjName.Mixer] = null;
-                playerAccessPosssiblAnnounce_cs.HiddenSprite();
-                break;
-            case "IceBox":
-                hitObj[(int)hitObjName.IceBox] = null;
-                playerAccessPosssiblAnnounce_cs.HiddenSprite();
-                break;
-            case "DastBox":
-                hitObj[(int)hitObjName.DastBox] = null;
-                playerAccessPosssiblAnnounce_cs.HiddenSprite();
-                break;
-            case "Alien":
-                hitObj[(int)hitObjName.Alien] = null;
-                break;
-        }
-    }
-
     /// <summary>
     /// 料理を渡す
     /// </summary>
     public void OfferCuisine()
     {
-		if (!AlienStatus.GetCounterStatusChangeFlag(GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT))
+		if (!AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT))
 		{
 			// エイリアンのスクリプトを取得して料理を渡す
-			haveInEatoy_cs.SetHaveInEatoyPosition(GetHitObj((int)hitObjName.Alien).transform.position);
-			GetHitObj((int)hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
+			haveInEatoy_cs.SetHaveInEatoyPosition(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).transform.position);
+            collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
 			GetComponent<PlayerAnimCtrl>().SetServing(false);
 
 			//haveInEatoy_cs.RevocationHaveInEatoy();
@@ -207,12 +93,6 @@ public class Player : MonoBehaviour
 		}
     }
 
-    public GameObject GetHitObj(int HitObjID)
-    {
-        if (hitObj[HitObjID] == null) return null;
-
-        return hitObj[HitObjID].gameObject;
-    }
 
 	public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
@@ -254,7 +134,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void AccessPot()
     {
-        GetHitObj((int)hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
+        collision_cs.GetHitObj(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
         cookingPot_cs.CookingStart();
     }
 
@@ -270,7 +150,7 @@ public class Player : MonoBehaviour
 
     private void AccessIceBox()
     {
-        if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().Access(playerID))
+        if (collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().Access(playerID))
         {
             SetPlayerStatus(PlayerStatus.IceBox);
         }
@@ -323,6 +203,7 @@ public class Player : MonoBehaviour
         haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
         playerAccessController_cs = GetComponent<PlayerAccessController>();
         playerAccessPosssiblAnnounce_cs = GetComponent<PlayerAccessPossiblAnnounce>();
+        collision_cs = GetComponent<PlayerCollision>();
     }
 
 
@@ -356,7 +237,7 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.MixerAccess:
                 playerInput_cs.InputMixerAccess();
-                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -365,7 +246,7 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.MixerWait:
                 playerInput_cs.InputMixerWait();
-                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -375,7 +256,7 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.Mixer:
                 playerInput_cs.InputMixer();
-                if (GetHitObj((int)hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
                 {
                     playerAccessPosssiblAnnounce_cs.HiddenSprite();
                     playerInput_cs.InputMixer();
@@ -418,7 +299,7 @@ public class Player : MonoBehaviour
         // 料理を持つ
         playerAccessPosssiblAnnounce_cs.HiddenSprite();
         haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+        collision_cs.GetHitObj((int)PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
         // レンジOpenSE
         //Sound.PlaySe(GameSceneManager.seKey[16], 4);
     }
@@ -435,7 +316,7 @@ public class Player : MonoBehaviour
         // 料理を持つ
         playerAccessPosssiblAnnounce_cs.HiddenSprite();
         haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        collision_cs.GetHitObj(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
     /// <summary>
@@ -449,22 +330,22 @@ public class Player : MonoBehaviour
         // 焼く調理終了の処理 
         playerAccessPosssiblAnnounce_cs.HiddenSprite();
         haveInEatoy_cs.SetEatoy(eatoy);
-        GetHitObj((int)hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        collision_cs.GetHitObj(PlayerCollision.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
 
     private void UpdateIceBox()
     {
         playerInput_cs.InputIceBox();
-        if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
+        if (collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().IsPutEatoy() && collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().IsAccessOnePlayer(playerID))
         {
             // イートイを持つ
             playerAccessPosssiblAnnounce_cs.HiddenSprite();
-            haveInEatoy_cs.SetEatoy(GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
+            haveInEatoy_cs.SetEatoy(collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().PassEatoy());
 
             // 冷蔵庫の後処理
-            GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
-            if (GetHitObj((int)hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
+            collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
+            if (collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
             {
                 Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess), 5);
             }
@@ -484,7 +365,7 @@ public class Player : MonoBehaviour
         if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
         {
             playerAccessPosssiblAnnounce_cs.HiddenSprite();
-            GetHitObj((int)hitObjName.DastBox).transform.Find("box").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+            collision_cs.GetHitObj(PlayerCollision.hitObjName.DastBox).transform.Find("box").GetComponent<mwAnimCtrl>().SetIsOpen(true);
             SetPlayerStatus(PlayerStatus.Normal);
             haveInEatoy_cs.RevocationHaveInEatoy(true);
             GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -493,4 +374,10 @@ public class Player : MonoBehaviour
             Sound.PlaySe(GameSceneManager.seKey[7],8);
         }
     }
+
+    public void HiddenAnnounceSprite() => playerAccessPosssiblAnnounce_cs.HiddenSprite();
+
+    public void SetAnnounceSprite(int spriteID) => playerAccessPosssiblAnnounce_cs.SetSprite(spriteID);
+
+    public GameObject IsObjectCollision(PlayerCollision.hitObjName ObjID) => collision_cs.GetHitObj(ObjID);
 }

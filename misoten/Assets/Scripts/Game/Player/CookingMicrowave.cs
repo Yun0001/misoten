@@ -17,7 +17,7 @@ public class CookingMicrowave : MonoBehaviour {
 
     public GameObject UpdateMicrowave()
     {
-        GameObject eatoy = player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().UpdateMiniGame();
+        GameObject eatoy = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<Microwave>().UpdateMiniGame();
         if (eatoy != null)
         {
             microwaveEffect.Stop();
@@ -32,10 +32,10 @@ public class CookingMicrowave : MonoBehaviour {
     public void CookingStart()
     {
         // 電子レンジ調理開始
-        if (!player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
+        if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<Microwave>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
 
         // レンジOpenSE
         Sound.PlaySe(GameSceneManager.seKey[16], 4);
@@ -47,8 +47,8 @@ public class CookingMicrowave : MonoBehaviour {
     /// </summary>
     public void CancelCooking()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().CookingInterruption();
-        player_cs.GetHitObj((int)Player.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(false);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<Microwave>().CookingInterruption();
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(false);
         microwaveEffect.Stop();
     }
 }

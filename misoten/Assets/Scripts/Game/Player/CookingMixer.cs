@@ -13,7 +13,7 @@ public class CookingMixer : MonoBehaviour {
 
     public void Preparation()
     {
-            if (!player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<MixerAccessPoint>().Access(gameObject))
+            if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<MixerAccessPoint>().Access(gameObject))
             {
                 Debug.LogError("アクセス失敗");
             }

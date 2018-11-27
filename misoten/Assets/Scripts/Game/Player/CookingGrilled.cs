@@ -13,12 +13,12 @@ public class CookingGrilled : MonoBehaviour {
 
     public void CookingStart()
     {
-        if (!player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
+        if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
         {
             return;
         }
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
 
         //着火SE
        // Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
@@ -29,7 +29,7 @@ public class CookingGrilled : MonoBehaviour {
 
     public GameObject UpdateGrilled()
     {
-        GameObject obj = player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().UpdateMiniGame();
+        GameObject obj = player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().UpdateMiniGame();
         if (obj == null)
         {
             return null;
@@ -42,8 +42,8 @@ public class CookingGrilled : MonoBehaviour {
 
     public void CancelCooking()
     {
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingInterruption();
-        player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingInterruption();
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
         Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 14);
         Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
     }

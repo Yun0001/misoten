@@ -73,7 +73,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (InputDownButton(GamePad.Button.B))
         {
-            player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
         }
     }
 
@@ -81,7 +81,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (InputDownButton(GamePad.Button.B))
         {
-            player_cs.GetHitObj((int)Player.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
         }
     }
 
@@ -94,7 +94,7 @@ public class PlayerInput : MonoBehaviour
         if (InputDownButton(GamePad.Button.B))
         {
             // ミキサーのアクセス数を加算
-            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
             // プレイヤーの状態をミキサー待機状態に変更
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
         }
@@ -103,7 +103,7 @@ public class PlayerInput : MonoBehaviour
         if (InputDownButton(GamePad.Button.A))
         {
             // ミキサーへのアクセスを切断
-            if(player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<MixerAccessPoint>().AccessDiscconnection(transform.position))
+            if(player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<MixerAccessPoint>().AccessDiscconnection(transform.position))
             {
                 // プレイヤーの状態を配膳状態に戻す
                 player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
@@ -122,7 +122,7 @@ public class PlayerInput : MonoBehaviour
         if (InputDownButton(GamePad.Button.A))
         {
             // ミキサーのアクセス数を減算
-            player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
             // プレイヤーの状態をミキサーアクセスに戻す
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         }
@@ -139,12 +139,12 @@ public class PlayerInput : MonoBehaviour
             if (Angle != 90)
             {
                 AngleSum += Angle;
-                if (!player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().GetMiniGameUI().GetComponent<MixerMiniGame>().GetRotation())
+                if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetMiniGameUI().GetComponent<MixerMiniGame>().GetRotation())
                 {
                     if ((int)AngleSum <= -360 * (rotationNum + 1))
                     {
                         rotationNum++;
-                        if (player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().OneRotation())
+                        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().OneRotation())
                         {
                             rotationNum = 0;
                             AngleSum = 0;
@@ -156,7 +156,7 @@ public class PlayerInput : MonoBehaviour
                     if ((int)AngleSum >= 360 * (rotationNum + 1))
                     {
                         rotationNum++;
-                        player_cs.GetHitObj((int)Player.hitObjName.Mixer).GetComponent<Mixer>().OneRotation();
+                        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().OneRotation();
                     }
                 }
 
@@ -182,7 +182,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (InputDownButton(GamePad.Button.B))
         {
-            if (player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
+            if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
             {
                     Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Icebreak),18);
             }
@@ -191,7 +191,7 @@ public class PlayerInput : MonoBehaviour
                     Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Icebreak),19);
             }
             
-            player_cs.GetHitObj((int)Player.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().ActionMiniGame();
         }
     }
 
