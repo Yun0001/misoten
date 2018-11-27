@@ -46,6 +46,11 @@ public class Flyingpan : KitchenwareBase
 		Vector3 gPos = transform.position;
         gPos.z -= 1f;
         miniGameUI.transform.position = gPos;
+
+        foreach (var e in eatoyPoint)
+        {
+            eatoyPoint[e] = 0;
+        }
     }
 
     /// <summary>
