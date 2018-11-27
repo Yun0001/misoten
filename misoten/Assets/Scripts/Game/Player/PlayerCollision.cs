@@ -63,7 +63,7 @@ public class PlayerCollision : MonoBehaviour
             // ミキサー
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = collision.gameObject;
-                if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering)
+                if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering && !GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().IsChangeEatoy())
                 {
                     player_cs.SetAnnounceSprite((int)hitObjName.Mixer);
                 }

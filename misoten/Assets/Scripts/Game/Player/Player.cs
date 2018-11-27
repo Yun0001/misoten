@@ -134,6 +134,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void AccessPot()
     {
+        if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().IsCooking()) return;
         collision_cs.GetHitObj(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
         cookingPot_cs.CookingStart();
     }
@@ -258,7 +259,6 @@ public class Player : MonoBehaviour
                 playerInput_cs.InputMixer();
                 if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
                 {
-                    playerAccessPosssiblAnnounce_cs.HiddenSprite();
                     playerInput_cs.InputMixer();
                     SetPlayerStatus(PlayerStatus.Normal);
                 }

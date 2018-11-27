@@ -68,4 +68,12 @@ public class Eatoy : MonoBehaviour
     public EEatoyColor GetEatoyColor() => eatoyColor;
 
     public bool IsIcing() => isIcing;
+
+    public bool IsChangeEatoy()
+    {
+        return 
+            eatoyColor == EEatoyColor.Orange ||
+            eatoyColor == EEatoyColor.Purple ||
+            eatoyColor == EEatoyColor.Green;
+    }
 }
