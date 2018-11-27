@@ -19,6 +19,13 @@ public class Flyingpan : KitchenwareBase
     [SerializeField]
     private GameObject missText;
 
+    [SerializeField]
+    private GameObject pointText;
+
+    [SerializeField]
+    private GameObject buttonUI;
+
+
     void Awake () {
 		InstanceMiniGameUI();
         grilledGage_cs = miniGameUI.GetComponent<GrilledGage>();
@@ -51,6 +58,8 @@ public class Flyingpan : KitchenwareBase
         {
             eatoyPoint[e] = 0;
         }
+
+        buttonUI.SetActive(true);
     }
 
     /// <summary>
@@ -58,7 +67,13 @@ public class Flyingpan : KitchenwareBase
     /// </summary>
     protected override bool Cooking()
     {
-        return grilledGage_cs.CookingGrilledCuisine();
+        bool isEnd = grilledGage_cs.CookingGrilledCuisine();
+        if (isEnd)
+        {
+            buttonUI.SetActive(false);
+        }
+
+        return isEnd;
     } 
 
     /// <summary>
@@ -83,6 +98,7 @@ public class Flyingpan : KitchenwareBase
         miniGameUI.gameObject.SetActive(false);
         SetIsCooking(false);
         cuisine = null;
+        buttonUI.SetActive(false);
     }
 
     /// <summary>

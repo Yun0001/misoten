@@ -58,7 +58,7 @@ public class CookWareMw : KitchenwareBase
         bool result = microwaveGage_cs.UpdateMicrowaveGage();
         if (result)
         {
-            UIButton.SetActive(true);
+            UIButton.SetActive(false);
         }
         return result;
     }
