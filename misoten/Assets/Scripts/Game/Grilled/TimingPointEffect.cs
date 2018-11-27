@@ -28,7 +28,7 @@ public class TimingPointEffect : MonoBehaviour
 		if (Flyingpan.effectFlag)
 		{
 			GetComponent<ParticleSystem>().startSize = 0.8f;
-			if (timeAdd >= 0.8f)
+			if (timeAdd >= 0.3f)
 			{
 				timeAdd = 0.0f;
 				Flyingpan.effectFlag = false;
@@ -37,6 +37,7 @@ public class TimingPointEffect : MonoBehaviour
 		}
 		else
 		{
+			timeAdd = 0.0f;
 			GetComponent<ParticleSystem>().startSize = 0.3f;
 		}
 	}

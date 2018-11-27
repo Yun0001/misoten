@@ -17,21 +17,15 @@ public class MixerAccess : MonoBehaviour
 	// ---------------------------------------------
 
 	/// <summary>
-	/// 開始関数
-	/// </summary>
-	void Start ()
-	{
-		// ラインの終点座標
-		GetComponent<LineRenderer>().SetPosition(1, endPod);
-	}
-	
-	/// <summary>
 	/// 更新関数
 	/// </summary>
 	void Update ()
 	{
+		// ラインの終点座標
+		GetComponent<LineRenderer>().SetPosition(1, endPod);
+
 		// プレイヤーがミキサーにアクセスをしている場合
-		if(transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerWait
+		if (transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerWait
 			|| transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerAccess)
 		{
 			//Line

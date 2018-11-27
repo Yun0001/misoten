@@ -111,6 +111,9 @@ public class AlienClaim : MonoBehaviour
 				// エイリアンの注文内容が見えている状態の時
 				if (!claimFlag)
 				{
+					// イートイオブジェクトを削除
+					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+
 					// SEを鳴らす
 					Sound.PlaySe(GameSceneManager.seKey[2]);
 

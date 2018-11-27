@@ -130,15 +130,15 @@ public class AlienMove : MonoBehaviour
 			// カウンター席側のエイリアンの退店時移動処理
 			CounterWhenLeavingStoreMove();
 
-            for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
-            {
-                if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
-                {
-                    PlayWalkSE();
-                    break;
-                }
-            }
-        }
+			for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
+			{
+				if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
+				{
+					PlayWalkSE();
+					break;
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -296,10 +296,11 @@ public class AlienMove : MonoBehaviour
 
 			// 終点座標に到着
 			if (timeAdd > WhenLeavingStoreMoveTime)
-            {
-                Sound.PlaySe(GameSceneManager.seKey[3]);
-                counterClosedCompletion[GetComponent<AlienOrder>().GetSetId()] = true;
-            }
+			{
+				Sound.PlaySe(GameSceneManager.seKey[3]);
+				counterClosedCompletion[GetComponent<AlienOrder>().GetSetId()] = true;
+			}
+
 			transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 3, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 1, 1], rate);
 		}
 	}

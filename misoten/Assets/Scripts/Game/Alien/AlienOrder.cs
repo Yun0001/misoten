@@ -99,6 +99,9 @@ public class AlienOrder : MonoBehaviour
 	// 状態移行フラグ
 	private bool statusMoveFlag = false;
 
+	// 当たり判定フラグ
+	private bool boxColliderFlag = true;
+
 	// オーダーの種類
 	private int orderType = 0;
 
@@ -136,6 +139,9 @@ public class AlienOrder : MonoBehaviour
 		// 状態移行フラグの初期化
 		statusMoveFlag = false;
 
+		// 当たり判定フラグ
+		boxColliderFlag = true;
+
 		// 注文するまでの時間の初期化
 		orderTimeAdd = 0.0f;
 }
@@ -154,8 +160,6 @@ public class AlienOrder : MonoBehaviour
 			// 「0」になると、クレーム状態or満足状態に移行
 			if (eatingCount <= 0.0f)
 			{
-				// イートイオブジェクトを削除
-				Destroy(GetEatoyObj());
 				statusMoveFlag = true;
 				AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
 			}
@@ -222,8 +226,13 @@ public class AlienOrder : MonoBehaviour
 					// オーダー完了
 					SetIsOrder(true);
 
-					// 注文すると、BoxColliderを「ON」にする
-					GetComponent<BoxCollider>().enabled = true;
+					// 一度しか通らない
+					if(boxColliderFlag)
+					{
+						// 注文すると、BoxColliderを「ON」にする
+						GetComponent<BoxCollider>().enabled = true;
+						boxColliderFlag = false;
+					}
 
 					// オーダーの種類管理
 					switch (orderType)
