@@ -35,6 +35,9 @@ public class PauseScreen : MonoBehaviour
 	// ポーズを開いたプレイヤーのみ操作可能
 	private bool[] id = new bool[4];
 
+	// 選択時のカーソルフラグ
+	private bool selectCursorFlag = false;
+
 	// 選択時のカーソル
 	private int selectCursor = 0;
 
@@ -75,14 +78,16 @@ public class PauseScreen : MonoBehaviour
 			else if (pauseObj.GetComponent<Pause>().pausing && id[i])
 			{
 				// セレクトカーソルの更新
-				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == 1.0f)
+				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == 1.0f && !selectCursorFlag && selectCursor == 1)
 				{
 					selectCursor = 0;
+					selectCursorFlag = true;
 					selectCursorObj.transform.localPosition = new Vector3(0.0f, 30.0f, 0.1f);
 				}
-				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f)
+				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
 				{
 					selectCursor = 1;
+					selectCursorFlag = true;
 					selectCursorObj.transform.localPosition = new Vector3(0.0f, -31.0f, 0.1f);
 				}
 
@@ -105,7 +110,7 @@ public class PauseScreen : MonoBehaviour
 						case 1: // タイトルへ戻る
 							Sound.StopBgm();
 							SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
-							break;	
+							break;
 						default: Debug.LogError("だから言ったじゃないか！"); break;
 					}
 
@@ -124,6 +129,9 @@ public class PauseScreen : MonoBehaviour
 		// ポーズオブジェクトを非アクティブ化に設定
 		childObj.SetActive(false);
 
+		// 選択時のカーソルフラグの初期化
+		selectCursorFlag = false;
+
 		// 選択時のカーソルの初期化
 		selectCursor = 0;
 
@@ -133,4 +141,16 @@ public class PauseScreen : MonoBehaviour
 		// ポーズを開いたプレイヤーのみ操作可能の初期化
 		for (int i = 0; i < playerObj.Length; i++) { id[i] = false; }
 	}
+
+	/// <summary>
+	/// 選択時のカーソルフラグの格納
+	/// </summary>
+	/// <param name="_selectCursorFlag"></param>
+	public void SetSelectCursorFlag(bool _selectCursorFlag) => selectCursorFlag = _selectCursorFlag;
+
+	/// <summary>
+	/// 選択時のカーソルフラグの取得
+	/// </summary>
+	/// <returns></returns>
+	public bool GetSelectCursorFlag() => selectCursorFlag;
 }

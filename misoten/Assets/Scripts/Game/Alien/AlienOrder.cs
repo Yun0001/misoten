@@ -160,6 +160,8 @@ public class AlienOrder : MonoBehaviour
 			// 「0」になると、クレーム状態or満足状態に移行
 			if (eatingCount <= 0.0f)
 			{
+				// イートイオブジェクトを削除
+				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 				statusMoveFlag = true;
 				AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
 			}
@@ -364,28 +366,31 @@ public class AlienOrder : MonoBehaviour
 		// Debug用
 		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
 
-		// EAT状態が「ON」になる
-		AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
-
-		// 料理が来た判定
-		GetComponent<AlienChip>().SetCuisineCame(true);
-
-		// オーダーの種類管理
-		switch (orderType)
+		if(!GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && !AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 		{
-			case (int)EOrderType.BASE:
-				if (individualOrderBaseType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
-				else { Claim(eatoy); }
-				break;
-			case (int)EOrderType.CHANGE:
-				if (individualOrderChangeType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
-				else { Claim(eatoy); }
-				break;
-			default: break;
-		}
+			// EAT状態が「ON」になる
+			AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
 
-		// イートイのセット
-		SetEatoyObj(eatoy);
+			// 料理が来た判定
+			GetComponent<AlienChip>().SetCuisineCame(true);
+
+			// オーダーの種類管理
+			switch (orderType)
+			{
+				case (int)EOrderType.BASE:
+					if (individualOrderBaseType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+					else { Claim(eatoy); }
+					break;
+				case (int)EOrderType.CHANGE:
+					if (individualOrderChangeType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+					else { Claim(eatoy); }
+					break;
+				default: break;
+			}
+
+			// イートイのセット
+			SetEatoyObj(eatoy);
+		}
 	}
 
 	/// <summary>

@@ -5608,6 +5608,7 @@ GameObject:
   - component: {fileID: 33626777712208624}
   - component: {fileID: 64951176687152218}
   - component: {fileID: 23089815450896410}
+  - component: {fileID: 114457586650603260}
   m_Layer: 0
   m_Name: SelectCursor
   m_TagString: Untagged
@@ -5873,8 +5874,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4042357589267072}
-  - component: {fileID: 114885557071371328}
   - component: {fileID: 136054404806347908}
+  - component: {fileID: 114582548701218234}
   m_Layer: 0
   m_Name: microwave1
   m_TagString: Microwave
@@ -10997,7 +10998,7 @@ Transform:
   m_GameObject: {fileID: 1757076252527016}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 30, z: 0.1}
-  m_LocalScale: {x: 27, y: 60, z: 6}
+  m_LocalScale: {x: 27, y: 1, z: 6}
   m_Children: []
   m_Father: {fileID: 224945243200945304}
   m_RootOrder: 1
@@ -24732,6 +24733,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endPod: {x: 0, y: 1.3, z: -0.1}
+--- !u!114 &114457586650603260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757076252527016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424cd89209192b7448ef71ab15cd28f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseObj: {fileID: 1102003933926302}
 --- !u!114 &114467928972801426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24901,6 +24914,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d97a11b74c3174c89e2c5048f5cd05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114582548701218234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793426851517810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b489b22bcbc55d46ad3b6f02239be3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDebugMode: 0
+  isEnd: 0
+  canvasCamera: {fileID: 0}
+  microwaveGage_cs: {fileID: 0}
+  basePoint: 0
 --- !u!114 &114583179001354298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -25455,22 +25484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d97a11b74c3174c89e2c5048f5cd05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114885557071371328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1793426851517810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bcd218fc3bee534984cdc749e5ac99e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDebugMode: 0
-  isEnd: 0
-  canvasCamera: {fileID: 0}
-  microwaveGage_cs: {fileID: 0}
-  basePoint: 1
 --- !u!114 &114891590281184612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -26576,7 +26589,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1623858313
+  randomSeed: 1137300360
   InitialModule:
     serializedVersion: 3
     enabled: 1
