@@ -345,14 +345,10 @@ public class Player : MonoBehaviour
 
             // 冷蔵庫の後処理
             collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().ResetEatoy();
-            if (collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() == 0)
-            {
-                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess), 5);
-            }
-            else
-            {
-                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess), 6);
-            }
+
+            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess),
+                collision_cs.GetHitObj(PlayerCollision.hitObjName.IceBox).GetComponent<IceBox>().GetIceBoxID() + 5);
+
         }
     }
 
