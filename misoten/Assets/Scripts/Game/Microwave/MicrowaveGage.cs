@@ -210,4 +210,10 @@ public class MicrowaveGage : MonoBehaviour
     {
         Sound.PlaySe(GameSceneManager.seKey[15],4);
     }
+
+    public void temp(CookWareMw mw)
+    {
+        checkClock_cs.temp(mw);
+    }
+
 }

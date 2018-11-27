@@ -11,4 +11,5 @@ public class TutorialPlayer : MonoBehaviour {
     public bool IsComplete() => isComplete;
     public void UnComplete() => isComplete = false;
     public void SetPlayerReder(bool b) => GetComponent<SpriteRenderer>().enabled = b;
+
 }

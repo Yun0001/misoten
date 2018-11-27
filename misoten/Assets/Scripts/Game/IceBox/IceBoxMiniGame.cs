@@ -129,4 +129,7 @@ public class IceBoxMiniGame : MonoBehaviour {
     }
 
 	public bool GetMoveflg() => moveflg;
+
+    public void SetInitPos(Vector3 pos) => icePickInitPosition = pos;
+
 }

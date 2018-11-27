@@ -6,6 +6,9 @@ using Constants;
 
 public class TutorialCtrl : MonoBehaviour
 {
+    [SerializeField] bool isDebugMode = false;
+    [SerializeField, Range(Tutorial.NO_1, Tutorial.NO_6)] int DebugTutorialNum = Tutorial.NO_1;
+    [SerializeField] bool isOnce = false;
 
     private int             CURRENT_TUTORIAL_STATE;
 
@@ -19,11 +22,24 @@ public class TutorialCtrl : MonoBehaviour
 
     private GameObject[]    _players;
 
+    private GameObject[]    _eatoys;
+
+    private Sprite[] _eatoySprites;
+    private void Awake()
+    {
+        _eatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+    }
 
     void Start()
     {
         StartCoroutine("OpenMenu");     // Open Menu Coroutine
-        CURRENT_TUTORIAL_STATE = Tutorial.NO_1;
+
+        if (isDebugMode) {
+            CURRENT_TUTORIAL_STATE = DebugTutorialNum;
+        }
+        else {
+            CURRENT_TUTORIAL_STATE = Tutorial.NO_1;
+        }
 
         _tutorialMenu = GameObject.Find("OBJ_menu");
         _menuAnimCtrl = _tutorialMenu.GetComponent<MenuAnimCtrl>();
@@ -35,7 +51,7 @@ public class TutorialCtrl : MonoBehaviour
         _tutorialFrow = GameObject.Find("TutorialFrow").GetComponent<TutorialFrow>();
        
         _players = GameObject.FindGameObjectsWithTag("Player");
-        
+
     }
 
     void Update()
@@ -61,8 +77,23 @@ public class TutorialCtrl : MonoBehaviour
             return;
         }
 
+        _eatoys = GameObject.FindGameObjectsWithTag("Eatoy");
+
         // ページをめくってるならば非表示
         if (IsOverPage()) {
+            
+            if (_eatoys.Length != 0)
+            {
+                foreach (GameObject eatoy in _eatoys)
+                {
+                    eatoy.GetComponent<SpriteRenderer>().enabled = false;
+                    GameObject child1 = eatoy.transform.GetChild(0).gameObject;
+                    GameObject child2 = child1.transform.GetChild(0).gameObject;
+                    child2.SetActive(false);
+                    child1.SetActive(false);
+                    eatoy.SetActive(false);
+                }
+            }
             _menuSprite.color = MyColor.ALPHA_0;
             alpha = 0.0f;
             return;
@@ -76,7 +107,20 @@ public class TutorialCtrl : MonoBehaviour
             _tutorialFrow.SetTutorial(CURRENT_TUTORIAL_STATE, true);
 
             foreach (GameObject player in _players) player.GetComponent<TutorialPlayer>().SetPlayerReder(true);
-            
+
+            if (_eatoys.Length != 0)
+            {
+                foreach (GameObject eatoy in _eatoys)
+                {
+                    eatoy.SetActive(true);
+                    GameObject child1 = eatoy.transform.GetChild(0).gameObject;
+                    GameObject child2 = child1.transform.GetChild(0).gameObject;
+                    eatoy.GetComponent<SpriteRenderer>().enabled = true;
+                    child1.SetActive(true);
+                    child2.SetActive(true);
+                }
+            }
+
             return;
         }
 
@@ -89,11 +133,8 @@ public class TutorialCtrl : MonoBehaviour
             NextTutorial();
         }
 
-        switch (CURRENT_TUTORIAL_STATE)
-        {
-            case Tutorial.NO_1:
-                break;
-        }
+        TutorialDebug();
+
     }
 
     bool CheckAllPlayerPlayComplete()
@@ -126,6 +167,38 @@ public class TutorialCtrl : MonoBehaviour
         }
 
         OverPage();
+    }
+
+    void TutorialDebug()
+    {
+        // チュートリアルが遷移してから一度きり
+        if (isOnce)
+        {
+            switch (CURRENT_TUTORIAL_STATE)
+            {
+                case Tutorial.NO_1:
+                    break;
+                case Tutorial.NO_2:
+                    foreach (GameObject player in _players)
+                    {
+                        player.GetComponent<PlayerHaveInEatoy>().SetEatoy(
+                            Instantiate(
+                                Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
+                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(
+                            1,
+                            _eatoySprites[0]
+                            );
+                        // todo : scale調整
+
+                        player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+                        player.GetComponent<PlayerAnimCtrl>().SetServing(true);
+                    }
+                    break;
+            }
+        }
+
+        isOnce = false;
+
     }
 
     void OverPage() => _menuAnimCtrl.OverPage();

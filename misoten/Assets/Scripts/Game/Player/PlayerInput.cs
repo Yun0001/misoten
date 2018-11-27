@@ -73,7 +73,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (InputDownButton(GamePad.Button.B))
         {
-            player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<Microwave>().DecisionCheckClockCollision();
+            player_cs.GetHitObj((int)Player.hitObjName.Microwave).GetComponent<CookWareMw>().DecisionCheckClockCollision();
         }
     }
 

@@ -21,6 +21,7 @@ public class CookWareMw : KitchenwareBase
     {
         InstanceMiniGameUI();
         microwaveGage_cs = miniGameUI.GetComponent<MicrowaveGage>();
+        miniGameUI.GetComponent<MicrowaveGage>().temp(GetComponent<CookWareMw>());
     }
 
     protected override void InstanceMiniGameUI()
