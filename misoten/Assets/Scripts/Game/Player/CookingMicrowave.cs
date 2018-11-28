@@ -15,17 +15,6 @@ public class CookingMicrowave : MonoBehaviour {
         player_cs = GetComponent<Player>();
 	}
 
-    public GameObject UpdateMicrowave()
-    {
-        GameObject eatoy = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().UpdateMiniGame();
-        if (eatoy != null)
-        {
-            microwaveEffect.Stop();
-        }
-        return eatoy;
-    }
-
-
     /// <summary>
     /// 電子レンジを動かす
     /// </summary>
@@ -43,12 +32,40 @@ public class CookingMicrowave : MonoBehaviour {
     }
 
     /// <summary>
+    /// Player.csが呼ぶ更新関数
+    /// </summary>
+    public void UpdateCookingMicrowave()
+    {
+        GameObject eatoy = UpdateMicrowave();
+        if (eatoy == null) return;
+
+        // 料理を持つ
+        player_cs.SetHaveInEatoy(eatoy);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+        // レンジOpenSE
+        //Sound.PlaySe(GameSceneManager.seKey[16], 4);
+    }
+
+    private GameObject UpdateMicrowave()
+    {
+        GameObject eatoy = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().UpdateMiniGame();
+        if (eatoy != null)
+        {
+            microwaveEffect.Stop();
+        }
+        return eatoy;
+    }
+
+
+    /// <summary>
     /// 調理中断
     /// </summary>
     public void CancelCooking()
     {
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().CookingInterruption();
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(false);
+        GameObject microwave = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave);
+        microwave.GetComponent<CookWareMw>().CookingInterruption();
+        microwave.transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(false);
         microwaveEffect.Stop();
+        player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.Microwave);
     }
 }

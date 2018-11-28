@@ -205,6 +205,8 @@ public class PlayerInput : MonoBehaviour
         else if (GamePad.GetButtonUp(GamePad.Button.B, playerControllerNumber))
         {
             player_cs.GetDastBoxUI().SetActive(false);
+            //アナウンスUIを再表示
+            player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.DastBox);
             switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
             {
                 case 9:
