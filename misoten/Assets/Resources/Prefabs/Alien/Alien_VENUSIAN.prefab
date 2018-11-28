@@ -1599,6 +1599,7 @@ MonoBehaviour:
   orderTime: 1
   orderPlanDispCount: 1.5
   eatingCount: 2
+  eachAlienOrderTypeValue: 70
   individualOrderBaseType: 0
   individualOrderChangeType: 0
 --- !u!114 &114234972851072704
@@ -1645,11 +1646,6 @@ MonoBehaviour:
   - {fileID: 1999411218181526}
   - {fileID: 1109184020060904}
   judgeCount: 2
-  satisfactionLevel:
-  - 10
-  - 30
-  - 100
-  - 300
 --- !u!114 &114633767721605522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1727,8 +1723,12 @@ MonoBehaviour:
   - {fileID: 198408748922992586, guid: 58b7251254e5c1140b816a3853357857, type: 2}
   - {fileID: 198035655553859540, guid: 9fb3edaf0e46d604399b2dff94ea4a42, type: 2}
   - {fileID: 198778288485439660, guid: 4d82bc8f568152d4191e1e124a880af3, type: 2}
+  - {fileID: 198873970437648578, guid: 3e0dc1001a9924146b20c6654b410141, type: 2}
   - {fileID: 198281654058517542, guid: 0ede2dab2325b2049964de9c9578c564, type: 2}
+  - {fileID: 198579277737145876, guid: 563df98ea14edcd47804b6c21b386d40, type: 2}
   particleSystems:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

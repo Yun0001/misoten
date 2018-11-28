@@ -189,7 +189,10 @@ public class AlienMove : MonoBehaviour
 				// 一つ目の終点座標に到着(画面外に向かって歩いている状態「ON」)
 				if (timeAdd > WhenEnteringStoreMoveTime[0])
 				{
-					Sound.PlaySe(GameSceneManager.seKey[1]);
+					// SEを鳴らす
+					//Sound.PlaySe(GameSceneManager.seKey[1]);
+					Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Bell), 1);
+
 					setEndPositionId = 1; timeAdd = 0.0f;
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.WALK_SIDE);
 
@@ -248,21 +251,18 @@ public class AlienMove : MonoBehaviour
 					// 右移動時のアニメーション
 					RightMoveAnimation();
 
-					for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
-					{
-						if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
-						{
-							break;
-						}
-						if (i == AlienCall.alienCall.GetCounterSeatsMax())
-						{
-							Sound.SetLoopFlgSe(GameSceneManager.seKey[6], false, 9);
-							Sound.PlaySe(GameSceneManager.seKey[6], 9);
-						}
-					}
-
-					// スクリプトを切る
-					//enabled = false;
+					//for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
+					//{
+					//	if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
+					//	{
+					//		break;
+					//	}
+					//	if (i == AlienCall.alienCall.GetCounterSeatsMax())
+					//	{
+					//		Sound.SetLoopFlgSe(GameSceneManager.seKey[6], false, 9);
+					//		Sound.PlaySe(GameSceneManager.seKey[6], 9);
+					//	}
+					//}
 				}
 
 				transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 2, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 3, 0], rate);

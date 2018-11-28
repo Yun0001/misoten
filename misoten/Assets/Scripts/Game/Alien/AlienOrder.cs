@@ -63,6 +63,10 @@ public class AlienOrder : MonoBehaviour
 	[SerializeField]
 	private float eatingCount;
 
+	// 各エイリアンの注文タイプの確率用
+	[SerializeField, Range(2, 99)]
+	private int eachAlienOrderTypeValue = 0;
+
 	// オーダーベース用
 	[SerializeField]
 	private int individualOrderBaseType;
@@ -104,6 +108,9 @@ public class AlienOrder : MonoBehaviour
 
 	// オーダーの種類
 	private int orderType = 0;
+
+	// 各エイリアンの注文タイプ
+	private int eachAlienOrderType = 0;
 
 	// オーダー内容をセーブ(チェンジ)
 	private int orderChangeSave = 0;
@@ -154,6 +161,9 @@ public class AlienOrder : MonoBehaviour
 		// 食べる状態の時
 		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 		{
+			// イートアニメーションになる
+			GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
+
 			// 当たり判定が消える
 			GetComponent<BoxCollider>().enabled = false;
 
@@ -301,20 +311,44 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void OrderTable()
 	{
+		// 各エイリアンの注文タイプ
+		eachAlienOrderType = Random.Range(1, 101);
+
 		// エイリアンの種類によって、注文傾向が変わる
 		switch ((AlienCall.EAlienPattern)AlienCall.alienCall.GetAlienPattern(GetSetId()))
 		{
 			case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
-				OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE,
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE,
 					EOrderBaseType.BLUE, EOrderBaseType.YELLOW, EOrderBaseType.RED);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE);
+				}
 				break;
 			case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
-				OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN,
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN,
 					EOrderBaseType.RED, EOrderBaseType.YELLOW, EOrderBaseType.BLUE);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN);
+				}
 				break;
 			case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
-				OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
 					EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN);
+				}
 				break;
 			default: Debug.LogError("エイリアンの注文傾向が設定されていません！"); break;
 		}
@@ -334,6 +368,18 @@ public class AlienOrder : MonoBehaviour
 		if (orderTrend >= 11 && orderTrend <= 30) { orderBaseSave = (int)base1; orderType = (int)EOrderType.BASE; return; }
 		if (orderTrend >= 31 && orderTrend <= 50) { orderBaseSave = (int)base2; orderType = (int)EOrderType.BASE; return; }
 		if (orderTrend >= 51 && orderTrend <= 100) { orderBaseSave = (int)base3; orderType = (int)EOrderType.BASE; return; }
+	}
+
+	/// <summary>
+	/// チェンジオーダー設定関数
+	/// </summary>
+	void ChangeOrderConfiguration(EOrderChangeType change1, EOrderChangeType change2)
+	{
+		// 乱数で注文傾向を決める
+		orderTrend = Random.Range(1, 101);
+
+		if (orderTrend >= 1 && orderTrend <= 50) { orderChangeSave = (int)change1; orderType = (int)EOrderType.CHANGE; return; }
+		if (orderTrend >= 51 && orderTrend <= 100) { orderChangeSave = (int)change2; orderType = (int)EOrderType.CHANGE; return; }
 	}
 
 	/// <summary>

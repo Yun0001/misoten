@@ -18,10 +18,6 @@ public class AlienSatisfaction : MonoBehaviour
 	[SerializeField, Range(1.0f, 10.0f)]
 	private float judgeCount;
 
-	// 満足度
-	[SerializeField]
-	private float[] satisfactionLevel = new float[4];
-
 	// ---------------------------------------------
 
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
@@ -41,9 +37,6 @@ public class AlienSatisfaction : MonoBehaviour
 	// 満足フラグ
 	private bool satisfactionFlag = false;
 
-	// アニメーションフラグ
-	private bool AnimationFlag = false;
-
 	// ---------------------------------------------
 
 	/// <summary>
@@ -56,9 +49,6 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足フラグ(チップ取得時用)の初期化
 		satisfactionChipFlag = false;
-
-		// アニメーションフラグの初期化
-		AnimationFlag = false;
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
@@ -80,9 +70,6 @@ public class AlienSatisfaction : MonoBehaviour
 				{
 					// イートイオブジェクトを削除
 					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
-
-					// 満足時のSE
-					Sound.PlaySe(GameSceneManager.seKey[4]);
 
 					// 満足アニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
