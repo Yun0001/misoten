@@ -11,6 +11,9 @@ public class Pot : KitchenwareBase
 
     private int missCount;
 
+    [SerializeField]
+    private GameObject stickUI;
+
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class Pot : KitchenwareBase
     protected override void ResetMiniGameUI()
     {
         miniGameUI.SetActive(false);
+        stickUI.SetActive(false);
     }
 
 
@@ -36,11 +40,18 @@ public class Pot : KitchenwareBase
         miniGameUI.SetActive(true);
         basePoint = 50;
         missCount = 0;
+        stickUI.SetActive(true);
+        stickUI.GetComponent<Animator>().Play("rSpin");
     }
 
     protected override bool Cooking()
     {
-        return frame.GetComponent<IraIraFrame>().GetOneRotationFlag();
+        bool result = frame.GetComponent<IraIraFrame>().GetOneRotationFlag();
+        if (result)
+        {
+            stickUI.SetActive(false);
+        }
+        return result;
     }
 
     public override void CookingInterruption()
