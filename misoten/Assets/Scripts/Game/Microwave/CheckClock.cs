@@ -17,7 +17,7 @@ public class CheckClock : MonoBehaviour {
 
     private void Awake()
     {
-        microwave_cs= GameObject.Find("microwave1").GetComponent<CookWareMw>();
+        //microwave_cs= GameObject.Find("microwave1").GetComponent<CookWareMw>();
         microwaveGage_cs = MicrowaveGage.GetComponent<MicrowaveGage>();
     }
 

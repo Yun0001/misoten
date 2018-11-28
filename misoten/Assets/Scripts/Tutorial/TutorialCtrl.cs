@@ -7,7 +7,7 @@ using Constants;
 public class TutorialCtrl : MonoBehaviour
 {
     [SerializeField] bool isDebugMode = false;
-    [SerializeField, Range(Tutorial.NO_1, Tutorial.NO_6)] int DebugTutorialNum = Tutorial.NO_1;
+    [SerializeField, Range(Tutorial.NO_1 + 1, Tutorial.NO_6 + 1)] int DebugTutorialNum = Tutorial.NO_1;
     [SerializeField] bool isOnce = false;
 
     private int             CURRENT_TUTORIAL_STATE;
@@ -23,8 +23,8 @@ public class TutorialCtrl : MonoBehaviour
     private GameObject[]    _players;
 
     private GameObject[]    _eatoys;
+    private Sprite[]        _eatoySprites;
 
-    private Sprite[] _eatoySprites;
     private void Awake()
     {
         _eatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
@@ -35,7 +35,7 @@ public class TutorialCtrl : MonoBehaviour
         StartCoroutine("OpenMenu");     // Open Menu Coroutine
 
         if (isDebugMode) {
-            CURRENT_TUTORIAL_STATE = DebugTutorialNum;
+            CURRENT_TUTORIAL_STATE = DebugTutorialNum - 1;
         }
         else {
             CURRENT_TUTORIAL_STATE = Tutorial.NO_1;
@@ -133,7 +133,8 @@ public class TutorialCtrl : MonoBehaviour
             NextTutorial();
         }
 
-        TutorialDebug();
+
+        OnetimeOnlyOnTutorialStart();   // 各チュートリアル開始時一度きりだけ処理される
 
     }
 
@@ -169,7 +170,7 @@ public class TutorialCtrl : MonoBehaviour
         OverPage();
     }
 
-    void TutorialDebug()
+    void OnetimeOnlyOnTutorialStart()
     {
         // チュートリアルが遷移してから一度きり
         if (isOnce)
@@ -177,23 +178,22 @@ public class TutorialCtrl : MonoBehaviour
             switch (CURRENT_TUTORIAL_STATE)
             {
                 case Tutorial.NO_1:
+                    // 冷蔵庫
                     break;
-                case Tutorial.NO_2:
+
+                default:
                     foreach (GameObject player in _players)
                     {
-                        player.GetComponent<PlayerHaveInEatoy>().SetEatoy(
-                            Instantiate(
-                                Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
-                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(
-                            1,
-                            _eatoySprites[0]
-                            );
-                        // todo : scale調整
-
+                        player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
+                        int num = Random.Range(0, 4);
+                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num]);
+                        Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
+                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
                         player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
                         player.GetComponent<PlayerAnimCtrl>().SetServing(true);
                     }
                     break;
+
             }
         }
 

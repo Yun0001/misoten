@@ -113,6 +113,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!198 &612586 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198944006119673036, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1912103841}
+--- !u!198 &131762705 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198520508096763228, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1912103841}
 --- !u!1 &145362960
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +209,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!198 &186579069 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198882085546200598, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1912103841}
 --- !u!1 &240486328
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +277,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &670688133 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198866824247667656, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1912103841}
 --- !u!1001 &999548568
 Prefab:
   m_ObjectHideFlags: 0
@@ -301,6 +321,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114855379489170582, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 612586}
+    - target: {fileID: 114847934078907462, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114726103775183832, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
     - target: {fileID: 114575126137975496, guid: 14c560f67358d9146b3ec7c15361a4a3,
         type: 2}
       propertyPath: timeManager
@@ -311,22 +346,27 @@ Prefab:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 1350153141}
+    - target: {fileID: 114273884890255434, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 670688133}
+    - target: {fileID: 114264911005477728, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 186579069}
+    - target: {fileID: 114204984329700684, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114201512496818352, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 131762705}
     - target: {fileID: 114160835257052034, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114726103775183832, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114046379784098090, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114847934078907462, guid: 14c560f67358d9146b3ec7c15361a4a3,
         type: 2}
       propertyPath: timeManager
       value: 
@@ -336,7 +376,7 @@ Prefab:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 1350153141}
-    - target: {fileID: 114204984329700684, guid: 14c560f67358d9146b3ec7c15361a4a3,
+    - target: {fileID: 114046379784098090, guid: 14c560f67358d9146b3ec7c15361a4a3,
         type: 2}
       propertyPath: timeManager
       value: 
@@ -737,12 +777,52 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 1812643025}
+    - target: {fileID: 114077910196966912, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
     - target: {fileID: 114070447655832786, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 1812643025}
-    - target: {fileID: 114077910196966912, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    - target: {fileID: 114336216952577166, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114639203995635104, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114187948832705586, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114522241444521002, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114096227577453832, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114379378709781674, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114593532391978746, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114176778829261810, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
       propertyPath: canvasCamera
       value: 
@@ -797,6 +877,11 @@ Prefab:
     - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
         type: 2}
       propertyPath: isOnce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
+        type: 2}
+      propertyPath: DebugTutorialNum
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
