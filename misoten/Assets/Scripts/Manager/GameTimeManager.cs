@@ -82,6 +82,15 @@ public class GameTimeManager : MonoBehaviour {
                     ui.SetActive(false);
                 }
             }
+
+            GameObject[] annouceUI = GameObject.FindGameObjectsWithTag("MiniGameUI");
+            foreach (var ui in annouceUI)
+            {
+                if (ui.activeInHierarchy)
+                {
+                    ui.SetActive(false);
+                }
+            }
         }
     }
 

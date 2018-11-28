@@ -284,7 +284,7 @@ Camera:
   m_PrefabParentObject: {fileID: 20968258506782094, guid: 50292cb25f53b5042938c15b47a45370,
     type: 2}
   m_PrefabInternal: {fileID: 430315091}
---- !u!1001 &1380408922
+--- !u!1001 &1447417561
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -333,6 +333,11 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 24543913}
+    - target: {fileID: 114775434568062330, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: stickUI
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 223604145624308502, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
       propertyPath: m_Camera
@@ -345,7 +350,7 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 1102859739124382, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
     type: 2}
-  m_PrefabInternal: {fileID: 1380408922}
+  m_PrefabInternal: {fileID: 1447417561}
 --- !u!1 &1700340684
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ TagManager:
   - GameUI
   - TutorialFrow
   - Eatoy
+  - MiniGameUI
   layers:
   - Default
   - TransparentFX
