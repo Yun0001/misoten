@@ -21,6 +21,7 @@ public class AlienAnimation : MonoBehaviour
 		WORK,			// 歩く
 		ANGER,			// 怒り
 		SATISFACTION,	// 満足
+		EAT,			// 食事
 		MAX
 	}
 
@@ -28,7 +29,7 @@ public class AlienAnimation : MonoBehaviour
 	private EAlienPattern alienPattern;
 
 	//private const int ANIMATION_STATUS_PATTERN = 2;// アニメーションが必要な状態の数
-	private const int IS_CATERING = 4;// 待機、歩き、怒り、満足
+	private const int IS_CATERING = 5;// 待機、歩き、怒り、満足、食事
 	private const int ANIMATION_NUM = 4;// アニメーションの数
 
 
@@ -39,7 +40,7 @@ public class AlienAnimation : MonoBehaviour
 
 	private float countAnimTime = 0;
 
-	private string[] folderPass = { "Textures/Alien/Wait/", "Textures/Alien/Work/", "Textures/Alien/Anger/", "Textures/Alien/Satisfaction/" };
+	private string[] folderPass = { "Textures/Alien/Wait/", "Textures/Alien/Work/", "Textures/Alien/Anger/", "Textures/Alien/Satisfaction/", "Textures/Alien/Eat/" };
 
 	private string[] waitTextureName1 = { "Martian/1", "Martian/2", "Martian/1", "Martian/2" };
 	private string[] waitTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/1", "Mercury/2" };
@@ -56,6 +57,10 @@ public class AlienAnimation : MonoBehaviour
 	private string[] satisfactionTextureName1 = { "Martian/1", "Martian/1", "Martian/1", "Martian/1" };
 	private string[] satisfactionTextureName2 = { "Mercury/1", "Mercury/1", "Mercury/1", "Mercury/1" };
 	private string[] satisfactionTextureName3 = { "Venusian/1", "Venusian/1", "Venusian/1", "Venusian/1" };
+
+	private string[] eatTextureName1 = { "Martian/1", "Martian/2", "Martian/1", "Martian/2" };
+	private string[] eatTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/1", "Mercury/2" };
+	private string[] eatTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/1", "Venusian/2" };
 
 	// スプライト
 	public Sprite[,,,] sprite = new Sprite[(int)EAlienPattern.MAX, IS_CATERING, 2, ANIMATION_NUM];
@@ -79,18 +84,21 @@ public class AlienAnimation : MonoBehaviour
 				WorkAnimationSpriteLoad1();
 				AngerAnimationSpriteLoad1();
 				SatisfactionAnimationSpriteLoad1();
+				EatAnimationSpriteLoad1();
 				break;
 			case EAlienPattern.MERCURY:
 				WaitAnimationSpriteLoad2();
 				WorkAnimationSpriteLoad2();
 				AngerAnimationSpriteLoad2();
 				SatisfactionAnimationSpriteLoad2();
+				EatAnimationSpriteLoad2();
 				break;
 			case EAlienPattern.VENUSIAN:
 				WaitAnimationSpriteLoad3();
 				WorkAnimationSpriteLoad3();
 				AngerAnimationSpriteLoad3();
 				SatisfactionAnimationSpriteLoad3();
+				EatAnimationSpriteLoad3();
 				break;
 			default: break;
 		}
@@ -140,6 +148,17 @@ public class AlienAnimation : MonoBehaviour
 		}
 	}
 
+	private void EatAnimationSpriteLoad1()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[0, 4, i, k] = Resources.Load<Sprite>(folderPass[4] + eatTextureName1[k]);
+			}
+		}
+	}
+
 	private void WaitAnimationSpriteLoad2()
 	{
 		for (int i = 0; i < 2; i++)
@@ -184,6 +203,17 @@ public class AlienAnimation : MonoBehaviour
 		}
 	}
 
+	private void EatAnimationSpriteLoad2()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[1, 4, i, k] = Resources.Load<Sprite>(folderPass[4] + eatTextureName2[k]);
+			}
+		}
+	}
+
 	private void WaitAnimationSpriteLoad3()
 	{
 		for (int i = 0; i < 2; i++)
@@ -224,6 +254,17 @@ public class AlienAnimation : MonoBehaviour
 			for (int k = 0; k < 4; k++)
 			{
 				sprite[2, 3, i, k] = Resources.Load<Sprite>(folderPass[3] + satisfactionTextureName3[k]);
+			}
+		}
+	}
+
+	private void EatAnimationSpriteLoad3()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[2, 4, i, k] = Resources.Load<Sprite>(folderPass[4] + eatTextureName3[k]);
 			}
 		}
 	}

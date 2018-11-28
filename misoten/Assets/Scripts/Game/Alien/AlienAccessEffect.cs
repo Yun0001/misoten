@@ -60,7 +60,10 @@ public class AlienAccessEffect : MonoBehaviour
 				{
 					if (HitDish.hitDish[j])
 					{
-						accessObj[j].GetComponent<ParticleSystem>().Play();
+						if(playerObj[i].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
+						{
+							accessObj[j].GetComponent<ParticleSystem>().Play();
+						}
 					}
 					else { accessObj[j].GetComponent<ParticleSystem>().Stop(); }
 				}
