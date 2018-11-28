@@ -54,9 +54,10 @@ public class Flyingpan : KitchenwareBase
         gPos.z -= 1f;
         miniGameUI.transform.position = gPos;
 
-        foreach (var e in eatoyPoint)
+
+        for (int i = 0; i < eatoyPoint.Length; i++)
         {
-            eatoyPoint[e] = 0;
+            eatoyPoint[i] = 0;
         }
 
         buttonUI.SetActive(true);

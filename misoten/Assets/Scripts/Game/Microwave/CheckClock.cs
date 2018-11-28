@@ -73,6 +73,7 @@ public class CheckClock : MonoBehaviour {
                 }
                 microwave_cs.AddChain();
                 microwaveGage_cs.DecisionSuceesAreaPosition();
+                Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.rentin_Success), 16);
                 return;
             }
         }

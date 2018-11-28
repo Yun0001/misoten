@@ -31,6 +31,6 @@ public class GameSceneManager : MonoBehaviour
             SoundController.SoundLoad();
         }
 
-        Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Gameplay));
+        //Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Gameplay));
 	}
 }

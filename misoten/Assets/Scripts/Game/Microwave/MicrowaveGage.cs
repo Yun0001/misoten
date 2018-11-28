@@ -154,7 +154,6 @@ public class MicrowaveGage : MonoBehaviour
     public void DecisionSuceesAreaPosition()
     {
         timer = (int)(timer / 1.25);
-        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Grilled_During), 16);
         int arrayElement = rand.Next(5);
         while (arrayElement == oldRand)
         {
