@@ -11,6 +11,8 @@ public class AnimEffectCtrl : MonoBehaviour {
 
     [SerializeField] private GameObject _effectObj;
 
+    [SerializeField] private bool _isDebugMode = false;
+
     // Use this for initialization
     void Start () {
         _animator = GetComponent<Animator>();
@@ -24,7 +26,14 @@ public class AnimEffectCtrl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (_animator.GetBool("isOpen"))
+        if (_isDebugMode)
+        {
+            DebugMode();
+
+            return;
+        }
+
+        if (_animator.GetBool("isCooking"))
         {
             if (!_effect.isPlaying)
             {
@@ -40,4 +49,13 @@ public class AnimEffectCtrl : MonoBehaviour {
         }
 
     }
+
+    void DebugMode()
+    {
+        if (!_effect.isPlaying)
+        {
+            _effect.Play();
+        }
+    }
+
 }
