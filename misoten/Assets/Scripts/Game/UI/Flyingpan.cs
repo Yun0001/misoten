@@ -36,7 +36,7 @@ public class Flyingpan : KitchenwareBase
    /// </summary>
     protected override void InstanceMiniGameUI()
     {
-		miniGameUI = Instantiate(Resources.Load("Prefabs/GrilledGage/GrilledMiniGame") as GameObject, transform.position, Quaternion.identity);
+		//miniGameUI = Instantiate(Resources.Load("Prefabs/GrilledGage/GrilledMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
    }
 

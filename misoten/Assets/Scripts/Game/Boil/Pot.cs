@@ -22,7 +22,7 @@ public class Pot : KitchenwareBase
 
     protected override void InstanceMiniGameUI()
     {
-        miniGameUI = Instantiate(Resources.Load("Prefabs/PotMiniGame") as GameObject, transform.position, Quaternion.identity);
+       // miniGameUI = Instantiate(Resources.Load("Prefabs/PotMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
         frame = miniGameUI.transform.Find("Canvas/JoyStick/SecondHandFrame").gameObject;
         miniGameUI.SetActive(false);

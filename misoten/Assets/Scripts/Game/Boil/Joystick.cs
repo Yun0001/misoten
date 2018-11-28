@@ -77,7 +77,7 @@ public class Joystick : MonoBehaviour
         //スティックのベクトルに現在のスクリーン座標を加算して計算
         // スティックを動かすと座標変換される
         RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
-			new Vector2(Input.GetAxis(playerInput.GetInputXAxisName()) + Position.x, -Input.GetAxis(playerInput.GetInputYAxisName())+ Position.y), null, out imagePos);
+			new Vector2(Input.GetAxis(playerInput.GetInputXAxisName())*100 + Position.x, -Input.GetAxis(playerInput.GetInputYAxisName())*100+ Position.y), null, out imagePos);
 
 
         // 位置の更新

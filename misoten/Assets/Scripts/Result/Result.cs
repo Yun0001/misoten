@@ -122,7 +122,7 @@ public class Result : MonoBehaviour
 						{
 							if (obj[i - 1].activeSelf || obj[i].activeSelf)
 							{
-								if (timeAdd[i] >= time[i]) { Sound.StopBgm(); SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
+								if (timeAdd[i] >= time[i]) { Sound.StopBgm();SoundController.StopAllSE(); SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
 								else { timeAdd[i] += Time.deltaTime; }
 							}
 						}

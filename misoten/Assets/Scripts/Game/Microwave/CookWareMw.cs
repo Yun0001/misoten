@@ -25,11 +25,12 @@ public class CookWareMw : KitchenwareBase
         InstanceMiniGameUI();
         microwaveGage_cs = miniGameUI.GetComponent<MicrowaveGage>();
         miniGameUI.GetComponent<MicrowaveGage>().SetCheckClockInMicrowave_cs(GetComponent<CookWareMw>());
+        miniGameUI.SetActive(false);
     }
 
     protected override void InstanceMiniGameUI()
     {
-        miniGameUI = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
+       //' miniGameUI = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
         miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
     }

@@ -14,6 +14,7 @@ public abstract class KitchenwareBase : MonoBehaviour
     protected bool isEnd = false;
 
     // 各料理のミニゲームUI
+    [SerializeField]
     protected GameObject miniGameUI;
 
     // 料理
