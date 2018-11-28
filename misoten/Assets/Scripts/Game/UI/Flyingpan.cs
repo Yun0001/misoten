@@ -110,7 +110,7 @@ public class Flyingpan : KitchenwareBase
 
     public void DecisionTimingPointCollision()
     {
-			GameObject hitSuccessArea = grilledGage_cs.DecisionIsHit();
+        GameObject hitSuccessArea = grilledGage_cs.DecisionIsHit();
         if (hitSuccessArea == null)
         {
 			effectFlag = false;
@@ -121,33 +121,38 @@ public class Flyingpan : KitchenwareBase
 
 
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Grilled_During), 15);
+        int point = 0;
         switch (hitSuccessArea.tag)
         {
             case "GrilledSuccessAreaNormal1":
                 hitSuccessArea.transform.parent.gameObject.SetActive(false);
                 grilledGage_cs.ResetIsHit(0);
                 AddEatoyPoint(0, 1);
-             
+                point = 1;
                 break;
 
             case "GrilledSuccessAreaNormal2":
                 hitSuccessArea.transform.parent.gameObject.SetActive(false);
                 grilledGage_cs.ResetIsHit(1);
                 AddEatoyPoint(1, 2);
+                point = 2;
                 break;
 
             case "GrilledSuccessAreaHard":
                 hitSuccessArea.SetActive(false);
                 grilledGage_cs.ResetIsHit(2);
                 AddEatoyPoint(2, 2);
+                point = 2;
                 break;
 
             case "GrilledSuccessAreaHell":
                 hitSuccessArea.SetActive(false);
                 grilledGage_cs.ResetIsHit(3);
                 AddEatoyPoint(3, 3);
+                point = 3;
                 break;
         }
+        pointText.GetComponent<PointAnnouce>().DisplayText(point);
         chain++;
 		effectFlag = true;
 	}
