@@ -5528,7 +5528,7 @@ MonoBehaviour:
   - {fileID: 1715689404654530}
   - {fileID: 1130183835116090}
   - {fileID: 1927893757780514}
-  score: 3000000
+  score: 3864400
 --- !u!120 &120138738252196704
 LineRenderer:
   m_ObjectHideFlags: 1

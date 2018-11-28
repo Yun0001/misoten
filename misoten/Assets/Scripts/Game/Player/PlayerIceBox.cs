@@ -7,7 +7,7 @@ public class PlayerIceBox : MonoBehaviour {
     private Player player_cs;
     private void Awake()
     {
-        
+        player_cs = GetComponent<Player>();
     }
 
     public void AccessIceBox()
