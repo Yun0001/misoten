@@ -65,11 +65,11 @@ public class TitleController : MonoBehaviour {
     }
 
     void Update () {
-
         // タイトルBGMが終了でタイトルシーンの再ロード
         if (!_audioSource.isPlaying)
         {
-            _canvasWIO.GetComponent<WhiteIO>().OnRsWhiteOut();
+            TitleAnimation();
+            // _canvasWIO.GetComponent<WhiteIO>().OnRsWhiteOut();
         }
 
         // タイトルロゴのアニメーションが終わってない場合以下スルー
