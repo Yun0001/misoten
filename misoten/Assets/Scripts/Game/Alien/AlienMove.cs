@@ -192,6 +192,9 @@ public class AlienMove : MonoBehaviour
 					//Sound.PlaySe(GameSceneManager.seKey[1]);
 					Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Bell), 1);
 
+					// 当たり判定が消える
+					GetComponent<BoxCollider>().enabled = false;
+
 					setEndPositionId = 1; timeAdd = 0.0f;
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.WALK_SIDE);
 
@@ -229,6 +232,9 @@ public class AlienMove : MonoBehaviour
 				// 四つ目の終点座標に到着
 				if (timeAdd > WhenEnteringStoreMoveTime[3])
 				{
+					// 当たり判定「ON」
+					GetComponent<BoxCollider>().enabled = true;
+
 					// 訪問時の移動状態「OFF」
 					AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.VISIT);
 
