@@ -132,6 +132,7 @@ public class PlayerInput : MonoBehaviour
 
     public void InputMixer()
     {
+        Mixer mixer_cs = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
         stickframe++;
         if (stickframe >= 2)
         {
@@ -141,12 +142,12 @@ public class PlayerInput : MonoBehaviour
             if (Angle != 90)
             {
                 AngleSum += Angle;
-                if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetMiniGameUI().GetComponent<MixerMiniGame>().GetRotation())
+                if (!mixer_cs.GetMiniGameUI().GetComponent<MixerMiniGame>().GetRotation())
                 {
                     if ((int)AngleSum <= -360 * (rotationNum + 1))
                     {
                         rotationNum++;
-                        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().OneRotation())
+                        if (mixer_cs.OneRotation())
                         {
                             rotationNum = 0;
                             AngleSum = 0;
@@ -158,7 +159,7 @@ public class PlayerInput : MonoBehaviour
                     if ((int)AngleSum >= 360 * (rotationNum + 1))
                     {
                         rotationNum++;
-                        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().OneRotation();
+                        mixer_cs.OneRotation();
                     }
                 }
 

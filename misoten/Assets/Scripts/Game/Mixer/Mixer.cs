@@ -83,6 +83,17 @@ public class Mixer : KitchenwareBase {
                     complateEatoyAnnounce.SetActive(false);
                 }
                 break;
+            case Status.AccessThree:
+                if (accessNum == (int)Status.AccessThree)
+                {
+                    // 調理開始
+                    status = Status.Open;
+                    mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.ThreeParson);
+                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+                    mixerEatoyM_cs.HieenEatoySprite();
+                    complateEatoyAnnounce.SetActive(false);
+                }
+                break;
 
             case Status.Open:
                 animCount++;
@@ -243,26 +254,12 @@ public class Mixer : KitchenwareBase {
         mixerEatoyM_cs.SetEatoy(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
 
         // アクセスしている人数が二人の時
-        if (status == Status.AccessTwo)
+        if (status >= Status.AccessTwo)
         {
             // できるイートイの表示
             int colorId = mixerEatoyM_cs.DecisionTwoParonPutEatoyID();
             complateEatoyAnnounce.GetComponent<ComplateEatoyAnnounce>().SetSprite(mixerEatoyM_cs.GetEatoySprite(colorId));
             complateEatoyAnnounce.SetActive(true);
-
-
-
-        }
-        // 三人アクセスした時
-        else if (status == Status.AccessThree)
-        {
-            accessNum = 3;
-            mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.ThreeParson);
-            status = Status.Open;
-            lastAccessPlayer.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Mixer);
-            transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
-            mixerEatoyM_cs.HieenEatoySprite();
-            complateEatoyAnnounce.SetActive(false);
         }
         return true;
     }

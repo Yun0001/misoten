@@ -44,14 +44,24 @@ public class IceBox : MonoBehaviour {
     [SerializeField]
     private int iceBoxID;
 
+    private int emissionRateID = 0;
+
+    /*
+     * 0　黄
+     * 1　橙
+     * 2　赤
+     * 3　紫
+     * 4　青
+     * 5　緑
+     * */
     private int[,] emissionRate = {
-        { 33,33,33,0,0,0},// オーダーなし
-        { 15,15,69,0,0,0},// 黄オーダー
-        { 40,10,40,0,0,9},// 橙オーダー
-        { 69,15,15,0,0,0},// 赤オーダー
-        { 40,40,10,9,0,0},// 紫オーダー
-        { 15,69,15,0,0,0},// 青オーダー
-        { 10,40,40,0,9,0},// 緑オーダー        
+        { 33,0,33,0,33,0},// オーダーなし
+        { 69,0,15,0,15,0},// 黄オーダー
+        { 40,9,40,0,10,0},// 橙オーダー
+        { 15,0,69,0,15,0},// 赤オーダー
+        { 10,0,40,9,40,0},// 紫オーダー
+        { 15,0,15,0,69,0},// 青オーダー
+        { 40,0,10,0,40,9},// 緑オーダー        
     };
 
     // Use this for initialization
@@ -59,7 +69,8 @@ public class IceBox : MonoBehaviour {
     {
         // テクスチャロード
         eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
-	}
+        emissionRateID = 0;
+    }
 
     /// <summary>
     /// プレイヤーアクセス
@@ -127,6 +138,12 @@ public class IceBox : MonoBehaviour {
         {
             status = Status.AccessOn;
         }
+
+        // 誰もアクセスしていない時にエイリアンが当たると排出率を変更
+        if (status <= Status.AccessOn　&& other.tag == "Alien")
+        {
+            DecisionEmissionRate(other.gameObject);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -151,26 +168,25 @@ public class IceBox : MonoBehaviour {
     /// <returns></returns>
     public int DecisionPutEatoyElement()
     {
-        // 客の注文している料理を参照する
-        bool IsChangeEatoy = false;
-
         random = new System.Random();
-        // 一番最初に入店してきた客
-        if (IsChangeEatoy)
+        int sum = 0;
+        val = random.Next(1, 99);
+        if (val <= emissionRate[emissionRateID, 0])
         {
-            // チェンジイートイがある時
+            return 0;
         }
-        else
+        for (int i = 1; i < 6; i++)
         {
-            // ベースイートイだけの時
-            val = random.Next(1, 7);
-            if (val == 2 || val == 4 || val == 6)
+            sum += emissionRate[emissionRateID, i - 1];
+            if (val <= sum + emissionRate[emissionRateID, i])
             {
-                val--;
+                return i;
             }
         }
 
-        return val;
+
+        Debug.LogError("ここまでくるのはありえないはず");
+        return 100;
     }
 
     public void ActionMiniGame()
@@ -247,7 +263,7 @@ public class IceBox : MonoBehaviour {
         
         // イートイを初期化
         int eatoyID = DecisionPutEatoyElement();
-        putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID - 1]);
+        putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID]);
         putEatoy.GetComponent<SpriteRenderer>().enabled = false;
     }
 
@@ -258,8 +274,22 @@ public class IceBox : MonoBehaviour {
     /// <summary>
     /// 排出率決定
     /// </summary>
-    private void DecisionEmissionRate()
+    private void DecisionEmissionRate(GameObject Alien)
     {
+        AlienOrder order_cs = Alien.GetComponent<AlienOrder>();
+        int orderEatoy = 0;
+        // オーダーするイートイIDを取得
+        if (order_cs.GetOrderType() == 0)
+        {
+            //  ベースイートイ
+            orderEatoy = order_cs.GetOrderBaseSave();
+        }
+        else
+        {
+            // チェンジイートイ
+            orderEatoy = order_cs.GetOrderChangeSave();
+        }
 
+        emissionRateID =  orderEatoy;
     }
 }

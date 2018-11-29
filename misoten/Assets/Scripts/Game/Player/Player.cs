@@ -134,6 +134,7 @@ public class Player : MonoBehaviour
 
     private void UpdateBranch()
     {
+        Mixer mixer_cs;
         switch (playerStatus)
         {
             case PlayerStatus.Microwave:
@@ -153,10 +154,17 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerStatus.MixerAccess:
-                playerInput_cs.InputMixerAccess();
+                mixer_cs = IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
+
+                // ミキサーがオープン状態以降は入力不可
+                if (mixer_cs.GetStatus() < Mixer.Status.Open)
+                {
+                    playerInput_cs.InputMixerAccess();
+                }
+           
 
                 // 自分が3人目としてアクセスした時用
-                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Open)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -165,14 +173,15 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerStatus.MixerWait:
-                Mixer mixer_cs = IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
+                mixer_cs = IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
+                // ミキサーがオープン状態以降は入力不可
                 if (mixer_cs.GetStatus() < Mixer.Status.Open)
                 {
                     playerInput_cs.InputMixerWait();
                 }
                
                 // 二人でミキサーを利用する時
-                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                if (mixer_cs.GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
@@ -198,16 +207,6 @@ public class Player : MonoBehaviour
             case PlayerStatus.DastBox:
                 // ゴミ箱状態更新処理
                 pDastbox_cs.UpdateDastBox();
-                break;
-
-            case PlayerStatus.Catering:
-                // 持っているイートイの座標を更新
-               // haveInEatoy_cs.UpdateHaveInEatoyPosition();
-                break;
-
-            case PlayerStatus.CateringIceEatoy:
-                // 持っているイートイの座標を更新
-              //  haveInEatoy_cs.UpdateHaveInEatoyPosition();
                 break;
 
             default:

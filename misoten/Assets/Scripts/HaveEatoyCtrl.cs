@@ -111,7 +111,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
     void SetEatoy(int num) => _eatoyRenderer.sprite = _eatoyMaps[num];
 
-    public void SetEatoyNum(int num) => _eatoyNum = num - 1;
+    public void SetEatoyNum(int num) => _eatoyNum = num;
 
     public void Sorting(int sortID)
     {
