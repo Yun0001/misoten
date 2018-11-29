@@ -129,6 +129,9 @@ public class AlienDisturbance : MonoBehaviour
 							// 怒り状態になる
 							mood[setId] = EAlienMood.ANGER;
 						}
+
+						// 当たり判定が消える
+						if (timeFont <= 0) { GetComponent<BoxCollider>().enabled = false; }
 					}
 				}
 
