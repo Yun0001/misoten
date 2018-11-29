@@ -6,13 +6,16 @@ using Constants;
 
 public class HaveEatoyCtrl : MonoBehaviour {
 
-    private Player          _player;
-    private PlayerMove      _playerMove;
-    private PlayerAnimCtrl  _playerAnim;
+    private Player _player;
+    private PlayerMove _playerMove;
+    private PlayerAnimCtrl _playerAnim;
 
-    private Sprite[]        _eatoyMaps;
-    private GameObject      _haveEatoy;
-    private SpriteRenderer  _eatoyRenderer;
+    private Sprite[] _eatoyMaps;
+    private GameObject _haveEatoy;
+    private SpriteRenderer _eatoyRenderer;
+
+    [SerializeField, Range(0.01f, 0.2f)]
+    private float _renderingZ = 0.01f;
 
     public enum EATOY_NUM
     {
@@ -52,7 +55,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
         _eatoyRenderer.sprite = null;
 
         foreach (Transform effect in _haveEatoy.transform) effect.gameObject.GetComponent<ParticleSystem>().Stop();
-        
+
     }
 
     void Update() {
@@ -73,7 +76,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
-                if(!(effect.gameObject.GetComponent<ParticleSystem>().isPlaying))
+                if (!(effect.gameObject.GetComponent<ParticleSystem>().isPlaying))
                     effect.gameObject.GetComponent<ParticleSystem>().Play();
             }
         }
@@ -102,9 +105,9 @@ public class HaveEatoyCtrl : MonoBehaviour {
             _haveEatoy.transform.localScale = new Vector3(1, 1, 1);
         }
     }
-    void UpHand() => _haveEatoy.transform.localPosition = new Vector3(0, 0.01f, -0.1f);
+    void UpHand() => _haveEatoy.transform.localPosition = new Vector3(0, 0.01f, _renderingZ * -1.0f);
 
-    void DownHand() => _haveEatoy.transform.localPosition = new Vector3(0, 0, -0.1f);
+    void DownHand() => _haveEatoy.transform.localPosition = new Vector3(0, 0, _renderingZ * -1.0f);
 
     void SetEatoy(int num) => _eatoyRenderer.sprite = _eatoyMaps[num];
 
