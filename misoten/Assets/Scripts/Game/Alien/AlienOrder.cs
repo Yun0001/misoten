@@ -49,7 +49,7 @@ public class AlienOrder : MonoBehaviour
 
 	// オーダー内容描画用
 	[SerializeField]
-	GameObject[] orderBalloon = new GameObject[7];
+	GameObject[] orderBalloon = new GameObject[6];
 
 	// オーダーするまでの時間
 	[SerializeField]

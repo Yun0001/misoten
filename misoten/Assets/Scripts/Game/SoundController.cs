@@ -91,7 +91,7 @@ public class SoundController : MonoBehaviour {
         { GameSE.Addcoins,"Addcoins"},
         { GameSE.Fire,"Fire"},
         { GameSE.Success_share,"Success_share"},
-        { GameSE.Offer_succes,"Offer_succes"},
+        { GameSE.Offer_succes,"Offer_success"},
         { GameSE.Getangry,"Getangry"},
         { GameSE.Eat_success,"Eat_success"},
         { GameSE.Eat_Getangry,"Eat_Getangry"},

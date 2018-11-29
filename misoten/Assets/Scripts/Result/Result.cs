@@ -65,6 +65,7 @@ public class Result : MonoBehaviour
 		// リザルトから始めた時に呼ばれる
 		if (!SoundController.Loadflg) { SoundController.SoundLoad(); }
 
+		Sound.SetLoopFlgSe(SoundController.GetResultSEName(SoundController.ResultSE.register), false, 4);
 		Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Result));
 		seFlag = seFlag2 = true;
 	}
