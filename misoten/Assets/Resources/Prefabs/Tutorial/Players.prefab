@@ -974,15 +974,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStatus: 0
   playerID: 3
-  hitObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   timeManager: {fileID: 0}
 --- !u!114 &114151580916434690
 MonoBehaviour:
@@ -996,6 +987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1130303417966762}
+  buttonUI: {fileID: 0}
 --- !u!114 &114161191859290004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1030,6 +1022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1160915088663066}
+  buttonUI: {fileID: 0}
 --- !u!114 &114204290762649460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1162,15 +1155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStatus: 0
   playerID: 2
-  hitObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   timeManager: {fileID: 0}
 --- !u!114 &114480657807044392
 MonoBehaviour:
@@ -1264,15 +1248,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStatus: 0
   playerID: 1
-  hitObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   timeManager: {fileID: 0}
 --- !u!114 &114605684383479716
 MonoBehaviour:
@@ -1430,15 +1405,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStatus: 0
   playerID: 0
-  hitObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   timeManager: {fileID: 0}
 --- !u!114 &114871269999002018
 MonoBehaviour:
@@ -1476,6 +1442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1137411883429722}
+  buttonUI: {fileID: 0}
 --- !u!114 &114903607493467240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1488,6 +1455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1662274576713208}
+  buttonUI: {fileID: 0}
 --- !u!114 &114912555614484822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1535,7 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFront: 1
-  isServing: 1
+  isServing: 0
   isWalking: 0
   isPause: 0
 --- !u!114 &114962359405181952
@@ -28933,7 +28901,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 12
-  m_Sprite: {fileID: 21300032, guid: 6eb395b2b42efc84b87ecd7db76b4e6a, type: 3}
+  m_Sprite: {fileID: 21300008, guid: 6eb395b2b42efc84b87ecd7db76b4e6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
