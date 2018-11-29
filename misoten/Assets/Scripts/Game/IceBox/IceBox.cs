@@ -44,7 +44,11 @@ public class IceBox : MonoBehaviour {
     [SerializeField]
     private int iceBoxID;
 
-    private int[,] emissionRate = new int[7, 6];
+    private int[,] emissionRate = {
+
+        { 69,15,15,0,0,0},
+       // { 15,}
+    };
 
     // Use this for initialization
     void Awake ()
