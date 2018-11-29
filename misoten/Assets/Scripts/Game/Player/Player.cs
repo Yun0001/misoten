@@ -84,8 +84,8 @@ public class Player : MonoBehaviour
 		if (!IsOffer())
 		{
 			// エイリアンのスクリプトを取得して料理を渡す
-			haveInEatoy_cs.SetHaveInEatoyPosition(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).transform.position);
-            collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
+			haveInEatoy_cs.SetHaveInEatoyPosition(IsObjectCollision(PlayerCollision.hitObjName.Alien).transform.position);
+            IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
 			GetComponent<PlayerAnimCtrl>().SetServing(false);
 
 			SetPlayerStatus(PlayerStatus.Normal);
@@ -95,10 +95,10 @@ public class Player : MonoBehaviour
     public bool IsOffer()
     {
         return
-            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT) ||
-            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.CLAIM) ||
-            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD) ||
-            AlienStatus.GetCounterStatusChangeFlag(collision_cs.GetHitObj(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
+            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT) ||
+            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.CLAIM) ||
+            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD) ||
+            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
     }
 
     /// <summary>
@@ -153,28 +153,34 @@ public class Player : MonoBehaviour
                 playerInput_cs.InputMixerAccess();
 
                 // 自分が3人目としてアクセスした時用
-                if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
+                    HiddenAnnounceSprite();
                 }
                 break;
 
             case PlayerStatus.MixerWait:
-                playerInput_cs.InputMixerWait();
-
+                Mixer mixer_cs = IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
+                if (mixer_cs.GetStatus() < Mixer.Status.Open)
+                {
+                    playerInput_cs.InputMixerWait();
+                }
+               
                 // 二人でミキサーを利用する時
-                if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
+                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Play)
                 {
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
                     transform.Find("Line").gameObject.SetActive(false);
+         
                 }
                 break;
 
             case PlayerStatus.Mixer:
                 playerInput_cs.InputMixer();
-                if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
                 {
                     playerInput_cs.InputMixer();
                     SetPlayerStatus(PlayerStatus.Normal);
@@ -258,8 +264,8 @@ public class Player : MonoBehaviour
     /// </summary>
     private void AccessPot()
     {
-        if (collision_cs.GetHitObj(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().IsCooking()) return;
-        collision_cs.GetHitObj(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
+        if (IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().IsCooking()) return;
+        IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().JoystickInit(playerID);
         cookingPot_cs.CookingStart();
     }
 
@@ -302,4 +308,6 @@ public class Player : MonoBehaviour
     }
 
     public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
+
+    public void ResetUIButtonPos() => playerAccessPosssiblAnnounce_cs.ResetButtonUIPos();
 }

@@ -97,6 +97,7 @@ public class PlayerInput : MonoBehaviour
             player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
             // プレイヤーの状態をミキサー待機状態に変更
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
+            player_cs.HiddenAnnounceSprite();
         }
 
         // キャンセルボタン
@@ -125,6 +126,7 @@ public class PlayerInput : MonoBehaviour
             player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
             // プレイヤーの状態をミキサーアクセスに戻す
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
+            GetComponent<PlayerAccessPossiblAnnounce>().SetMixerAccessSprite();
         }
     }
 

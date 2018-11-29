@@ -28,6 +28,7 @@ public class PlayerCollision : MonoBehaviour
         player_cs = GetComponent<Player>();
     }
 
+    
     /// <summary>
     /// 当たり判定
     /// </summary>
@@ -63,7 +64,9 @@ public class PlayerCollision : MonoBehaviour
             // ミキサー
             case "Mixer":
                 hitObj[(int)hitObjName.Mixer] = collision.gameObject;
-                if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering && !GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().IsChangeEatoy())
+                if (player_cs.GetPlayerStatus() == Player.PlayerStatus.Catering &&
+                    !GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().IsChangeEatoy() &&
+                      hitObj[(int)hitObjName.Mixer].GetComponent<Mixer>().GetStatus() < Mixer.Status.Open)
                 {
                     player_cs.SetAnnounceSprite((int)hitObjName.Mixer);
                 }
@@ -90,6 +93,7 @@ public class PlayerCollision : MonoBehaviour
                 break;
         }
     }
+    
 
     /// <summary>
     /// 当たり判定がなくなるとき
@@ -128,6 +132,7 @@ public class PlayerCollision : MonoBehaviour
                 break;
         }
     }
+    
 
     public GameObject GetHitObj(hitObjName HitObjID)
     {
@@ -135,4 +140,5 @@ public class PlayerCollision : MonoBehaviour
 
         return hitObj[(int)HitObjID].gameObject;
     }
+
 }

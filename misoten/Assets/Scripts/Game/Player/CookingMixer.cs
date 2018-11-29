@@ -19,7 +19,7 @@ public class CookingMixer : MonoBehaviour {
             }
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         transform.Find("Line").gameObject.SetActive(true);
-        GetComponent<PlayerAccessPossiblAnnounce>().HiddenSprite();
+        GetComponent<PlayerAccessPossiblAnnounce>().SetMixerAccessSprite();
     }
     
 }

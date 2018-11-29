@@ -11,7 +11,6 @@ public class Mixer : KitchenwareBase {
         AccessOne,
         AccessTwo,
         AccessThree,
-        Start,
         Open,
         Play,
         Put,
@@ -57,7 +56,7 @@ public class Mixer : KitchenwareBase {
 
     // Use this for initialization
     void Awake () {
-        miniGameUI = Instantiate(Resources.Load("Prefabs/MixerMiniGame") as GameObject, transform.position, Quaternion.identity);
+        //miniGameUI = Instantiate(Resources.Load("Prefabs/MixerMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
         mixerEatoyM_cs = GetComponent<MixerEatoyManager>();
     }
