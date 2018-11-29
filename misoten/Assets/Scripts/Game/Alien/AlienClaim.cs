@@ -100,13 +100,13 @@ public class AlienClaim : MonoBehaviour
 	/// <summary>
 	/// 更新関数
 	/// </summary>
-	void Update ()
+	void Update()
 	{
 		// クレーム状態の時
 		if (GetIsClaim())
 		{
 			// 状態移行フラグが「ON」の時
-			if(GetComponent<AlienOrder>().GetStatusMoveFlag())
+			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
 				// エイリアンの注文内容が見えている状態の時
 				if (!claimFlag)
@@ -129,7 +129,7 @@ public class AlienClaim : MonoBehaviour
 				}
 
 				// クレームアニメーション
-				if(AnimationFlag)
+				if (AnimationFlag)
 				{
 					if (timeAdd >= time)
 					{
@@ -153,16 +153,6 @@ public class AlienClaim : MonoBehaviour
 
 					// 帰る(悪)状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD);
-
-					//for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
-					//{
-					//	if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.RETURN_BAD))
-					//	{
-					//		Sound.SetLoopFlgSe(GameSceneManager.seKey[5], true, 8);
-					//		Sound.PlaySe(GameSceneManager.seKey[5], 8);
-					//		break;
-					//	}
-					//}
 
 					// 退店時の移動開始
 					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
@@ -192,7 +182,7 @@ public class AlienClaim : MonoBehaviour
 				}
 			}
 
-			if(GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD))
+			if (GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD))
 			{
 				// クレームアニメーション
 				if (AnimationFlag)
@@ -206,6 +196,13 @@ public class AlienClaim : MonoBehaviour
 					else { timeAdd += Time.deltaTime; }
 				}
 			}
+		}
+
+		// Fadeが開始された時
+		if (AlienCall.alienCall.GetCoinFoObj().GetComponent<CoinFO>().GetIsStartingCoinFO())
+		{
+			// 吹き出しを出さない
+			for (int i = 0; i < (int)EClaimPattern.MAX; i++) { claimBalloon[i].SetActive(false); }
 		}
 	}
 

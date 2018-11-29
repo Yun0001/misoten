@@ -284,9 +284,6 @@ public class AlienMove : MonoBehaviour
 			// 予定時間を割る
 			rate = timeAdd / WhenLeavingStoreMoveTime;
 
-			// BoxColliderを「OFF」にする
-			GetComponent<BoxCollider>().enabled = false;
-
 			// 歩行アニメーションになる
 			GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WORK);
 

@@ -41,11 +41,11 @@ public class AlienEat : MonoBehaviour
 		// 時間更新の初期化
 		timeAdd = 0.0f;
 	}
-	
+
 	/// <summary>
 	/// 更新関数
 	/// </summary>
-	void Update ()
+	void Update()
 	{
 		// 食べる状態の時
 		if (AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT))
@@ -73,6 +73,12 @@ public class AlienEat : MonoBehaviour
 			else { timeAdd += Time.deltaTime; }
 		}
 		else
+		{
+			for (int i = 0; i < 3; i++) { obj[i].SetActive(false); }
+		}
+
+		// Fadeが開始された時
+		if (AlienCall.alienCall.GetCoinFoObj().GetComponent<CoinFO>().GetIsStartingCoinFO())
 		{
 			for (int i = 0; i < 3; i++) { obj[i].SetActive(false); }
 		}
