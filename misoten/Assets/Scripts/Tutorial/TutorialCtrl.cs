@@ -184,6 +184,10 @@ public class TutorialCtrl : MonoBehaviour
                 default:
                     foreach (GameObject player in _players)
                     {
+                        if (player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() != null)
+                        {
+                            player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
+                        }
                         player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
                         int num = Random.Range(0, 4);
                         player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num]);

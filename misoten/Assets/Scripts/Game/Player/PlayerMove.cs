@@ -111,6 +111,8 @@ public class PlayerMove : MonoBehaviour
     /// <returns></returns>
     private bool IsLeftDirection() => move.x > 0;
 
+    public bool IsRightDirection() => this.GetComponent<SpriteRenderer>().flipX;
+
     private bool IsFront()
     {
         return 

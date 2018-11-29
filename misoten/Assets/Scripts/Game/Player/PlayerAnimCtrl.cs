@@ -116,4 +116,6 @@ public class PlayerAnimCtrl : MonoBehaviour {
 
     public bool IsFront() => isFront;
 
+    public bool IsServing() => isServing;
+
 }
