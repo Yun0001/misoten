@@ -28,6 +28,7 @@ public class PlayerIceBox : MonoBehaviour {
             player_cs.SetHaveInEatoy(iceBox.PassEatoy());
             // 冷蔵庫の後処理
             iceBox.ResetEatoy();
+            GetComponent<PlayerAnimCtrl>().SetFront(true);
 
             Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.RefrigeratorSuccess),
                iceBox.GetIceBoxID() + 5);
