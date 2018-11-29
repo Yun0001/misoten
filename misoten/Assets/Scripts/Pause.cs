@@ -25,6 +25,9 @@ public class Pause : MonoBehaviour
 	private Animator[] pauseingAnimation;
 	private MonoBehaviour[] pausingMonoBehaviours;
 
+    private GameObject[] _players;
+    private GameObject[] _stageModels;
+
     private void Update()
     {
        if (prevPausing != pausing)
@@ -37,12 +40,22 @@ public class Pause : MonoBehaviour
 
     private void PauseMode()
     {
+        _players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in _players)
+        {
+            player.GetComponent<PauseAnimation>().SetIsPause(true);
+        }
+        _stageModels = GameObject.FindGameObjectsWithTag("StageModel");
+        foreach (GameObject stageModel in _stageModels)
+        {
+            stageModel.GetComponent<PauseAnimation>().SetIsPause(true);
+        }
+
         // Rigidbodyの停止
         // 子要素から有効かつ、このインスタンスでないもの、IgnoreGameObjectに含まれていないMonoBehaviourを抽出
         Predicate<Rigidbody> rigidbodyPredicate = obj => !obj.IsSleeping() && Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
 		Predicate<ParticleSystem> particleSystemPredicate = obj => Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
 		Predicate<Animator> animationPredicate = obj => Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
-
 
 		pauseingRigidbodies = Array.FindAll(transform.GetComponentsInChildren<Rigidbody>(), rigidbodyPredicate);
 		pauseingParticleSystem = Array.FindAll(transform.GetComponentsInChildren<ParticleSystem>(), particleSystemPredicate);
@@ -84,6 +97,17 @@ public class Pause : MonoBehaviour
 
     private void ResumeMode()
     {
+        _players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in _players)
+        {
+            player.GetComponent<PauseAnimation>().SetIsPause(false);
+        }
+        _stageModels = GameObject.FindGameObjectsWithTag("StageModel");
+        foreach (GameObject stageModel in _stageModels)
+        {
+            stageModel.GetComponent<PauseAnimation>().SetIsPause(false);
+        }
+
         for (int i = 0; i < pauseingRigidbodies.Length; i++)
         {
             pauseingRigidbodies[i].WakeUp();
