@@ -16,7 +16,7 @@ public class AlienAccessEffect : MonoBehaviour
 
 	// アクセスエリアの設定
 	[SerializeField]
-	private GameObject[] dishObj = new GameObject[7];
+	private GameObject[] dishObj = new GameObject[6];
 
 	// アクセスエフェクトの設定
 	[SerializeField]
@@ -28,7 +28,7 @@ public class AlienAccessEffect : MonoBehaviour
 	// ---------------------------------------------
 
 	// アクセス用のオブジェクト設定用
-	private ParticleSystem[] accessObj = new ParticleSystem[7];
+	private ParticleSystem[] accessObj = new ParticleSystem[6];
 
 	// ---------------------------------------------
 
@@ -38,7 +38,7 @@ public class AlienAccessEffect : MonoBehaviour
 	void Start ()
 	{
 		// 席分ループ
-		for(int i = 0; i < 7 ;i++)
+		for(int i = 0; i < 6 ;i++)
 		{
 			// エフェクト生成
 			accessObj[i] = Instantiate(prefab, dishObj[i].transform.position, Quaternion.identity) as ParticleSystem;
@@ -54,7 +54,8 @@ public class AlienAccessEffect : MonoBehaviour
 	{
 		for (int i = 0; i < playerObj.Length; i++)
 		{
-			if (playerObj[i].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
+			if (/*playerObj[i].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien) &&*/
+				playerObj[i].GetComponent<PlayerCollision>().GetHitObj(PlayerCollision.hitObjName.Alien) != null)
 			{
 				for (int j = 0; j < dishObj.Length; j++)
 				{
