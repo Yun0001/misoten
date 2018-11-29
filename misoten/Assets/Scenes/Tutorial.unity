@@ -282,108 +282,6 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 198866824247667656, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
     type: 2}
   m_PrefabInternal: {fileID: 1912103841}
---- !u!1001 &999548568
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432953062838386, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114855379489170582, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 612586}
-    - target: {fileID: 114847934078907462, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114726103775183832, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114575126137975496, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114310099159745530, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114273884890255434, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 670688133}
-    - target: {fileID: 114264911005477728, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 186579069}
-    - target: {fileID: 114204984329700684, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114201512496818352, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 131762705}
-    - target: {fileID: 114160835257052034, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114054021892234094, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114046379784098090, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &1203850194
 Prefab:
   m_ObjectHideFlags: 0
@@ -447,6 +345,108 @@ Transform:
   m_PrefabParentObject: {fileID: 4809934511475596, guid: 522770742dbc96d4095c93b1a8971d02,
     type: 2}
   m_PrefabInternal: {fileID: 1203850194}
+--- !u!1001 &1282457358
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422642227565170, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114561103837177936, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114367409829349736, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114480657807044392, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 131762705}
+    - target: {fileID: 114841153384247972, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114811801888589208, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114605684383479716, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 670688133}
+    - target: {fileID: 114452898944295368, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114832318495377528, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114888372162767134, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 186579069}
+    - target: {fileID: 114145019566238380, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114009051121443504, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114548508787107974, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 612586}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1350153141 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1553323503464946, guid: 522770742dbc96d4095c93b1a8971d02,
@@ -490,6 +490,10 @@ Prefab:
     - target: {fileID: 4013777079835874, guid: b96e5f4edb449b241a42f21d31afe635, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1829014702642700, guid: b96e5f4edb449b241a42f21d31afe635, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b96e5f4edb449b241a42f21d31afe635, type: 2}
@@ -767,52 +771,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114643520033397438, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114372670333535718, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114077910196966912, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114070447655832786, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114336216952577166, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114639203995635104, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114187948832705586, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114522241444521002, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114096227577453832, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114379378709781674, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    - target: {fileID: 114176778829261810, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
       propertyPath: canvasCamera
       value: 
@@ -822,7 +781,52 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 1812643025}
-    - target: {fileID: 114176778829261810, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    - target: {fileID: 114379378709781674, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114096227577453832, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114522241444521002, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114187948832705586, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114639203995635104, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114336216952577166, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114070447655832786, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114077910196966912, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114372670333535718, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114643520033397438, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
       propertyPath: canvasCamera
       value: 
@@ -882,7 +886,7 @@ Prefab:
     - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
         type: 2}
       propertyPath: DebugTutorialNum
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38b998f74566c7840943d375ccc86dff, type: 2}

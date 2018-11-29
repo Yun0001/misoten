@@ -3,6 +3,10 @@
 
 namespace Constants
 {
+    public static class Game
+    {
+        public const float FPS = 60;
+    }
 
     public static class Tutorial
     {
