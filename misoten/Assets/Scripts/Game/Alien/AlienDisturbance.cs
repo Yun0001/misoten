@@ -44,10 +44,10 @@ public class AlienDisturbance : MonoBehaviour
 	// ---------------------------------------------
 
 	// エイリアンのタイムリミット用
-	private GameObject[] timeLimitDraw = new GameObject[7];
+	private GameObject[] timeLimitDraw = new GameObject[6];
 
 	// エイリアンの機嫌
-	private EAlienMood[] mood = new EAlienMood[7];
+	private EAlienMood[] mood = new EAlienMood[6];
 
 	// テキストメッシュフラグ
 	private bool textMeshFlag = true;
@@ -59,7 +59,7 @@ public class AlienDisturbance : MonoBehaviour
 	private int timeFont = 0;
 
 	// 待ち時間の加算
-	private float[] latencyAdd = new float[7];
+	private float[] latencyAdd = new float[6];
 
 	// ---------------------------------------------
 

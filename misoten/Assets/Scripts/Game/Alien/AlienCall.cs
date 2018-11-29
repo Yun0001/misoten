@@ -55,7 +55,7 @@ public class AlienCall : MonoBehaviour
 	private GameObject[] prefab;
 
 	// カウンター席の最大数指定
-	[SerializeField, Range(1, 7)]
+	[SerializeField, Range(1, 6)]
 	private int counterSeatsMax;
 
 	// エイリアン最大数指定
@@ -115,10 +115,10 @@ public class AlienCall : MonoBehaviour
 	static public AlienCall alienCall;
 
 	// エイリアンの種類設定
-	private EAlienPattern[] alienPattern = new EAlienPattern[7];
+	private EAlienPattern[] alienPattern = new EAlienPattern[6];
 
 	// カウンター専用オブジェ
-	private GameObject[] counterDesignatedObj = new GameObject[7];
+	private GameObject[] counterDesignatedObj = new GameObject[6];
 
 	// スコアカウント
 	private ScoreCount scoreCount;
@@ -227,12 +227,12 @@ public class AlienCall : MonoBehaviour
 			latencyAdd += Time.deltaTime;
 
 			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
-			if(inAlienTime >= 300.0f) { inAlienTime = enterShop - 0.5f; }
-			else if(inAlienTime >= 600.0f) { inAlienTime = enterShop - 1.0f; }
-			else if (inAlienTime >= 900.0f) { inAlienTime = enterShop - 1.5f; }
-			else if (inAlienTime >= 1200.0f) { inAlienTime = enterShop - 2.0f; }
-			else if (inAlienTime >= 1500.0f) { inAlienTime = enterShop - 2.5f; }
-			else if (inAlienTime >= 1800.0f) { inAlienTime = enterShop - 3.0f; }
+			if(inAlienTime >= 10000.0f) { inAlienTime = enterShop - 0.5f; }
+			else if(inAlienTime >= 100000.0f) { inAlienTime = enterShop - 1.0f; }
+			else if (inAlienTime >= 500000.0f) { inAlienTime = enterShop - 1.5f; }
+			else if (inAlienTime >= 1000000.0f) { inAlienTime = enterShop - 2.0f; }
+			else if (inAlienTime >= 5000000.0f) { inAlienTime = enterShop - 2.5f; }
+			else if (inAlienTime >= 10000000.0f) { inAlienTime = enterShop - 3.0f; }
 
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
 			if (alienNumber < alienMax && latencyAdd > inAlienTime)
@@ -359,13 +359,13 @@ public class AlienCall : MonoBehaviour
 		// 残り時間が減っていく毎にエイリアンの入店インターバルが減っていく
 		switch ((int)gameTimeManager.GetCountTime())
 		{
-			case 200: inAlienTime -= 0.01f; break;
-			case 180: inAlienTime -= 0.03f; break;
-			case 150: inAlienTime -= 0.05f; break;
-			case 120: inAlienTime -= 0.07f; break;
-			case 90: inAlienTime -= 0.09f; break;
+			case 160: inAlienTime -= 0.01f; break;
+			case 140: inAlienTime -= 0.03f; break;
+			case 120: inAlienTime -= 0.05f; break;
+			case 100: inAlienTime -= 0.07f; break;
+			case 80: inAlienTime -= 0.09f; break;
 			case 60: inAlienTime -= 0.1f; break;
-			case 30: inAlienTime -= 0.12f; break;
+			case 40: inAlienTime -= 0.12f; break;
 		}
 
 		// 指定した数分エイリアンが入店すると、入店時間が再設定される

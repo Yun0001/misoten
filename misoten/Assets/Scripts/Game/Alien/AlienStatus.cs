@@ -39,7 +39,7 @@ public class AlienStatus : MonoBehaviour
 	// ---------------------------------------------
 
 	// 指定席に座るエイリアンのID(Debug用)
-	[SerializeField, Range(0, 7)]
+	[SerializeField, Range(0, 6)]
 	private int debugSeatId;
 
 	// エイリアンの状態を目視(Debug用)

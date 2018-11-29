@@ -30,7 +30,7 @@ public class PauseScreen : MonoBehaviour
 	// ---------------------------------------------
 
 	// オブジェクト取得用
-	private GameObject childObj;
+	private GameObject childObj1, childObj2;
 
 	// ポーズを開いたプレイヤーのみ操作可能
 	private bool[] id = new bool[4];
@@ -49,7 +49,8 @@ public class PauseScreen : MonoBehaviour
 	void Start()
 	{
 		// 指定オブジェクト取得
-		childObj = transform.Find("Canvas").gameObject;
+		childObj1 = transform.Find("Canvas1").gameObject;
+		childObj2 = transform.Find("Canvas2").gameObject;
 
 		// 初期化処理
 		Init();
@@ -71,7 +72,8 @@ public class PauseScreen : MonoBehaviour
 				pauseObj.GetComponent<Pause>().pausing = id[i] = true;
 
 				// ポーズオブジェクトを非アクティブ化に設定
-				childObj.SetActive(true);
+				childObj1.SetActive(true);
+				childObj2.SetActive(true);
 			}
 
 			// ポーズ中の処理
@@ -82,13 +84,13 @@ public class PauseScreen : MonoBehaviour
 				{
 					selectCursor = 0;
 					selectCursorFlag = true;
-					selectCursorObj.transform.localPosition = new Vector3(0.0f, 30.0f, 0.1f);
+					selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
 				}
 				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
 				{
 					selectCursor = 1;
 					selectCursorFlag = true;
-					selectCursorObj.transform.localPosition = new Vector3(0.0f, -31.0f, 0.1f);
+					selectCursorObj.transform.localPosition = new Vector3(0.0f, 98.0f, 0.1f);
 				}
 
 				// ゲーム画面へ戻る
@@ -127,7 +129,8 @@ public class PauseScreen : MonoBehaviour
 	void Init()
 	{
 		// ポーズオブジェクトを非アクティブ化に設定
-		childObj.SetActive(false);
+		childObj1.SetActive(false);
+		childObj2.SetActive(false);
 
 		// 選択時のカーソルフラグの初期化
 		selectCursorFlag = false;
@@ -136,7 +139,7 @@ public class PauseScreen : MonoBehaviour
 		selectCursor = 0;
 
 		// 初期位置保存
-		selectCursorObj.transform.localPosition = new Vector3(0.0f, 30.0f, 0.1f);
+		selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
 
 		// ポーズを開いたプレイヤーのみ操作可能の初期化
 		for (int i = 0; i < playerObj.Length; i++) { id[i] = false; }

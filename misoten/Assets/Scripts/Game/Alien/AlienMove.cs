@@ -26,7 +26,7 @@ public class AlienMove : MonoBehaviour
 
 	// 指定終点座標
 	[SerializeField]
-	Vector3[,,] counterSeatsPosition = new Vector3[7, 4, 2];	// [最大席の数、移動回数、入店&退店時移動]
+	Vector3[,,] counterSeatsPosition = new Vector3[6, 4, 2];	// [最大席の数、移動回数、入店&退店時移動]
 
 	// 入店移動時間
 	[SerializeField]
@@ -44,7 +44,7 @@ public class AlienMove : MonoBehaviour
 	// ---------------------------------------------
 
 	// 退店完了判定
-	private static bool[] counterClosedCompletion = { false, false, false, false, false, false, false };
+	private static bool[] counterClosedCompletion = { false, false, false, false, false, false };
 
 	// ローカル変数
 	// ---------------------------------------------
@@ -150,25 +150,24 @@ public class AlienMove : MonoBehaviour
 		for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++) { counterSeatsPosition[i, 0, 0] = new Vector3(0.0f, 0.8f, 5.0f); }
 
 		// 二つ目の終点座標の設定(入店時)
-		counterSeatsPosition[0, 1, 0] = counterSeatsPosition[1, 1, 0] = counterSeatsPosition[2, 1, 0] = counterSeatsPosition[3, 1, 0] = new Vector3(-7.0f, 0.8f, 5.0f);
-		counterSeatsPosition[4, 1, 0] = counterSeatsPosition[5, 1, 0] = counterSeatsPosition[6, 1, 0] = new Vector3(7.0f, 0.8f, 5.0f);
+		counterSeatsPosition[0, 1, 0] = counterSeatsPosition[1, 1, 0] = counterSeatsPosition[2, 1, 0] = new Vector3(-7.0f, 0.8f, 5.0f);
+		counterSeatsPosition[3, 1, 0] = counterSeatsPosition[4, 1, 0] = counterSeatsPosition[5, 1, 0] = new Vector3(7.0f, 0.8f, 5.0f);
 
 		// 三つ目の終点座標の設定(入店時)
-		counterSeatsPosition[0, 2, 0] = counterSeatsPosition[1, 2, 0] = counterSeatsPosition[2, 2, 0] = counterSeatsPosition[3, 2, 0] = new Vector3(-7.0f, 0.8f, 3.1f);
-		counterSeatsPosition[4, 2, 0] = counterSeatsPosition[5, 2, 0] = counterSeatsPosition[6, 2, 0] = new Vector3(7.0f, 0.8f, 3.1f);
+		counterSeatsPosition[0, 2, 0] = counterSeatsPosition[1, 2, 0] = counterSeatsPosition[2, 2, 0] = new Vector3(-7.0f, 0.8f, 3.1f);
+		counterSeatsPosition[3, 2, 0] = counterSeatsPosition[4, 2, 0] = counterSeatsPosition[5, 2, 0] = new Vector3(7.0f, 0.8f, 3.1f);
 
 		// 四つ目の終点座標の設定(入店時)&一つ目の終点座標の設定(退店時)
 		counterSeatsPosition[0, 3, 0] = new Vector3(-3.35f, 0.8f, 3.1f);
 		counterSeatsPosition[1, 3, 0] = new Vector3(-2.25f, 0.8f, 3.09f);
 		counterSeatsPosition[2, 3, 0] = new Vector3(-1.15f, 0.8f, 3.08f);
-		counterSeatsPosition[3, 3, 0] = new Vector3(0.0f, 0.8f, 3.07f);
-		counterSeatsPosition[4, 3, 0] = new Vector3(3.35f, 0.8f, 3.06f);
-		counterSeatsPosition[5, 3, 0] = new Vector3(2.25f, 0.8f, 3.07f);
-		counterSeatsPosition[6, 3, 0] = new Vector3(1.15f, 0.8f, 3.08f);
+		counterSeatsPosition[3, 3, 0] = new Vector3(3.35f, 0.8f, 3.06f);
+		counterSeatsPosition[4, 3, 0] = new Vector3(2.25f, 0.8f, 3.07f);
+		counterSeatsPosition[5, 3, 0] = new Vector3(1.15f, 0.8f, 3.08f);
 
 		// 二つ目の終点座標の設定(退店時)
-		counterSeatsPosition[0, 1, 1] = counterSeatsPosition[1, 1, 1] = counterSeatsPosition[2, 1, 1] = counterSeatsPosition[3, 1, 1] = new Vector3(-7.0f, 0.8f, 3.1f);
-		counterSeatsPosition[4, 1, 1] = counterSeatsPosition[5, 1, 1] = counterSeatsPosition[6, 1, 1] = new Vector3(7.0f, 0.8f, 3.1f);
+		counterSeatsPosition[0, 1, 1] = counterSeatsPosition[1, 1, 1] = counterSeatsPosition[2, 1, 1] = new Vector3(-7.0f, 0.8f, 3.1f);
+		counterSeatsPosition[3, 1, 1] = counterSeatsPosition[4, 1, 1] = counterSeatsPosition[5, 1, 1] = new Vector3(7.0f, 0.8f, 3.1f);
 	}
 
 	/// <summary>
@@ -215,7 +214,7 @@ public class AlienMove : MonoBehaviour
 				}
 				transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 0, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 1, 0], rate);
 
-				if (GetComponent<AlienOrder>().GetSetId() < 4) { RightMoveAnimation(); }
+				if (GetComponent<AlienOrder>().GetSetId() < 3) { RightMoveAnimation(); }
 				else { LeftMoveAnimation(); }
 				break;
 			case 2:
@@ -223,7 +222,7 @@ public class AlienMove : MonoBehaviour
 				if (timeAdd > WhenEnteringStoreMoveTime[2]) { setEndPositionId = 3; timeAdd = 0.0f; AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.WALK_IN); }
 				transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 1, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 2, 0], rate);
 
-				if (GetComponent<AlienOrder>().GetSetId() < 4) { LeftMoveAnimation(); }
+				if (GetComponent<AlienOrder>().GetSetId() < 3) { LeftMoveAnimation(); }
 				else { RightMoveAnimation(); }
 				break;
 			case 3:
@@ -291,7 +290,7 @@ public class AlienMove : MonoBehaviour
 			// 歩行アニメーションになる
 			GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WORK);
 
-			if (GetComponent<AlienOrder>().GetSetId() < 4) { RightMoveAnimation(); }
+			if (GetComponent<AlienOrder>().GetSetId() < 3) { RightMoveAnimation(); }
 			else { LeftMoveAnimation(); }
 
 			// 終点座標に到着
