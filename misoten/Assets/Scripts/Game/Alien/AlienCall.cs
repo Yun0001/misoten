@@ -46,13 +46,13 @@ public class AlienCall : MonoBehaviour
 	// インスペクター上で設定可能
 	// ---------------------------------------------
 
-	// 入店に遷移する秒数設定
-	[SerializeField]
-	private float enterShop;
-
 	// 生成するPrefab設定用
 	[SerializeField]
 	private GameObject[] prefab;
+
+	// Fadeが開始された時の状態を取得する為に必要
+	[SerializeField]
+	private GameObject coinFoObj;
 
 	// カウンター席の最大数指定
 	[SerializeField, Range(1, 6)]
@@ -61,6 +61,10 @@ public class AlienCall : MonoBehaviour
 	// エイリアン最大数指定
 	[SerializeField, Range(1, 50)]
 	private int alienMax;
+
+	// 入店に遷移する秒数設定
+	[SerializeField]
+	private float enterShop;
 
 	// 周期の設定(例外処理を発生させる為の物)
 	[SerializeField]
@@ -202,8 +206,12 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// カウンター席専用処理
-		CounterSeatsDesignated();
+		// Fadeが開始されていない時
+		if(!coinFoObj.GetComponent<CoinFO>().GetIsStartingCoinFO())
+		{
+			// カウンター席専用処理
+			CounterSeatsDesignated();
+		}
 
 		// 例外処理関数
 		//ExceptionHandling();

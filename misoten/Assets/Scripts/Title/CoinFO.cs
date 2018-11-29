@@ -50,4 +50,6 @@ public class CoinFO : MonoBehaviour {
         }
 
     }
+
+	public bool GetIsStartingCoinFO() => isStartingCoinFO;
 }

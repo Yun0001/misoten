@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4633594225863346}
   - component: {fileID: 33086643481741370}
   - component: {fileID: 23180795759757238}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33625364954737834}
   - component: {fileID: 23957301213458380}
   - component: {fileID: 54841042535137272}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SatisfactionLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 33375160095793804}
   - component: {fileID: 23680525354387154}
   - component: {fileID: 54276876386198644}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SatisfactionOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 33542411489336946}
   - component: {fileID: 23259535361865252}
   - component: {fileID: 54554565090743286}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Anger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 33226191319037266}
   - component: {fileID: 23089464597969548}
   - component: {fileID: 54576637217062526}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Anger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 33636898953716058}
   - component: {fileID: 23715628178439616}
   - component: {fileID: 54485498632649420}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 4155319679772620}
   - component: {fileID: 33181693581529706}
   - component: {fileID: 23598070983980782}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 33130267885237694}
   - component: {fileID: 23790117626693562}
   - component: {fileID: 54215140390808874}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Surprise
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 33687341024968762}
   - component: {fileID: 23086908816900448}
   - component: {fileID: 54100613396007114}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 33935587062169426}
   - component: {fileID: 23164925612906002}
   - component: {fileID: 54702907208285800}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 4164485975207344}
   - component: {fileID: 33385516092240738}
   - component: {fileID: 23010879006817798}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 4509009947274682}
   - component: {fileID: 33158059695859858}
   - component: {fileID: 23827665316748866}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 4185055722735452}
   - component: {fileID: 33316123747587248}
   - component: {fileID: 23892637813314106}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 4375020394415708}
   - component: {fileID: 33932787690170040}
   - component: {fileID: 23703659827342542}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 33968537802648154}
   - component: {fileID: 23700722719209788}
   - component: {fileID: 54783589404318560}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SatisfactionMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 33622223418865176}
   - component: {fileID: 23586731306426102}
   - component: {fileID: 54306740949722736}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SatisfactionHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

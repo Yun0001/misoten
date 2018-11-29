@@ -217,11 +217,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 223021643601462442, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    - target: {fileID: 223118009246907276, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 984459320}
+      objectReference: {fileID: 450791865}
+    - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: coinFoObj
+      value: 
+      objectReference: {fileID: 1326055999}
     - target: {fileID: 114775434568062330, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
       propertyPath: canvasCamera
@@ -232,24 +237,50 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 450791862}
-    - target: {fileID: 223604145624308502, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    - target: {fileID: 23224687049608234, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
-      propertyPath: m_Camera
+      propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 450791865}
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23650075317673394, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23554445114207394, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23449526659336758, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23888215505287764, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23152013990480952, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23009714998341318, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
+    - target: {fileID: 23712555827848244, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a9ab891a14e2d5040902726125bb4a83, type: 2}
     - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
-      propertyPath: theRemainingTime.Array.data[1]
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
-        type: 2}
-      propertyPath: theRemainingTime.Array.data[0]
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1108244047144230, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
-      propertyPath: m_TagString
-      value: AlienAccessEffect
+      propertyPath: enterShop
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
@@ -375,11 +406,11 @@ Camera:
   m_PrefabParentObject: {fileID: 20641195661219076, guid: 50292cb25f53b5042938c15b47a45370,
     type: 2}
   m_PrefabInternal: {fileID: 1449729840}
---- !u!20 &984459320 stripped
-Camera:
-  m_PrefabParentObject: {fileID: 20968258506782094, guid: 50292cb25f53b5042938c15b47a45370,
+--- !u!1 &1326055999 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1029317096598590, guid: 3f5e51f6bd586534086b7da1a587ab31,
     type: 2}
-  m_PrefabInternal: {fileID: 1449729840}
+  m_PrefabInternal: {fileID: 80584725}
 --- !u!1 &1446039879 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1102859739124382, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
