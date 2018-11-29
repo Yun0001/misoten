@@ -323,4 +323,6 @@ public class Player : MonoBehaviour
     public void SetHaveEatoyCtrlNum(int num) => haveEatoyCtrl_cs.SetEatoyNum(num);
 
     private void DisplayHaveInEatoy() => haveInEatoy_cs.DisplayEatoy();
+
+    public bool IsEatoyIceing() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().IsIcing();
 }

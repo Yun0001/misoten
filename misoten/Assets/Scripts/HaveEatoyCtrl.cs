@@ -72,7 +72,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
         _eatoyRenderer.enabled = true;
 
-        if (_player.GetPlayerStatus() != Player.PlayerStatus.Catering)
+        if (_player.IsEatoyIceing())
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
@@ -120,4 +120,14 @@ public class HaveEatoyCtrl : MonoBehaviour {
             effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingOrder = sortID;
         }
     }
+
+    public void StopEffect()
+    {
+        foreach (Transform effect in _haveEatoy.transform)
+        {
+            if (effect.gameObject.GetComponent<ParticleSystem>().isPlaying)
+                effect.gameObject.GetComponent<ParticleSystem>().Stop();
+        }
+    }
+
 }
