@@ -41,7 +41,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
     void Start()
     {
-       
+
         _player = this.GetComponent<Player>();
         _playerMove = this.GetComponent<PlayerMove>();
         _playerAnim = this.GetComponent<PlayerAnimCtrl>();
@@ -72,7 +72,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
         _eatoyRenderer.enabled = true;
 
-        if (_player.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
+        if (_player.GetPlayerStatus() != Player.PlayerStatus.Catering)
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
@@ -112,5 +112,12 @@ public class HaveEatoyCtrl : MonoBehaviour {
     void SetEatoy(int num) => _eatoyRenderer.sprite = _eatoyMaps[num];
 
     public void SetEatoyNum(int num) => _eatoyNum = num - 1;
-    
+
+    public void Sorting(int sortID)
+    {
+        foreach (Transform effect in _haveEatoy.transform)
+        {
+            effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingOrder = sortID;
+        }
+    }
 }

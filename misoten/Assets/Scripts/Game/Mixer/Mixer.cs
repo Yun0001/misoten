@@ -50,6 +50,9 @@ public class Mixer : KitchenwareBase {
     [SerializeField]
     private GameObject stickObj;
 
+    [SerializeField]
+    private GameObject complateEatoyAnnounce;
+
 
     // Use this for initialization
     void Awake () {
@@ -242,7 +245,11 @@ public class Mixer : KitchenwareBase {
         if (status == Status.AccessTwo)
         {
             // できるイートイの表示
-            
+            int colorId = mixerEatoyM_cs.DecisionTwoParonPutEatoyID();
+            complateEatoyAnnounce.SetActive(true);
+
+
+
         }
         // 三人アクセスした時
         else if (status == Status.AccessThree)
