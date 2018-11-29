@@ -105,6 +105,8 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
     void DownHand() => _haveEatoy.transform.localPosition = new Vector3(0, 0, -0.1f);
 
-    public void SetEatoy(int num) => _eatoyRenderer.sprite = _eatoyMaps[num];
+    void SetEatoy(int num) => _eatoyRenderer.sprite = _eatoyMaps[num];
+
+    public void SetEatoyNum(int num) => _eatoyNum = num - 1;
     
 }
