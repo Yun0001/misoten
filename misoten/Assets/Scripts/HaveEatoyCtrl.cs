@@ -38,6 +38,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
     void Start()
     {
+       
         _player = this.GetComponent<Player>();
         _playerMove = this.GetComponent<PlayerMove>();
         _playerAnim = this.GetComponent<PlayerAnimCtrl>();
@@ -48,7 +49,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
             Debug.Log("Error . broken hierarchy : Not haveEatoy");
         }
         _eatoyRenderer = _haveEatoy.GetComponent<SpriteRenderer>();
-        _eatoyRenderer.sprite = _eatoyMaps[_eatoyNum * 2];
+        _eatoyRenderer.sprite = null;
 
         foreach (Transform effect in _haveEatoy.transform) effect.gameObject.GetComponent<ParticleSystem>().Stop();
         

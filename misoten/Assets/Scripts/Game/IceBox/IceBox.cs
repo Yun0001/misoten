@@ -238,6 +238,7 @@ public class IceBox : MonoBehaviour {
         // イートイを初期化
         int eatoyID = DecisionPutEatoyElement();
         putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID - 1]);
+        putEatoy.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public int GetIceBoxID() => iceBoxID; 

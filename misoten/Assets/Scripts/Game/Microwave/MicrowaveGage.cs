@@ -228,6 +228,10 @@ public class MicrowaveGage : MonoBehaviour
 
     public void SetCheckClockInMicrowave_cs(CookWareMw cs)
     {
+        if (checkClock_cs == null)
+        {
+            checkClock_cs = transform.Find("Canvas/Center/CheckClock/CheckClockImage").gameObject.GetComponent<CheckClock>();
+        }
         checkClock_cs.SetMicrowave_cs(cs);
     }
 }

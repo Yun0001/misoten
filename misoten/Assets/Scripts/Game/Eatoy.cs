@@ -29,12 +29,6 @@ public class Eatoy : MonoBehaviour
     [SerializeField]
     private bool isIcing;
 
-    /// <summary>
-    /// アイスエフェクト
-    /// </summary>
-    [SerializeField]
-    private ParticleSystem iceEffect;
-
 
     public void Init(int colorID, Sprite eatoySprite)
     {
@@ -56,7 +50,6 @@ public class Eatoy : MonoBehaviour
     {
         isIcing = false;
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        iceEffect.Stop();
     }
 
     public int AddPoint(int p) => eatoyPoint += p;
