@@ -19,6 +19,8 @@ public class TitleController : MonoBehaviour {
     float cameraMoveTime = 0.75f;
     private static readonly Vector3 endPosition = new Vector3(0.0f, -1.5f, -4.5f); // カメラが移動した際の終点座標
 
+    private GameObject _storyBoard;
+
     private Animator doorrAnimator;
     private Animator doorlAnimator;
 
@@ -40,7 +42,9 @@ public class TitleController : MonoBehaviour {
         // メインカメラを取得
         mainCamera = Camera.main.gameObject;
         startPosition = mainCamera.transform.position;
-        
+
+        _storyBoard = GameObject.Find("StoryBoard");
+
         // ショップオブジェクト取得
         doorrAnimator = GameObject.Find("doorr").GetComponent<Animator>();
         doorlAnimator = GameObject.Find("doorl").GetComponent<Animator>();
@@ -68,12 +72,19 @@ public class TitleController : MonoBehaviour {
         // タイトルBGMが終了でタイトルシーンの再ロード
         if (!_audioSource.isPlaying)
         {
-            TitleAnimation();
+            isStartingGame = true;
             // _canvasWIO.GetComponent<WhiteIO>().OnRsWhiteOut();
         }
 
         // タイトルロゴのアニメーションが終わってない場合以下スルー
         if (!isCompleteTitleLogoAnimation)
+        {
+            return;
+        }
+
+        _storyBoard.GetComponent<StoryBoardCtrl>().SetIsStartStory(true);
+
+        if (!(_storyBoard.GetComponent<StoryBoardCtrl>().GetIsCompleteStartAnimation()))
         {
             return;
         }

@@ -10,11 +10,14 @@ public class WhiteIO : MonoBehaviour {
     private Color _color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     private bool isWhiteOut = false;
     private bool isWhiteIn = false;
+    private bool isSeWhiteIn = false;
+    private bool isSeWhiteOut = false;
     private bool isRsWhiteOut = false;
     private Image _whiteOutImg;
     private Image _titleLogoImg;
     private Image _pushImg;
     private GameObject _titleCtrl;
+    private GameObject _storyBoard;
 
     [SerializeField, Range(0.01f, 0.05f)] float fadeInSpeed = 0.02f;
     [SerializeField, Range(0.01f, 0.05f)] float fadeOutSpeed = 0.02f;
@@ -28,6 +31,7 @@ public class WhiteIO : MonoBehaviour {
         _titleLogoImg = GameObject.Find("titleLogo").GetComponent<Image>();
         _titleCtrl = GameObject.Find("TitleController");
         _pushImg = GameObject.Find("push").GetComponent<Image>();
+        _storyBoard = GameObject.Find("StoryBoard");
     }
 
     void Update()
@@ -37,6 +41,10 @@ public class WhiteIO : MonoBehaviour {
         if (isWhiteIn)
         {
             StartWhiteIn();
+        }
+        if (isSeWhiteIn)
+        {
+            StoryEndWhiteIn();
         }
         if (isWhiteOut)
         {
@@ -72,7 +80,6 @@ public class WhiteIO : MonoBehaviour {
         _color.a -= fadeInSpeed / 2;
 
         _whiteOutImg.color = _color;
-        _titleLogoImg.color = _color;
 
         if (_color.a <= 0.0f)
         {
@@ -83,6 +90,39 @@ public class WhiteIO : MonoBehaviour {
             _titleCtrl.GetComponent<TitleController>().OnIsCompleteTitleLogoAnimation();
 
             _pushImg.enabled = true;
+        }
+
+    }
+
+    void StoryEndWhiteIn()
+    {
+        if (isSeWhiteOut)
+        {
+            _whiteOutImg.enabled = true;
+            _color.a += fadeOutSpeed;
+
+            _whiteOutImg.color = _color;
+
+            if (_color.a >= 1.0f)
+            {
+                isSeWhiteOut = false;
+                _storyBoard.GetComponent<StoryBoardCtrl>().SetEnabled(false);
+            }
+        }
+        else
+        {
+            _color.a -= fadeInSpeed / 2;
+
+            _whiteOutImg.color = _color;
+
+            if (_color.a <= 0.0f)
+            {
+                isSeWhiteIn = false;
+                _color.a = 0.0f;
+                _whiteOutImg.enabled = false;
+
+                _storyBoard.GetComponent<StoryBoardCtrl>().OnCompleteStoryAnimation();
+            }
         }
 
     }
@@ -147,6 +187,12 @@ public class WhiteIO : MonoBehaviour {
     public void OnWhiteIn()
     {
         isWhiteIn = true;
+    }
+
+    public void OnSeWhiteIn()
+    {
+        isSeWhiteIn = true;
+        isSeWhiteOut = true;
     }
 
     public void OnRsWhiteOut()
