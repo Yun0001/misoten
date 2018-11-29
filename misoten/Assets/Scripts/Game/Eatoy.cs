@@ -74,4 +74,9 @@ public class Eatoy : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().enabled = false;
     }
+
+    public void DisplaySprite()
+    {
+        GetComponent<SpriteRenderer>().enabled = true;
+    }
 }

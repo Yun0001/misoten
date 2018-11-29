@@ -94,4 +94,9 @@ public class PlayerHaveInEatoy : MonoBehaviour
         haveInEatoy.transform.position = alienPos;
         
     }
+
+    public void DisplayEatoy()
+    {
+        haveInEatoy.GetComponent<Eatoy>().DisplaySprite();
+    }
 }

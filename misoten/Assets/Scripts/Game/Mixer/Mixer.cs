@@ -36,9 +36,6 @@ public class Mixer : KitchenwareBase {
 
     [SerializeField]
     private int accessNum = 0;
-    private bool efectFlg;
-    private bool seFlg;
-    private bool uiFlg;
 
 
     [SerializeField]
@@ -56,7 +53,6 @@ public class Mixer : KitchenwareBase {
 
     // Use this for initialization
     void Awake () {
-        //miniGameUI = Instantiate(Resources.Load("Prefabs/MixerMiniGame") as GameObject, transform.position, Quaternion.identity);
         miniGameUI.SetActive(false);
         mixerEatoyM_cs = GetComponent<MixerEatoyManager>();
     }
@@ -196,8 +192,8 @@ public class Mixer : KitchenwareBase {
                             stickObj.SetActive(false);
 
                             // イートイを生成し、最後にアクセスしたプレイヤーに渡す
-                            lastAccessPlayer.GetComponent<PlayerHaveInEatoy>().SetEatoy(
-                                GetComponent<MixerEatoyManager>().MixEatoy());
+                            lastAccessPlayer.GetComponent<Player>().SetHaveInEatoy(
+                              mixerEatoyM_cs.MixEatoy());
                             isEatoyPut = true;
 
                             // 全ての当たり判定を復活
@@ -240,10 +236,16 @@ public class Mixer : KitchenwareBase {
 
         status++;
         lastAccessPlayer = player;
-        GetComponent<MixerEatoyManager>().SetEatoy(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
+        mixerEatoyM_cs.SetEatoy(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
 
+        // アクセスしている人数が二人の時
+        if (status == Status.AccessTwo)
+        {
+            // できるイートイの表示
+            
+        }
         // 三人アクセスした時
-        if (status == Status.AccessThree)
+        else if (status == Status.AccessThree)
         {
             accessNum = 3;
             mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.ThreeParson);

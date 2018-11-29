@@ -66,9 +66,10 @@ public class MixerEatoyManager : MonoBehaviour
                 break;
         }
 
-        putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprits[eatoyID - 1]);
-        putEatoy.GetComponent<Eatoy>().Thawing();
-        putEatoy.GetComponent<Eatoy>().AddPoint(CalcEatoyPoint());
+        Eatoy putEatoy_cs = putEatoy.GetComponent<Eatoy>();
+        putEatoy_cs.Init(eatoyID, eatoySprits[eatoyID - 1]);
+        putEatoy_cs.Thawing();
+        putEatoy_cs.AddPoint(CalcEatoyPoint());
         return putEatoy;
     }
 
@@ -205,4 +206,8 @@ public class MixerEatoyManager : MonoBehaviour
             }
         }
     }
+
+    public Sprite[] GetEatoySprite() => eatoySprits;
+
+    public GameObject[] GetEatoies() => eatoies;
 }

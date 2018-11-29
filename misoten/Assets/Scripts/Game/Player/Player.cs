@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     private PlayerCollision collision_cs;
     private PlayerDastBox pDastbox_cs;
     private PlayerIceBox pIceBox_cs;
+    private HaveEatoyCtrl haveEatoyCtrl_cs;
 
     [SerializeField]
     private GameObject timeManager;
@@ -87,8 +88,11 @@ public class Player : MonoBehaviour
 			haveInEatoy_cs.SetHaveInEatoyPosition(IsObjectCollision(PlayerCollision.hitObjName.Alien).transform.position);
             IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
 			GetComponent<PlayerAnimCtrl>().SetServing(false);
+            // イートイを表示
+            DisplayHaveInEatoy();
 
-			SetPlayerStatus(PlayerStatus.Normal);
+
+            SetPlayerStatus(PlayerStatus.Normal);
 		}
     }
 
@@ -199,12 +203,12 @@ public class Player : MonoBehaviour
 
             case PlayerStatus.Catering:
                 // 持っているイートイの座標を更新
-                haveInEatoy_cs.UpdateHaveInEatoyPosition();
+               // haveInEatoy_cs.UpdateHaveInEatoyPosition();
                 break;
 
             case PlayerStatus.CateringIceEatoy:
                 // 持っているイートイの座標を更新
-                haveInEatoy_cs.UpdateHaveInEatoyPosition();
+              //  haveInEatoy_cs.UpdateHaveInEatoyPosition();
                 break;
 
             default:
@@ -243,7 +247,13 @@ public class Player : MonoBehaviour
 
     public GameObject IsObjectCollision(PlayerCollision.hitObjName ObjID) => collision_cs.GetHitObj(ObjID);
 
-    public void SetHaveInEatoy(GameObject eatoy) => haveInEatoy_cs.SetEatoy(eatoy);
+    public void SetHaveInEatoy(GameObject eatoy)
+    {
+        haveInEatoy_cs.SetEatoy(eatoy);
+        SetHaveEatoyCtrlNum((int)GetHaveInEatoyColor());
+    }
+
+    public Eatoy.EEatoyColor GetHaveInEatoyColor() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().GetEatoyColor();
 
     public void RevocationHaveInEatoy(bool b) => haveInEatoy_cs.RevocationHaveInEatoy(b);
 
@@ -305,9 +315,12 @@ public class Player : MonoBehaviour
         collision_cs = GetComponent<PlayerCollision>();
         pDastbox_cs = GetComponent<PlayerDastBox>();
         pIceBox_cs = GetComponent<PlayerIceBox>();
+        haveEatoyCtrl_cs = GetComponent<HaveEatoyCtrl>();
     }
 
     public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
-    public void ResetUIButtonPos() => playerAccessPosssiblAnnounce_cs.ResetButtonUIPos();
+    public void SetHaveEatoyCtrlNum(int num) => haveEatoyCtrl_cs.SetEatoyNum(num);
+
+    private void DisplayHaveInEatoy() => haveInEatoy_cs.DisplayEatoy();
 }
