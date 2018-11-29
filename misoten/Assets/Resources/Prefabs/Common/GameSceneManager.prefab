@@ -2228,6 +2228,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4837953484845210}
+  - component: {fileID: 114650891120975228}
   m_Layer: 0
   m_Name: CompleteEatoyAnnounce
   m_TagString: Untagged
@@ -3229,6 +3230,7 @@ GameObject:
   - component: {fileID: 95741876830721326}
   - component: {fileID: 114713826583620796}
   - component: {fileID: 114496516622084242}
+  - component: {fileID: 114666911869176422}
   m_Layer: 0
   m_Name: nabe
   m_TagString: StageModel
@@ -5053,7 +5055,7 @@ GameObject:
   - component: {fileID: 114362175214720928}
   m_Layer: 18
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: MiniGameUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5582,6 +5584,7 @@ GameObject:
   - component: {fileID: 114213974128239394}
   - component: {fileID: 136633671777171900}
   - component: {fileID: 136265403437621892}
+  - component: {fileID: 65097228236033702}
   m_Layer: 0
   m_Name: icebox1
   m_TagString: IceBox
@@ -27152,6 +27155,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65097228236033702
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1610083900169618}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 19.7, y: 0, z: 1}
 --- !u!65 &65159824211908950
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -28685,7 +28700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 1
+  isDebugMode: 0
   isEnd: 0
   miniGameUI: {fileID: 1676299864168382}
   canvasCamera: {fileID: 0}
@@ -29345,7 +29360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583aea5ab1388ef4886e8e0f42e4979b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderingZ: 0.01
+  _renderingZ: 0.05
   _eatoyNum: 0
 --- !u!114 &114560251549921580
 MonoBehaviour:
@@ -29606,6 +29621,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb12da61c974a0d46a0e40212d4b266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114650891120975228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1243562134155224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac640c4cd360cc4ab07812abeb0161c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatoy: {fileID: 1732487868380300}
 --- !u!114 &114664664231115732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29618,6 +29645,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitPos: {x: -3.3, y: 1, z: -4}
+--- !u!114 &114666911869176422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1377588618109102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c4f9a16440e3424ea330410aa248646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114677925865645720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29737,7 +29775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583aea5ab1388ef4886e8e0f42e4979b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderingZ: 0.01
+  _renderingZ: 0.05
   _eatoyNum: 0
 --- !u!114 &114718022572213934
 MonoBehaviour:
@@ -29826,7 +29864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583aea5ab1388ef4886e8e0f42e4979b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderingZ: 0.01
+  _renderingZ: 0.05
   _eatoyNum: 0
 --- !u!114 &114755872124425512
 MonoBehaviour:
@@ -29967,7 +30005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583aea5ab1388ef4886e8e0f42e4979b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderingZ: 0.01
+  _renderingZ: 0.05
   _eatoyNum: 0
 --- !u!114 &114797870805565628
 MonoBehaviour:
@@ -31006,10 +31044,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2.96188
-  m_Height: 8.88564
+  m_Radius: 3.7
+  m_Height: 10.567053
   m_Direction: 1
-  m_Center: {x: -0.05658368, y: 3, z: 0}
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!136 &136672694054193440
 CapsuleCollider:
   m_ObjectHideFlags: 1
