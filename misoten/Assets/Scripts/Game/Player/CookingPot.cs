@@ -18,7 +18,7 @@ public class CookingPot : MonoBehaviour {
         if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
               
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(true);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookingAnimCtrl>().SetIsCooking(true);
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire),17);
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), true, 13);
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
@@ -31,7 +31,7 @@ public class CookingPot : MonoBehaviour {
         if (eatoy == null) return;
 
         player_cs.SetHaveInEatoy(eatoy);
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).transform.Find("nabe").GetComponent<CookingAnimCtrl>().SetIsCooking(false);
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class CookingPot : MonoBehaviour {
     {
         GameObject pot = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot);
         pot.GetComponent<Pot>().CookingInterruption();
-        pot.transform.Find("nabe").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        pot.transform.Find("nabe").GetComponent<CookingAnimCtrl>().SetIsCooking(false);
         CancelSE();
         player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.Pot);
     }

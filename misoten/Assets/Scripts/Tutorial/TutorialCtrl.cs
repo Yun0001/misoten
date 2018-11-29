@@ -22,7 +22,7 @@ public class TutorialCtrl : MonoBehaviour
 
     private GameObject[]    _players;
 
-    private GameObject[]    _eatoys;
+    //private GameObject[]    _eatoys;
     private Sprite[]        _eatoySprites;
 
     private void Awake()
@@ -77,23 +77,23 @@ public class TutorialCtrl : MonoBehaviour
             return;
         }
 
-        _eatoys = GameObject.FindGameObjectsWithTag("Eatoy");
+       //_eatoys = GameObject.FindGameObjectsWithTag("Eatoy");
 
         // ページをめくってるならば非表示
         if (IsOverPage()) {
             
-            if (_eatoys.Length != 0)
-            {
-                foreach (GameObject eatoy in _eatoys)
-                {
-                    eatoy.GetComponent<SpriteRenderer>().enabled = false;
-                    GameObject child1 = eatoy.transform.GetChild(0).gameObject;
-                    GameObject child2 = child1.transform.GetChild(0).gameObject;
-                    child2.SetActive(false);
-                    child1.SetActive(false);
-                    eatoy.SetActive(false);
-                }
-            }
+            //if (_eatoys.Length != 0)
+            //{
+            //    foreach (GameObject eatoy in _eatoys)
+            //    {
+            //        eatoy.GetComponent<SpriteRenderer>().enabled = false;
+            //        GameObject child1 = eatoy.transform.GetChild(0).gameObject;
+            //        GameObject child2 = child1.transform.GetChild(0).gameObject;
+            //        child2.SetActive(false);
+            //        child1.SetActive(false);
+            //        eatoy.SetActive(false);
+            //    }
+            //}
             _menuSprite.color = MyColor.ALPHA_0;
             alpha = 0.0f;
             return;
@@ -108,18 +108,18 @@ public class TutorialCtrl : MonoBehaviour
 
             foreach (GameObject player in _players) player.GetComponent<TutorialPlayer>().SetPlayerReder(true);
 
-            if (_eatoys.Length != 0)
-            {
-                foreach (GameObject eatoy in _eatoys)
-                {
-                    eatoy.SetActive(true);
-                    GameObject child1 = eatoy.transform.GetChild(0).gameObject;
-                    GameObject child2 = child1.transform.GetChild(0).gameObject;
-                    eatoy.GetComponent<SpriteRenderer>().enabled = true;
-                    child1.SetActive(true);
-                    child2.SetActive(true);
-                }
-            }
+            //if (_eatoys.Length != 0)
+            //{
+            //    foreach (GameObject eatoy in _eatoys)
+            //    {
+            //        eatoy.SetActive(true);
+            //        GameObject child1 = eatoy.transform.GetChild(0).gameObject;
+            //        GameObject child2 = child1.transform.GetChild(0).gameObject;
+            //        eatoy.GetComponent<SpriteRenderer>().enabled = true;
+            //        child1.SetActive(true);
+            //        child2.SetActive(true);
+            //    }
+            //}
 
             return;
         }
@@ -162,6 +162,8 @@ public class TutorialCtrl : MonoBehaviour
         foreach (GameObject player in _players) player.GetComponent<TutorialPlayer>().SetPlayerReder(false);
 
         CURRENT_TUTORIAL_STATE++;
+        isOnce = true;
+
         if (Tutorial.ERROR <= CURRENT_TUTORIAL_STATE)
         {
             CURRENT_TUTORIAL_STATE = (Tutorial.ERROR - 1);

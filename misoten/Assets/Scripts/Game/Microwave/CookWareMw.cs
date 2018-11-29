@@ -31,7 +31,7 @@ public class CookWareMw : KitchenwareBase
     protected override void InstanceMiniGameUI()
     {
        //' miniGameUI = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
-        miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
+        //miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
     }
 
     protected override void InitMiniGameUI()

@@ -108,7 +108,7 @@ public class PlayerInput : MonoBehaviour
             {
                 // プレイヤーの状態を配膳状態に戻す
                 player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
-                //transform.Find("Line").gameObject.SetActive(false);
+               
             }
 
         }

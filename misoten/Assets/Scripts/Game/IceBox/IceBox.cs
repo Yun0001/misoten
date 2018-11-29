@@ -44,8 +44,10 @@ public class IceBox : MonoBehaviour {
     [SerializeField]
     private int iceBoxID;
 
-	// Use this for initialization
-	void Awake ()
+    private int[,] emissionRate = new int[7, 6];
+
+    // Use this for initialization
+    void Awake ()
     {
         // テクスチャロード
         eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
@@ -144,7 +146,7 @@ public class IceBox : MonoBehaviour {
         // 客の注文している料理を参照する
         bool IsChangeEatoy = false;
 
-
+        random = new System.Random();
         // 一番最初に入店してきた客
         if (IsChangeEatoy)
         {
@@ -241,5 +243,15 @@ public class IceBox : MonoBehaviour {
         putEatoy.GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    public int GetIceBoxID() => iceBoxID; 
+    public int GetIceBoxID() => iceBoxID;
+
+
+
+    /// <summary>
+    /// 排出率決定
+    /// </summary>
+    private void DecisionEmissionRate()
+    {
+
+    }
 }

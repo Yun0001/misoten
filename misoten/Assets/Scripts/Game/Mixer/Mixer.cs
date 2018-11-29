@@ -80,6 +80,7 @@ public class Mixer : KitchenwareBase {
                     mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.TwoParson);
                     transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
                     mixerEatoyM_cs.HieenEatoySprite();
+                    complateEatoyAnnounce.SetActive(false);
                 }
                 break;
 
@@ -246,6 +247,7 @@ public class Mixer : KitchenwareBase {
         {
             // できるイートイの表示
             int colorId = mixerEatoyM_cs.DecisionTwoParonPutEatoyID();
+            complateEatoyAnnounce.GetComponent<ComplateEatoyAnnounce>().SetSprite(mixerEatoyM_cs.GetEatoySprite(colorId));
             complateEatoyAnnounce.SetActive(true);
 
 
@@ -260,16 +262,33 @@ public class Mixer : KitchenwareBase {
             lastAccessPlayer.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Mixer);
             transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
             mixerEatoyM_cs.HieenEatoySprite();
+            complateEatoyAnnounce.SetActive(false);
         }
         return true;
     }
 
 
-    public void ReturnStatus() => status--;
+    public void ReturnStatus()
+    {
+        status--;
+        if (status <= Status.AccessOne)
+        {
+            complateEatoyAnnounce.SetActive(false);
+        }
+        else
+        {
+            int colorId = mixerEatoyM_cs.DecisionTwoParonPutEatoyID();
+            complateEatoyAnnounce.GetComponent<ComplateEatoyAnnounce>().SetSprite(mixerEatoyM_cs.GetEatoySprite(colorId));
+            complateEatoyAnnounce.SetActive(true);
+        }
 
+    }
     public void AddAccessNum() => accessNum++;
 
-    public void SubAccessNum() => accessNum--;
+    public void SubAccessNum()
+    {
+        accessNum--;
+    }
 
     public Status GetStatus() => status;
 

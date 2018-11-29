@@ -70,6 +70,7 @@ public class MixerEatoyManager : MonoBehaviour
         putEatoy_cs.Init(eatoyID, eatoySprits[eatoyID - 1]);
         putEatoy_cs.Thawing();
         putEatoy_cs.AddPoint(CalcEatoyPoint());
+        putEatoy.GetComponent<SpriteRenderer>().enabled = false;
         return putEatoy;
     }
 
@@ -207,7 +208,7 @@ public class MixerEatoyManager : MonoBehaviour
         }
     }
 
-    public Sprite[] GetEatoySprite() => eatoySprits;
+    public Sprite GetEatoySprite(int id) => eatoySprits[id -1];
 
     public GameObject[] GetEatoies() => eatoies;
 }
