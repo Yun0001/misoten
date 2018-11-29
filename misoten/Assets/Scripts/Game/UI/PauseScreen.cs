@@ -30,7 +30,7 @@ public class PauseScreen : MonoBehaviour
 	// ---------------------------------------------
 
 	// オブジェクト取得用
-	private GameObject childObj1, childObj2;
+	private GameObject childObj1, childObj2, childObj3;
 
 	// ポーズを開いたプレイヤーのみ操作可能
 	private bool[] id = new bool[4];
@@ -51,6 +51,8 @@ public class PauseScreen : MonoBehaviour
 		// 指定オブジェクト取得
 		childObj1 = transform.Find("Canvas1").gameObject;
 		childObj2 = transform.Find("Canvas2").gameObject;
+		childObj3 = transform.Find("UIButton").gameObject;
+
 
 		// 初期化処理
 		Init();
@@ -74,6 +76,7 @@ public class PauseScreen : MonoBehaviour
 				// ポーズオブジェクトを非アクティブ化に設定
 				childObj1.SetActive(true);
 				childObj2.SetActive(true);
+				childObj3.SetActive(true);
 			}
 
 			// ポーズ中の処理
@@ -94,7 +97,8 @@ public class PauseScreen : MonoBehaviour
 				}
 
 				// ゲーム画面へ戻る
-				if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+				if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber())
+					|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
 				{
 					pauseObj.GetComponent<Pause>().pausing = false;
 
@@ -131,6 +135,7 @@ public class PauseScreen : MonoBehaviour
 		// ポーズオブジェクトを非アクティブ化に設定
 		childObj1.SetActive(false);
 		childObj2.SetActive(false);
+		childObj3.SetActive(false);
 
 		// 選択時のカーソルフラグの初期化
 		selectCursorFlag = false;

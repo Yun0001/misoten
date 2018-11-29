@@ -36,14 +36,17 @@ public class HitDish : MonoBehaviour
 		for(int i = 0; i < hitDish.Length; i++) { hitDish[i] = false; }
 	}
 
-	/// <summary>
-	/// 衝突していない時
-	/// </summary>
-	/// <param name="collision"></param>
-	private void OnTriggerExit(Collider collision)
-	{
-		hitDish[id] = false;
-	}
+	///// <summary>
+	///// 衝突していない時
+	///// </summary>
+	///// <param name="collision"></param>
+	//private void OnTriggerExit(Collider collision)
+	//{
+	//	if (collision.tag == "Player")
+	//	{
+	//		hitDish[id] = false;
+	//	}
+	//}
 
 	/// <summary>
 	/// 衝突している間
@@ -51,6 +54,9 @@ public class HitDish : MonoBehaviour
 	/// <param name="collision"></param>
 	private void OnTriggerStay(Collider collision)
 	{
-		hitDish[id] = true;
+		if (collision.tag == "Alien")
+		{
+			hitDish[id] = true;
+		}
 	}
 }

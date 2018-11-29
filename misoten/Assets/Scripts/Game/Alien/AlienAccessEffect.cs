@@ -54,31 +54,24 @@ public class AlienAccessEffect : MonoBehaviour
 	{
 		for (int i = 0; i < playerObj.Length; i++)
 		{
-			if (/*playerObj[i].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien) &&*/
-				playerObj[i].GetComponent<PlayerCollision>().GetHitObj(PlayerCollision.hitObjName.Alien) != null)
+			if (playerObj[i].GetComponent<PlayerAccessController>().IsAccessPossible(PlayerAccessController.AccessObjectName.Alien)
+				/*&& playerObj[i].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering*/)
 			{
 				for (int j = 0; j < dishObj.Length; j++)
 				{
 					if (HitDish.hitDish[j])
 					{
-						if(playerObj[i].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
-						{
-							accessObj[j].GetComponent<ParticleSystem>().Play();
-						}
+						accessObj[j].GetComponent<ParticleSystem>().Play();
 					}
-					else { accessObj[j].GetComponent<ParticleSystem>().Stop(); }
 				}
 			}
 			else
 			{
 				for (int j = 0; j < dishObj.Length; j++)
 				{
-					if (!HitDish.hitDish[j])
-					{
-						accessObj[j].GetComponent<ParticleSystem>().Stop();
-					}
+					accessObj[j].GetComponent<ParticleSystem>().Stop();
 				}
-			}
+			 }
 		}
 	}
 }

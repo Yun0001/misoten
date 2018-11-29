@@ -180,6 +180,13 @@ public class AlienOrder : MonoBehaviour
 
 		// カウンター席に座っているエイリアンからの注文処理
 		CounterOrder();
+
+		// Fadeが開始された時
+		if (AlienCall.alienCall.GetCoinFoObj().GetComponent<CoinFO>().GetIsStartingCoinFO())
+		{
+			// 注文したものを非アクティブにする(吹き出し)
+			OrderType(false);
+		}
 	}
 
 	/// <summary>
@@ -237,14 +244,6 @@ public class AlienOrder : MonoBehaviour
 
 					// オーダー完了
 					SetIsOrder(true);
-
-					// 一度しか通らない
-					if(boxColliderFlag)
-					{
-						// 注文すると、BoxColliderを「ON」にする
-						GetComponent<BoxCollider>().enabled = true;
-						boxColliderFlag = false;
-					}
 
 					// オーダーの種類管理
 					switch (orderType)

@@ -57,10 +57,10 @@ public class AlienSatisfaction : MonoBehaviour
 	/// <summary>
 	/// 更新関数
 	/// </summary>
-	void Update ()
+	void Update()
 	{
 		// 満足した場合
-		if(GetSatisfactionFlag())
+		if (GetSatisfactionFlag())
 		{
 			// 状態移行フラグが「ON」の時
 			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
@@ -97,6 +97,12 @@ public class AlienSatisfaction : MonoBehaviour
 				// 毎フレームの時間を加算
 				satisfactionTimeAdd += Time.deltaTime;
 			}
+		}
+
+		// Fadeが開始された時
+		if (AlienCall.alienCall.GetCoinFoObj().GetComponent<CoinFO>().GetIsStartingCoinFO())
+		{
+			for(int i = 0; i < 4; i++) { satisfactionBalloon[i].SetActive(false); }
 		}
 	}
 

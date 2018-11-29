@@ -385,6 +385,12 @@ public class AlienCall : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Fadeが開始された時の状態を取得する為に必要
+	/// </summary>
+	/// <returns></returns>
+	public GameObject GetCoinFoObj() => coinFoObj;
+
+	/// <summary>
 	/// 生成されたオブジェクトの取得
 	/// </summary>
 	/// <returns></returns>
