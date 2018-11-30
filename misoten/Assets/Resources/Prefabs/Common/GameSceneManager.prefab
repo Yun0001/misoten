@@ -1969,6 +1969,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4988640631291200}
+  - component: {fileID: 114242913182926750}
   m_Layer: 18
   m_Name: PotMiniGame
   m_TagString: MiniGame
@@ -28582,6 +28583,20 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &114242913182926750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215843662538050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292317ef849a6384a947617332eaf134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missParticle: {fileID: 198545863452489126, guid: 082af0ed53924d642bedc35d4e1d1f6f,
+    type: 2}
+  irairaObj: {fileID: 1122250446357620}
 --- !u!114 &114243526455179948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28731,7 +28746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 1
+  isDebugMode: 0
   isEnd: 0
   miniGameUI: {fileID: 1676299864168382}
   canvasCamera: {fileID: 0}
@@ -82081,7 +82096,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 207587867
+  randomSeed: 716489307
   InitialModule:
     serializedVersion: 3
     enabled: 1

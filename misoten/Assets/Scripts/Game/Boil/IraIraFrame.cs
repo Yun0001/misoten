@@ -20,8 +20,9 @@ public class IraIraFrame : MonoBehaviour
 	[SerializeField, Range(0, 100.0f)]
 	private float speed;
 
-    [SerializeField]
-    private GameObject pot;
+	// 確認用
+	[SerializeField]
+	private GameObject pot;
 
 	// ---------------------------------------------
 
@@ -37,12 +38,19 @@ public class IraIraFrame : MonoBehaviour
 	// 一回転したかのフラグ
 	private bool oneRotationFlag = false;
 
-    // ---------------------------------------------
+	// エフェクトフラグ
+	private bool effectFlag = false;
 
-    private void Awake()
-    {
-        pot = GameObject.Find("nabe1");
-    }
+	// ヒットフラグ
+	private bool hitFlag = false;
+
+	// ---------------------------------------------
+
+	private void Awake()
+	{
+		pot = GameObject.Find("nabe1");
+		effectFlag = hitFlag = false;
+	}
 
     /// <summary>
     /// 衝突していない時
@@ -65,7 +73,8 @@ public class IraIraFrame : MonoBehaviour
 			// 一回転したかのフラグ初期化
 			oneRotationFlag = false;
 
-            pot.GetComponent<Pot>().AddMissCount();
+			pot.GetComponent<Pot>().AddMissCount();
+			if (hitFlag) { effectFlag = true; }
 		}
 	}
 
@@ -78,6 +87,7 @@ public class IraIraFrame : MonoBehaviour
 		// Tagが「SecondHand」に設定されているオブジェクトのみ
 		if (collision.tag == "SecondHand")
 		{
+			hitFlag = true;
 			// 回転中(一回転をしていない場合)
 			if (!oneRotationFlag)
 			{
@@ -106,4 +116,6 @@ public class IraIraFrame : MonoBehaviour
 	public Vector3 GetScale() => scale;
 
     public bool GetOneRotationFlag() => oneRotationFlag;
+	public bool SetEffectFlag(bool _effectFlag) => effectFlag = _effectFlag;
+	public bool GetEffectFlag() => effectFlag;
 }
