@@ -27,7 +27,7 @@ public class CoinFO : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (_gameTimeManager.IsTimeUp())
+        if (_gameTimeManager.IsTimeUp() && _gameTimeManager.GetIsTimeUp())
         {
             isStartingCoinFO = true;
             foreach (GameObject _gameUI in _gameUIs)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GamepadInput;
 
 /// <summary>
 /// リザルトエイリアンの描画用スクリプト
@@ -98,7 +99,7 @@ public class Result : MonoBehaviour
 					}
 					else
 					{
-						if (ScoreCount.GetScore() >= 3864400)
+						if (ScoreCount.GetScore() >= 99999999)
 						{
 							if (obj[2].activeSelf)
 							{
@@ -123,7 +124,13 @@ public class Result : MonoBehaviour
 						{
 							if (obj[i - 1].activeSelf || obj[i].activeSelf)
 							{
-								if (timeAdd[i] >= time[i]) { Sound.StopBgm();SoundController.StopAllSE(); SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
+								if(GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any)
+									|| GamePad.GetButtonDown(GamePad.Button.Y, GamePad.Index.Any) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.Any))
+								{
+									Sound.StopBgm(); SoundController.StopAllSE(); SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
+								}
+
+								if (timeAdd[i] >= time[i]) { Sound.StopBgm(); SoundController.StopAllSE(); SceneManager.LoadScene("Title_heita", LoadSceneMode.Single); }
 								else { timeAdd[i] += Time.deltaTime; }
 							}
 						}
