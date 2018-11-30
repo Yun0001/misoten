@@ -54,7 +54,7 @@ public class Mixer : KitchenwareBase {
     private mixerAnimCtrl mixerAnim;
 
     [SerializeField]
-    private GameObject[] theOrderPlayer = new GameObject[3];
+    private GameObject[] theOrderPlayer = { null, null, null };
 
 
     // Use this for initialization
@@ -148,13 +148,8 @@ public class Mixer : KitchenwareBase {
         isEatoyPut = false;
         status = Status.Stand;
         endFrame = 0;
-        accessNum = 0;
         animCount = 0;
         miniGameUI.GetComponent<MixerMiniGame>().Init();
-        for (int i = 0; i < 3; i++)
-        {
-            theOrderPlayer[i] = null;
-        }
     }
 
     protected override void ResetMiniGameUI()
@@ -224,6 +219,10 @@ public class Mixer : KitchenwareBase {
                             Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Mixerend), 7);
                             // statusをEndに変更
                             status = Status.End;
+                            for (int i = 0; i < 3; i++)
+                            {
+                                theOrderPlayer[i] = null;
+                            }
                         }
                     }                
                 }
@@ -359,9 +358,18 @@ public class Mixer : KitchenwareBase {
                     if (theOrderPlayer[j] == null)
                     {
                         theOrderPlayer[j] = theOrderPlayer[j + 1];
+                        theOrderPlayer[j + 1] = null;
                     }
                 }
+
+                if (!mixerEatoyM_cs.DeleteStackEatoy(i))
+                {
+                    Debug.LogError("イートイスタック消去失敗");
+                    return false;
+                }
+
                 return true;
+               
             }
         }
         return false;

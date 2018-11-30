@@ -211,4 +211,24 @@ public class MixerEatoyManager : MonoBehaviour
     public Sprite GetEatoySprite(int id) => eatoySprits[id -1];
 
     public GameObject[] GetEatoies() => eatoies;
+
+    public bool DeleteStackEatoy(int Id)
+    {
+        if (Id > 2)
+        {
+            Debug.LogError("配列の要素数をオーバーします");
+            return false;
+        }
+
+        eatoies[Id] = null;
+        for (int i = 0; i < 2; i++)
+        {
+            if (eatoies[i] == null)
+            {
+                eatoies[i] = eatoies[i + 1];
+                eatoies[i + 1] = null;             
+            }
+        }
+        return true;
+    }
 }
