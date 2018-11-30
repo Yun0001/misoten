@@ -7,6 +7,22 @@ using UnityEngine;
 /// </summary>
 public class AlienSatisfaction : MonoBehaviour
 {
+	// エイリアン管理用列挙型
+	// ---------------------------------------------
+
+	/// <summary>
+	/// エイリアンの向き
+	/// </summary>
+	public enum EHappyPoint
+	{
+		LOW = 0,
+		MID,
+		HIGH,
+		OVER
+	}
+
+	// ---------------------------------------------
+
 	// インスペクター上で設定可能
 	// ---------------------------------------------
 
@@ -17,6 +33,10 @@ public class AlienSatisfaction : MonoBehaviour
 	// 満足を行う時間
 	[SerializeField, Range(1.0f, 10.0f)]
 	private float judgeCount;
+
+	// 各満足時のポイント設定
+	[SerializeField]
+	private float[] happyPoint = new float[4];
 
 	// ---------------------------------------------
 
@@ -62,6 +82,9 @@ public class AlienSatisfaction : MonoBehaviour
 		// 満足した場合
 		if (GetSatisfactionFlag())
 		{
+			// 当たり判定が消える
+			GetComponent<BoxCollider>().enabled = false;
+
 			// 状態移行フラグが「ON」の時
 			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
@@ -112,10 +135,10 @@ public class AlienSatisfaction : MonoBehaviour
 	void BalloonDraw()
 	{
 		// 満足した吹き出しを出す
-		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 1) { satisfactionBalloon[0].SetActive(true); }
-		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 2) { satisfactionBalloon[1].SetActive(true); }
-		if (3 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 15) { satisfactionBalloon[2].SetActive(true); }
-		if (16 <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= 99999999) { satisfactionBalloon[3].SetActive(true); }
+		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() <= happyPoint[(int)EHappyPoint.LOW]) { satisfactionBalloon[0].SetActive(true); }
+		if ((happyPoint[(int)EHappyPoint.LOW] + 1) <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= happyPoint[(int)EHappyPoint.MID]) { satisfactionBalloon[1].SetActive(true); }
+		if ((happyPoint[(int)EHappyPoint.MID] + 1) <= (int)GetComponent<AlienChip>().GetCuisineCoefficient() && (int)GetComponent<AlienChip>().GetCuisineCoefficient() <= happyPoint[(int)EHappyPoint.HIGH]) { satisfactionBalloon[2].SetActive(true); }
+		if ((int)GetComponent<AlienChip>().GetCuisineCoefficient() >= happyPoint[(int)EHappyPoint.OVER]) { satisfactionBalloon[3].SetActive(true); }
 	}
 
 	/// <summary>

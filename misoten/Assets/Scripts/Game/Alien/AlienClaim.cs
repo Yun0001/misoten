@@ -105,6 +105,9 @@ public class AlienClaim : MonoBehaviour
 		// クレーム状態の時
 		if (GetIsClaim())
 		{
+			// 当たり判定が消える
+			GetComponent<BoxCollider>().enabled = false;
+
 			// 状態移行フラグが「ON」の時
 			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{

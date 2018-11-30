@@ -1635,6 +1635,11 @@ MonoBehaviour:
   - {fileID: 1969216220126924}
   - {fileID: 1428720592541494}
   judgeCount: 2
+  happyPoint:
+  - 100
+  - 1000
+  - 10000
+  - 100000
 --- !u!114 &114219152501415518
 MonoBehaviour:
   m_ObjectHideFlags: 1
