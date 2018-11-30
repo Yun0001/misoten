@@ -57,6 +57,9 @@ public class AlienSatisfaction : MonoBehaviour
 	// 満足フラグ
 	private bool satisfactionFlag = false;
 
+	// チップ取得フラグ
+	private bool chipGetFlag = true;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -69,6 +72,9 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足フラグ(チップ取得時用)の初期化
 		satisfactionChipFlag = false;
+
+		// チップ取得フラグの初期化
+		chipGetFlag = true;
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
@@ -97,9 +103,8 @@ public class AlienSatisfaction : MonoBehaviour
 					// 満足「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
 
-					//// スコア取得
-					//if(!satisfactionChipFlag)
-					//ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue());
+					// スコア取得
+					if (chipGetFlag) { chipGetFlag = false; ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
 
 					// 満足アニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);

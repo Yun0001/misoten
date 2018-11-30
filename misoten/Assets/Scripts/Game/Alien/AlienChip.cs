@@ -114,7 +114,7 @@ public class AlienChip : MonoBehaviour
 						// 満足状態の時
 						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 						{
-                            ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
+                            //ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
                             SetCuisineCame(false);
 							GetComponent<AlienOrder>().SetIsOrder(false);
 
