@@ -28518,6 +28518,7 @@ MonoBehaviour:
   val: 0
   isDebugMode: 0
   iceBoxID: 0
+  emissionRateID: 0
 --- !u!114 &114224754586567574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29391,6 +29392,7 @@ MonoBehaviour:
   val: 0
   isDebugMode: 0
   iceBoxID: 1
+  emissionRateID: 0
 --- !u!114 &114557588998090134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29745,6 +29747,7 @@ MonoBehaviour:
   status: 0
   stickObj: {fileID: 1121196433524830}
   complateEatoyAnnounce: {fileID: 1243562134155224}
+  theOrderPlayer: 000000000000000000000000
 --- !u!114 &114708552205020610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29962,7 +29965,7 @@ MonoBehaviour:
   canvasCamera: {fileID: 0}
   animationModel: {fileID: 1377588618109102}
   stickUI: {fileID: 1676916404820844}
-  secondHandFrame: {fileID: 1318468084715240}
+  secondHandFrame: {fileID: 1122250446357620}
   joystick: {fileID: 1980132134415524}
 --- !u!114 &114777176516533352
 MonoBehaviour:

@@ -67,7 +67,7 @@ public class MixerEatoyManager : MonoBehaviour
         }
 
         Eatoy putEatoy_cs = putEatoy.GetComponent<Eatoy>();
-        putEatoy_cs.Init(eatoyID, eatoySprits[eatoyID - 1]);
+        putEatoy_cs.Init(eatoyID - 1, eatoySprits[eatoyID - 1]);
         putEatoy_cs.Thawing();
         putEatoy_cs.AddPoint(CalcEatoyPoint());
         putEatoy.GetComponent<SpriteRenderer>().enabled = false;

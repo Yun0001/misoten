@@ -94,15 +94,19 @@ public class AlienSatisfaction : MonoBehaviour
 					// イートイオブジェクトを削除
 					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 
-					// 満足アニメーションになる
-					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
+                    //// スコア取得
+                    //if(!satisfactionChipFlag)
+                    //ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue());
+
+                    // 満足アニメーションになる
+                    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
 
 					// 満足吹き出しの描画を行う
 					BalloonDraw();
 
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
-				}
+                }
 
 				// 満足時間が指定時間を超えた場合
 				if (satisfactionTimeAdd >= judgeCount)

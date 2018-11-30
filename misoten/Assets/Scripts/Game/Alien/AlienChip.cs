@@ -114,8 +114,8 @@ public class AlienChip : MonoBehaviour
 						// 満足状態の時
 						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 						{
-							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
-							SetCuisineCame(false);
+                            ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
+                            SetCuisineCame(false);
 							GetComponent<AlienOrder>().SetIsOrder(false);
 
 							// チップをプレイヤーに渡した
@@ -183,11 +183,16 @@ public class AlienChip : MonoBehaviour
 	/// <returns></returns>
 	public static bool GetChipOnFlag(int id) => chipOnFlag[id];
 
-	/// <summary>
-	/// 料理を持ってきた相手のIDの格納
-	/// </summary>
-	/// <param name="ID"></param>
-	public void SetOpponentID(int ID) => opponentID = ID;
+    /// <summary>
+    /// 料理を持ってきた相手のIDの取得
+    /// </summary>
+    public int GetOpponentID() => opponentID;
+
+    /// <summary>
+    /// 料理を持ってきた相手のIDの格納
+    /// </summary>
+    /// <param name="ID"></param>
+    public void SetOpponentID(int ID) => opponentID = ID;
 
 	/// <summary>
 	/// 渡すor置くチップの計算

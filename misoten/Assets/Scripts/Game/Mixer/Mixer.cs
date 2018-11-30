@@ -262,7 +262,7 @@ public class Mixer : KitchenwareBase {
         status++;
 
         // アクセスしたプレイヤーのIDを保持
-        if (SetOrderPlayer(player.GetComponent<Player>().GetPlayerID()))
+        if (!SetOrderPlayer(player.GetComponent<Player>().GetPlayerID()))
         {
             Debug.LogError("プレイヤーIDスタックがいっぱいです！");
             return false;
