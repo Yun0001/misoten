@@ -22,6 +22,7 @@ public class TutorialCtrl : MonoBehaviour
     bool isOnce = false;
 
     private GameObject[]    _players;
+    private Vector3[]       _playerInitPos = new Vector3[4];
 
     //private GameObject[]    _eatoys;
     private Sprite[]        _eatoySprites;
@@ -53,6 +54,12 @@ public class TutorialCtrl : MonoBehaviour
         _tutorialFrow = GameObject.Find("TutorialFrow").GetComponent<TutorialFrow>();
        
         _players = GameObject.FindGameObjectsWithTag("Player");
+        int i = 0;
+        foreach (GameObject player in _players)
+        {
+            _playerInitPos[i] = player.transform.position;
+            i++;
+        }
 
     }
 
@@ -133,10 +140,13 @@ public class TutorialCtrl : MonoBehaviour
         }
 
         _tutorialFrow.SetTutorial(CURRENT_TUTORIAL_STATE, false);
+        int i = 0;
         foreach (GameObject player in _players)
         {
+            player.transform.position = _playerInitPos[i];
             player.GetComponent<Player>().AllNull();
             player.GetComponent<TutorialPlayer>().SetPlayerReder(false);
+            i++;
         }
         isNextTutorial = false;
 
@@ -162,6 +172,8 @@ public class TutorialCtrl : MonoBehaviour
                     break;
 
                 case Tutorial.NO_5: // ミキサー
+                    GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+                    GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
                     int[] nums = { 1, 3, 3, 5 };
                     int i = 0;
                     foreach (GameObject player in _players)
@@ -185,6 +197,8 @@ public class TutorialCtrl : MonoBehaviour
                     break;
 
                 default:
+                    GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
+                    GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = true;
                     foreach (GameObject player in _players)
                     {
                         if (player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() != null)

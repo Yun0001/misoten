@@ -72,8 +72,8 @@ public class TitleController : MonoBehaviour {
         // タイトルBGMが終了でタイトルシーンの再ロード
         if (!_audioSource.isPlaying)
         {
-            isStartingGame = true;
-            // _canvasWIO.GetComponent<WhiteIO>().OnRsWhiteOut();
+            //isStartingGame = true;
+            _canvasWIO.GetComponent<WhiteIO>().OnRsWhiteOut();
         }
 
         // タイトルロゴのアニメーションが終わってない場合以下スルー

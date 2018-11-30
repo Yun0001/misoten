@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class GrilledGage : MonoBehaviour {
+public class GrilledGageTutorial : MonoBehaviour
+{
 
-     enum EArea
+    enum EArea
     {
         Normal,
         Hard,
@@ -26,7 +27,7 @@ public class GrilledGage : MonoBehaviour {
     private EArea[,] pattern = new EArea[PATTERN_NUM, SUCCESSAREA_NUM] {
         { EArea.Hard, EArea.Hell, EArea.Normal, EArea.Hell, EArea.Hell },
         { EArea.Hell, EArea.Normal, EArea.Hell, EArea.Hard, EArea.Hell },
-        { EArea.Normal, EArea.Normal, EArea.Normal, EArea.Normal, EArea.Hard }, 
+        { EArea.Normal, EArea.Normal, EArea.Normal, EArea.Normal, EArea.Hard },
         { EArea.Hard, EArea.Hard, EArea.Hard, EArea.Hell, EArea.Hell }
     };
 
@@ -36,46 +37,34 @@ public class GrilledGage : MonoBehaviour {
     private GameObject[] successAreaPrefab = new GameObject[3];
     private string successAreaPrefabPass = "Prefabs/GrilledGage/";
     private string[] successAreaPrefabName = { "SuccessArea_Normal", "SuccessArea_Hard", "SuccessArea_Hell" };
-    
+
     // 各パターンは５つのエリアが流れてくる
     private GameObject[,] allPatternSuccessArea = new GameObject[PATTERN_NUM, SUCCESSAREA_NUM];
 
     // ノーツを流す時に使う変数
     [SerializeField]
     private GameObject[] successAreaGroup = new GameObject[SUCCESSAREA_NUM];
-    
+
     // エリア移動速度
     [SerializeField]
     private float areaSpeed;
 
     // ゲージ表示から流れてくるまでのフレーム数
     [SerializeField]
-    private float STAY_TIME =1;
+    private float STAY_TIME = 1;
     [SerializeField]
     private float stayTime;
 
     private TimingPoint timingPoint_cs;
 
 
-    [SerializeField] private bool _isTutorialMode = false;
 
 
 
     private void Awake()
     {
         grilledGageStatus = EGrilledGageStatus.Standby;
-        Transform parent;
-        Vector3 pos = new Vector3(0, 0, 0);
-        if (_isTutorialMode)
-        {
-            parent = this.transform.GetChild(0);
-            pos = this.transform.GetChild(0).position;
-            //pos.z -= 5.0f;
-        }
-        else
-        {
-            parent = this.transform;
-        }
+        var parent = this.transform.GetChild(0);
         // SuccessAreaをロード
         for (int i = 0; i < successAreaPrefab.Length; i++)
         {
@@ -87,20 +76,13 @@ public class GrilledGage : MonoBehaviour {
         {
             for (int i = 0; i < SUCCESSAREA_NUM; i++)
             {
-                if (_isTutorialMode)
-                {
-                    allPatternSuccessArea[j, i] = Instantiate(successAreaPrefab[(int)pattern[j, i]], pos, Quaternion.identity, parent);
-                }
-                else
-                {
-                    allPatternSuccessArea[j, i] = Instantiate(successAreaPrefab[(int)pattern[j, i]], parent.position, Quaternion.identity, parent);
-                }
+                allPatternSuccessArea[j, i] = Instantiate(successAreaPrefab[(int)pattern[j, i]], transform.position, Quaternion.identity, parent);
                 allPatternSuccessArea[j, i].SetActive(false);
             }
         }
 
         timingPoint_cs = transform.Find("TimingPoint").GetComponent<TimingPoint>();
-}
+    }
 
 
     public void Init(int pRank)
@@ -156,10 +138,10 @@ public class GrilledGage : MonoBehaviour {
         for (int i = 0; i < successAreaGroup.Length; i++)
         {
             Vector3 pos = transform.position;
-            successAreaGroup[i].transform.position= pos;
+            successAreaGroup[i].transform.position = pos;
         }
     }
-    
+
 
 
     // Update is called once per frame
@@ -188,8 +170,8 @@ public class GrilledGage : MonoBehaviour {
                 }
 
                 return true;
-                //grilledGageStatus = EGrilledGageStatus.End;
-                //break;
+            //grilledGageStatus = EGrilledGageStatus.End;
+            //break;
 
             case EGrilledGageStatus.End:
                 break;
