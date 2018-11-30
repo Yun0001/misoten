@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class Pot : KitchenwareBase
 {
-    private GameObject frame;
-
     private int basePoint;
 
     private int missCount;
 
     [SerializeField]
     private GameObject stickUI;
+
+    [SerializeField]
+    private GameObject secondHandFrame;
+
+    [SerializeField]
+    private GameObject joystick;
 
 
     private void Awake()
@@ -22,9 +26,6 @@ public class Pot : KitchenwareBase
 
     protected override void InstanceMiniGameUI()
     {
-       // miniGameUI = Instantiate(Resources.Load("Prefabs/PotMiniGame") as GameObject, transform.position, Quaternion.identity);
-        miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
-        frame = miniGameUI.transform.Find("Canvas/JoyStick/SecondHandFrame").gameObject;
         miniGameUI.SetActive(false);
     }
 
@@ -46,7 +47,7 @@ public class Pot : KitchenwareBase
 
     protected override bool Cooking()
     {
-        bool result = frame.GetComponent<IraIraFrame>().GetOneRotationFlag();
+        bool result = secondHandFrame.GetComponent<IraIraFrame>().GetOneRotationFlag();
         if (result)
         {
             stickUI.SetActive(false);
@@ -75,9 +76,6 @@ public class Pot : KitchenwareBase
 
     public void AddMissCount() => missCount++;
 
-    public void JoystickInit(int Id)
-    {
-        miniGameUI.transform.Find("Canvas/JoyStick").GetComponent<Joystick>().Init(Id);
+    public void JoystickInit(int Id) => joystick.GetComponent<Joystick>().Init(Id);
 
-    }
 }

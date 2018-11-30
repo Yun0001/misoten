@@ -28734,6 +28734,7 @@ MonoBehaviour:
   isEnd: 0
   miniGameUI: {fileID: 1676299864168382}
   canvasCamera: {fileID: 0}
+  animationModel: {fileID: 1307421366601884}
   missText: {fileID: 1201346819079334}
   pointText: {fileID: 1745267075972698}
   buttonUI: {fileID: 1378149260462642}
@@ -29735,6 +29736,7 @@ MonoBehaviour:
   isEnd: 0
   miniGameUI: {fileID: 1965429176088652}
   canvasCamera: {fileID: 0}
+  animationModel: {fileID: 1860223414177068}
   TIME: 7
   time: 0
   animCount: 0
@@ -29958,7 +29960,10 @@ MonoBehaviour:
   isEnd: 0
   miniGameUI: {fileID: 1215843662538050}
   canvasCamera: {fileID: 0}
+  animationModel: {fileID: 1377588618109102}
   stickUI: {fileID: 1676916404820844}
+  secondHandFrame: {fileID: 1318468084715240}
+  joystick: {fileID: 1980132134415524}
 --- !u!114 &114777176516533352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30607,6 +30612,7 @@ MonoBehaviour:
   isEnd: 0
   miniGameUI: {fileID: 1674986219436374}
   canvasCamera: {fileID: 0}
+  animationModel: {fileID: 1778819659467578}
   microwaveGage_cs: {fileID: 0}
   UIButton: {fileID: 1478854044589824}
   basePoint: 1

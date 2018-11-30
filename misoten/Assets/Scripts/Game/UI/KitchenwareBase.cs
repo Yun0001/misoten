@@ -24,6 +24,10 @@ public abstract class KitchenwareBase : MonoBehaviour
     [SerializeField]
     protected GameObject canvasCamera;
 
+    // アニメーター持っているモデル
+    [SerializeField]
+    private GameObject animationModel;
+
     /// <summary>
     /// 調理開始
     /// </summary>
@@ -115,4 +119,6 @@ public abstract class KitchenwareBase : MonoBehaviour
     protected abstract int CalcEatoyPoint();
 
     public GameObject GetMiniGameUI() => miniGameUI;
+
+    public GameObject GetAnimationModel() => animationModel;
 }

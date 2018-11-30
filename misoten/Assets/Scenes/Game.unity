@@ -284,6 +284,11 @@ Prefab:
     - {fileID: 81239631846428548, guid: 50292cb25f53b5042938c15b47a45370, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 50292cb25f53b5042938c15b47a45370, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1382632473 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1122250446357620, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 2029460354}
 --- !u!1 &1573959172 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1102859739124382, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
@@ -440,42 +445,35 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 223118009246907276, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 24543914}
-    - target: {fileID: 114974197512596166, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 24543913}
-    - target: {fileID: 114775434568062330, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 24543913}
     - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
       propertyPath: coinFoObj
       value: 
       objectReference: {fileID: 1813441639}
-    - target: {fileID: 1741072199682436, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224733777874360542, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    - target: {fileID: 114775434568062330, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.32999992
-      objectReference: {fileID: 0}
-    - target: {fileID: 4007134031919604, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 4.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 4128707710867876, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.71
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 24543913}
+    - target: {fileID: 114974197512596166, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 24543913}
+    - target: {fileID: 223118009246907276, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 24543914}
+    - target: {fileID: 114775434568062330, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: secondHandFrame
+      value: 
+      objectReference: {fileID: 1382632473}
+    - target: {fileID: 114330503888718726, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: isDebugMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}

@@ -53,11 +53,14 @@ public class Mixer : KitchenwareBase {
     [SerializeField]
     private GameObject complateEatoyAnnounce;
 
+    private mixerAnimCtrl mixerAnim;
+
 
     // Use this for initialization
     void Awake () {
         miniGameUI.SetActive(false);
         mixerEatoyM_cs = GetComponent<MixerEatoyManager>();
+        mixerAnim = GetAnimationModel().GetComponent<mixerAnimCtrl>();
     }
 
     private void Update()
@@ -66,9 +69,9 @@ public class Mixer : KitchenwareBase {
         {
 
             case Status.Stand:
-                if (transform.Find("mixer").GetComponent<mixerAnimCtrl>().GetIsOpen())
+                if (mixerAnim.GetIsOpen())
                 {
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                    mixerAnim.SetIsOpen(false);
                 }
                 break;
             case Status.AccessTwo:
@@ -78,7 +81,7 @@ public class Mixer : KitchenwareBase {
                     // 調理開始
                     status = Status.Open;
                     mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.TwoParson);
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+                    mixerAnim.SetIsOpen(true);
                     mixerEatoyM_cs.HieenEatoySprite();
                     complateEatoyAnnounce.SetActive(false);
                 }
@@ -89,7 +92,7 @@ public class Mixer : KitchenwareBase {
                     // 調理開始
                     status = Status.Open;
                     mixerEatoyM_cs.SetMixMode(MixerEatoyManager.MixMode.ThreeParson);
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(true);
+                    mixerAnim.SetIsOpen(true);
                     mixerEatoyM_cs.HieenEatoySprite();
                     complateEatoyAnnounce.SetActive(false);
                 }
@@ -103,8 +106,8 @@ public class Mixer : KitchenwareBase {
                     status = Status.Play;
                     stickObj.SetActive(true);
                     stickObj.GetComponent<Animator>().Play("rSpin");
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetBool(true);
+                    mixerAnim.SetIsOpen(false);
+                    mixerAnim.SetBool(true);
                     miniGameUI.SetActive(true);
                     animCount = 0;
                 }
@@ -121,7 +124,7 @@ public class Mixer : KitchenwareBase {
                 endFrame++;
                 if (endFrame > 5)
                 {
-                    transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                    mixerAnim.SetIsOpen(false);
                     status = Status.Stand;
                     endFrame = 0;
                     InitMiniGameUI();
@@ -186,13 +189,13 @@ public class Mixer : KitchenwareBase {
                 break;
 
             case Status.Put:
-                if (transform.Find("mixer").GetComponent<mixerAnimCtrl>().GetIsOpen())
+                if (mixerAnim.GetIsOpen())
                 {
                     animCount++;
                     if (animCount >= openFrame)
                     {
                         // 蓋を閉める
-                        transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetIsOpen(false);
+                        mixerAnim.SetIsOpen(false);
                         // statusをEndに変更
                         status = Status.End;
                     }
@@ -213,7 +216,7 @@ public class Mixer : KitchenwareBase {
 
                             // 全ての当たり判定を復活
                             GetComponent<MixerAccessPoint>().RevivalAllAccessPoint();
-                            transform.Find("mixer").GetComponent<mixerAnimCtrl>().SetBool(false);
+                            mixerAnim.SetBool(false);
                             Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Mixer), false, 7);
                             Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Mixerend), 7);
                         }

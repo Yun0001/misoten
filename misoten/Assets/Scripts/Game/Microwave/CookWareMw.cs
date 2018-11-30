@@ -30,8 +30,7 @@ public class CookWareMw : KitchenwareBase
 
     protected override void InstanceMiniGameUI()
     {
-       //' miniGameUI = Instantiate(Resources.Load("Prefabs/MicrowaveMiniGame") as GameObject, transform.position, Quaternion.identity);
-        //miniGameUI.transform.Find("Canvas").gameObject.GetComponent<Canvas>().worldCamera = canvasCamera.GetComponent<Camera>();
+ 
     }
 
     protected override void InitMiniGameUI()
@@ -73,7 +72,7 @@ public class CookWareMw : KitchenwareBase
         cuisine = null;
         microwaveGage_cs.StopStartSE();
         // レンジOpenSE
-        Sound.PlaySe(GameSceneManager.seKey[16], 4);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.MicrowaveOpen), 4);
         UIButton.SetActive(false);
     }
 

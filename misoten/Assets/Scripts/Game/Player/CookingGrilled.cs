@@ -16,12 +16,12 @@ public class CookingGrilled : MonoBehaviour {
     /// </summary>
     public void CookingStart()
     {
-        if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
+        if (!GetFlyingpan_cs().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
         {
             return;
         }
         player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(true);
+        GetFlyingpan_cs().GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(true);
 
         //着火SE
         CookingStratSE();
@@ -37,7 +37,7 @@ public class CookingGrilled : MonoBehaviour {
 
         // 焼く調理終了の処理 
         player_cs.SetHaveInEatoy(eatoy);
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        GetFlyingpan_cs().GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(false);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class CookingGrilled : MonoBehaviour {
     /// <returns></returns>
     private GameObject UpdateGrilled()
     {
-        GameObject obj = player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().UpdateMiniGame();
+        GameObject obj = GetFlyingpan_cs().UpdateMiniGame();
         if (obj == null)
         {
             return null;
@@ -60,9 +60,9 @@ public class CookingGrilled : MonoBehaviour {
     /// </summary>
     public void CancelCooking()
     {
-        GameObject flyingpan = player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable);
-        flyingpan.GetComponent<Flyingpan>().CookingInterruption();
-        flyingpan.transform.Find("pan").GetComponent<CookWareAnimCtrl>().SetBool(false);
+        Flyingpan flyimngpan_cs = GetFlyingpan_cs();
+        flyimngpan_cs.CookingInterruption();
+        flyimngpan_cs.GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(false);
         CancelSE();
         player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.GrilledTable);
     }
@@ -97,4 +97,6 @@ public class CookingGrilled : MonoBehaviour {
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), false, 12);
         Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Stirfry), 12);
     }
+
+    private Flyingpan GetFlyingpan_cs() => player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>();
 }

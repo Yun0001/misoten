@@ -21,10 +21,10 @@ public class CookingMicrowave : MonoBehaviour {
     public void CookingStart()
     {
         // 電子レンジ調理開始
-        if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
+        if (!GetMicrowave_cs().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
         // プレイヤーのステータスを電子レンジ調理状態に変更
         player_cs.SetPlayerStatus(Player.PlayerStatus.Microwave);
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+        GetMicrowave_cs().GetAnimationModel().GetComponent<mwAnimCtrl>().SetIsOpen(true);
 
         // レンジOpenSE
         Sound.PlaySe(GameSceneManager.seKey[16], 4);
@@ -41,14 +41,14 @@ public class CookingMicrowave : MonoBehaviour {
 
         // 料理を持つ
         player_cs.SetHaveInEatoy(eatoy);
-        player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(true);
+        GetMicrowave_cs().GetAnimationModel().GetComponent<mwAnimCtrl>().SetIsOpen(true);
         // レンジOpenSE
         //Sound.PlaySe(GameSceneManager.seKey[16], 4);
     }
 
     private GameObject UpdateMicrowave()
     {
-        GameObject eatoy = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().UpdateMiniGame();
+        GameObject eatoy = GetMicrowave_cs().UpdateMiniGame();
         if (eatoy != null)
         {
             microwaveEffect.Stop();
@@ -62,10 +62,12 @@ public class CookingMicrowave : MonoBehaviour {
     /// </summary>
     public void CancelCooking()
     {
-        GameObject microwave = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave);
-        microwave.GetComponent<CookWareMw>().CookingInterruption();
-        microwave.transform.Find("microwave").GetComponent<mwAnimCtrl>().SetIsOpen(false);
+        CookWareMw microwave_cs = GetMicrowave_cs();
+        microwave_cs.CookingInterruption();
+        microwave_cs.GetAnimationModel().GetComponent<mwAnimCtrl>().SetIsOpen(false);
         microwaveEffect.Stop();
         player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.Microwave);
     }
+
+    private CookWareMw GetMicrowave_cs() => player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>();
 }
