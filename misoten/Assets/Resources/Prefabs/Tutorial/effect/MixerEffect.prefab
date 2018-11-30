@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4868525830814062}
   - component: {fileID: 198628147951996936}
   - component: {fileID: 199584241516939170}
-  - component: {fileID: 114061048177712622}
   m_Layer: 18
   m_Name: MixerEffect
   m_TagString: Untagged
@@ -42,18 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &114061048177712622
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1401296897134070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7c42106cb0bae943979047bfe0a1e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orderType: 5
 --- !u!198 &198628147951996936
 ParticleSystem:
   m_ObjectHideFlags: 1
