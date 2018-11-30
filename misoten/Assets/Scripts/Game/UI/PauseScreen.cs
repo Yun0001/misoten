@@ -24,6 +24,10 @@ public class PauseScreen : MonoBehaviour
 	[SerializeField]
 	private GameObject pauseObj;
 
+	// Fadeが開始された時の状態を取得する為に必要
+	[SerializeField]
+	private GameObject coinFoObj;
+
 	// ---------------------------------------------
 
 	// ローカル変数
@@ -63,65 +67,70 @@ public class PauseScreen : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// プレイヤーの数分ループ
-		for(int i = 0; i < playerObj.Length; i++)
+		// Fadeが開始されていない時
+		if (!coinFoObj.GetComponent<CoinFO>().GetIsStartingCoinFO())
 		{
-			// スタートボタンが押されると、ポーズ画面になる
-			if (!pauseObj.GetComponent<Pause>().pausing
-				&& GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+			// プレイヤーの数分ループ
+			for (int i = 0; i < playerObj.Length; i++)
 			{
-				// ポーズ「ON」、ポーズを開いたプレイヤーのみ操作可能
-				pauseObj.GetComponent<Pause>().pausing = id[i] = true;
-
-				// ポーズオブジェクトを非アクティブ化に設定
-				childObj1.SetActive(true);
-				childObj2.SetActive(true);
-				childObj3.SetActive(true);
-			}
-
-			// ポーズ中の処理
-			else if (pauseObj.GetComponent<Pause>().pausing && id[i])
-			{
-				// セレクトカーソルの更新
-				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == 1.0f && !selectCursorFlag && selectCursor == 1)
+				// スタートボタンが押されると、ポーズ画面になる
+				if (!pauseObj.GetComponent<Pause>().pausing
+					&& GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
 				{
-					selectCursor = 0;
-					selectCursorFlag = true;
-					selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
-				}
-				if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
-				{
-					selectCursor = 1;
-					selectCursorFlag = true;
-					selectCursorObj.transform.localPosition = new Vector3(0.0f, 98.0f, 0.1f);
+					// ポーズ「ON」、ポーズを開いたプレイヤーのみ操作可能
+					pauseObj.GetComponent<Pause>().pausing = id[i] = true;
+
+					// ポーズオブジェクトを非アクティブ化に設定
+					childObj1.SetActive(true);
+					childObj2.SetActive(true);
+					childObj3.SetActive(true);
 				}
 
-				// ゲーム画面へ戻る
-				if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber())
-					|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+				// ポーズ中の処理
+				else if (pauseObj.GetComponent<Pause>().pausing && id[i])
 				{
-					pauseObj.GetComponent<Pause>().pausing = false;
-
-					// 初期化処理
-					Init();
-				}
-
-				// 決定
-				if (GamePad.GetButtonDown(GamePad.Button.B, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
-				{
-					// ポーズ中の項目
-					switch(selectCursor)
+					// セレクトカーソルの更新
+					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == 1.0f && !selectCursorFlag && selectCursor == 1)
 					{
-						case 0: pauseObj.GetComponent<Pause>().pausing = false; break;	// ゲーム画面へ戻る
-						case 1: // タイトルへ戻る
-							Sound.StopBgm();
-							SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
-							break;
-						default: Debug.LogError("だから言ったじゃないか！"); break;
+						selectCursor = 0;
+						selectCursorFlag = true;
+						selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
+					}
+					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
+					{
+						selectCursor = 1;
+						selectCursorFlag = true;
+						selectCursorObj.transform.localPosition = new Vector3(0.0f, 98.0f, 0.1f);
 					}
 
-					// 初期化処理
-					Init();
+					// ゲーム画面へ戻る
+					if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber())
+						|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+					{
+						pauseObj.GetComponent<Pause>().pausing = false;
+
+						// 初期化処理
+						Init();
+					}
+
+					// 決定
+					if (GamePad.GetButtonDown(GamePad.Button.B, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+					{
+						// ポーズ中の項目
+						switch (selectCursor)
+						{
+							case 0: pauseObj.GetComponent<Pause>().pausing = false; break;  // ゲーム画面へ戻る
+							case 1: // タイトルへ戻る
+								Sound.StopBgm();
+								SoundController.StopAllSE();
+								SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
+								break;
+							default: Debug.LogError("だから言ったじゃないか！"); break;
+						}
+
+						// 初期化処理
+						Init();
+					}
 				}
 			}
 		}
