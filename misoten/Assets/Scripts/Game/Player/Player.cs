@@ -74,6 +74,8 @@ public class Player : MonoBehaviour
         } 
         UpdateBranch();
         playerInput_cs.UpdateInput();
+
+        haveEatoyCtrl_cs.HaveEatoy();
     }
 
     /// <summary>

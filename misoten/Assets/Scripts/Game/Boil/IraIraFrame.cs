@@ -48,7 +48,7 @@ public class IraIraFrame : MonoBehaviour
 
 	private void Awake()
 	{
-		pot = GameObject.Find("nabe1");
+		//pot = GameObject.Find("nabe1");
 		effectFlag = hitFlag = false;
 	}
 

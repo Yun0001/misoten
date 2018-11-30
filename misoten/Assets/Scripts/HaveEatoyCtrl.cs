@@ -54,16 +54,20 @@ public class HaveEatoyCtrl : MonoBehaviour {
         _eatoyRenderer = _haveEatoy.GetComponent<SpriteRenderer>();
         _eatoyRenderer.sprite = null;
 
-        foreach (Transform effect in _haveEatoy.transform) effect.gameObject.GetComponent<ParticleSystem>().Play();
+        foreach (Transform effect in _haveEatoy.transform)
+        {
+            effect.gameObject.GetComponent<ParticleSystem>().Play();
+            effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = true;
+        }
 
     }
 
-    void Update() {
-        HaveEatoy();
-    }
-
-    void HaveEatoy()
+    public void HaveEatoy()
     {
+        SetEatoy(_eatoyNum * 2);
+        OnTrun();
+
+        //  プレイヤーが非表示なら非表示
         if (!_player.GetComponent<SpriteRenderer>().enabled)
         {
             _eatoyRenderer.enabled = false;
@@ -74,18 +78,28 @@ public class HaveEatoyCtrl : MonoBehaviour {
             return;
         }
 
+        // プレイヤーが表示中なら以下の処理
+
+        //  配膳中でないなら非表示
         if (!(_playerAnim.IsServing()))
         {
             _eatoyRenderer.enabled = false;
+            foreach (Transform effect in _haveEatoy.transform)
+            {
+                effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = false;
+            }
             return;
         }
 
+        
         _eatoyRenderer.enabled = true;
 
+        // プレイヤーが持っているイートイが凍っているか判定
         if (_player.IsEatoyIceing())
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
+               
                 effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = true;
             }
         }
@@ -97,8 +111,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
             }
         }
 
-        SetEatoy(_eatoyNum * 2);
-        OnTrun();
+
 
     }
 

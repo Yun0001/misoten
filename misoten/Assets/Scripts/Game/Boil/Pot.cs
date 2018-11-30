@@ -43,6 +43,7 @@ public class Pot : KitchenwareBase
         missCount = 0;
         stickUI.SetActive(true);
         stickUI.GetComponent<Animator>().Play("rSpin");
+        stickUI.GetComponent<Animator>().speed = 0.15f;
     }
 
     protected override bool Cooking()

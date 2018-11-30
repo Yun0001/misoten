@@ -132,7 +132,7 @@ public class MixerEatoyManager : MonoBehaviour
     /// 三人でミキサー
     /// </summary>
     /// <returns></returns>
-    private int DecisionThreeParsonPutEatoyID()
+    public int DecisionThreeParsonPutEatoyID()
     {
         // イートイの色を格納
         Eatoy.EEatoyColor[] eatoyColor = new Eatoy.EEatoyColor[3];

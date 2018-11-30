@@ -41,8 +41,6 @@ public class Mixer : KitchenwareBase {
     [SerializeField]
     private Status status = Status.Stand;
 
-    private GameObject lastAccessPlayer;
-
     private MixerEatoyManager mixerEatoyM_cs;
 
     private int endFrame;
@@ -56,7 +54,7 @@ public class Mixer : KitchenwareBase {
     private mixerAnimCtrl mixerAnim;
 
     [SerializeField]
-    private int[] theOrderPlayer = new int[3];
+    private GameObject[] theOrderPlayer = new GameObject[3];
 
 
     // Use this for initialization
@@ -155,7 +153,7 @@ public class Mixer : KitchenwareBase {
         miniGameUI.GetComponent<MixerMiniGame>().Init();
         for (int i = 0; i < 3; i++)
         {
-            theOrderPlayer[i] = 0;
+            theOrderPlayer[i] = null;
         }
     }
 
@@ -215,7 +213,7 @@ public class Mixer : KitchenwareBase {
                             stickObj.SetActive(false);
 
                             // イートイを生成し、最後にアクセスしたプレイヤーに渡す
-                            lastAccessPlayer.GetComponent<Player>().SetHaveInEatoy(
+                            theOrderPlayer[accessNum - 1].GetComponent<Player>().SetHaveInEatoy(
                               mixerEatoyM_cs.MixEatoy());
                             isEatoyPut = true;
 
@@ -262,20 +260,26 @@ public class Mixer : KitchenwareBase {
         status++;
 
         // アクセスしたプレイヤーのIDを保持
-        if (!SetOrderPlayer(player.GetComponent<Player>().GetPlayerID()))
+        if (!StackOrderPlayer(player))
         {
             Debug.LogError("プレイヤーIDスタックがいっぱいです！");
             return false;
         }
         
-        lastAccessPlayer = player;
         mixerEatoyM_cs.SetEatoy(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
 
         // アクセスしている人数が二人の時
-        if (status >= Status.AccessTwo)
+        if (status == Status.AccessTwo)
         {
             // できるイートイの表示
             int colorId = mixerEatoyM_cs.DecisionTwoParonPutEatoyID();
+            complateEatoyAnnounce.GetComponent<ComplateEatoyAnnounce>().SetSprite(mixerEatoyM_cs.GetEatoySprite(colorId));
+            complateEatoyAnnounce.SetActive(true);
+        }
+        // アクセスしている人数が3人の時
+        else if (status == Status.AccessThree)
+        {
+            int colorId = mixerEatoyM_cs.DecisionThreeParsonPutEatoyID();
             complateEatoyAnnounce.GetComponent<ComplateEatoyAnnounce>().SetSprite(mixerEatoyM_cs.GetEatoySprite(colorId));
             complateEatoyAnnounce.SetActive(true);
         }
@@ -324,30 +328,43 @@ public class Mixer : KitchenwareBase {
     public int GetMiniGamePoint() => miniGameUI.GetComponent<MixerMiniGame>().GetPowerPoint();
 
 
-    public bool SetOrderPlayer(int pID)
+    //　プレイヤーのアクセス順番をスタック
+    public bool StackOrderPlayer(GameObject player)
     {
         for (int i = 0; i < theOrderPlayer.Length; i++)
         {
-            if (theOrderPlayer[i] == 0)
+            if (theOrderPlayer[i] == null)
             {
-                theOrderPlayer[i] = pID;
+                theOrderPlayer[i] = player;
                 return true;
             }
         }
         return false;
     }
 
-    public bool DeleteStackPlayerID(int pID)
-    {
-        for (int i = 0; i < theOrderPlayer.Length; i++)
-        {
-            if (theOrderPlayer[i] == pID)
-            {
-                theOrderPlayer[i] = 0;
 
+    // プレイヤーIDスタックを削除
+    public bool DeleteStackPlayerID(GameObject player)
+    {
+        // アクセスを解除するプレイヤーIDと同じ要素を検索
+        for (int i = 0; i < theOrderPlayer.Length; i++)
+        {         
+            if (theOrderPlayer[i] == player)
+            {
+                theOrderPlayer[i] = null;
+
+                // スタックに抜けがあれば詰める
+                for (int j = 0; j < 2; j++)
+                {
+                    if (theOrderPlayer[j] == null)
+                    {
+                        theOrderPlayer[j] = theOrderPlayer[j + 1];
+                    }
+                }
                 return true;
             }
         }
         return false;
     }
+
 }

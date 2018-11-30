@@ -36,7 +36,7 @@ public class PlayerDastBox : MonoBehaviour {
             GetDastBoxUI().SetActive(false);
             Sound.SetVolumeSe(GameSceneManager.seKey[7], 0.3f, 8);
             Sound.PlaySe(GameSceneManager.seKey[7], 8);
-            GetComponent<HaveEatoyCtrl>().StopEffect();
+
         }
     }
 
