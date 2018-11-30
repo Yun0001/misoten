@@ -114,7 +114,7 @@ public class AlienChip : MonoBehaviour
 						// 満足状態の時
 						if (GetComponent<AlienSatisfaction>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 						{
-							ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
+							//ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
 							SetCuisineCame(false);
 							GetComponent<AlienOrder>().SetIsOrder(false);
 
@@ -182,6 +182,11 @@ public class AlienChip : MonoBehaviour
 	/// <param name="id"></param>
 	/// <returns></returns>
 	public static bool GetChipOnFlag(int id) => chipOnFlag[id];
+
+	/// <summary>
+	/// 料理を持ってきた相手のIDの取得
+	/// </summary>
+	public int GetOpponentID() => opponentID;
 
 	/// <summary>
 	/// 料理を持ってきた相手のIDの格納

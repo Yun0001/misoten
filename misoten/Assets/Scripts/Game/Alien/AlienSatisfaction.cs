@@ -57,6 +57,9 @@ public class AlienSatisfaction : MonoBehaviour
 	// 満足フラグ
 	private bool satisfactionFlag = false;
 
+	// スコアフラグ
+	private bool scoreFlag = false;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -69,6 +72,9 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足フラグ(チップ取得時用)の初期化
 		satisfactionChipFlag = false;
+
+		// スコアフラグの初期化
+		scoreFlag = false;
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
@@ -102,6 +108,16 @@ public class AlienSatisfaction : MonoBehaviour
 
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
+
+					// スコア取得
+					if(!scoreFlag)
+					{
+						// 一度しか通らないようにする
+						scoreFlag = true;
+
+						// スコア加算処理
+						ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue());
+					}
 				}
 
 				// 満足時間が指定時間を超えた場合
