@@ -82,4 +82,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDebugMode: 0
   DebugTutorialNum: 1
-  isOnce: 0
+  isNextTutorial: 0

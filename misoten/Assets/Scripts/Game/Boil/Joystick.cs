@@ -42,17 +42,6 @@ public class Joystick : MonoBehaviour
 
     // ---------------------------------------------
 
-    /// <summary>
-    /// 開始関数
-    /// </summary>
-    void Start()
-	{
-		// コンポーネント取得
-		//player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
-		PositionInit();
-	}
-
-
     public void Init(int playerID)
     {
         playerInput = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<PlayerInput>();
@@ -94,10 +83,6 @@ public class Joystick : MonoBehaviour
 	private void PositionInit()
 	{
 		stickObj.transform.localPosition = Vector3.zero;
-
-		pos = transform.position;
-		pos.x += 0.1f;
-		pos.y -= 2.4f;
-		transform.position = pos;
 	}
+
 }

@@ -80,6 +80,7 @@ public class WhiteIO : MonoBehaviour {
         _color.a -= fadeInSpeed / 2;
 
         _whiteOutImg.color = _color;
+        _titleLogoImg.color = _color;
 
         if (_color.a <= 0.0f)
         {
@@ -89,7 +90,6 @@ public class WhiteIO : MonoBehaviour {
             _titleLogoImg.enabled = false;
             _titleCtrl.GetComponent<TitleController>().OnIsCompleteTitleLogoAnimation();
 
-            _pushImg.enabled = true;
         }
 
     }
@@ -107,6 +107,8 @@ public class WhiteIO : MonoBehaviour {
             {
                 isSeWhiteOut = false;
                 _storyBoard.GetComponent<StoryBoardCtrl>().SetEnabled(false);
+
+                _pushImg.enabled = true;
             }
         }
         else

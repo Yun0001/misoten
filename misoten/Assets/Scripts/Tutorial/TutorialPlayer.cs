@@ -9,7 +9,9 @@ public class TutorialPlayer : MonoBehaviour {
 
     [SerializeField] private bool isComplete = false;
     public bool IsComplete() => isComplete;
+    public void OnComplete() => isComplete = true;
     public void UnComplete() => isComplete = false;
     public void SetPlayerReder(bool b) => GetComponent<SpriteRenderer>().enabled = b;
+
 
 }

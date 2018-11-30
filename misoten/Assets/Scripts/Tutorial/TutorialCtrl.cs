@@ -114,9 +114,9 @@ public class TutorialCtrl : MonoBehaviour
             NextTutorial();
         }
 
-
         OnetimeOnlyOnTutorialStart();   // 各チュートリアル開始時一度きりだけ処理される
 
+        CheckAllIsCookingComplete();
     }
 
     bool CheckAllPlayerPlayComplete()
@@ -151,11 +151,17 @@ public class TutorialCtrl : MonoBehaviour
         isNextTutorial = false;
 
         CURRENT_TUTORIAL_STATE++;
+        if (CURRENT_TUTORIAL_STATE==Tutorial.NO_5)
+        {
+            CURRENT_TUTORIAL_STATE++;
+        }
         isOnce = true;
 
         if (Tutorial.ERROR <= CURRENT_TUTORIAL_STATE)
         {
             CURRENT_TUTORIAL_STATE = (Tutorial.ERROR - 1);
+
+            SceneManagerScript.GetInstance().LoadNextScene();
         }
 
         OverPage();
@@ -220,6 +226,76 @@ public class TutorialCtrl : MonoBehaviour
 
         isOnce = false;
 
+    }
+
+    void CheckAllIsCookingComplete()
+    {
+        switch (CURRENT_TUTORIAL_STATE)
+        {
+            case Tutorial.NO_1: // フリーザ
+                foreach (GameObject player in _players)
+                {
+                    if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
+                    {
+                        player.GetComponent<TutorialPlayer>().OnComplete();
+                    }
+                }
+                break;
+
+            case Tutorial.NO_2: // レンジ
+                foreach (GameObject player in _players)
+                {
+                    if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
+                    {
+                        player.GetComponent<TutorialPlayer>().OnComplete();
+                    }
+                }
+                break;
+
+            case Tutorial.NO_3: // ボイル
+                foreach (GameObject player in _players)
+                {
+                    if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
+                    {
+                        player.GetComponent<TutorialPlayer>().OnComplete();
+                    }
+                }
+                break;
+
+            case Tutorial.NO_4: // グリル
+                foreach (GameObject player in _players)
+                {
+                    if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
+                    {
+                        player.GetComponent<TutorialPlayer>().OnComplete();
+                    }
+                }
+                break;
+
+            case Tutorial.NO_5: // ミキサー
+                foreach (GameObject player in _players)
+                {
+                    if (player.GetComponent<Player>().IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                    {
+                        player.GetComponent<TutorialPlayer>().OnComplete();
+                    }
+                }
+                break;
+
+            case Tutorial.NO_6: // リリース
+                foreach (GameObject player in _players)
+                {
+                    if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Normal)
+                    {
+                        player.GetComponent<TutorialPlayer>().OnComplete();
+                    }
+                }
+                break;
+
+            default:
+                break;
+
+        }
     }
 
     void OverPage() => _menuAnimCtrl.OverPage();
