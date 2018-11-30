@@ -6,6 +6,7 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
 
     private Sprite[] announceUISprits;
     private Sprite mixerAccessAnnounceSprite;
+    private Sprite standbySprite;
 
     [SerializeField]
     private GameObject announceUI;
@@ -13,11 +14,16 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
     [SerializeField]
     private GameObject buttonUI;
 
+    [SerializeField]
+    private GameObject standbyUI;
+
+
 
     private void Awake()
     {
         announceUISprits= Resources.LoadAll<Sprite>("Textures/AccessUI/AccessUI_Re");
         mixerAccessAnnounceSprite = Resources.Load<Sprite>("Textures/Mixer/FuKidaShi");
+        standbySprite = Resources.Load<Sprite>("Textures/Mixer/UI_Standby");
     }
 
 
@@ -54,6 +60,17 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
         Vector3 pos = new Vector3(-0.346f, 0.473f, 0.01f);
         buttonUI.transform.position = annoucePos + pos;
     }
+
+    public void DisplayStandbySprite()
+    {
+        standbyUI.SetActive(true);
+    }
+
+    public void HiddenStandbySprite()
+    {
+
+    }
+
 
 
 

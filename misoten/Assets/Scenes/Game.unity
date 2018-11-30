@@ -296,6 +296,11 @@ Prefab:
       propertyPath: theOrderPlayer.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114008174956850714, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: ignoreGameObjects.Array.size
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4538774773285586, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -372,7 +377,14 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114147096084659024, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114583179001354298, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114840747238498000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114426244635112964, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114106512469997612, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114474123936023848, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114367448402565594, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1573959172 stripped

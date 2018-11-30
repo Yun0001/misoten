@@ -74,7 +74,7 @@ public class CookingPot : MonoBehaviour {
     {
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), false, 13);
         Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), 13);
-        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 16);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 17);
     }
 
     private Pot GetCollisionPot_cs() => player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>();
