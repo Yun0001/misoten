@@ -174,7 +174,7 @@ public class TutorialCtrl : MonoBehaviour
                 case Tutorial.NO_5: // ミキサー
                     GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
                     GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
-                    int[] nums = { 1, 3, 3, 5 };
+                    int[] nums = { 0, 2, 2, 4 };
                     int i = 0;
                     foreach (GameObject player in _players)
                     {
