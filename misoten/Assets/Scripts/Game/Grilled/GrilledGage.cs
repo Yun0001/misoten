@@ -56,21 +56,19 @@ public class GrilledGage : MonoBehaviour {
 
     private TimingPoint timingPoint_cs;
 
-
     [SerializeField] private bool _isTutorialMode = false;
-
-
 
     private void Awake()
     {
         grilledGageStatus = EGrilledGageStatus.Standby;
         Transform parent;
         Vector3 pos = new Vector3(0, 0, 0);
+    
         if (_isTutorialMode)
         {
             parent = this.transform.GetChild(0);
             pos = this.transform.GetChild(0).position;
-            //pos.z -= 5.0f;
+            pos.z -= 0.1f;
         }
         else
         {
@@ -90,6 +88,8 @@ public class GrilledGage : MonoBehaviour {
                 if (_isTutorialMode)
                 {
                     allPatternSuccessArea[j, i] = Instantiate(successAreaPrefab[(int)pattern[j, i]], pos, Quaternion.identity, parent);
+                    allPatternSuccessArea[j, i].transform.position = pos;
+                    allPatternSuccessArea[j, i].transform.localScale = new Vector3(0.1f, 1.0f, 1.0f);
                 }
                 else
                 {

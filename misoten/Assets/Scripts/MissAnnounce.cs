@@ -10,6 +10,8 @@ public class MissAnnounce : MonoBehaviour
     [SerializeField]
     private Vector3 InitPos;
 
+    [SerializeField] private bool _isTutorialMode = false;
+
     private void Awake()
     {
         missText = GetComponent<TextMesh>();
@@ -41,8 +43,15 @@ public class MissAnnounce : MonoBehaviour
 
     public void DisplayText()
     {
-        transform.position = InitPos;
-        gameObject.SetActive(true);
+        if (_isTutorialMode)
+        {
+            gameObject.SetActive(true); 
+        }
+        else
+        {
+            transform.position = InitPos;
+            gameObject.SetActive(true);
+        }
     }
 
     private void HiddenText()

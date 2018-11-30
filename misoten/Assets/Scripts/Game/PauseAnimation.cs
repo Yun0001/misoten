@@ -42,5 +42,6 @@ public class PauseAnimation : MonoBehaviour {
     }
 
     public void SetIsPause(bool b) => isPause = b;
+    public bool GetIsPause() => isPause;
 
 }
