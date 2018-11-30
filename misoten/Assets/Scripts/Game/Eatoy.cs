@@ -36,7 +36,7 @@ public class Eatoy : MonoBehaviour
         isIcing = true;
         
         // enum設定
-        eatoyColor = (EEatoyColor)Enum.ToObject(typeof(EEatoyColor), colorID);
+        eatoyColor = (EEatoyColor)Enum.ToObject(typeof(EEatoyColor), colorID + 1);
 
         // スプライト設定
         GetComponent<SpriteRenderer>().sprite = eatoySprite;

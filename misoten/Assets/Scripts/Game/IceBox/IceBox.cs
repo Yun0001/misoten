@@ -44,6 +44,7 @@ public class IceBox : MonoBehaviour {
     [SerializeField]
     private int iceBoxID;
 
+    [SerializeField]
     private int emissionRateID = 0;
 
     /*

@@ -55,6 +55,9 @@ public class Mixer : KitchenwareBase {
 
     private mixerAnimCtrl mixerAnim;
 
+    [SerializeField]
+    private int[] theOrderPlayer = new int[3];
+
 
     // Use this for initialization
     void Awake () {
@@ -150,6 +153,10 @@ public class Mixer : KitchenwareBase {
         accessNum = 0;
         animCount = 0;
         miniGameUI.GetComponent<MixerMiniGame>().Init();
+        for (int i = 0; i < 3; i++)
+        {
+            theOrderPlayer[i] = 0;
+        }
     }
 
     protected override void ResetMiniGameUI()
@@ -253,6 +260,14 @@ public class Mixer : KitchenwareBase {
         }
 
         status++;
+
+        // アクセスしたプレイヤーのIDを保持
+        if (SetOrderPlayer(player.GetComponent<Player>().GetPlayerID()))
+        {
+            Debug.LogError("プレイヤーIDスタックがいっぱいです！");
+            return false;
+        }
+        
         lastAccessPlayer = player;
         mixerEatoyM_cs.SetEatoy(player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy());
 
@@ -307,4 +322,32 @@ public class Mixer : KitchenwareBase {
     }
 
     public int GetMiniGamePoint() => miniGameUI.GetComponent<MixerMiniGame>().GetPowerPoint();
+
+
+    public bool SetOrderPlayer(int pID)
+    {
+        for (int i = 0; i < theOrderPlayer.Length; i++)
+        {
+            if (theOrderPlayer[i] == 0)
+            {
+                theOrderPlayer[i] = pID;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool DeleteStackPlayerID(int pID)
+    {
+        for (int i = 0; i < theOrderPlayer.Length; i++)
+        {
+            if (theOrderPlayer[i] == pID)
+            {
+                theOrderPlayer[i] = 0;
+
+                return true;
+            }
+        }
+        return false;
+    }
 }
