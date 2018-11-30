@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameSceneManager : MonoBehaviour
 {
+   
     static public string[] seKey = {
         "Eat", "Entershop", "Failure_share","Leave","Offer_success","Run","Walk",//6
         "Dustshoot",//7
