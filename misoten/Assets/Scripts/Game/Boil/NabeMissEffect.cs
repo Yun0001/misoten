@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NabeMissEffect : MonoBehaviour
 {
+	// インスペクター上で設定可能
+	// ---------------------------------------------
+
 	// 失敗時のエフェクト設定
 	[SerializeField]
 	private ParticleSystem missParticle;
@@ -12,8 +15,15 @@ public class NabeMissEffect : MonoBehaviour
 	[SerializeField]
 	private GameObject irairaObj;
 
+	// ---------------------------------------------
+
+	// ローカル変数
+	// ---------------------------------------------
+
 	// オブジェクト設定用
 	private ParticleSystem setObj;
+
+	// ---------------------------------------------
 
 	private void Awake()
 	{
@@ -28,13 +38,22 @@ public class NabeMissEffect : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		// エフェクトフラグ「ON」の時
-		if(irairaObj.GetComponent<IraIraFrame>().GetEffectFlag())
+		if(CookingPot.inFlag)
 		{
-			// エフェクト再生
-			setObj.GetComponent<ParticleSystem>().Play();
-			irairaObj.GetComponent<IraIraFrame>().SetEffectFlag(false);
+			// エフェクトフラグ「ON」の時
+			if (irairaObj.GetComponent<IraIraFrame>().GetEffectFlag())
+			{
+				// エフェクト再生
+				setObj.GetComponent<ParticleSystem>().Play();
+				irairaObj.GetComponent<IraIraFrame>().SetEffectFlag(false);
+			}
+			else { setObj.GetComponent<ParticleSystem>().Stop(); }
 		}
-		else { setObj.GetComponent<ParticleSystem>().Stop(); }
+		else
+		{
+			CookingPot.inFlag = true;
+			irairaObj.GetComponent<IraIraFrame>().SetEffectFlag(false);
+			setObj.GetComponent<ParticleSystem>().Stop();
+		}
 	}
 }

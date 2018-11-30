@@ -5,17 +5,18 @@ using UnityEngine;
 public class CookingPot : MonoBehaviour {
 
     private Player player_cs;
+	static public bool inFlag = true;
     // Use this for initialization
     void Awake()
     {
-        player_cs = GetComponent<Player>();
+		inFlag = true;
+		player_cs = GetComponent<Player>();
     }
 
     // 調理開始
     public void CookingStart()
     {
-
-        if (!GetCollisionPot_cs().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
+		if (!GetCollisionPot_cs().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy())) return;
               
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
         GetCollisionPot_cs().GetAnimationModel().GetComponent<CookingAnimCtrl>().SetIsCooking(true);
@@ -52,7 +53,8 @@ public class CookingPot : MonoBehaviour {
     /// </summary>
     public void CancelCooking()
     {
-        Pot pot = GetCollisionPot_cs();
+		inFlag = false;
+		Pot pot = GetCollisionPot_cs();
         pot.CookingInterruption();
         pot.GetAnimationModel().GetComponent<CookingAnimCtrl>().SetIsCooking(false);
         CancelSE();

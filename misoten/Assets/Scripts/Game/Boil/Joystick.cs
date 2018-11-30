@@ -47,23 +47,17 @@ public class Joystick : MonoBehaviour
     /// </summary>
     void Start()
 	{
-		//スティックを生成する必要があれば生成し、位置を中心に設定
-		stickObj.transform.localPosition = Vector3.zero;
-
-        // コンポーネント取得
-        //player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
-
-        pos = transform.position;
-        pos.x += 0.1f;
-        pos.y -= 2.4f;
-        transform.position = pos;
-    }
+		// コンポーネント取得
+		//player = GameObject.Find(nameObj[playerId]).gameObject.GetComponent<Player>();
+		PositionInit();
+	}
 
 
     public void Init(int playerID)
     {
         playerInput = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<PlayerInput>();
-    }
+		PositionInit();
+	}
 
     /// <summary>
     /// 更新関数
@@ -92,5 +86,18 @@ public class Joystick : MonoBehaviour
 			// 円上にXとYを設定
 			stickObj.transform.localPosition = new Vector3(radius * Mathf.Cos(radian), radius * Mathf.Sin(radian), 0.0f);
 		}
-    }
+	}
+
+	/// <summary>
+	/// 位置初期化関数
+	/// </summary>
+	private void PositionInit()
+	{
+		stickObj.transform.localPosition = Vector3.zero;
+
+		pos = transform.position;
+		pos.x += 0.1f;
+		pos.y -= 2.4f;
+		transform.position = pos;
+	}
 }

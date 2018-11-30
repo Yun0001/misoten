@@ -29645,7 +29645,7 @@ MonoBehaviour:
   status: 0
   stickObj: {fileID: 1121196433524830}
   complateEatoyAnnounce: {fileID: 1243562134155224}
-  theOrderPlayer: 000000000000000000000000
+  theOrderPlayer: []
 --- !u!114 &114708552205020610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29660,6 +29660,7 @@ MonoBehaviour:
   targetObj: {fileID: 1980132134415524}
   speed: 30
   pot: {fileID: 1405686639299458}
+  nabeObj: {fileID: 1215843662538050}
 --- !u!114 &114709036162226214
 MonoBehaviour:
   m_ObjectHideFlags: 1
