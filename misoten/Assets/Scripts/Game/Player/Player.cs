@@ -57,7 +57,6 @@ public class Player : MonoBehaviour
         SetScript();
         playerInput_cs.Init();
         playerMove_cs.Init();
-
     }
 
     /// <summary>

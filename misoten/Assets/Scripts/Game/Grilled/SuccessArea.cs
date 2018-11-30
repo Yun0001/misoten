@@ -7,7 +7,7 @@ public class SuccessArea : MonoBehaviour
     [SerializeField]
     private Mesh myMesh;
     public float moveUV = 0;
-    public float moveSpeed=0.01f;
+    public float moveSpeed=0.03f;
 
     public Vector2[] uv = new Vector2[4];
 
@@ -20,16 +20,18 @@ public class SuccessArea : MonoBehaviour
     // Use this for initialization
     void Awake () {
         myMesh = GetComponent<MeshFilter>().mesh;
-        Vector2[] nUV = { new Vector2(0.6f, 0.0f), new Vector2(0.9f, 0.0f), new Vector2(0.9f, 1.0f), new Vector2(0.6f, 1.0f) };
+        Vector2[] nUV = { new Vector2(1.0f, 0.2f), new Vector2(0.5f, 0.8f), new Vector2(0.5f, 0.2f), new Vector2(1.0f, 0.8f) };
+       
+
         uv = nUV;
         myMesh.uv = nUV;
-        moveSpeed = 0.01f;
+        moveSpeed = 0.03f;
     }
 
     public void Init()
     {
         ResetMoveUV();
-        Vector2[] nUV = { new Vector2(0.6f, 0.0f), new Vector2(0.9f, 0.0f), new Vector2(0.9f, 1.0f), new Vector2(0.6f, 1.0f) };
+        Vector2[] nUV = { new Vector2(1.0f, 0.2f), new Vector2(0.5f, 0.8f), new Vector2(0.5f, 0.2f), new Vector2(1.0f, 0.8f) };
         uv = nUV;
 
         myMesh.uv = nUV;
@@ -40,6 +42,7 @@ public class SuccessArea : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        
         // ゲージの中に入った時の処理
         if (isInGageFrame)
         {
@@ -94,6 +97,7 @@ public class SuccessArea : MonoBehaviour
                 }
             }
         }
+        
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -114,7 +118,9 @@ public class SuccessArea : MonoBehaviour
 
     private void ChangeUV()
     {
-        Vector2[] nUV = { new Vector2(0.4f, 0.0f), new Vector2(0.1f, 0.0f), new Vector2(0.1f, 1.0f), new Vector2(0.4f, 1.0f) };
+        //Vector2[] nUV = { new Vector2(0.5f, 0.2f), new Vector2(0.0f, 0.8f), new Vector2(0.0f, 0.2f), new Vector2(0.56f, 0.8f) };
+        Vector2[] nUV = { new Vector2(0.0f, 0.2f), new Vector2(0.5f, 0.8f), new Vector2(0.5f, 0.2f), new Vector2(0.0f, 0.8f) };
+
         uv = nUV;
 
         myMesh.uv = nUV;
