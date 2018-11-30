@@ -327,8 +327,10 @@ public class Player : MonoBehaviour
 
     public bool IsEatoyIceing() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().IsIcing();
 
-    public void AllNull()
-    {
-        collision_cs.AllNull();
-    }
+    public void AllNull() => collision_cs.AllNull();
+
+    public void DisplaySandbySprite() => playerAccessPosssiblAnnounce_cs.DisplayStandbySprite();
+
+    public void HiddenStandbySprite() => playerAccessPosssiblAnnounce_cs.HiddenStandbySprite();
+
 }
