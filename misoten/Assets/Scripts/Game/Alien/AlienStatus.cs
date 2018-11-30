@@ -26,6 +26,7 @@ public class AlienStatus : MonoBehaviour
 		ORDER,          // 注文
 		STAY,           // 待つ(注文待機)
 		CLAIM,          // クレーム
+		SATISFACTION,	// 満足
 		EAT,            // 食べる
 		RETURN_GOOD,    // 帰る(良)
 		RETURN_BAD,     // 帰る(悪)
@@ -84,6 +85,7 @@ public class AlienStatus : MonoBehaviour
 			case EStatus.ORDER: Debug.Log("エイリアン「" + id + "」" + "の注文状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.ORDER)); break;
 			case EStatus.STAY: Debug.Log("エイリアン「" + id + "」" + "の待つ(注文待機)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.STAY)); break;
 			case EStatus.CLAIM: Debug.Log("エイリアン「" + id + "」" + "のクレーム状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.CLAIM)); break;
+			case EStatus.SATISFACTION: Debug.Log("エイリアン「" + id + "」" + "の満足状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.SATISFACTION)); break;
 			case EStatus.EAT: Debug.Log("エイリアン「" + id + "」" + "の食べる状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.EAT)); break;
 			case EStatus.RETURN_GOOD: Debug.Log("エイリアン「" + id + "」" + "の帰る(良)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_GOOD)); break;
 			case EStatus.RETURN_BAD: Debug.Log("エイリアン「" + id + "」" + "の帰る(悪)状態は" + GetCounterStatusChangeFlag(id, (int)EStatus.RETURN_BAD)); break;
