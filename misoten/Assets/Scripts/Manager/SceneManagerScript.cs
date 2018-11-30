@@ -96,6 +96,9 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         SoundController.StopAllSE();
           switch(currentScene){
             case "Title_heita":
+                SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
+                break;
+            case "Tutorial":
                 SceneManager.LoadScene("Game", LoadSceneMode.Single);
                 break;
             case "Game":
@@ -125,10 +128,19 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
         {
             if (currentScene == "Title_heita")
             {
+                SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (currentScene == "Tutorial")
+            {
                 SceneManager.LoadScene("Game", LoadSceneMode.Single);
             }
         }
-        if(Input.GetKeyDown(KeyCode.R))
+
+        if (Input.GetKeyDown(KeyCode.T))
         {
             if (currentScene =="Game" )
             {
@@ -138,7 +150,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript> {
 
         //if (GamePad.GetButtonDown(GamePad.Button.A, PlayerControllerNumber)
         //    ||Input.GetKeyDown(KeyCode.T))
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
             if (currentScene == "Result")
             {

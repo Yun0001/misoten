@@ -86,4 +86,5 @@ public class Joystick : MonoBehaviour
 	{
 		stickObj.transform.localPosition = Vector3.zero;
 	}
+
 }

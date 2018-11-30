@@ -20,7 +20,6 @@ public class titleLogoAnimation : MonoBehaviour {
 
     void Update()
     {
-        
 
         if (_titleLogo.localPosition.y <= 10.0f)
         {

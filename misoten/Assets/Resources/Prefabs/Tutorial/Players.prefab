@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e183c78f49a67704ca0e87c269f58bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPod: {x: 2.53, y: -1.55, z: -2}
+  endPod: {x: 2.53, y: -1.35, z: -2}
 --- !u!114 &114069894910845294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e183c78f49a67704ca0e87c269f58bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPod: {x: 2.53, y: 0.3, z: -2}
+  endPod: {x: 2.53, y: 0.5, z: -2}
 --- !u!114 &114137926318728846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1435,6 +1435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1542428503958704}
   buttonUI: {fileID: 1665240921612330}
+  standbyUI: {fileID: 0}
 --- !u!114 &114161191859290004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1482,6 +1483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1264649034386608}
   buttonUI: {fileID: 1793595952368668}
+  standbyUI: {fileID: 0}
 --- !u!114 &114204290762649460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1774,7 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e183c78f49a67704ca0e87c269f58bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPod: {x: 2.53, y: 0.3, z: -2}
+  endPod: {x: 2.53, y: 0.5, z: -2}
 --- !u!114 &114536872781103314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2068,7 +2070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e183c78f49a67704ca0e87c269f58bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPod: {x: 2.53, y: -1.55, z: -2}
+  endPod: {x: 2.53, y: -1.35, z: -2}
 --- !u!114 &114888372162767134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2105,6 +2107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1761329065893518}
   buttonUI: {fileID: 1292041057721988}
+  standbyUI: {fileID: 0}
 --- !u!114 &114903607493467240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2118,6 +2121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   announceUI: {fileID: 1437895692488832}
   buttonUI: {fileID: 1042154698227588}
+  standbyUI: {fileID: 0}
 --- !u!114 &114912555614484822
 MonoBehaviour:
   m_ObjectHideFlags: 1
