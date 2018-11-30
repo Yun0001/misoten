@@ -84,6 +84,7 @@ public class SoundController : MonoBehaviour {
         RefrigeratorSuccess,
         // Refusebox/
         Dustshoot,
+        Coin,
     }
 
     private static Dictionary<GameSE, string> gameSEDictionary = new Dictionary<GameSE, string>
@@ -113,6 +114,7 @@ public class SoundController : MonoBehaviour {
         { GameSE.Refrigeratoropen,"Refrigeratoropen"},
         { GameSE.RefrigeratorSuccess,"RefrigeratorSuccess"},
         { GameSE.Dustshoot,"Dustshoot"},
+        { GameSE.Coin,"Coin"}
     };
 
     public enum ResultSE

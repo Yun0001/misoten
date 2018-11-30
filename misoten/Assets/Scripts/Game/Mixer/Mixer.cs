@@ -129,6 +129,7 @@ public class Mixer : KitchenwareBase {
                     status = Status.Stand;
                     endFrame = 0;
                     InitMiniGameUI();
+                    accessNum = 0;
                 }
                 break;
         }
@@ -189,6 +190,7 @@ public class Mixer : KitchenwareBase {
                 break;
 
             case Status.Put:
+                miniGameUI.GetComponent<MixerMiniGame>().CoinStopSound();
                 if (mixerAnim.GetIsOpen())
                 {
                     animCount++;

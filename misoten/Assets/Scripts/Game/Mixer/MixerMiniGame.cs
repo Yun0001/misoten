@@ -24,6 +24,8 @@ public class MixerMiniGame : MonoBehaviour {
     [SerializeField]
     GameObject timeManager;
 
+    private bool SEflg;
+
 
     // Use this for initialization
     void Awake () {
@@ -37,6 +39,7 @@ public class MixerMiniGame : MonoBehaviour {
         power = 0;
         rotationFlg = false;
         mixerArrow.GetComponent<MixerArrow>().Init();
+        SEflg = false;
     }
 
     // Update is called once per frame
@@ -46,6 +49,12 @@ public class MixerMiniGame : MonoBehaviour {
 
     public bool AddPowerPoint()
     {
+        if (!SEflg)
+        {
+            Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Coin), true, 20);
+            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Coin),20);
+            SEflg = true;
+        }
         power+= powerPoint;
         if (power >= powerBorder && !rotationFlg)
         {
@@ -66,4 +75,10 @@ public class MixerMiniGame : MonoBehaviour {
     public bool GetRotation() => rotationFlg;
 
     public int GetPowerPoint() => power;
+
+    public void CoinStopSound()
+    {
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Coin), false, 20);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Coin), 20);
+    }
 }
