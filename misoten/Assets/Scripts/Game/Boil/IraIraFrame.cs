@@ -52,11 +52,11 @@ public class IraIraFrame : MonoBehaviour
 		effectFlag = hitFlag = false;
 	}
 
-    /// <summary>
-    /// 衝突していない時
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnTriggerExit2D(Collider2D collision)
+	/// <summary>
+	/// 衝突していない時
+	/// </summary>
+	/// <param name="collision"></param>
+	private void OnTriggerExit2D(Collider2D collision)
 	{
 		// Tagが「SecondHand」に設定されているオブジェクトのみ
 		if (collision.tag == "SecondHand")
@@ -87,10 +87,10 @@ public class IraIraFrame : MonoBehaviour
 		// Tagが「SecondHand」に設定されているオブジェクトのみ
 		if (collision.tag == "SecondHand")
 		{
-			hitFlag = true;
 			// 回転中(一回転をしていない場合)
 			if (!oneRotationFlag)
 			{
+				hitFlag = true;
 				// イライラフレームの回転
 				transform.RotateAround(targetObj.transform.position, new Vector3(0.0f, 0.0f, -1.0f), speed * Time.deltaTime);
 
@@ -116,6 +116,7 @@ public class IraIraFrame : MonoBehaviour
 	public Vector3 GetScale() => scale;
 
     public bool GetOneRotationFlag() => oneRotationFlag;
+	public bool SetHitFlag(bool _hitFlag) => hitFlag = _hitFlag;
 	public bool SetEffectFlag(bool _effectFlag) => effectFlag = _effectFlag;
 	public bool GetEffectFlag() => effectFlag;
 }
