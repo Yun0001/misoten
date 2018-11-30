@@ -27,7 +27,7 @@ public class GameTimeManager : MonoBehaviour {
 		endSeFlag = false;
 
 		sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
-        countTime = 181;
+        countTime = 11;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {
@@ -96,9 +96,8 @@ public class GameTimeManager : MonoBehaviour {
 		if(UI_GameFinish.gameEndFlag)
 		{
 			isTimeUp = true;
-			Sound.SetVolumeSe(GameSceneManager.seKey[25], 0.5f, 10);
-			Sound.PlaySe(GameSceneManager.seKey[25], 10);
-			SoundController.StopAllSE();
+			Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Endannouncement), 0.5f, 10);
+			Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Endannouncement), 10);
 		}
 	}
 

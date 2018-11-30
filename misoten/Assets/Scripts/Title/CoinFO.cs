@@ -44,7 +44,8 @@ public class CoinFO : MonoBehaviour {
 
             if (_coin.transform.position.x<=-18.5f)
             {
-                SceneManager.LoadScene("Scenes/Result");
+                SceneManagerScript.GetInstance().LoadNextScene();
+                //SceneManager.LoadScene("Scenes/Result");
                 //SceneManagerScript.GetInstance().LoadNextScene();
             }
         }
