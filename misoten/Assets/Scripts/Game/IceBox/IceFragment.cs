@@ -12,7 +12,7 @@ public class IceFragment : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		if(id == 0) { obj = GameObject.Find("IceFragment_1").gameObject; }
+		if(id == 0) { obj = this.gameObject; }
 		else { obj = GameObject.Find("GameSceneManager/PauseManager/Stage/cookwares/iceboxes/icebox2/IceBoxMiniGame/IceFragment_2").gameObject; }
 	}
 

@@ -160,7 +160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1309629705738368
 GameObject:
   m_ObjectHideFlags: 1
@@ -447,7 +447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1862545487418280
 GameObject:
   m_ObjectHideFlags: 1
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4155e5c0ae5a44ca54b4e61ab27e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1458366595438362}
+  player: {fileID: 1332303196153932}
 --- !u!114 &114189007847165484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4155e5c0ae5a44ca54b4e61ab27e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1458366595438362}
+  player: {fileID: 1485162727398430}
 --- !u!114 &114652338574778526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4155e5c0ae5a44ca54b4e61ab27e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1458366595438362}
+  player: {fileID: 1009342017023750}
 --- !u!114 &114667681091274746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5320,7 +5320,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1501625802
+  randomSeed: 1857304658
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15403,7 +15403,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1962862743
+  randomSeed: -143654219
   InitialModule:
     serializedVersion: 3
     enabled: 1

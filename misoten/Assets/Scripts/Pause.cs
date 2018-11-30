@@ -25,30 +25,40 @@ public class Pause : MonoBehaviour
 	private Animator[] pauseingAnimation;
 	private MonoBehaviour[] pausingMonoBehaviours;
 
-    private GameObject[] _players;
-    private GameObject[] _stageModels;
-
+    private Animator[] _allAnimator;
+  
+    private bool _isPausing = false;
     private void Update()
     {
        if (prevPausing != pausing)
         {
             if (pausing) PauseMode();
             else ResumeMode();
-            prevPausing = pausing;
         }
     }
 
     private void PauseMode()
     {
-        _players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject player in _players)
+ 
+        if (!_isPausing)
         {
-            player.GetComponent<PauseAnimation>().SetIsPause(true);
-        }
-        _stageModels = GameObject.FindGameObjectsWithTag("StageModel");
-        foreach (GameObject stageModel in _stageModels)
-        {
-            stageModel.GetComponent<PauseAnimation>().SetIsPause(true);
+
+            Predicate<Animator> PDCAnimator = obj => Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
+            _allAnimator = Array.FindAll(transform.GetComponentsInChildren<Animator>(), PDCAnimator);
+            GameObject[] _allAnimatorObj = new GameObject[_allAnimator.Length];
+
+            for (int i=0;i<_allAnimator.Length;i++)
+            {
+                _allAnimatorObj[i] = _allAnimator[i].gameObject;
+            }
+
+            foreach (GameObject animObj in _allAnimatorObj)
+            {
+                animObj.GetComponent<PauseAnimation>().SetIsPause(true);
+            }
+
+            _isPausing = true;
+            return;
         }
 
         // Rigidbodyの停止
@@ -92,49 +102,63 @@ public class Pause : MonoBehaviour
         {
             monoBehaviour.enabled = false;
         }
+
+        prevPausing = pausing;
     }
 
 
     private void ResumeMode()
     {
-        _players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject player in _players)
+        if (_isPausing)
         {
-            player.GetComponent<PauseAnimation>().SetIsPause(false);
+
+            for (int i = 0; i < pauseingRigidbodies.Length; i++)
+            {
+                pauseingRigidbodies[i].WakeUp();
+                pauseingRigidbodies[i].velocity = rbVelocities[i].velocity;
+                pauseingRigidbodies[i].angularVelocity = rbVelocities[i].angularVelocity;
+            }
+
+            for (int i = 0; i < pauseingParticleSystem.Length; i++)
+            {
+                if (pauseingParticleSystem[i].isPaused)
+                {
+                    pauseingParticleSystem[i].Play();
+                }
+            }
+
+            for (int i = 0; i < pauseingAnimation.Length; i++)
+            {
+                if (pauseingAnimation[i].GetFloat("Base Layer") == 0.0f)
+                {
+                    pauseingAnimation[i].SetFloat("Base Layer", 1.0f);
+                }
+            }
+
+
+            foreach (var monoBehaviour in pausingMonoBehaviours)
+            {
+                monoBehaviour.enabled = true;
+            }
+
+            _isPausing = false;
+            return;
         }
-        _stageModels = GameObject.FindGameObjectsWithTag("StageModel");
-        foreach (GameObject stageModel in _stageModels)
+
+        Predicate<Animator> PDCAnimator = obj => Array.FindIndex(ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
+        _allAnimator = Array.FindAll(transform.GetComponentsInChildren<Animator>(), PDCAnimator);
+        GameObject[] _allAnimatorObj = new GameObject[_allAnimator.Length];
+
+        for (int i = 0; i < _allAnimator.Length; i++)
         {
-            stageModel.GetComponent<PauseAnimation>().SetIsPause(false);
+            _allAnimatorObj[i] = _allAnimator[i].gameObject;
         }
 
-        for (int i = 0; i < pauseingRigidbodies.Length; i++)
+        foreach (GameObject animObj in _allAnimatorObj)
         {
-            pauseingRigidbodies[i].WakeUp();
-            pauseingRigidbodies[i].velocity = rbVelocities[i].velocity;
-            pauseingRigidbodies[i].angularVelocity = rbVelocities[i].angularVelocity;
+            animObj.GetComponent<PauseAnimation>().SetIsPause(false);
         }
 
-		for (int i = 0; i < pauseingParticleSystem.Length; i++)
-		{
-			if(pauseingParticleSystem[i].isPaused)
-			{
-				pauseingParticleSystem[i].Play();
-			}
-		}
-
-		for (int i = 0; i < pauseingAnimation.Length; i++)
-		{
-			if (pauseingAnimation[i].GetFloat("Base Layer") == 0.0f)
-			{
-				pauseingAnimation[i].SetFloat("Base Layer", 1.0f);
-			}
-		}
-
-
-		foreach (var monoBehaviour in pausingMonoBehaviours)
-        {
-            monoBehaviour.enabled = true;
-        }
+        prevPausing = pausing;
     }
 }

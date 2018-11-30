@@ -230,6 +230,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4967082874003724, guid: 1fb1dedb9182e1140beaeed3204962da, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227214293122214, guid: 1fb1dedb9182e1140beaeed3204962da, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1fb1dedb9182e1140beaeed3204962da, type: 2}
   m_IsPrefabParent: 0
@@ -277,52 +285,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114176778829261810, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114187948832705586, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114643520033397438, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114096227577453832, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114593532391978746, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114336216952577166, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114372670333535718, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114639203995635104, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114522241444521002, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
-        type: 2}
-      propertyPath: canvasCamera
-      value: 
-      objectReference: {fileID: 1812643025}
-    - target: {fileID: 114379378709781674, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    - target: {fileID: 114070447655832786, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
       propertyPath: canvasCamera
       value: 
@@ -332,79 +295,56 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 1812643025}
-    - target: {fileID: 114070447655832786, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    - target: {fileID: 114379378709781674, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 1812643025}
-    - target: {fileID: 65841942899447364, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+    - target: {fileID: 114522241444521002, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4123793800528676, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4605965909722148, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250878369189198, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4798354564055310, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 65869591708877198, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114639203995635104, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 65010589824874548, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114372670333535718, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 65111793144597262, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114336216952577166, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 65264586561507254, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114593532391978746, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319343775803502, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4673794812105630, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4750366070603038, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 65049908723057368, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114096227577453832, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 65061430956953574, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114643520033397438, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 65486090943090486, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114187948832705586, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
         type: 2}
-      propertyPath: m_Center.z
-      value: -0.5
-      objectReference: {fileID: 0}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
+    - target: {fileID: 114176778829261810, guid: 76bddf7e4bf56d04e99aeda477c44ea9,
+        type: 2}
+      propertyPath: canvasCamera
+      value: 
+      objectReference: {fileID: 1812643025}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76bddf7e4bf56d04e99aeda477c44ea9, type: 2}
   m_IsPrefabParent: 0
@@ -638,52 +578,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114888372162767134, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 186579069}
-    - target: {fileID: 114841153384247972, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114832318495377528, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114811801888589208, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114605684383479716, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 670688133}
-    - target: {fileID: 114561103837177936, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114548508787107974, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 612586}
-    - target: {fileID: 114480657807044392, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: microwaveEffect
-      value: 
-      objectReference: {fileID: 131762705}
-    - target: {fileID: 114452898944295368, guid: 14c560f67358d9146b3ec7c15361a4a3,
-        type: 2}
-      propertyPath: timeManager
-      value: 
-      objectReference: {fileID: 1350153141}
-    - target: {fileID: 114367409829349736, guid: 14c560f67358d9146b3ec7c15361a4a3,
+    - target: {fileID: 114009051121443504, guid: 14c560f67358d9146b3ec7c15361a4a3,
         type: 2}
       propertyPath: timeManager
       value: 
@@ -693,11 +588,64 @@ Prefab:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 1350153141}
-    - target: {fileID: 114009051121443504, guid: 14c560f67358d9146b3ec7c15361a4a3,
+    - target: {fileID: 114367409829349736, guid: 14c560f67358d9146b3ec7c15361a4a3,
         type: 2}
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 1350153141}
+    - target: {fileID: 114452898944295368, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114480657807044392, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 131762705}
+    - target: {fileID: 114548508787107974, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 612586}
+    - target: {fileID: 114561103837177936, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114605684383479716, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 670688133}
+    - target: {fileID: 114811801888589208, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114832318495377528, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114841153384247972, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1350153141}
+    - target: {fileID: 114888372162767134, guid: 14c560f67358d9146b3ec7c15361a4a3,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 186579069}
+    - target: {fileID: 1793595952368668, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292041057721988, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14c560f67358d9146b3ec7c15361a4a3, type: 2}
   m_IsPrefabParent: 0
@@ -763,7 +711,7 @@ Prefab:
     - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
         type: 2}
       propertyPath: DebugTutorialNum
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38b998f74566c7840943d375ccc86dff, type: 2}
