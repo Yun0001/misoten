@@ -413,6 +413,9 @@ public class AlienOrder : MonoBehaviour
 
 		if(!GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && !AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 		{
+			// 当たり判定が消える
+			GetComponent<BoxCollider>().enabled = false;
+
 			// EAT状態が「ON」になる
 			AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);
 
