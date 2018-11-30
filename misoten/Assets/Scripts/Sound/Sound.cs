@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sound:MonoBehaviour
 {
     /// SEチャンネル数
-    readonly int SE_CHANNEL = 21;
+    readonly int SE_CHANNEL = 22;
 
     /// サウンド種別
     enum eType

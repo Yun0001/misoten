@@ -7,10 +7,12 @@ public class GameTimeManager : MonoBehaviour {
 
     private float countTime;
     private bool isTimeUp = false;
-    private int oneSecond = 11;
+	private bool endSeFlag = false;
+	private int oneSecond = 11;
 
+	static public bool uiGameFinishFlag = false;
 
-    [SerializeField]
+	[SerializeField]
     private GameObject[] time;
 
     [SerializeField] bool _tutorialFlg = false;
@@ -21,8 +23,10 @@ public class GameTimeManager : MonoBehaviour {
     void Start () {
 
         isTimeUp = false;
+		uiGameFinishFlag = false;
+		endSeFlag = false;
 
-        sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
+		sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
         countTime = 181;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
@@ -68,13 +72,12 @@ public class GameTimeManager : MonoBehaviour {
     {
         if (countTime<=0)
         {
-            countTime = 0;
-            Sound.SetVolumeSe(GameSceneManager.seKey[25], 0.5f, 10);
-            Sound.PlaySe(GameSceneManager.seKey[25], 10);
-            SoundController.StopAllSE();
-            isTimeUp = true;
+			if (!endSeFlag) { endSeFlag = true; Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Gong_played2), 21); }
+			countTime = 0;
 
-            GameObject[] minigame = GameObject.FindGameObjectsWithTag("MiniGame");
+			uiGameFinishFlag = true;
+
+			GameObject[] minigame = GameObject.FindGameObjectsWithTag("MiniGame");
             foreach (var ui in minigame)
             {
                 if (ui.activeInHierarchy)
@@ -89,7 +92,15 @@ public class GameTimeManager : MonoBehaviour {
                     ui.SetActive(false);
             }
         }
-    }
+
+		if(UI_GameFinish.gameEndFlag)
+		{
+			isTimeUp = true;
+			Sound.SetVolumeSe(GameSceneManager.seKey[25], 0.5f, 10);
+			Sound.PlaySe(GameSceneManager.seKey[25], 10);
+			SoundController.StopAllSE();
+		}
+	}
 
     public float GetCountTime()
     {
@@ -118,5 +129,7 @@ public class GameTimeManager : MonoBehaviour {
         }
     }
 
-    public bool IsTimeUp() => countTime <= 0 ? true : false;
+	public bool GetIsTimeUp() => isTimeUp;
+
+	public bool IsTimeUp() => countTime <= 0 ? true : false;
 }
