@@ -460,6 +460,11 @@ Prefab:
       propertyPath: canvasCamera
       value: 
       objectReference: {fileID: 24543913}
+    - target: {fileID: 114612525384742638, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: coinFoObj
+      value: 
+      objectReference: {fileID: 1813441639}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0

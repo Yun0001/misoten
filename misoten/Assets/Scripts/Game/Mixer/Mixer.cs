@@ -203,8 +203,6 @@ public class Mixer : KitchenwareBase {
                     {
                         // 蓋を閉める
                         mixerAnim.SetIsOpen(false);
-                        // statusをEndに変更
-                        status = Status.End;
                     }
                     else if (animCount >= openFrame / 3)
                     {
@@ -226,6 +224,8 @@ public class Mixer : KitchenwareBase {
                             mixerAnim.SetBool(false);
                             Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Mixer), false, 7);
                             Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Mixerend), 7);
+                            // statusをEndに変更
+                            status = Status.End;
                         }
                     }                
                 }
