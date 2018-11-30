@@ -141,4 +141,12 @@ public class PlayerCollision : MonoBehaviour
         return hitObj[(int)HitObjID].gameObject;
     }
 
+    public void AllNull()
+    {
+        for (int i=0;i<hitObj.Length;i++)
+        {
+            hitObj[i] = null;
+        }
+    }
+
 }

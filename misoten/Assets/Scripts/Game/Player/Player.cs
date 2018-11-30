@@ -324,4 +324,9 @@ public class Player : MonoBehaviour
     private void DisplayHaveInEatoy() => haveInEatoy_cs.DisplayEatoy();
 
     public bool IsEatoyIceing() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().IsIcing();
+
+    public void AllNull()
+    {
+        collision_cs.AllNull();
+    }
 }

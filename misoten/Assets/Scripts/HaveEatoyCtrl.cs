@@ -54,7 +54,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
         _eatoyRenderer = _haveEatoy.GetComponent<SpriteRenderer>();
         _eatoyRenderer.sprite = null;
 
-        foreach (Transform effect in _haveEatoy.transform) effect.gameObject.GetComponent<ParticleSystem>().Stop();
+        foreach (Transform effect in _haveEatoy.transform) effect.gameObject.GetComponent<ParticleSystem>().Play();
 
     }
 
@@ -64,6 +64,16 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
     void HaveEatoy()
     {
+        if (!_player.GetComponent<SpriteRenderer>().enabled)
+        {
+            _eatoyRenderer.enabled = false;
+            foreach (Transform effect in _haveEatoy.transform)
+            {
+                effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = false;
+            }
+            return;
+        }
+
         if (!(_playerAnim.IsServing()))
         {
             _eatoyRenderer.enabled = false;
@@ -76,16 +86,14 @@ public class HaveEatoyCtrl : MonoBehaviour {
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
-                if (!(effect.gameObject.GetComponent<ParticleSystem>().isPlaying))
-                    effect.gameObject.GetComponent<ParticleSystem>().Play();
+                effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = true;
             }
         }
         else
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
-                if (effect.gameObject.GetComponent<ParticleSystem>().isPlaying)
-                    effect.gameObject.GetComponent<ParticleSystem>().Stop();
+                effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = false;
             }
         }
 

@@ -10,7 +10,7 @@ namespace Constants
 
     public static class Tutorial
     {
-        public const float WAIT_TIME = 2.0f;
+        public const float WAIT_TIME = 1.0f;
         public const int NO_1 = 0;
         public const int NO_2 = 1;
         public const int NO_3 = 2;
