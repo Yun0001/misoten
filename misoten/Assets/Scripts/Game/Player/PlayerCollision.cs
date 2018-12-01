@@ -42,7 +42,10 @@ public class PlayerCollision : MonoBehaviour
                 hitObj[(int)hitObjName.Microwave] = collision.gameObject;
                 if (player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                 {
-                    player_cs.SetAnnounceSprite((int)hitObjName.Microwave);
+                    if (!hitObj[(int)hitObjName.Microwave].GetComponent<CookWareMw>().IsCooking())
+                    {
+                        player_cs.SetAnnounceSprite((int)hitObjName.Microwave);
+                    }
                 }
                 break;
             // 鍋
@@ -50,7 +53,11 @@ public class PlayerCollision : MonoBehaviour
                 hitObj[(int)hitObjName.Pot] = collision.gameObject;
                 if (player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                 {
-                    player_cs.SetAnnounceSprite((int)hitObjName.Pot);
+                    if (!hitObj[(int)hitObjName.Microwave].GetComponent<Pot>().IsCooking())
+                    {
+                        player_cs.SetAnnounceSprite((int)hitObjName.Pot);
+                    }
+                      
                 }
                 break;
             // 焼き台
@@ -58,7 +65,10 @@ public class PlayerCollision : MonoBehaviour
                 hitObj[(int)hitObjName.GrilledTable] = collision.gameObject;
                 if (player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                 {
-                    player_cs.SetAnnounceSprite((int)hitObjName.GrilledTable);
+                    if (!hitObj[(int)hitObjName.Microwave].GetComponent<Flyingpan>().IsCooking())
+                    {
+                        player_cs.SetAnnounceSprite((int)hitObjName.GrilledTable);
+                    }                 
                 }
                 break;
             // ミキサー
@@ -93,7 +103,30 @@ public class PlayerCollision : MonoBehaviour
                 break;
         }
     }
-    
+
+    private void OnTriggerStay(Collider other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Microwave":
+                hitObj[(int)hitObjName.Microwave] = null;
+                player_cs.HiddenAnnounceSprite();
+                break;
+            case "Pot":
+                hitObj[(int)hitObjName.Pot] = null;
+                player_cs.HiddenAnnounceSprite();
+                break;
+            case "Fryingpan":
+                hitObj[(int)hitObjName.GrilledTable] = null;
+                player_cs.HiddenAnnounceSprite();
+                break;
+            case "Mixer":
+                hitObj[(int)hitObjName.Mixer] = null;
+                player_cs.HiddenAnnounceSprite();
+                break;
+        }
+    }
+
 
     /// <summary>
     /// 当たり判定がなくなるとき
