@@ -39,6 +39,7 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
     {
         ResetButtonUIPos();
         announceUI.GetComponent<SpriteRenderer>().sprite = null;
+        HiddenStandbySprite();
         buttonUI.SetActive(false);
     }
 

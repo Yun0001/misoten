@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
                     SetPlayerStatus(PlayerStatus.Mixer);
                     GetComponent<PlayerAnimCtrl>().SetServing(false);
                     transform.Find("Line").gameObject.SetActive(false);
-         
+                    HiddenAnnounceSprite();
                 }
                 break;
 
