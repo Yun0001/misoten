@@ -51,8 +51,8 @@ public class MixerMiniGame : MonoBehaviour {
     {
         if (!SEflg)
         {
-            Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Coin), true, 20);
-            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Coin),20);
+            Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Mixer), true, 20);
+            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Mixer),20);
             SEflg = true;
         }
         power+= powerPoint;
@@ -78,7 +78,7 @@ public class MixerMiniGame : MonoBehaviour {
 
     public void CoinStopSound()
     {
-        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Coin), false, 20);
-        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Coin), 20);
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Mixer), false, 20);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.Mixer), 20);
     }
 }
