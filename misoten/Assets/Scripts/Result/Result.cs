@@ -99,7 +99,7 @@ public class Result : MonoBehaviour
 					}
 					else
 					{
-						if (ScoreCount.GetScore() >= 99999999)
+						if (ScoreCount.GetScore() >= 67650380)
 						{
 							if (obj[2].activeSelf)
 							{
