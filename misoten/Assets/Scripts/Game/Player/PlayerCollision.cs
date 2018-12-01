@@ -53,7 +53,7 @@ public class PlayerCollision : MonoBehaviour
                 hitObj[(int)hitObjName.Pot] = collision.gameObject;
                 if (player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                 {
-                    if (!hitObj[(int)hitObjName.Microwave].GetComponent<Pot>().IsCooking())
+                    if (!hitObj[(int)hitObjName.Pot].GetComponent<Pot>().IsCooking())
                     {
                         player_cs.SetAnnounceSprite((int)hitObjName.Pot);
                     }
@@ -65,7 +65,7 @@ public class PlayerCollision : MonoBehaviour
                 hitObj[(int)hitObjName.GrilledTable] = collision.gameObject;
                 if (player_cs.GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                 {
-                    if (!hitObj[(int)hitObjName.Microwave].GetComponent<Flyingpan>().IsCooking())
+                    if (!hitObj[(int)hitObjName.GrilledTable].GetComponent<Flyingpan>().IsCooking())
                     {
                         player_cs.SetAnnounceSprite((int)hitObjName.GrilledTable);
                     }                 
@@ -104,6 +104,7 @@ public class PlayerCollision : MonoBehaviour
         }
     }
 
+    /*
     private void OnTriggerStay(Collider other)
     {
         switch (other.gameObject.tag)
@@ -126,7 +127,7 @@ public class PlayerCollision : MonoBehaviour
                 break;
         }
     }
-
+    */
 
     /// <summary>
     /// 当たり判定がなくなるとき

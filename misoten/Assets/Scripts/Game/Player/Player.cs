@@ -246,6 +246,8 @@ public class Player : MonoBehaviour
 
     public void SetAnnounceSprite(int spriteID) => playerAccessPosssiblAnnounce_cs.SetSprite(spriteID);
 
+    public Sprite GetAnnounceUISprite() => playerAccessPosssiblAnnounce_cs.GetAnnounceUISprite();
+
     public GameObject IsObjectCollision(PlayerCollision.hitObjName ObjID) => collision_cs.GetHitObj(ObjID);
 
     public void SetHaveInEatoy(GameObject eatoy)

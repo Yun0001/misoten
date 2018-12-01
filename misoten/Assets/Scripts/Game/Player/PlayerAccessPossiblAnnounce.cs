@@ -43,6 +43,8 @@ public class PlayerAccessPossiblAnnounce : MonoBehaviour {
         buttonUI.SetActive(false);
     }
 
+    public Sprite GetAnnounceUISprite() => announceUI.GetComponent<SpriteRenderer>().sprite;
+
     public void SetMixerAccessSprite()
     {
         announceUI.GetComponent<SpriteRenderer>().sprite = mixerAccessAnnounceSprite;

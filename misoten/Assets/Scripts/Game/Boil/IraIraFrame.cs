@@ -24,6 +24,9 @@ public class IraIraFrame : MonoBehaviour
 	[SerializeField]
 	private GameObject pot;
 
+    [SerializeField]
+    private GameObject pointText;
+
 	// ---------------------------------------------
 
 	// ローカル変数

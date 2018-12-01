@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Pot : KitchenwareBase
 {
+    [SerializeField]
     private int basePoint;
 
+    [SerializeField]
     private int missCount;
 
     [SerializeField]
@@ -17,6 +19,9 @@ public class Pot : KitchenwareBase
 
     [SerializeField]
     private GameObject joystick;
+
+    [SerializeField]
+    private GameObject pointText;
 
 
     private void Awake()
@@ -40,7 +45,7 @@ public class Pot : KitchenwareBase
     {
         miniGameUI.SetActive(true);
         basePoint = 50;
-        missCount = 0;
+        missCount = -1;
         stickUI.SetActive(true);
         stickUI.GetComponent<Animator>().Play("rSpin");
         stickUI.GetComponent<Animator>().speed = 0.15f;
@@ -67,12 +72,14 @@ public class Pot : KitchenwareBase
 
     protected override int CalcEatoyPoint()
     {
-        double missPoint = 0.9;
+        double missPoint =1;
         for (int i = 0; i < missCount; i++)
         {
             missPoint *= 0.9;
         }
-        return (int)(basePoint* missPoint);
+        int point = (int)(basePoint * missPoint);
+        pointText.GetComponent<PointAnnouce>().DisplayText(point);
+        return point;
     }
 
     public void AddMissCount() => missCount++;
