@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class TitleController : MonoBehaviour {
 
-    [SerializeField] private bool isCompleteTitleLogoAnimation = false;
-    [SerializeField] private bool isStartingGame = false;
+    [SerializeField] private bool _isTestMode = false;
+
+    private bool isCompleteTitleLogoAnimation = false;
+    private bool isStartingGame = false;
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _clip;
@@ -28,7 +30,6 @@ public class TitleController : MonoBehaviour {
 
     private float startTime;
     private Vector3 startPosition;
-
 
     void Start () {
 
@@ -55,17 +56,13 @@ public class TitleController : MonoBehaviour {
             SoundController.SoundLoad();
         }
 		//Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Title));
+
 		_audioSource = GetComponent<AudioSource>();
 		_audioSource.clip = _clip;
 		_audioSource.Play();
 
         _canvasWIO = GameObject.Find("WIO");
 
-    }
-
-    private void OnDisable()
-    {
-        _audioSource.Stop();
     }
 
     void Update () {
@@ -84,14 +81,17 @@ public class TitleController : MonoBehaviour {
 
         _storyBoard.GetComponent<StoryBoardCtrl>().SetIsStartStory(true);
 
+        // ストーリーアニメーションが終わってなければ以下スルー
         if (!(_storyBoard.GetComponent<StoryBoardCtrl>().GetIsCompleteStartAnimation()))
         {
+            if (_isTestMode) isStartingGame = true;
             return;
         }
 
         if (!_canvasWIO.GetComponent<WhiteIO>().GetRsWhiteOut()) {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share));
                 if (!isStartingGame)
                 {
                     startTime = Time.timeSinceLevelLoad;
@@ -101,6 +101,7 @@ public class TitleController : MonoBehaviour {
             }
             else if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
             {
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share));
                 if (!isStartingGame)
                 {
                     startTime = Time.timeSinceLevelLoad;
@@ -125,7 +126,6 @@ public class TitleController : MonoBehaviour {
         }
 
         TitleAnimation();
-
     }
 
     void TitleAnimation()
@@ -156,6 +156,11 @@ public class TitleController : MonoBehaviour {
     public void OnIsCompleteTitleLogoAnimation()
     {
         isCompleteTitleLogoAnimation = true;
+    }
+
+    public void StopTitleBgm()
+    {
+        _audioSource.Stop();
     }
 
 }
