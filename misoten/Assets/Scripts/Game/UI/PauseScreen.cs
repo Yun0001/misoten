@@ -95,18 +95,21 @@ public class PauseScreen : MonoBehaviour
 						selectCursor = 0;
 						selectCursorFlag = true;
 						selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
+						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.cursor), 22);
 					}
 					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
 					{
 						selectCursor = 1;
 						selectCursorFlag = true;
 						selectCursorObj.transform.localPosition = new Vector3(0.0f, 98.0f, 0.1f);
+						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.cursor), 22);
 					}
 
 					// ゲーム画面へ戻る
 					if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber())
 						|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
 					{
+						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.Cancelkey_share), 22);
 						pauseObj.GetComponent<Pause>().pausing = false;
 
 						// 初期化処理
@@ -119,10 +122,14 @@ public class PauseScreen : MonoBehaviour
 						// ポーズ中の項目
 						switch (selectCursor)
 						{
-							case 0: pauseObj.GetComponent<Pause>().pausing = false; break;  // ゲーム画面へ戻る
+							case 0:	// ゲーム画面へ戻る
+								pauseObj.GetComponent<Pause>().pausing = false;
+								Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.Cancelkey_share), 22);
+								break;
 							case 1: // タイトルへ戻る
-								Sound.StopBgm();
 								SoundController.StopAllSE();
+								Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 22);
+								Sound.StopBgm();
 								SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
 								break;
 							default: Debug.LogError("だから言ったじゃないか！"); break;

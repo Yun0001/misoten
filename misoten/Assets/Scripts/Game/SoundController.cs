@@ -32,7 +32,8 @@ public class SoundController : MonoBehaviour {
         open,
         textslide_share,
         tutorial_failure,
-        tutorial_success
+        tutorial_success,
+		cursor
     }
 
     private static Dictionary<MenuSE, string> menuSEDictionary = new Dictionary<MenuSE, string>
@@ -45,7 +46,8 @@ public class SoundController : MonoBehaviour {
         { MenuSE.textslide_share,"textslide_share"},
         { MenuSE.tutorial_failure,"tutorial_failure"},
         { MenuSE.tutorial_success,"tutorial_success"},
-    };
+		{ MenuSE.cursor,"cursor02"},
+	};
 
     // Sounds/GamePlay/
     public enum GameSE
