@@ -107,6 +107,7 @@ public class PauseScreen : MonoBehaviour
 					if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber())
 						|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
 					{
+						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.Cancelkey_share), 22);
 						pauseObj.GetComponent<Pause>().pausing = false;
 
 						// 初期化処理
@@ -119,10 +120,14 @@ public class PauseScreen : MonoBehaviour
 						// ポーズ中の項目
 						switch (selectCursor)
 						{
-							case 0: pauseObj.GetComponent<Pause>().pausing = false; break;  // ゲーム画面へ戻る
+							case 0:	// ゲーム画面へ戻る
+								pauseObj.GetComponent<Pause>().pausing = false;
+								Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.Cancelkey_share), 22);
+								break;
 							case 1: // タイトルへ戻る
-								Sound.StopBgm();
 								SoundController.StopAllSE();
+								Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 22);
+								Sound.StopBgm();
 								SceneManager.LoadScene("Title_heita", LoadSceneMode.Single);
 								break;
 							default: Debug.LogError("だから言ったじゃないか！"); break;
