@@ -12,6 +12,8 @@ public class TitleController : MonoBehaviour {
     private bool isCompleteTitleLogoAnimation = false;
     private bool isStartingGame = false;
 
+    private bool isOneShot = false;
+
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _clip;
 
@@ -79,6 +81,20 @@ public class TitleController : MonoBehaviour {
             return;
         }
 
+        // 強制ロード
+        TitleInputKey();
+        if (isStartingGame)
+        {
+            CameraMove();
+            // カメラの移動が完了していない場合以下スルー
+            if (!isCameraMoved)
+            {
+                return;
+            }
+            TitleAnimation();
+            return;
+        }
+
         _storyBoard.GetComponent<StoryBoardCtrl>().SetIsStartStory(true);
 
         // ストーリーアニメーションが終わってなければ以下スルー
@@ -88,27 +104,9 @@ public class TitleController : MonoBehaviour {
             return;
         }
 
+        // リスタート中はキー入力不可
         if (!_canvasWIO.GetComponent<WhiteIO>().GetRsWhiteOut()) {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share));
-                if (!isStartingGame)
-                {
-                    startTime = Time.timeSinceLevelLoad;
-                }
-
-                isStartingGame = true;
-            }
-            else if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
-            {
-                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share));
-                if (!isStartingGame)
-                {
-                    startTime = Time.timeSinceLevelLoad;
-                }
-
-                isStartingGame = true;
-            }
+            TitleInputKey();
         }
 
         // ゲームスタートじゃない場合、以下はスルー
@@ -161,6 +159,38 @@ public class TitleController : MonoBehaviour {
     public void StopTitleBgm()
     {
         _audioSource.Stop();
+    }
+
+    void TitleInputKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (!isOneShot)
+            {
+                isOneShot = true;
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 0);
+            }
+            if (!isStartingGame)
+            {
+                startTime = Time.timeSinceLevelLoad;
+            }
+
+            isStartingGame = true;
+        }
+        else if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
+        {
+            if (!isOneShot)
+            {
+                isOneShot = true;
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 0);
+            }
+            if (!isStartingGame)
+            {
+                startTime = Time.timeSinceLevelLoad;
+            }
+
+            isStartingGame = true;
+        }
     }
 
 }
