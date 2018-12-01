@@ -161,4 +161,6 @@ public class Pause : MonoBehaviour
 
         prevPausing = pausing;
     }
+
+    public bool IsPausing() => pausing;
 }

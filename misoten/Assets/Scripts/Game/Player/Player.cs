@@ -62,10 +62,10 @@ public class Player : MonoBehaviour
     /// <summary>
     /// プレイヤー移動
     /// </summary>
-    private void FixedUpdate() => playerMove_cs.Move();
+    public void PlayerFixedUpdate() => playerMove_cs.Move();
 
     // Update is called once per frame
-    void Update()
+    public void PlayerUpdate()
     {
         if (timeManager.GetComponent<GameTimeManager>().IsTimeUp())
         {

@@ -113,15 +113,6 @@ public class AlienMove : MonoBehaviour
 		{
 			// カウンター席への移動処理
 			CounterSeatsMove();
-
-			for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
-			{
-				if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
-				{
-					PlayWalkSE();
-					break;
-				}
-			}
 		}
 
 		// 退店時移動状態の時
@@ -129,15 +120,6 @@ public class AlienMove : MonoBehaviour
 		{
 			// カウンター席側のエイリアンの退店時移動処理
 			CounterWhenLeavingStoreMove();
-
-			for (int i = 0; i < AlienCall.alienCall.GetCounterSeatsMax(); i++)
-			{
-				if (AlienStatus.GetCounterStatusChangeFlag(i, (int)AlienStatus.EStatus.WALK_SIDE))
-				{
-					PlayWalkSE();
-					break;
-				}
-			}
 		}
 	}
 
@@ -299,7 +281,6 @@ public class AlienMove : MonoBehaviour
 			// 終点座標に到着
 			if (timeAdd > WhenLeavingStoreMoveTime)
 			{
-				Sound.PlaySe(GameSceneManager.seKey[3]);
 				counterClosedCompletion[GetComponent<AlienOrder>().GetSetId()] = true;
 			}
 
@@ -366,16 +347,4 @@ public class AlienMove : MonoBehaviour
 	/// <returns></returns>
 	public static bool GetCounterClosedCompletion(int seatId) => counterClosedCompletion[seatId];
 
-
-    private void PlayWalkSE()
-    {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[6], true, 9);
-        Sound.PlaySe(GameSceneManager.seKey[6], 9);
-    }
-
-    private void StopWalkSE()
-    {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[6], false, 9);
-        Sound.StopSe(GameSceneManager.seKey[6], 9);
-    }
 }

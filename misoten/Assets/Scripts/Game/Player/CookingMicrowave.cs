@@ -27,7 +27,7 @@ public class CookingMicrowave : MonoBehaviour {
         GetMicrowave_cs().GetAnimationModel().GetComponent<mwAnimCtrl>().SetIsOpen(true);
 
         // レンジOpenSE
-        Sound.PlaySe(GameSceneManager.seKey[16], 4);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.MicrowaveOpen), 4);
         microwaveEffect.Play();
     }
 

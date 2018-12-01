@@ -34,8 +34,8 @@ public class PlayerDastBox : MonoBehaviour {
             player_cs.RevocationHaveInEatoy(true);
             GetComponent<PlayerAnimCtrl>().SetServing(false);
             GetDastBoxUI().SetActive(false);
-            Sound.SetVolumeSe(GameSceneManager.seKey[7], 0.3f, 8);
-            Sound.PlaySe(GameSceneManager.seKey[7], 8);
+            Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Dustshoot), 0.3f, 8);
+            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Dustshoot), 8);
 
         }
     }

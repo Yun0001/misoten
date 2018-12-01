@@ -200,19 +200,19 @@ public class MicrowaveGage : MonoBehaviour
 
     private void PlayStartSE()
     {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], true, 4);
-        Sound.PlaySe(GameSceneManager.seKey[17], 4);
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.MicrowaveStartup), true, 4);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.MicrowaveStartup), 4);
     }
 
     public void StopStartSE()
     {
-        Sound.SetLoopFlgSe(GameSceneManager.seKey[17], false, 4);
-        Sound.StopSe(GameSceneManager.seKey[17], 4);
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.MicrowaveStartup), false, 4);
+        Sound.StopSe(SoundController.GetGameSEName(SoundController.GameSE.MicrowaveStartup), 4);
     }
 
     private void PlayChinSE()
     {
-        Sound.PlaySe(GameSceneManager.seKey[15],4);
+        Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Microwave), 4);
     }
 
     public void DisplayPoint(int point)

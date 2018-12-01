@@ -60,8 +60,8 @@ public class GameTimeManager : MonoBehaviour {
         if (countTime < oneSecond && countTime > 0)
         {
             oneSecond = (int)Mathf.Floor(countTime);
-            Sound.SetVolumeSe(GameSceneManager.seKey[24], 0.5f, 10);
-            Sound.PlaySe(GameSceneManager.seKey[24], 10);
+            Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Countdown), 0.5f, 10);
+            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Countdown), 10);
         }
     }
 
