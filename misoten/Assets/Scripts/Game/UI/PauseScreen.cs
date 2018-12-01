@@ -95,12 +95,14 @@ public class PauseScreen : MonoBehaviour
 						selectCursor = 0;
 						selectCursorFlag = true;
 						selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
+						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.cursor), 22);
 					}
 					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
 					{
 						selectCursor = 1;
 						selectCursorFlag = true;
 						selectCursorObj.transform.localPosition = new Vector3(0.0f, 98.0f, 0.1f);
+						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.cursor), 22);
 					}
 
 					// ゲーム画面へ戻る
