@@ -82,18 +82,19 @@ public class TitleController : MonoBehaviour {
         }
 
         // 強制ロード
-        TitleInputKey();
-        if (isStartingGame)
-        {
-            CameraMove();
-            // カメラの移動が完了していない場合以下スルー
-            if (!isCameraMoved)
-            {
-                return;
-            }
-            TitleAnimation();
-            return;
-        }
+        AddStorySpeed();
+
+        //if (isStartingGame)
+        //{
+        //    CameraMove();
+        //    // カメラの移動が完了していない場合以下スルー
+        //    if (!isCameraMoved)
+        //    {
+        //        return;
+        //    }
+        //    TitleAnimation();
+        //    return;
+        //}
 
         _storyBoard.GetComponent<StoryBoardCtrl>().SetIsStartStory(true);
 
@@ -190,6 +191,18 @@ public class TitleController : MonoBehaviour {
             }
 
             isStartingGame = true;
+        }
+    }
+
+    void AddStorySpeed()
+    {
+        if (Input.GetKey(KeyCode.Return))
+        {
+            _storyBoard.GetComponent<StoryBoardCtrl>().AddSpeed(5);
+        }
+        else if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.Any))
+        {
+            _storyBoard.GetComponent<StoryBoardCtrl>().AddSpeed(5);
         }
     }
 
