@@ -15,7 +15,8 @@ public class CookingMixer : MonoBehaviour {
     {
             if (!player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<MixerAccessPoint>().Access(gameObject))
             {
-                Debug.LogError("アクセス失敗");
+            //Debug.LogError("アクセス失敗");
+            return;
             }
             player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
         transform.Find("Line").gameObject.SetActive(true);

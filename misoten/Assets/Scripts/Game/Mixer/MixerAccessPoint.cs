@@ -22,7 +22,7 @@ public class MixerAccessPoint : MonoBehaviour
         // アクセスポイント判定
         if (!DecisionAccessPoint(player.transform.position))
         {
-            Debug.LogError("アクセスポイントがおかしい");
+            //Debug.LogError("アクセスポイントがおかしい");
             return false;
         }
 
@@ -49,7 +49,7 @@ public class MixerAccessPoint : MonoBehaviour
     public bool DecisionAccessPoint(Vector3 accesspos)
     {
         float border = transform.position.z - 0.5f;
-
+        BoxCollider[] bc = GetComponents<BoxCollider>();
         if (accesspos.z < border)
         {
             ChangeBoxColliderEnable(0);
