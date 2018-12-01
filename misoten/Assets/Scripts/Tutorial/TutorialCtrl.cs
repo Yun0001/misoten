@@ -43,8 +43,8 @@ public class TutorialCtrl : MonoBehaviour
             StartCoroutine("TestOver");
         }
 
+        isOnce = true;
         if (isDebugMode) {
-            isOnce = true;
             CURRENT_TUTORIAL_STATE = DebugTutorialNum - 1;
         }
         else {
@@ -72,8 +72,20 @@ public class TutorialCtrl : MonoBehaviour
 
     void Update()
     {
+        foreach (GameObject player in _players)
+        {
+            player.GetComponent<Player>().PlayerUpdate();
+        }
         TutorialState();
         TutorialRenderer();
+    }
+
+    private void FixedUpdate()
+    {
+        foreach (GameObject player in _players)
+        {
+            player.GetComponent<Player>().PlayerFixedUpdate();
+        }
     }
 
     private IEnumerator OpenMenu()
