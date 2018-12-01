@@ -7,8 +7,10 @@ using Constants;
 public class TutorialCtrl : MonoBehaviour
 {
     [SerializeField] bool isDebugMode = false;
+    [SerializeField] bool isTestMode = false;
     [SerializeField, Range(Tutorial.NO_1 + 1, Tutorial.NO_6 + 1)] int DebugTutorialNum = Tutorial.NO_1;
     [SerializeField] bool isNextTutorial = false;
+    private bool _isCallNextTutorial = false;
 
     private int             CURRENT_TUTORIAL_STATE;
 
@@ -35,6 +37,11 @@ public class TutorialCtrl : MonoBehaviour
     void Start()
     {
         StartCoroutine("OpenMenu");     // Open Menu Coroutine
+
+        if (isTestMode)
+        {
+            StartCoroutine("TestOver");
+        }
 
         if (isDebugMode) {
             isOnce = true;
@@ -73,6 +80,20 @@ public class TutorialCtrl : MonoBehaviour
     {
         yield return new WaitForSeconds(Tutorial.WAIT_TIME);
         _menuAnimCtrl.OpenMenu();
+        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.open),10);
+    }
+
+    private IEnumerator TestOver()
+    {
+        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 10.0f);
+        isNextTutorial = true;
+        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.flicker), 11);
+    }
+
+    private IEnumerator CallNextTutorial()
+    {
+        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 3.0f);
+        isNextTutorial = true;
     }
 
     float alpha = 0.0f;
@@ -109,10 +130,12 @@ public class TutorialCtrl : MonoBehaviour
 
     void TutorialState()
     {
-        if (CheckAllPlayerPlayComplete()|| isNextTutorial)
-        {
-            NextTutorial();
+        if (CheckAllPlayerPlayComplete()&&(!_isCallNextTutorial)) {
+            _isCallNextTutorial = true;
+            StartCoroutine(CallNextTutorial());
         }
+
+        if (isNextTutorial) NextTutorial();
 
         OnetimeOnlyOnTutorialStart();   // 各チュートリアル開始時一度きりだけ処理される
 
@@ -149,12 +172,13 @@ public class TutorialCtrl : MonoBehaviour
             i++;
         }
         isNextTutorial = false;
+        _isCallNextTutorial = false;
 
         CURRENT_TUTORIAL_STATE++;
-        if (CURRENT_TUTORIAL_STATE==Tutorial.NO_5)
-        {
-            CURRENT_TUTORIAL_STATE++;
-        }
+        //if (CURRENT_TUTORIAL_STATE==Tutorial.NO_5)
+        //{
+        //    CURRENT_TUTORIAL_STATE++;
+        //}
         isOnce = true;
 
         if (Tutorial.ERROR <= CURRENT_TUTORIAL_STATE)
@@ -165,6 +189,7 @@ public class TutorialCtrl : MonoBehaviour
         }
 
         OverPage();
+        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.flicker),11);
     }
 
     void OnetimeOnlyOnTutorialStart()
@@ -238,6 +263,7 @@ public class TutorialCtrl : MonoBehaviour
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                     {
                         player.GetComponent<TutorialPlayer>().OnComplete();
+                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success),12);
                     }
                 }
                 break;
@@ -248,6 +274,7 @@ public class TutorialCtrl : MonoBehaviour
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
                         player.GetComponent<TutorialPlayer>().OnComplete();
+                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -258,6 +285,7 @@ public class TutorialCtrl : MonoBehaviour
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
                         player.GetComponent<TutorialPlayer>().OnComplete();
+                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -268,6 +296,7 @@ public class TutorialCtrl : MonoBehaviour
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
                         player.GetComponent<TutorialPlayer>().OnComplete();
+                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -275,9 +304,13 @@ public class TutorialCtrl : MonoBehaviour
             case Tutorial.NO_5: // ミキサー
                 foreach (GameObject player in _players)
                 {
-                    if (player.GetComponent<Player>().IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                    if (player.GetComponent<Player>().IsObjectCollision(PlayerCollision.hitObjName.Mixer) != null)
                     {
-                        player.GetComponent<TutorialPlayer>().OnComplete();
+                        if (player.GetComponent<Player>().IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
+                        {
+                            player.GetComponent<TutorialPlayer>().OnComplete();
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                     }
                 }
                 break;
@@ -288,6 +321,7 @@ public class TutorialCtrl : MonoBehaviour
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Normal)
                     {
                         player.GetComponent<TutorialPlayer>().OnComplete();
+                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;

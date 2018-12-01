@@ -144,7 +144,7 @@ public class WhiteIO : MonoBehaviour {
 
             Scene loadScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(loadScene.name);
-
+            _titleCtrl.GetComponent<TitleController>().StopTitleBgm();
         }
 
     }
@@ -179,6 +179,8 @@ public class WhiteIO : MonoBehaviour {
     {
         //SceneManager.LoadScene("Scenes/3dNewScene");
         SceneManagerScript.GetInstance().LoadNextScene();
+
+        _titleCtrl.GetComponent<TitleController>().StopTitleBgm();
     }
 
     public void OnWhiteOut()
