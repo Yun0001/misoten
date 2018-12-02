@@ -15,6 +15,7 @@ public class NabeMissEffect : MonoBehaviour
 	[SerializeField]
 	private GameObject irairaObj;
 
+
 	// ---------------------------------------------
 
 	// ローカル変数
@@ -38,7 +39,7 @@ public class NabeMissEffect : MonoBehaviour
 	/// </summary>
 	void Update ()
 	{
-		if(CookingPot.inFlag)
+		if(irairaObj.GetComponent<IraIraFrame>().GetInFlag())
 		{
 			// エフェクトフラグ「ON」の時
 			if (irairaObj.GetComponent<IraIraFrame>().GetEffectFlag())
@@ -51,7 +52,9 @@ public class NabeMissEffect : MonoBehaviour
 		}
 		else
 		{
-			CookingPot.inFlag = true;
+            irairaObj.GetComponent<IraIraFrame>().SetInFlag(true);
+
+            //CookingPot.inFlag = true;
 			irairaObj.GetComponent<IraIraFrame>().SetEffectFlag(false);
 			setObj.GetComponent<ParticleSystem>().Stop();
 		}

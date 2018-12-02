@@ -17,6 +17,7 @@ public class Pot : KitchenwareBase
     [SerializeField]
     private GameObject secondHandFrame;
 
+
     [SerializeField]
     private GameObject joystick;
 
@@ -86,4 +87,5 @@ public class Pot : KitchenwareBase
 
     public void JoystickInit(int Id) => joystick.GetComponent<Joystick>().Init(Id);
 
+    public void SetIrairaFrameInFlag(bool b) => secondHandFrame.GetComponent<IraIraFrame>().SetInFlag(b);
 }

@@ -47,11 +47,12 @@ public class IraIraFrame : MonoBehaviour
 	// ヒットフラグ
 	private bool hitFlag = false;
 
+    private bool inFlag;
+
 	// ---------------------------------------------
 
 	private void Awake()
 	{
-		//pot = GameObject.Find("nabe1");
 		effectFlag = hitFlag = false;
 	}
 
@@ -111,6 +112,10 @@ public class IraIraFrame : MonoBehaviour
 	/// </summary>
 	/// <param name="_scale"></param>
 	public void SetScale(Vector3 _scale) => scale = _scale;
+
+    public void SetInFlag(bool b) => inFlag = b;
+
+    public bool GetInFlag() => inFlag;
 
 	/// <summary>
 	/// 拡縮の取得

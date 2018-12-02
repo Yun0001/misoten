@@ -155,5 +155,5 @@ public class PlayerAccessController : MonoBehaviour
         return true;
     }
 
-    public AccessObjectName[] GetAccessObjectName() => accessObjName;
+    public AccessObjectName[] GetAccessObjectNameArray() => accessObjName;
 }

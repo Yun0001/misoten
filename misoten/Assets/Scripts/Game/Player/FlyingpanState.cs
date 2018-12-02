@@ -1,36 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
-public class CookingGrilled : MonoBehaviour {
-
-    private Player player_cs;
-    // Use this for initialization
-    void Awake()
-    {
-        player_cs = GetComponent<Player>();
-    }
+public class FlyingpanState : PlayerStateBase {
 
     /// <summary>
-    /// 調理開始
+    /// 入力処理
     /// </summary>
-    public void CookingStart()
+    public override void InputState()
     {
-        if (!GetFlyingpan_cs().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
+        // 決定キー入力
+        if (player_cs.InputDownButton(GamePad.Button.B))
         {
-            return;
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).
+                GetComponent<Flyingpan>().DecisionTimingPointCollision();
         }
-        player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
-        GetFlyingpan_cs().GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(true);
 
-        //着火SE
-        CookingStratSE();
+        // キャンセルキー入力
+        if (player_cs.InputDownButton(GamePad.Button.A))
+        {
+            Flyingpan flyimngpan_cs = GetFlyingpan_cs();
+            flyimngpan_cs.CookingInterruption();
+            flyimngpan_cs.GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(false);
+            CancelSE();
+            player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.GrilledTable);
+            player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+            player_cs.ChangeAttachComponent((int)Player.PlayerStatus.Normal);
+        }
     }
 
     /// <summary>
-    /// Playerが呼び出す更新関数
+    /// 更新処理
     /// </summary>
-    public void UpdateCookingGrilled()
+    public override void UpdateState()
     {
         GameObject eatoy = UpdateGrilled();
         if (eatoy == null) return;
@@ -56,17 +59,19 @@ public class CookingGrilled : MonoBehaviour {
     }
 
     /// <summary>
-    /// 調理キャンセル
+    /// アクセス時の処理
     /// </summary>
-    public void CancelCooking()
+    public override void AccessAction()
     {
-        Flyingpan flyimngpan_cs = GetFlyingpan_cs();
-        flyimngpan_cs.CookingInterruption();
-        flyimngpan_cs.GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(false);
-        CancelSE();
-        player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.GrilledTable);
-        //   player_cs.Set
+        if (!GetFlyingpan_cs().CookingStart(GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy()))
+        {
+            return;
+        }
+        player_cs.SetPlayerStatus(Player.PlayerStatus.GrilledTable);
+        GetFlyingpan_cs().GetAnimationModel().GetComponent<CookWareAnimCtrl>().SetBool(true);
 
+        //着火SE
+        CookingStratSE();
     }
 
     /// <summary>

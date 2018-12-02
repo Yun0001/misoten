@@ -6,8 +6,10 @@ using System;
 
 public class CookWareMw : KitchenwareBase
 {
-    [SerializeField]
     MicrowaveGage microwaveGage_cs;
+
+    [SerializeField]
+    private ParticleSystem microwaveEffect;
 
     private int chain;
 
@@ -91,4 +93,8 @@ public class CookWareMw : KitchenwareBase
     {
         microwaveGage_cs.DecisionCheckClockCollision();
     }
+
+    public void PlayMicrowaveEffect() => microwaveEffect.Play();
+
+    public void StopMicrowaveEffect() => microwaveEffect.Stop();
 }

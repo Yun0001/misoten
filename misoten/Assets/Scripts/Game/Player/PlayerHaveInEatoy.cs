@@ -29,10 +29,12 @@ public class PlayerHaveInEatoy : MonoBehaviour
         if (haveInEatoy.GetComponent<Eatoy>().IsIcing())
         {
             GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+            GetComponent<Player>().ChangeAttachComponent((int)Player.PlayerStatus.Normal);
         }
         else
         {
             GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
+            GetComponent<Player>().ChangeAttachComponent((int)Player.PlayerStatus.Normal);
         }
         GetComponent<PlayerAnimCtrl>().SetServing(true);
         return true;

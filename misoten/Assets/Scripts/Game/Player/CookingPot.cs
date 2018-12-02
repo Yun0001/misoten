@@ -5,11 +5,11 @@ using UnityEngine;
 public class CookingPot : MonoBehaviour {
 
     private Player player_cs;
-	static public bool inFlag = true;
+	//static public bool inFlag = true;
     // Use this for initialization
     void Awake()
     {
-		inFlag = true;
+		//inFlag = true;
 		player_cs = GetComponent<Player>();
     }
 
@@ -53,8 +53,10 @@ public class CookingPot : MonoBehaviour {
     /// </summary>
     public void CancelCooking()
     {
-		inFlag = false;
-		Pot pot = GetCollisionPot_cs();
+        //inFlag = false;
+
+        Pot pot = GetCollisionPot_cs();
+        pot.SetIrairaFrameInFlag(false);
         pot.CookingInterruption();
         pot.GetAnimationModel().GetComponent<CookingAnimCtrl>().SetIsCooking(false);
         CancelSE();

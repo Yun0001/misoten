@@ -501,11 +501,38 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 114974197512596166, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: microwaveEffect
+      value: 
+      objectReference: {fileID: 1354344455}
+    - target: {fileID: 114775434568062330, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: irairaFrame
+      value: 
+      objectReference: {fileID: 1720558099}
     m_RemovedComponents:
     - {fileID: 114094513359293050, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
     - {fileID: 114308424350998648, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114190856730924064, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114722125989949414, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114577753884463578, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114285179818257792, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114345987731381288, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114282564153275912, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114005642595770268, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114904774704329188, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114972411160211922, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114645434357052724, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114962231775764604, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+    - {fileID: 114299791775947954, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
+--- !u!198 &1354344455 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198012108198533844, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1354344454}
 --- !u!1 &1501254148 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1099167004886528, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
@@ -581,6 +608,11 @@ Transform:
   m_Father: {fileID: 240486329}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50.65, y: -38.874, z: -12.666}
+--- !u!1 &1720558099 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1122250446357620, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1354344454}
 --- !u!1001 &1757615990
 Prefab:
   m_ObjectHideFlags: 0

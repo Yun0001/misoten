@@ -62,9 +62,7 @@ public class PlayerInput : MonoBehaviour
       //  if (InputDownButton(GamePad.Button.X)) Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire));
       
 
-        // キャンセル
-        if (InputDownButton(GamePad.Button.A)) player_cs.CookingCancel();
-
+     
         // 移動量セット
         playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
     }
@@ -225,7 +223,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
+    public bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
 
 
 	public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
