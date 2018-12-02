@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScriptStructure :MonoBehaviour
+public class PlayerScriptStructure
 {
     private PlayerStateBase state_cs;
     private PlayerMove move_cs;
@@ -24,7 +24,7 @@ public class PlayerScriptStructure :MonoBehaviour
         haveInEatoy_cs = haveineatoy;
         haveEatoyCtrl_cs = haveeatoyctrl;
 
-        move_cs.Init(gameObject);
+        move_cs.Init(player);
     }
 
     public void SetState(PlayerStateBase state) => state_cs = state;
