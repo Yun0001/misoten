@@ -57,30 +57,9 @@ public class PlayerInput : MonoBehaviour
 
         // アクション
         if (InputDownButton(GamePad.Button.B)) player_cs.ActionBranch();
-
-        // test
-      //  if (InputDownButton(GamePad.Button.X)) Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire));
-      
-
      
         // 移動量セット
         playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
-    }
-
-    public void InputMicrowave()
-    {
-        if (InputDownButton(GamePad.Button.B))
-        {
-            player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().DecisionCheckClockCollision();
-        }
-    }
-
-    public void InputGrilled()
-    {
-        if (InputDownButton(GamePad.Button.B))
-        {
-            player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().DecisionTimingPointCollision();
-        }
     }
 
     /// <summary>
@@ -225,8 +204,12 @@ public class PlayerInput : MonoBehaviour
 
     public bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
 
+    public bool InputButton(GamePad.Button button) => GamePad.GetButton(button, playerControllerNumber);
 
-	public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
+    public bool InputUpButton(GamePad.Button button) => GamePad.GetButtonUp(button, playerControllerNumber);
+
+
+    public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
 
 	private void SetInputAxisName(string x, string y)
     {

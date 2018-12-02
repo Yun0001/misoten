@@ -11,13 +11,13 @@ public class PlayerDastBox : MonoBehaviour {
     {
         player_cs = GetComponent<Player>();
         dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
-        dastBoxGage.SetActive(false);
+        GetDastBoxUI().SetActive(false);
     }
 
     public void AccessDastBox()
     {
-        dastBoxGage.SetActive(true);
-        dastBoxGage.GetComponent<DastBox>().Access((int)player_cs.GetPlayerStatus(), transform.position);
+        GetDastBoxUI().SetActive(true);
+        GetDastBoxUI().GetComponent<DastBox>().Access((int)player_cs.GetPlayerStatus(), transform.position);
         player_cs.SetPlayerStatus(Player.PlayerStatus.DastBox);
     }
 
@@ -27,7 +27,7 @@ public class PlayerDastBox : MonoBehaviour {
         player_cs.GetPlayerInput().InputDastBox();
 
         //　ゴミ箱ゲージがMaxの時
-        if (dastBoxGage.GetComponent<DastBox>().GetGageAmount() >= 1.0f)
+        if (GetDastBoxUI().GetComponent<DastBox>().GetGageAmount() >= 1.0f)
         {
             player_cs.IsObjectCollision(PlayerCollision.hitObjName.DastBox).transform.Find("box").GetComponent<mwAnimCtrl>().SetIsOpen(true);
             player_cs.SetPlayerStatus(Player.PlayerStatus.Normal);

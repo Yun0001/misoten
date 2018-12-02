@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject timeManager;
 
-
+    private GameObject dastBoxGage;
 
     // Use this for initialization
     void Awake()
@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
         SetScript();
         playerInput_cs.Init();
         playerMove_cs.Init();
+       // dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
+       // GetDastBoxUI().SetActive(false);
     }
 
     /// <summary>
@@ -124,7 +126,6 @@ public class Player : MonoBehaviour
                 {
                     case PlayerAccessController.AccessObjectName.Mixer: AccessMixer(); break;
                     case PlayerAccessController.AccessObjectName.IceBox: AccessIceBox(); break;
-                    case PlayerAccessController.AccessObjectName.DastBox: AccessDastBox(); break;
                     case PlayerAccessController.AccessObjectName.Alien: OfferCuisine(); break;
                 }
                 break;
@@ -187,11 +188,6 @@ public class Player : MonoBehaviour
             case PlayerStatus.IceBox:
                 // 冷蔵庫状態更新処理
                 pIceBox_cs.UpdateIceBox();
-                break;
-
-            case PlayerStatus.DastBox:
-                // ゴミ箱状態更新処理
-                pDastbox_cs.UpdateDastBox();
                 break;
 
             default:
@@ -270,6 +266,10 @@ public class Player : MonoBehaviour
 
     public bool InputDownButton(GamePad.Button button) => playerInput_cs.InputDownButton(button);
 
+    public bool InputUpButton(GamePad.Button button) => playerInput_cs.InputUpButton(button);
+
+    public bool InputButton(GamePad.Button button) => playerInput_cs.InputButton(button);
+
     public PlayerAccessController GetAccessController() => playerAccessController_cs;
 
     public PlayerAccessPossiblAnnounce GetAccessPossibleAnnounce() => playerAccessPosssibleAnnounce_cs;
@@ -305,8 +305,16 @@ public class Player : MonoBehaviour
                 break;
 
             case (int)PlayerStatus.Mixer:  break;
-            case (int)PlayerStatus.IceBox:  break;
-            case (int)PlayerStatus.DastBox:  break;
+            case (int)PlayerStatus.IceBox:
+                gameObject.AddComponent<IceBoxState>();
+                status_cs = GetComponent<IceBoxState>();
+                status_cs.AccessAction();
+                break;
+            case (int)PlayerStatus.DastBox:
+                gameObject.AddComponent<DastBoxState>();
+                status_cs = GetComponent<DastBoxState>();
+                status_cs.AccessAction();
+                break;
 
             case (int)PlayerStatus.Normal:
                 if (status_cs == null)
