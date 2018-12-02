@@ -32,7 +32,7 @@ public class DastBox : MonoBehaviour {
 
     public void SetPlayerStatus(int status)
     {
-        if (status != (int)Player.PlayerStatus.Catering || status != (int)Player.PlayerStatus.CateringIceEatoy)
+        if (status != (int)Player.PlayerStatus.Catering && status != (int)Player.PlayerStatus.CateringIceEatoy)
         {
             Debug.LogError("不正な状態");
             return;

@@ -16,7 +16,6 @@ public class PlayerMove : MonoBehaviour
     private ParticleSystem prefab = new ParticleSystem();
 
     // 呼び出したエフェクトの確認用
-    [SerializeField]
     private ParticleSystem particleSystems = new ParticleSystem();
 
     private bool effectFlag = false;
@@ -32,9 +31,6 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField, Range(1, 50)]
     private int adjustment;
-
-    [SerializeField]
-    private GameObject timeManager;
 
 
 
@@ -60,7 +56,6 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        if (timeManager.GetComponent<GameTimeManager>().IsTimeUp()) return;
         // 移動可能状態でない場合抜ける
         if (!IsMoveStatus()) return;
 

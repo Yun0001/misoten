@@ -7,7 +7,6 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <summary>
     /// イートイ
     /// </summary>
-    [SerializeField]
     GameObject haveInEatoy;
 
     /// <summary>
@@ -62,39 +61,11 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <returns></returns>
     public GameObject GetHaveInEatoy() => haveInEatoy;
 
-
-    /// <summary>
-    /// イートイ座標更新
-    /// </summary>
-    public void UpdateHaveInEatoyPosition()
-    {
-        Vector3 pos = transform.position;
-        
-        // 前向きの時
-        if (GetComponent<PlayerAnimCtrl>().IsFront())
-        {
-            haveInEatoy.SetActive(true);
-
-            if (GetComponent<SpriteRenderer>().flipX) pos.x += adjustmentPosition.x;            // 右向きの時
-            else pos.x -= adjustmentPosition.x;             // 左向きの時
-
-            pos.y += adjustmentPosition.y;                  // y座標調整
-            pos.z += adjustmentPosition.z;                  // z座標調整
-        }
-        else
-        {
-            // 後向きの時は非表示
-            haveInEatoy.SetActive(false);
-        }
-        haveInEatoy.transform.position = pos;
-    }
-
     public void SetHaveInEatoyPosition(Vector3 alienPos)
     {
         alienPos.y += 0.3f;
         alienPos.z -= 1f;
         haveInEatoy.transform.position = alienPos;
-        
     }
 
     public void DisplayEatoy()

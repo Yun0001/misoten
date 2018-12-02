@@ -40,8 +40,6 @@ public class Player : MonoBehaviour
     private PlayerAccessPossiblAnnounce playerAccessPosssibleAnnounce_cs;
     private PlayerCollision collision_cs;
     private HaveEatoyCtrl haveEatoyCtrl_cs;
-
-    [SerializeField]
     private PlayerStateBase status_cs;
 
     [SerializeField]
@@ -93,60 +91,12 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (playerAccessController_cs.IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
-        {
-            playerAccessPosssibleAnnounce_cs.HiddenSprite();
-            StopMove(); // 移動値をリセット
-            OfferCuisine();
-        }
         status_cs.InputState();
         status_cs.UpdateState();
         haveEatoyCtrl_cs.HaveEatoy();
 
         // 移動量セット
         playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
-    }
-
-    /// <summary>
-    /// 料理を渡す
-    /// </summary>
-    public void OfferCuisine()
-    {
-        if (!IsOffer())
-        {
-            // エイリアンのスクリプトを取得して料理を渡す
-            haveInEatoy_cs.SetHaveInEatoyPosition(IsObjectCollision(PlayerCollision.hitObjName.Alien).transform.position);
-            IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(haveInEatoy_cs.GetHaveInEatoy());
-            GetComponent<PlayerAnimCtrl>().SetServing(false);
-            // イートイを表示
-            DisplayHaveInEatoy();
-
-
-            SetPlayerStatus(PlayerStatus.Normal);
-        }
-    }
-
-    public bool IsOffer()
-    {
-        return
-            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT) ||
-            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.CLAIM) ||
-            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION) ||
-            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_BAD) ||
-            AlienStatus.GetCounterStatusChangeFlag(IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
-    }
-
-    /// <summary>
-    /// Bボタン入力
-    /// </summary>
-    public void ActionBranch()
-    {
-        if (playerAccessController_cs.IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
-        {
-            playerAccessPosssibleAnnounce_cs.HiddenSprite();
-            StopMove(); // 移動値をリセット
-            OfferCuisine();
-        }
     }
 
     public void HiddenAnnounceSprite() => playerAccessPosssibleAnnounce_cs.HiddenSprite();
@@ -193,7 +143,7 @@ public class Player : MonoBehaviour
 
     public void SetHaveEatoyCtrlNum(int num) => haveEatoyCtrl_cs.SetEatoyNum(num);
 
-    private void DisplayHaveInEatoy() => haveInEatoy_cs.DisplayEatoy();
+    public PlayerHaveInEatoy GetHaveInEatoy_cs() => haveInEatoy_cs;
 
     public bool IsEatoyIceing() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().IsIcing();
 
@@ -225,6 +175,11 @@ public class Player : MonoBehaviour
         // 新しい状態のComponentをアタッチ
         switch (stateID)
         {
+            case (int)PlayerStatus.Normal:
+                gameObject.AddComponent<NormalState>();
+                status_cs = GetComponent<NormalState>();
+                break;
+
             case (int)PlayerStatus.Microwave:
                 gameObject.AddComponent<MicrowaveState>();
                 status_cs = GetComponent<MicrowaveState>();
@@ -259,11 +214,6 @@ public class Player : MonoBehaviour
                 gameObject.AddComponent<DastBoxState>();
                 status_cs = GetComponent<DastBoxState>();
                 status_cs.AccessAction();
-                break;
-
-            case (int)PlayerStatus.Normal:
-                gameObject.AddComponent<NormalState>();
-                status_cs = GetComponent<NormalState>();
                 break;
         }
     }

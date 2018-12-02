@@ -19,9 +19,16 @@ public class NormalState : PlayerStateBase {
                     player_cs.GetAccessPossibleAnnounce().HiddenSprite();
                     player_cs.StopMove(); // 移動値をリセット
 
-                    // アタッチしているスクリプトを変更
-                    player_cs.ChangeAttachComponent((int)Name);
-                    break;
+                    if (Name == PlayerAccessController.AccessObjectName.Alien)
+                    {
+                        OfferCuisine();
+                    }
+                    else
+                    {
+                        // アタッチしているスクリプトを変更
+                        player_cs.ChangeAttachComponent((int)Name);
+                        break;
+                    }
                 }
             }
         }
@@ -34,5 +41,35 @@ public class NormalState : PlayerStateBase {
     public override void UpdateState()
     {
 
+    }
+
+    /// <summary>
+    /// 料理を渡す
+    /// </summary>
+    public void OfferCuisine()
+    {
+        if (!IsOffer())
+        {
+            // エイリアンのスクリプトを取得して料理を渡す
+            player_cs.GetHaveInEatoy_cs().SetHaveInEatoyPosition(player_cs.IsObjectCollision(PlayerCollision.hitObjName.Alien).transform.position);
+            player_cs.IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().EatCuisine(player_cs.GetHaveInEatoy_cs().GetHaveInEatoy());
+            GetComponent<PlayerAnimCtrl>().SetServing(false);
+            // イートイを表示
+            player_cs.GetHaveInEatoy_cs().DisplayEatoy();
+
+
+            player_cs.SetPlayerStatus(Player.PlayerStatus.Normal);
+        }
+    }
+
+    public bool IsOffer()
+    {
+        int setId = player_cs.IsObjectCollision(PlayerCollision.hitObjName.Alien).GetComponent<AlienOrder>().GetSetId();
+        return
+            AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT) ||
+            AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.CLAIM) ||
+            AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.SATISFACTION) ||
+            AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.RETURN_BAD) ||
+            AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.RETURN_GOOD);
     }
 }
