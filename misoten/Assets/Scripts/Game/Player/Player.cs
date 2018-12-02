@@ -23,24 +23,26 @@ public class Player : MonoBehaviour
         MixerWait,          // ミキサー他プレイヤー待ち状態
     }
 
+    public class ControllerInformation
+    {
+        public string XAxis;
+        public string YAxis;
+        public GamePad.Index controllerNumber;
 
-    [SerializeField]
+        public ControllerInformation(string x, string y, GamePad.Index num)
+        {
+            XAxis = x;
+            YAxis = y;
+            controllerNumber = num;
+        }
+    }
+
     private PlayerStatus playerStatus;
 
     [SerializeField]
     private int playerID;//プレイヤーID(インスペクターで設定)
-
-    private GamePad.Index playerControllerNumber;
-    private string inputXAxisName;
-    private string inputYAxisName;
-
-    private PlayerMove playerMove_cs;
-    private PlayerHaveInEatoy haveInEatoy_cs;
-    private PlayerAccessController playerAccessController_cs;
-    private PlayerAccessPossiblAnnounce playerAccessPosssibleAnnounce_cs;
-    private PlayerCollision collision_cs;
-    private HaveEatoyCtrl haveEatoyCtrl_cs;
-    private PlayerStateBase status_cs;
+    private ControllerInformation controllerInformation;
+    private PlayerScriptStructure scriptStructure;
 
     [SerializeField]
     private GameObject timeManager;
@@ -53,26 +55,25 @@ public class Player : MonoBehaviour
         switch (LayerMask.LayerToName(gameObject.layer))
         {
             case "Player1":
-                SetInputAxisName("L_XAxis_1", "L_YAxis_1");
-                SetPlayerControllerNumber(GamePad.Index.One);
+                controllerInformation = new ControllerInformation("L_XAxis_1", "L_YAxis_1", GamePad.Index.One);
                 break;
             case "Player2":
-                SetInputAxisName("L_XAxis_2", "L_YAxis_2");
-                SetPlayerControllerNumber(GamePad.Index.Two);
+                controllerInformation = new ControllerInformation("L_XAxis_2", "L_YAxis_2", GamePad.Index.Two);
                 break;
             case "Player3":
-                SetInputAxisName("L_XAxis_3", "L_YAxis_3");
-                SetPlayerControllerNumber(GamePad.Index.Three);
+                controllerInformation = new ControllerInformation("L_XAxis_3", "L_YAxis_3", GamePad.Index.Three);
                 break;
             case "Player4":
-                SetInputAxisName("L_XAxis_4", "L_YAxis_4");
-                SetPlayerControllerNumber(GamePad.Index.Four);
+                controllerInformation = new ControllerInformation("L_XAxis_4", "L_YAxis_4", GamePad.Index.Four);
                 break;
         }
         gameObject.AddComponent<NormalState>();
         SetPlayerStatus(PlayerStatus.Normal);
-        SetScript();
-        playerMove_cs.Init();
+        scriptStructure = new PlayerScriptStructure(
+            gameObject, GetComponent<NormalState>(),
+            GetComponent<PlayerMove>(), GetComponent<PlayerCollision>(),
+            GetComponent<PlayerAccessController>(), GetComponent<PlayerAccessPossiblAnnounce>(),
+            GetComponent<PlayerHaveInEatoy>(), GetComponent<HaveEatoyCtrl>());
         dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
         GetDastBoxUI().SetActive(false);
     }
@@ -80,7 +81,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// プレイヤー移動
     /// </summary>
-    public void PlayerFixedUpdate() => playerMove_cs.Move();
+    public void PlayerFixedUpdate() => scriptStructure.GetMove().Move();
 
     // Update is called once per frame
     public void PlayerUpdate()
@@ -91,30 +92,21 @@ public class Player : MonoBehaviour
             return;
         }
 
-        status_cs.InputState();
-        status_cs.UpdateState();
-        haveEatoyCtrl_cs.HaveEatoy();
+        scriptStructure.GetState().InputState();
+        scriptStructure.GetState().UpdateState();
+        scriptStructure.GetHaveEatoyCtrl().HaveEatoy();
 
         // 移動量セット
-        playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
+        scriptStructure.GetMove().SetMove(new Vector3(Input.GetAxis(controllerInformation.XAxis), 0, -(Input.GetAxis(controllerInformation.YAxis))));
     }
 
-    public void HiddenAnnounceSprite() => playerAccessPosssibleAnnounce_cs.HiddenSprite();
-
-    public void SetAnnounceSprite(int spriteID) => playerAccessPosssibleAnnounce_cs.SetSprite(spriteID);
-
-    public GameObject IsObjectCollision(PlayerCollision.hitObjName ObjID) => collision_cs.GetHitObj(ObjID);
+    public GameObject IsObjectCollision(PlayerCollision.hitObjName ObjID) => scriptStructure.GetCollision().GetHitObj(ObjID);
 
     public void SetHaveInEatoy(GameObject eatoy)
     {
-        haveInEatoy_cs.SetEatoy(eatoy);
-        SetHaveEatoyCtrlNum((int)GetHaveInEatoyColor());
+        GetHaveInEatoy_cs().SetEatoy(eatoy);
+        scriptStructure.GetHaveEatoyCtrl().SetEatoyNum((int)GetHaveInEatoy_cs().GetHaveInEatoy().GetComponent<Eatoy>().GetEatoyColor());
     }
-
-    public Eatoy.EEatoyColor GetHaveInEatoyColor() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().GetEatoyColor();
-
-    public void RevocationHaveInEatoy(bool b) => haveInEatoy_cs.RevocationHaveInEatoy(b);
-
 
     public int GetPlayerID() => playerID;
 
@@ -124,51 +116,39 @@ public class Player : MonoBehaviour
 
     public void StopMove()
     {
-        playerMove_cs.VelocityReset();
+        scriptStructure.GetMove().VelocityReset();
         GetComponent<PlayerAnimCtrl>().SetWalking(false);
-    }
-
-    private void SetScript()
-    {
-        status_cs = GetComponent<NormalState>();
-        playerMove_cs = GetComponent<PlayerMove>();
-        haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
-        playerAccessController_cs = GetComponent<PlayerAccessController>();
-        playerAccessPosssibleAnnounce_cs = GetComponent<PlayerAccessPossiblAnnounce>();
-        collision_cs = GetComponent<PlayerCollision>();
-        haveEatoyCtrl_cs = GetComponent<HaveEatoyCtrl>();
     }
 
     public void SetPlayerStatus(PlayerStatus state) => playerStatus = state;
 
-    public void SetHaveEatoyCtrlNum(int num) => haveEatoyCtrl_cs.SetEatoyNum(num);
+    public PlayerAccessController GetAccessController() => scriptStructure.GetAccessController();
 
-    public PlayerHaveInEatoy GetHaveInEatoy_cs() => haveInEatoy_cs;
+    public PlayerAccessPossiblAnnounce GetAccessPossibleAnnounce_cs() => scriptStructure.GetAccessPossibleAnnounce();
 
-    public bool IsEatoyIceing() => haveInEatoy_cs.GetHaveInEatoy().GetComponent<Eatoy>().IsIcing();
+    public void HiddenAnnounceSprite() => GetAccessPossibleAnnounce_cs().HiddenSprite();
 
-    public void AllNull() => collision_cs.AllNull();
+    public void SetAnnounceSprite(int spriteID) => GetAccessPossibleAnnounce_cs().SetSprite(spriteID);
 
-    public void DisplaySandbySprite() => playerAccessPosssibleAnnounce_cs.DisplayStandbySprite();
+    public PlayerHaveInEatoy GetHaveInEatoy_cs() => scriptStructure.GetHaveInEatoy();
 
-    public void HiddenStandbySprite() => playerAccessPosssibleAnnounce_cs.HiddenStandbySprite();
+    public bool IsEatoyIceing() => GetHaveInEatoy_cs().GetHaveInEatoy().GetComponent<Eatoy>().IsIcing();
 
-    public bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
+    public void AllNull() => scriptStructure.GetCollision().AllNull();
 
-    public bool InputUpButton(GamePad.Button button) => GamePad.GetButtonUp(button, playerControllerNumber);
+    public bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, controllerInformation.controllerNumber);
 
-    public bool InputButton(GamePad.Button button) => GamePad.GetButton(button, playerControllerNumber);
+    public bool InputUpButton(GamePad.Button button) => GamePad.GetButtonUp(button, controllerInformation.controllerNumber);
 
-    public PlayerAccessController GetAccessController() => playerAccessController_cs;
+    public bool InputButton(GamePad.Button button) => GamePad.GetButton(button, controllerInformation.controllerNumber);
 
-    public PlayerAccessPossiblAnnounce GetAccessPossibleAnnounce() => playerAccessPosssibleAnnounce_cs;
 
     public void ChangeAttachComponent(int stateID)
     {
         // 現在アタッチされている状態Componentを削除
-        if (status_cs != null)
+        if (scriptStructure.GetState() != null)
         {
-            status_cs.DeleteComponent();
+            scriptStructure.GetState().DeleteComponent();
         }
         
 
@@ -177,66 +157,46 @@ public class Player : MonoBehaviour
         {
             case (int)PlayerStatus.Normal:
                 gameObject.AddComponent<NormalState>();
-                status_cs = GetComponent<NormalState>();
+                scriptStructure.SetState(GetComponent<NormalState>());
                 break;
 
             case (int)PlayerStatus.Microwave:
                 gameObject.AddComponent<MicrowaveState>();
-                status_cs = GetComponent<MicrowaveState>();
-                status_cs.AccessAction();
+                scriptStructure.SetState(GetComponent<MicrowaveState>());
+                scriptStructure.GetState().AccessAction();
                 break;
 
             case (int)PlayerStatus.Pot:
                 gameObject.AddComponent<PotState>();
-                status_cs = GetComponent<PotState>();
-                status_cs.AccessAction();
+                scriptStructure.SetState(GetComponent<PotState>());
+                scriptStructure.GetState().AccessAction();
                 break;
 
             case (int)PlayerStatus.GrilledTable:
                 gameObject.AddComponent<FlyingpanState>();
-                status_cs = GetComponent<FlyingpanState>();
-                status_cs.AccessAction();
+                scriptStructure.SetState(GetComponent<FlyingpanState>());
+                scriptStructure.GetState().AccessAction();
                 break;
 
             case (int)PlayerStatus.Mixer:
                 gameObject.AddComponent<MixerState>();
-                status_cs = GetComponent<MixerState>();
-                status_cs.AccessAction();
+                scriptStructure.SetState(GetComponent<MixerState>());
+                scriptStructure.GetState().AccessAction();
                 break;
 
             case (int)PlayerStatus.IceBox:
                 gameObject.AddComponent<IceBoxState>();
-                status_cs = GetComponent<IceBoxState>();
-                status_cs.AccessAction();
+                scriptStructure.SetState(GetComponent<IceBoxState>());
+                scriptStructure.GetState().AccessAction();
                 break;
 
             case (int)PlayerStatus.DastBox:
                 gameObject.AddComponent<DastBoxState>();
-                status_cs = GetComponent<DastBoxState>();
-                status_cs.AccessAction();
+                scriptStructure.SetState(GetComponent<DastBoxState>());
+                scriptStructure.GetState().AccessAction();
                 break;
         }
     }
 
-    private void SetInputAxisName(string x, string y)
-    {
-        inputXAxisName = x;
-        inputYAxisName = y;
-    }
-
-    public string GetInputXAxisName() => inputXAxisName;
-
-    public string GetInputYAxisName() => inputYAxisName;
-
-    public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
-
-    private void SetPlayerControllerNumber(GamePad.Index index)
-    {
-        if (index < GamePad.Index.One || index > GamePad.Index.Four)
-        {
-            Debug.LogError("不正なコントローラindex");
-            return;
-        }
-        playerControllerNumber = index;
-    }
+    public ControllerInformation GetControllerInformation() => controllerInformation;
 }

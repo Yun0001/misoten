@@ -30,7 +30,7 @@ public class MixerState : PlayerStateBase
                     player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().AddAccessNum();
                     // プレイヤーの状態をミキサー待機状態に変更
                     player_cs.SetPlayerStatus(Player.PlayerStatus.MixerWait);
-                    player_cs.DisplaySandbySprite();
+                    player_cs.GetAccessPossibleAnnounce_cs().DisplayStandbySprite();
                 }
 
                 // キャンセルボタン
@@ -60,7 +60,7 @@ public class MixerState : PlayerStateBase
                         player_cs.IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().SubAccessNum();
                         // プレイヤーの状態をミキサーアクセスに戻す
                         player_cs.SetPlayerStatus(Player.PlayerStatus.MixerAccess);
-                        player_cs.HiddenStandbySprite();
+                        player_cs.GetAccessPossibleAnnounce_cs().HiddenStandbySprite();
                         GetComponent<PlayerAccessPossiblAnnounce>().SetMixerAccessSprite();
                     }
                 }

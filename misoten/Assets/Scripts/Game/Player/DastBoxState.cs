@@ -17,12 +17,13 @@ public class DastBoxState : PlayerStateBase
             player_cs.GetDastBoxUI().SetActive(false);
             //アナウンスUIを再表示
             player_cs.SetAnnounceSprite((int)PlayerCollision.hitObjName.DastBox);
+            player_cs.ChangeAttachComponent((int)Player.PlayerStatus.Normal);
             switch (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetPlayerStatus())
             {
-                case 9:
+                case (int)Player.PlayerStatus.CateringIceEatoy:
                     player_cs.SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
                     break;
-                case 10:
+                case (int)Player.PlayerStatus.Catering:
                     player_cs.SetPlayerStatus(Player.PlayerStatus.Catering);
                     break;
             }
@@ -44,7 +45,7 @@ public class DastBoxState : PlayerStateBase
             player_cs.IsObjectCollision(PlayerCollision.hitObjName.DastBox).transform.Find("box").GetComponent<mwAnimCtrl>().SetIsOpen(true);
             player_cs.SetPlayerStatus(Player.PlayerStatus.Normal);
             player_cs.ChangeAttachComponent((int)Player.PlayerStatus.Normal);
-            player_cs.RevocationHaveInEatoy(true);
+            player_cs.GetHaveInEatoy_cs().RevocationHaveInEatoy(true);
             GetComponent<PlayerAnimCtrl>().SetServing(false);
             player_cs.GetDastBoxUI().SetActive(false);
             Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Dustshoot), 0.3f, 8);

@@ -35,10 +35,10 @@ public class PlayerMove : MonoBehaviour
 
 
     // 初期化
-    public void Init()
+    public void Init(GameObject player)
     {
-        player_cs = GetComponent<Player>();
-        rb = player_cs.gameObject.GetComponent<Rigidbody>();
+        player_cs = player.GetComponent<Player>();
+        rb = player.GetComponent<Rigidbody>();
 
         // エフェクト生成
         InstanceMoveEffect();

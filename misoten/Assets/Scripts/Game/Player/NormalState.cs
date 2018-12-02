@@ -16,7 +16,7 @@ public class NormalState : PlayerStateBase {
                 // アクセス可能なオブジェクトが見つかった！！
                 if (player_cs.GetAccessController().IsAccessPossible(Name))
                 {
-                    player_cs.GetAccessPossibleAnnounce().HiddenSprite();
+                    player_cs.GetAccessPossibleAnnounce_cs().HiddenSprite();
                     player_cs.StopMove(); // 移動値をリセット
 
                     if (Name == PlayerAccessController.AccessObjectName.Alien)
