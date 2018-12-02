@@ -125,7 +125,6 @@ public class Player : MonoBehaviour
                 switch (Name)
                 {
                     case PlayerAccessController.AccessObjectName.Mixer: AccessMixer(); break;
-                    case PlayerAccessController.AccessObjectName.IceBox: AccessIceBox(); break;
                     case PlayerAccessController.AccessObjectName.Alien: OfferCuisine(); break;
                 }
                 break;
@@ -183,11 +182,6 @@ public class Player : MonoBehaviour
                     playerInput_cs.InputMixer();
                     SetPlayerStatus(PlayerStatus.Normal);
                 }
-                break;
-
-            case PlayerStatus.IceBox:
-                // 冷蔵庫状態更新処理
-                pIceBox_cs.UpdateIceBox();
                 break;
 
             default:
