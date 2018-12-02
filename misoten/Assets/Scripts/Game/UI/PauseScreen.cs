@@ -75,7 +75,7 @@ public class PauseScreen : MonoBehaviour
 			{
 				// スタートボタンが押されると、ポーズ画面になる
 				if (!pauseObj.GetComponent<Pause>().pausing
-					&& GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+					&& GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<Player>().GetPlayerControllerNumber()))
 				{
 					// ポーズ「ON」、ポーズを開いたプレイヤーのみ操作可能
 					pauseObj.GetComponent<Pause>().pausing = id[i] = true;
@@ -90,14 +90,14 @@ public class PauseScreen : MonoBehaviour
 				else if (pauseObj.GetComponent<Pause>().pausing && id[i])
 				{
 					// セレクトカーソルの更新
-					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == 1.0f && !selectCursorFlag && selectCursor == 1)
+					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<Player>().GetPlayerControllerNumber()).y == 1.0f && !selectCursorFlag && selectCursor == 1)
 					{
 						selectCursor = 0;
 						selectCursorFlag = true;
 						selectCursorObj.transform.localPosition = new Vector3(0.0f, 169.0f, 0.1f);
 						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.cursor), 22);
 					}
-					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
+					if (GamePad.GetAxis(GamePad.Axis.LeftStick, playerObj[i].GetComponent<Player>().GetPlayerControllerNumber()).y == -1.0f && !selectCursorFlag && selectCursor == 0)
 					{
 						selectCursor = 1;
 						selectCursorFlag = true;
@@ -106,8 +106,8 @@ public class PauseScreen : MonoBehaviour
 					}
 
 					// ゲーム画面へ戻る
-					if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber())
-						|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+					if (GamePad.GetButtonDown(GamePad.Button.Start, playerObj[i].GetComponent<Player>().GetPlayerControllerNumber())
+						|| GamePad.GetButtonDown(GamePad.Button.A, playerObj[i].GetComponent<Player>().GetPlayerControllerNumber()))
 					{
 						Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.Cancelkey_share), 22);
 						pauseObj.GetComponent<Pause>().pausing = false;
@@ -117,7 +117,7 @@ public class PauseScreen : MonoBehaviour
 					}
 
 					// 決定
-					if (GamePad.GetButtonDown(GamePad.Button.B, playerObj[i].GetComponent<PlayerInput>().GetPlayerControllerNumber()))
+					if (GamePad.GetButtonDown(GamePad.Button.B, playerObj[i].GetComponent<Player>().GetPlayerControllerNumber()))
 					{
 						// ポーズ中の項目
 						switch (selectCursor)

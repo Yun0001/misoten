@@ -30,40 +30,12 @@ public class DastBox : MonoBehaviour {
         DastBoxUI.GetComponent<DastBoxGage>().IncreaseGage();
     }
 
-    public void Cutting()
-    {
-        DastBoxUI.SetActive(false);
-    }
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (!isCollision)
-        {
-            if (other.tag == "Player")
-            {
-                isCollision = true;
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            isCollision = false;
-        }
-    }
-
-
-    public bool IsCollision() => isCollision;
-
     public void SetPlayerStatus(int status)
     {
         if (status != (int)Player.PlayerStatus.Catering || status != (int)Player.PlayerStatus.CateringIceEatoy)
         {
-            //Debug.LogError("不正な状態");
-           // return;
+            Debug.LogError("不正な状態");
+            return;
         }
         playerstatus = status;
     }

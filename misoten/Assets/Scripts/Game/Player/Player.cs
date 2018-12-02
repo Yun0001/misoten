@@ -30,15 +30,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int playerID;//プレイヤーID(インスペクターで設定)
 
-    private CookingMixer cookingMixer_cs;
+    private GamePad.Index playerControllerNumber;
+    private string inputXAxisName;
+    private string inputYAxisName;
+
     private PlayerMove playerMove_cs;
-    private PlayerInput playerInput_cs;
     private PlayerHaveInEatoy haveInEatoy_cs;
     private PlayerAccessController playerAccessController_cs;
     private PlayerAccessPossiblAnnounce playerAccessPosssibleAnnounce_cs;
     private PlayerCollision collision_cs;
-    private PlayerDastBox pDastbox_cs;
-    private PlayerIceBox pIceBox_cs;
     private HaveEatoyCtrl haveEatoyCtrl_cs;
 
     [SerializeField]
@@ -52,13 +52,31 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        switch (LayerMask.LayerToName(gameObject.layer))
+        {
+            case "Player1":
+                SetInputAxisName("L_XAxis_1", "L_YAxis_1");
+                SetPlayerControllerNumber(GamePad.Index.One);
+                break;
+            case "Player2":
+                SetInputAxisName("L_XAxis_2", "L_YAxis_2");
+                SetPlayerControllerNumber(GamePad.Index.Two);
+                break;
+            case "Player3":
+                SetInputAxisName("L_XAxis_3", "L_YAxis_3");
+                SetPlayerControllerNumber(GamePad.Index.Three);
+                break;
+            case "Player4":
+                SetInputAxisName("L_XAxis_4", "L_YAxis_4");
+                SetPlayerControllerNumber(GamePad.Index.Four);
+                break;
+        }
         gameObject.AddComponent<NormalState>();
         SetPlayerStatus(PlayerStatus.Normal);
         SetScript();
-        playerInput_cs.Init();
         playerMove_cs.Init();
-       // dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
-       // GetDastBoxUI().SetActive(false);
+        dastBoxGage = Instantiate(Resources.Load("Prefabs/DastBoxUI") as GameObject, transform.position, Quaternion.identity, transform);
+        GetDastBoxUI().SetActive(false);
     }
 
     /// <summary>
@@ -74,11 +92,19 @@ public class Player : MonoBehaviour
             StopMove();
             return;
         }
-        UpdateBranch();
-        playerInput_cs.UpdateInput();
+
+        if (playerAccessController_cs.IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
+        {
+            playerAccessPosssibleAnnounce_cs.HiddenSprite();
+            StopMove(); // 移動値をリセット
+            OfferCuisine();
+        }
         status_cs.InputState();
         status_cs.UpdateState();
         haveEatoyCtrl_cs.HaveEatoy();
+
+        // 移動量セット
+        playerMove_cs.SetMove(new Vector3(Input.GetAxis(inputXAxisName), 0, -(Input.GetAxis(inputYAxisName))));
     }
 
     /// <summary>
@@ -115,77 +141,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public void ActionBranch()
     {
-        foreach (var Name in playerAccessController_cs.GetAccessObjectNameArray())
+        if (playerAccessController_cs.IsAccessPossible(PlayerAccessController.AccessObjectName.Alien))
         {
-            // アクセス可能なオブジェクトが見つかった！！
-            if (playerAccessController_cs.IsAccessPossible(Name))
-            {
-                playerAccessPosssibleAnnounce_cs.HiddenSprite();
-                StopMove(); // 移動値をリセット
-                switch (Name)
-                {
-                    case PlayerAccessController.AccessObjectName.Mixer: AccessMixer(); break;
-                    case PlayerAccessController.AccessObjectName.Alien: OfferCuisine(); break;
-                }
-                break;
-            }
-        }
-    }
-
-
-    private void UpdateBranch()
-    {
-        Mixer mixer_cs;
-        switch (playerStatus)
-        {
-            case PlayerStatus.MixerAccess:
-                mixer_cs = IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
-
-                // ミキサーがオープン状態以降は入力不可
-                if (mixer_cs.GetStatus() < Mixer.Status.Open)
-                {
-                    playerInput_cs.InputMixerAccess();
-                }
-
-
-                // 自分が3人目としてアクセスした時用
-                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.Open)
-                {
-                    SetPlayerStatus(PlayerStatus.Mixer);
-                    GetComponent<PlayerAnimCtrl>().SetServing(false);
-                    HiddenAnnounceSprite();
-                }
-                break;
-
-            case PlayerStatus.MixerWait:
-                mixer_cs = IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>();
-                // ミキサーがオープン状態以降は入力不可
-                if (mixer_cs.GetStatus() < Mixer.Status.Open)
-                {
-                    playerInput_cs.InputMixerWait();
-                }
-
-                // 二人でミキサーを利用する時
-                if (mixer_cs.GetStatus() == Mixer.Status.Play)
-                {
-                    SetPlayerStatus(PlayerStatus.Mixer);
-                    GetComponent<PlayerAnimCtrl>().SetServing(false);
-                    transform.Find("Line").gameObject.SetActive(false);
-                    HiddenAnnounceSprite();
-                }
-                break;
-
-            case PlayerStatus.Mixer:
-                playerInput_cs.InputMixer();
-                if (IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
-                {
-                    playerInput_cs.InputMixer();
-                    SetPlayerStatus(PlayerStatus.Normal);
-                }
-                break;
-
-            default:
-                break;
+            playerAccessPosssibleAnnounce_cs.HiddenSprite();
+            StopMove(); // 移動値をリセット
+            OfferCuisine();
         }
     }
 
@@ -205,21 +165,10 @@ public class Player : MonoBehaviour
 
     public void RevocationHaveInEatoy(bool b) => haveInEatoy_cs.RevocationHaveInEatoy(b);
 
-    public PlayerInput GetPlayerInput() => playerInput_cs;
 
     public int GetPlayerID() => playerID;
 
-    public GameObject GetDastBoxUI() => pDastbox_cs.GetDastBoxUI();
-
-
-    /// <summary>
-    /// ミキサーへのアクション
-    /// </summary>
-    private void AccessMixer() => cookingMixer_cs.Preparation();
-
-    private void AccessIceBox() => pIceBox_cs.AccessIceBox();
-
-    private void AccessDastBox() => pDastbox_cs.AccessDastBox();
+    public GameObject GetDastBoxUI() => dastBoxGage;
 
     public PlayerStatus GetPlayerStatus() => playerStatus;
 
@@ -232,15 +181,11 @@ public class Player : MonoBehaviour
     private void SetScript()
     {
         status_cs = GetComponent<NormalState>();
-        cookingMixer_cs = GetComponent<CookingMixer>();
         playerMove_cs = GetComponent<PlayerMove>();
-        playerInput_cs = GetComponent<PlayerInput>();
         haveInEatoy_cs = GetComponent<PlayerHaveInEatoy>();
         playerAccessController_cs = GetComponent<PlayerAccessController>();
         playerAccessPosssibleAnnounce_cs = GetComponent<PlayerAccessPossiblAnnounce>();
         collision_cs = GetComponent<PlayerCollision>();
-        pDastbox_cs = GetComponent<PlayerDastBox>();
-        pIceBox_cs = GetComponent<PlayerIceBox>();
         haveEatoyCtrl_cs = GetComponent<HaveEatoyCtrl>();
     }
 
@@ -258,11 +203,11 @@ public class Player : MonoBehaviour
 
     public void HiddenStandbySprite() => playerAccessPosssibleAnnounce_cs.HiddenStandbySprite();
 
-    public bool InputDownButton(GamePad.Button button) => playerInput_cs.InputDownButton(button);
+    public bool InputDownButton(GamePad.Button button) => GamePad.GetButtonDown(button, playerControllerNumber);
 
-    public bool InputUpButton(GamePad.Button button) => playerInput_cs.InputUpButton(button);
+    public bool InputUpButton(GamePad.Button button) => GamePad.GetButtonUp(button, playerControllerNumber);
 
-    public bool InputButton(GamePad.Button button) => playerInput_cs.InputButton(button);
+    public bool InputButton(GamePad.Button button) => GamePad.GetButton(button, playerControllerNumber);
 
     public PlayerAccessController GetAccessController() => playerAccessController_cs;
 
@@ -298,12 +243,18 @@ public class Player : MonoBehaviour
                 status_cs.AccessAction();
                 break;
 
-            case (int)PlayerStatus.Mixer:  break;
+            case (int)PlayerStatus.Mixer:
+                gameObject.AddComponent<MixerState>();
+                status_cs = GetComponent<MixerState>();
+                status_cs.AccessAction();
+                break;
+
             case (int)PlayerStatus.IceBox:
                 gameObject.AddComponent<IceBoxState>();
                 status_cs = GetComponent<IceBoxState>();
                 status_cs.AccessAction();
                 break;
+
             case (int)PlayerStatus.DastBox:
                 gameObject.AddComponent<DastBoxState>();
                 status_cs = GetComponent<DastBoxState>();
@@ -311,17 +262,31 @@ public class Player : MonoBehaviour
                 break;
 
             case (int)PlayerStatus.Normal:
-                if (status_cs == null)
-                {
-                  
-                }
                 gameObject.AddComponent<NormalState>();
                 status_cs = GetComponent<NormalState>();
                 break;
-            case (int)PlayerStatus.Catering:  break;
-            case (int)PlayerStatus.CateringIceEatoy: break;
-            case (int)PlayerStatus.MixerAccess: break;
-            case (int)PlayerStatus.MixerWait: break;
         }
+    }
+
+    private void SetInputAxisName(string x, string y)
+    {
+        inputXAxisName = x;
+        inputYAxisName = y;
+    }
+
+    public string GetInputXAxisName() => inputXAxisName;
+
+    public string GetInputYAxisName() => inputYAxisName;
+
+    public GamePad.Index GetPlayerControllerNumber() => playerControllerNumber;
+
+    private void SetPlayerControllerNumber(GamePad.Index index)
+    {
+        if (index < GamePad.Index.One || index > GamePad.Index.Four)
+        {
+            Debug.LogError("不正なコントローラindex");
+            return;
+        }
+        playerControllerNumber = index;
     }
 }

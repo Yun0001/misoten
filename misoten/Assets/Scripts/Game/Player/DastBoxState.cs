@@ -38,9 +38,6 @@ public class DastBoxState : PlayerStateBase
 
     public override void UpdateState()
     {
-        // ゴミ箱状態の時の入力
-        player_cs.GetPlayerInput().InputDastBox();
-
         //　ゴミ箱ゲージがMaxの時
         if (player_cs.GetDastBoxUI().GetComponent<DastBox>().GetGageAmount() >= 1.0f)
         {

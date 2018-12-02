@@ -36,7 +36,7 @@ public class Joystick : MonoBehaviour
 	private Vector2 imagePos = Vector2.zero;
 
 	// プレイヤー
-	private PlayerInput playerInput;
+	private Player player;
 
     private Vector3 pos;
 
@@ -44,7 +44,7 @@ public class Joystick : MonoBehaviour
 
     public void Init(int playerID)
     {
-        playerInput = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<PlayerInput>();
+        player = GameObject.Find(nameObj[playerID]).gameObject.GetComponent<Player>();
 		PositionInit();
 	}
 
@@ -61,7 +61,7 @@ public class Joystick : MonoBehaviour
         //スティックのベクトルに現在のスクリーン座標を加算して計算
         // スティックを動かすと座標変換される
         RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>(),
-			new Vector2(Input.GetAxis(playerInput.GetInputXAxisName())*100 + Position.x, -Input.GetAxis(playerInput.GetInputYAxisName())*100+ Position.y), null, out imagePos);
+			new Vector2(Input.GetAxis(player.GetInputXAxisName())*100 + Position.x, -Input.GetAxis(player.GetInputYAxisName())*100+ Position.y), null, out imagePos);
 
 
         // 位置の更新

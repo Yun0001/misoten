@@ -36,7 +36,6 @@ public class IceBoxState : PlayerStateBase
 
     public override void UpdateState()
     {
-        player_cs.GetPlayerInput().InputIceBox();
         if (iceBox_cs.IsPutEatoy() && iceBox_cs.IsAccessOnePlayer(player_cs.GetPlayerID()))
         {
             // イートイを持つ

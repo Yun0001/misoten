@@ -10,6 +10,7 @@ public class IceBoxMiniGame : MonoBehaviour {
     [SerializeField]
     private int addBarragePoint;
 
+    [SerializeField]
     private float playerBarrage = 0;
 
     private float freesResist = 0f;
