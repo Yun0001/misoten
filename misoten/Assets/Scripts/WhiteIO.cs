@@ -178,7 +178,7 @@ public class WhiteIO : MonoBehaviour {
     void NextScene()
     {
         //SceneManager.LoadScene("Scenes/3dNewScene");
-        SceneManagerScript.GetInstance().LoadNextScene();
+        SceneManagerScript.LoadNextScene();
 
         _titleCtrl.GetComponent<TitleController>().StopTitleBgm();
     }

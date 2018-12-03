@@ -5,21 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class RankingManager : MonoBehaviour {
 
-    private GameObject SceneObject;
-    private SceneManagerScript sceneManagerScript;
- 
+
     private int[] ResultScore;
     // Use this for initialization
-    void Start () {
-		
-	}
 
-    void Awake()
-    {
-        SceneObject = GameObject.Find("SceneManager");
-        sceneManagerScript = SceneObject.GetComponent<SceneManagerScript>();
-  
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -54,7 +43,7 @@ public class RankingManager : MonoBehaviour {
         //仮置き
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            sceneManagerScript.LoadNextScene();
+            SceneManagerScript.LoadNextScene();
         }
     }
 

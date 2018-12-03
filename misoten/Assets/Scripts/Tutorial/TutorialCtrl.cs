@@ -197,7 +197,7 @@ public class TutorialCtrl : MonoBehaviour
         {
             CURRENT_TUTORIAL_STATE = (Tutorial.ERROR - 1);
 
-            SceneManagerScript.GetInstance().LoadNextScene();
+            SceneManagerScript.LoadNextScene();
         }
 
         OverPage();

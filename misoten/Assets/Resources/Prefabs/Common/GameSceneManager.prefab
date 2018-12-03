@@ -278,22 +278,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1031053072505876
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4171178785771676}
-  - component: {fileID: 114539215589628010}
-  m_Layer: 0
-  m_Name: DebugManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1031697404934836
 GameObject:
   m_ObjectHideFlags: 1
@@ -10545,19 +10529,6 @@ Transform:
   m_Father: {fileID: 4598400050815996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4171178785771676
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031053072505876}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4721533799184074}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4172066754552122
 Transform:
   m_ObjectHideFlags: 1
@@ -14631,7 +14602,6 @@ Transform:
   - {fileID: 4649681493272978}
   - {fileID: 4963813611377522}
   - {fileID: 4274013477072634}
-  - {fileID: 4171178785771676}
   m_Father: {fileID: 4521366178994344}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27880,7 +27850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3ad283a9a500a459993d4ffdc909c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatus: 6
   playerID: 1
   timeManager: {fileID: 1213304945201470}
 --- !u!114 &114026516639523820
@@ -27909,7 +27878,6 @@ MonoBehaviour:
   prefab: {fileID: 198197539644988382, guid: 9b9834551907a8443a97c06ebce72412, type: 2}
   speed: 4
   CateringCoefficient: 0.5
-  adjustment: 4
 --- !u!114 &114043659681979448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28107,7 +28075,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3ad283a9a500a459993d4ffdc909c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatus: 6
   playerID: 0
   timeManager: {fileID: 1213304945201470}
 --- !u!114 &114096579275851114
@@ -28616,7 +28583,6 @@ MonoBehaviour:
   prefab: {fileID: 198197539644988382, guid: 9b9834551907a8443a97c06ebce72412, type: 2}
   speed: 4
   CateringCoefficient: 0.5
-  adjustment: 25
 --- !u!114 &114321323423699180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28631,7 +28597,6 @@ MonoBehaviour:
   prefab: {fileID: 198197539644988382, guid: 9b9834551907a8443a97c06ebce72412, type: 2}
   speed: 4
   CateringCoefficient: 0.5
-  adjustment: 4
 --- !u!114 &114330503888718726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28794,7 +28759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3ad283a9a500a459993d4ffdc909c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatus: 6
   playerID: 2
   timeManager: {fileID: 1213304945201470}
 --- !u!114 &114407706148517508
@@ -29137,17 +29101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 1
---- !u!114 &114539215589628010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031053072505876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed2d31cb29594404c96a97873ce38d9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114544483616527420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29734,7 +29687,6 @@ MonoBehaviour:
   prefab: {fileID: 198197539644988382, guid: 9b9834551907a8443a97c06ebce72412, type: 2}
   speed: 4
   CateringCoefficient: 0.5
-  adjustment: 25
 --- !u!114 &114788780967400914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30102,7 +30054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3ad283a9a500a459993d4ffdc909c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatus: 6
   playerID: 3
   timeManager: {fileID: 1213304945201470}
 --- !u!114 &114941576533155602

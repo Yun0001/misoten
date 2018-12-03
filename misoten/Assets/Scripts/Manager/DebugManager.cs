@@ -24,6 +24,37 @@ public class DebugManager : MonoBehaviour {
 //#endif
             Application.Quit();
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Title);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Tutorial);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Result);
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SceneManagerScript.ReloadScene();
+        }
+
+        //SPACEキー仮置き
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManagerScript.LoadNextScene();
+        }
     }
 
 }

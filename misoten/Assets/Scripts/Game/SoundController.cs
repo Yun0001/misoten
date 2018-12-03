@@ -16,9 +16,9 @@ public class SoundController : MonoBehaviour {
     private static Dictionary<BGM, string> BGMDictionary = new Dictionary<BGM, string>
     {
             { BGM.Title,"Title"},
-                { BGM.Menu,"Gamemenu02"},
-                    { BGM.Gameplay,"Gameplay01"},
-                        { BGM.Result,"Gameresult01"},
+            { BGM.Menu,"Gamemenu02"},
+            { BGM.Gameplay,"Gameplay01"},
+            { BGM.Result,"Gameresult01"},
     };
 
 
@@ -170,29 +170,15 @@ public class SoundController : MonoBehaviour {
         Loadflg = true;
     }
 
-    public static string GetMenuSEName(MenuSE name)
-    {
-        return menuSEDictionary[name];
-    }
+    public static string GetMenuSEName(MenuSE name) => menuSEDictionary[name];
 
-    public static string GetGameSEName(GameSE name)
-    {
-        return gameSEDictionary[name];
-    }
-    public static string GetResultSEName(ResultSE name)
-    {
-        return resultSEDictionary[name];
-    }
+    public static string GetGameSEName(GameSE name) => gameSEDictionary[name];
 
-    public static string GetBGMName(BGM name)
-    {
-        return BGMDictionary[name];
-    }
+    public static string GetResultSEName(ResultSE name) => resultSEDictionary[name];
 
-    public static bool GetIsPlaySE(int Channel)
-    {
-        return Sound.GetInstance().GetAudioSource(Channel).isPlaying;
-    }
+    public static string GetBGMName(BGM name) => BGMDictionary[name];
+
+    public static bool GetIsPlaySE(int Channel) => Sound.GetInstance().GetAudioSource(Channel).isPlaying;
 
     public static void StopAllSE()
     {
@@ -204,4 +190,11 @@ public class SoundController : MonoBehaviour {
             }
         }
     }
+
+    public static void SoundStop()
+    {
+        StopAllSE();
+        Sound.StopBgm();
+    }
+
 }
