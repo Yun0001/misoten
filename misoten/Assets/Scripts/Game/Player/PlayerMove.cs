@@ -29,8 +29,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]    [Range(0.0f, 1.0f)]
     private float CateringCoefficient;
 
-    [SerializeField, Range(1, 50)]
-    private int adjustment;
+
+
 
 
 

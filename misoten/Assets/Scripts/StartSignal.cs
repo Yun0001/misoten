@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartSignal : MonoBehaviour {
 
-    private float StartTimeframe = 10f;
+
     private bool one = true;
     [SerializeField]
     private GameObject Start1;

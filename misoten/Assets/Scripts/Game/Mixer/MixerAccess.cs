@@ -24,16 +24,22 @@ public class MixerAccess : MonoBehaviour
 		// ラインの終点座標
 		GetComponent<LineRenderer>().SetPosition(1, endPod);
 
-		// プレイヤーがミキサーにアクセスをしている場合
-		if (transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerWait
+        LineRenderer line = GetComponent<LineRenderer>();
+        // プレイヤーがミキサーにアクセスをしている場合
+        if (transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerWait
 			|| transform.parent.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.MixerAccess)
 		{
-			//Line
-			// ラインの描画
-			GetComponent<LineRenderer>().SetWidth(0.03f, 0.03f);
+            //Line
+            // ラインの描画
+            line.startWidth = 0.03f;
+            line.endWidth = 0.03f;
 		}
 		// ミキサーにアクセスしていない時は、ラインを見えなくする
-		else { GetComponent<LineRenderer>().SetWidth(0.0f, 0.0f); }
+		else
+        {
+            line.startWidth = 0.0f;
+            line.endWidth = 0.0f;
+        }
 
 		// ラインの始点座標を更新
 		GetComponent<LineRenderer>().SetPosition(0, transform.parent.position);

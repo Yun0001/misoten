@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DastBox : MonoBehaviour {
 
-    [SerializeField]
-    private bool isCollision = false;
 
     [SerializeField]
     private GameObject DastBoxUI;

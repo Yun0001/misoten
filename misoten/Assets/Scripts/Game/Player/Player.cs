@@ -8,6 +8,9 @@ using System.Linq;
 public class Player : MonoBehaviour
 {
 
+    /// <summary>
+    /// プレイヤーの状態
+    /// </summary>
     public enum PlayerStatus
     {
         Microwave,        //電子レンジ
@@ -23,6 +26,9 @@ public class Player : MonoBehaviour
         MixerWait,          // ミキサー他プレイヤー待ち状態
     }
 
+    /// <summary>
+    /// 入力を取得する時に使用する情報
+    /// </summary>
     public class ControllerInformation
     {
         public string XAxis;
@@ -37,33 +43,53 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// プレイヤーの状態
+    /// </summary>
     private PlayerStatus playerStatus;
 
-    [SerializeField]
-    private int playerID;//プレイヤーID(インスペクターで設定)
+    /// <summary>
+    /// プレイヤーID(インスペクターで設定)
+    /// </summary>
+    [SerializeField, Range(0, 3)]
+    private int playerID;
+
+    /// <summary>
+    /// 入力を取得する時に使用する情報
+    /// </summary>
     private ControllerInformation controllerInformation;
+
+    /// <summary>
+    /// プレイヤーにアタッチするスクリプトの構造体
+    /// </summary>
     private PlayerScriptStructure scriptStructure;
 
+    /// <summary>
+    /// タイムマネージャー
+    /// </summary>
     [SerializeField]
     private GameObject timeManager;
 
+    /// <summary>
+    /// ゴミ箱UI
+    /// </summary>
     private GameObject dastBoxGage;
 
     // Use this for initialization
     void Awake()
     {
-        switch (LayerMask.LayerToName(gameObject.layer))
+        switch (GetPlayerID())
         {
-            case "Player1":
+            case 0:
                 controllerInformation = new ControllerInformation("L_XAxis_1", "L_YAxis_1", GamePad.Index.One);
                 break;
-            case "Player2":
+            case 1:
                 controllerInformation = new ControllerInformation("L_XAxis_2", "L_YAxis_2", GamePad.Index.Two);
                 break;
-            case "Player3":
+            case 2:
                 controllerInformation = new ControllerInformation("L_XAxis_3", "L_YAxis_3", GamePad.Index.Three);
                 break;
-            case "Player4":
+            case 3:
                 controllerInformation = new ControllerInformation("L_XAxis_4", "L_YAxis_4", GamePad.Index.Four);
                 break;
         }
@@ -143,6 +169,10 @@ public class Player : MonoBehaviour
     public bool InputButton(GamePad.Button button) => GamePad.GetButton(button, controllerInformation.controllerNumber);
 
 
+    /// <summary>
+    ///状態コンポーネント変更
+    /// </summary>
+    /// <param name="stateID"></param>
     public void ChangeAttachComponent(int stateID)
     {
         // 現在アタッチされている状態Componentを削除

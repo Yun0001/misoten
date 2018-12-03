@@ -10,11 +10,6 @@ public class PlayerHaveInEatoy : MonoBehaviour
     GameObject haveInEatoy;
 
     /// <summary>
-    /// 調整座標
-    /// </summary>
-    private readonly Vector3 adjustmentPosition = new Vector3(0.3f, 0.5f, -0.65f);
-
-    /// <summary>
     /// イートイセット
     /// </summary>
     /// <param name="eatoy"></param>

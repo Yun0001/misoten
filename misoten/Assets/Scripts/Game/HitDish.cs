@@ -23,7 +23,6 @@ public class HitDish : MonoBehaviour
 	// アクセス時の当たり判定フラグ
 	static public bool[] hitDish = new bool[7];
 
-	private bool[] saveObj = new bool[4];
 
 	// ---------------------------------------------
 
