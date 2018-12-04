@@ -27,7 +27,7 @@ public class GameTimeManager : MonoBehaviour {
 		endSeFlag = false;
 
 		sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
-        countTime = 181;
+        countTime = 11;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {

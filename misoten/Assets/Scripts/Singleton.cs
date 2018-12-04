@@ -5,7 +5,31 @@ using System;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T instance;
+    /// <summary>
+    /// インスタンス
+    /// </summary>
+    protected static T instance = null;
+
+    /// <summary>
+    /// シングルトンオブジェクト生成
+    /// </summary>
+    protected static void CreateSingletonObject(Type t)
+    {
+        // 新しいGameObjectを作成
+        var go = new GameObject(t.ToString());
+
+        //  T型のコンポーネントをアタッチ
+        go.AddComponent<T>();
+
+        // DontDestoryとして登録
+        DontDestroyOnLoad(go);
+    }
+
+
+    /// <summary>
+    /// インスタンス取得
+    /// </summary>
+    /// <returns></returns>
     public static T Instance
     {
         get
@@ -13,7 +37,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             if (instance == null)
             {
                 Type t = typeof(T);
-
+                CreateSingletonObject(t);
                 instance = (T)FindObjectOfType(t);
                 if (instance == null)
                 {
@@ -47,18 +71,4 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         return false;
     }
 
-    public static T GetInstance()
-    {
-        if (instance == null)
-        {
-            Type t = typeof(T);
-
-            instance = (T)FindObjectOfType(t);
-            if (instance == null)
-            {
-                Debug.LogError(t + " をアタッチしているGameObjectはありません");
-            }
-        }
-        return instance;
-    }
 }

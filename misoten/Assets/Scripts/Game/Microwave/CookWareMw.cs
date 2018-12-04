@@ -65,7 +65,7 @@ public class CookWareMw : KitchenwareBase
     }
 
 
-    protected override GameObject SetCuisine() => CuisineManager.GetInstance().GetMicrowaveController().OutputCuisine();
+    protected override GameObject SetCuisine() => CuisineManager.Instance.GetMicrowaveController().OutputCuisine();
 
     public override void CookingInterruption()
     {

@@ -106,7 +106,7 @@ public class Flyingpan : KitchenwareBase
     /// コントローラーから料理を取得
     /// </summary>
     /// <returns>料理</returns>
-    protected override GameObject SetCuisine() => CuisineManager.GetInstance().GetGrilledController().OutputCuisine();
+    protected override GameObject SetCuisine() => CuisineManager.Instance.GetGrilledController().OutputCuisine();
 
     public void DecisionTimingPointCollision()
     {

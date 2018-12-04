@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class SceneManagerScript : Singleton<SceneManagerScript>
 {
 
-    private string currentScene;
-    private string ScenesFolderPass = "Scenes/";
+    private static string currentScene;
+    private static string ScenesFolderPass = "Scenes/";
 
     public enum SceneName
     {
@@ -19,17 +19,22 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
     }
 
     // enumからシーン名を取得するために必要
-    private Dictionary<SceneName, string> m_sceneNameDictionary = new Dictionary<SceneName, string> {
+    private static Dictionary<SceneName, string> m_sceneNameDictionary = new Dictionary<SceneName, string> {
         { SceneName.Title, "Title_heita"},        //"Aseets/Scenes/Title.unity"
         { SceneName.Tutorial,"Tutorial" },  //"Aseets/Scenes/Tutorial.unity"
         { SceneName.Game,"Game" },          //"Aseets/Scenes/Game.unity"
         { SceneName.Result,"Result" }       //"Aseets/Scenes/Result.unity"
     };
 
+    protected static new void CreateSingletonObject()
+    {
+
+    }
+
     /// <summary>
     /// 次のシーンに遷移
     /// </summary>
-    public static void LoadNextScene() => GetInstance()._LoadNextScene();
+    public static void LoadNextScene() => Instance._LoadNextScene();
 
     private void _LoadNextScene()
     {
@@ -63,7 +68,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
     /// 指定したシーンに遷移
     /// </summary>
     /// <param name="sceneID"></param>
-    public static void LoadScene(SceneName sceneID) => GetInstance()._LoadScene(sceneID);
+    public static void LoadScene(SceneName sceneID) => Instance._LoadScene(sceneID);
 
     private void _LoadScene(SceneName sceneID)
     {
@@ -74,7 +79,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
     /// <summary>
     /// 現在のシーンをリロード
     /// </summary>
-    public static void ReloadScene() => GetInstance()._ReloadScene(); 
+    public static void ReloadScene() => Instance._ReloadScene(); 
 
     private void _ReloadScene()
     {

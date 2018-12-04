@@ -69,7 +69,7 @@ public class Pot : KitchenwareBase
         cuisine = null;
     }
 
-    protected override GameObject SetCuisine() => CuisineManager.GetInstance().GetPotController().OutputCuisine();
+    protected override GameObject SetCuisine() => CuisineManager.Instance.GetPotController().OutputCuisine();
 
     protected override int CalcEatoyPoint()
     {
