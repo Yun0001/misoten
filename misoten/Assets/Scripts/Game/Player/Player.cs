@@ -65,12 +65,6 @@ public class Player : MonoBehaviour
     private PlayerScriptStructure scriptStructure;
 
     /// <summary>
-    /// タイムマネージャー
-    /// </summary>
-    [SerializeField]
-    private GameObject timeManager;
-
-    /// <summary>
     /// ゴミ箱UI
     /// </summary>
     private GameObject dastBoxGage;
@@ -112,12 +106,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     public void PlayerUpdate()
     {
-        if (timeManager.GetComponent<GameTimeManager>().IsTimeUp())
-        {
-            StopMove();
-            return;
-        }
-
         scriptStructure.GetState().InputState();
         scriptStructure.GetState().UpdateState();
         scriptStructure.GetHaveEatoyCtrl().HaveEatoy();

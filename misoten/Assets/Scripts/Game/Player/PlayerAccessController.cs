@@ -13,7 +13,8 @@ public class PlayerAccessController : MonoBehaviour
         Mixer,
         IceBox,
         DastBox,
-        Alien
+        Alien,
+        None
     }
 
     private Player player_cs;

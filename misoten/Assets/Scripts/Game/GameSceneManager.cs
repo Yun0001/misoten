@@ -6,47 +6,64 @@ public class GameSceneManager : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject[] player;
+    private GameObject[] players;
 
     [SerializeField]
     private GameObject pauseManager;
-
     private Pause pause_cs;
-    
-    
-    // Use this for initialization
-	void Awake () {
 
+    [SerializeField]
+    private GameObject timeManager;
+    private GameTimeManager timeManager_cs;
+
+
+
+
+    // Use this for initialization
+    void Awake()
+    {
         if (!SoundController.Loadflg)
         {
             SoundController.SoundLoad();
         }
         pause_cs = pauseManager.GetComponent<Pause>();
+        timeManager_cs = timeManager.GetComponent<GameTimeManager>();
 
         Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Gameplay));
-	}
+    }
 
     private void FixedUpdate()
     {
-        // ポーズ中でないとき
-        if (!pause_cs.IsPausing())
+        // タイムアップならreturn
+        if (timeManager_cs.IsTimeUp()) return;
+        // ポーズ中ならreturn
+        if (pause_cs.IsPausing()) return;
+
+
+        for (int i = 0; i < players.Length; i++)
         {
-            for (int i = 0; i < player.Length; i++)
-            {
-                player[i].GetComponent<Player>().PlayerFixedUpdate();
-            }
+            players[i].GetComponent<Player>().PlayerFixedUpdate();
         }
     }
 
     private void Update()
     {
-        // ポーズ中でないとき
-        if (!pause_cs.IsPausing())
+        // タイムアップならreturn
+        if (timeManager_cs.IsTimeUp())
         {
-            for (int i = 0; i < player.Length; i++)
+            foreach (var player in players)
             {
-                player[i].GetComponent<Player>().PlayerUpdate();
+                player.GetComponent<Player>().StopMove();
             }
+            return;
+        } 
+        // ポーズ中ならreturn
+        if (pause_cs.IsPausing()) return;
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].GetComponent<Player>().PlayerUpdate();
         }
     }
+
 }

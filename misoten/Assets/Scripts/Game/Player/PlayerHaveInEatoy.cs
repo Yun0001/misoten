@@ -19,17 +19,19 @@ public class PlayerHaveInEatoy : MonoBehaviour
         // 持とうとしているものがnullなら抜ける
         if (eatoy == null) return false;
 
+        // イートイセット
         haveInEatoy = eatoy;
+
+        // イートイの状態によってプレイヤーの状態を設定
         if (haveInEatoy.GetComponent<Eatoy>().IsIcing())
         {
             GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
-            GetComponent<Player>().ChangeAttachComponent((int)Player.PlayerStatus.Normal);
         }
         else
         {
             GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
-            GetComponent<Player>().ChangeAttachComponent((int)Player.PlayerStatus.Normal);
         }
+        GetComponent<Player>().ChangeAttachComponent((int)Player.PlayerStatus.Normal);
         GetComponent<PlayerAnimCtrl>().SetServing(true);
         return true;
     }
@@ -56,15 +58,31 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <returns></returns>
     public GameObject GetHaveInEatoy() => haveInEatoy;
 
-    public void SetHaveInEatoyPosition(Vector3 alienPos)
+    public void OfferEatoy(Vector3 alienPos)
+    {
+        // イートイの座標をエイリアンの前に設定
+        SetHaveInEatoyPosition(alienPos);
+
+        // イートイ表示
+        DisplayEatoy();
+
+        // 手放す
+        RevocationHaveInEatoy();
+    }
+
+    /// <summary>
+    /// イートイの座標をエイリアンの前に設定
+    /// </summary>
+    /// <param name="alienPos"></param>
+    private void SetHaveInEatoyPosition(Vector3 alienPos)
     {
         alienPos.y += 0.3f;
         alienPos.z -= 1f;
         haveInEatoy.transform.position = alienPos;
     }
 
-    public void DisplayEatoy()
-    {
-        haveInEatoy.GetComponent<Eatoy>().DisplaySprite();
-    }
+    /// <summary>
+    /// イートイ表示
+    /// </summary>
+    private void DisplayEatoy() => haveInEatoy.GetComponent<Eatoy>().DisplaySprite();
 }

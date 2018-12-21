@@ -209,55 +209,19 @@ public class TutorialCtrl : MonoBehaviour
         // チュートリアルが遷移してから一度きり
         if (isOnce)
         {
+            // チュートリアルの状態によって分岐
             switch (CURRENT_TUTORIAL_STATE)
             {
                 case Tutorial.NO_1: // 冷蔵庫
                     break;
 
                 case Tutorial.NO_5: // ミキサー
-                    GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
-                    GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
-                    int[] nums = { 0, 2, 2, 4 };
-                    int i = 0;
-                    foreach (GameObject player in _players)
-                    {
-                        if (player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() != null)
-                        {
-                            player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
-                        }
-                        player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
-                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(nums[i], _eatoySprites[nums[i]]);
-                        Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
-                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
-
-                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Thawing();
-
-                        player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
-                        player.GetComponent<PlayerAnimCtrl>().SetServing(true);
-
-                        i++;
-                    }
+                    MixerTutorialSetting();
                     break;
 
                 default:
-                    GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
-                    GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = true;
-                    foreach (GameObject player in _players)
-                    {
-                        if (player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() != null)
-                        {
-                            player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
-                        }
-                        player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
-                        int num = Random.Range(0, 4);
-                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num]);
-                        Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
-                        player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
-                        player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
-                        player.GetComponent<PlayerAnimCtrl>().SetServing(true);
-                    }
+                    DefaultTutorialSetting();
                     break;
-
             }
         }
 
@@ -343,6 +307,53 @@ public class TutorialCtrl : MonoBehaviour
 
         }
     }
+
+    private void MixerTutorialSetting()
+    {
+        GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+        GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
+        int[] nums = { 0, 2, 2, 4 };
+        int i = 0;
+        foreach (GameObject player in _players)
+        {
+            if (player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() != null)
+            {
+                player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
+            }
+            player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(nums[i], _eatoySprites[nums[i]]);
+            Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
+
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Thawing();
+
+            player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
+            player.GetComponent<PlayerAnimCtrl>().SetServing(true);
+
+            i++;
+        }
+    }
+
+    private void DefaultTutorialSetting()
+    {
+        GameObject.Find("kitchen_limit_wall").transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
+        GameObject.Find("kitchen_limit_wall").transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = true;
+        foreach (GameObject player in _players)
+        {
+            if (player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy() != null)
+            {
+                player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
+            }
+            player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
+            int num = Random.Range(0, 4);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num]);
+            Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
+            player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
+            player.GetComponent<PlayerAnimCtrl>().SetServing(true);
+        }
+    }
+
 
     void OverPage() => _menuAnimCtrl.OverPage();
     void CloseMenu() => _menuAnimCtrl.CloseMenu();

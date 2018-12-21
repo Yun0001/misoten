@@ -26,11 +26,6 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
         { SceneName.Result,"Result" }       //"Aseets/Scenes/Result.unity"
     };
 
-    protected static new void CreateSingletonObject()
-    {
-
-    }
-
     /// <summary>
     /// 次のシーンに遷移
     /// </summary>
