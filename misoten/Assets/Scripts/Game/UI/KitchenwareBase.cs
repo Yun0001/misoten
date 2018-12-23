@@ -75,11 +75,11 @@ public abstract class KitchenwareBase : MonoBehaviour
         // 調理をすすめる
         if (Cooking())
         {
+            cuisine.GetComponent<Eatoy>().Thawing();
+            cuisine.GetComponent<Eatoy>().AddPoint(CalcEatoyPoint());
             ResetMiniGameUI();
             SetIsCooking(false);
             SetIsEnd(true);
-            cuisine.GetComponent<Eatoy>().Thawing();
-            cuisine.GetComponent<Eatoy>().AddPoint(CalcEatoyPoint());
             return cuisine;
         }
 

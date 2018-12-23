@@ -6,12 +6,6 @@ using UnityEngine;
 public class Pot : KitchenwareBase
 {
     [SerializeField]
-    private int basePoint;
-
-    [SerializeField]
-    private int missCount;
-
-    [SerializeField]
     private GameObject stickUI;
 
     [SerializeField]
@@ -24,10 +18,16 @@ public class Pot : KitchenwareBase
     [SerializeField]
     private GameObject pointText;
 
+    [SerializeField]
+    private int POINT;
+
+    private int point;
+
 
     private void Awake()
     {
         InstanceMiniGameUI();
+        point = 0;
     }
 
     protected override void InstanceMiniGameUI()
@@ -39,17 +39,19 @@ public class Pot : KitchenwareBase
     {
         miniGameUI.SetActive(false);
         stickUI.SetActive(false);
+        secondHandFrame.GetComponent<IraIraFrame>().SetStartFlag(false);
+        secondHandFrame.GetComponent<IraIraFrame>().InitRotation();
+        point = 0;
     }
 
 
     protected override void InitMiniGameUI()
     {
         miniGameUI.SetActive(true);
-        basePoint = 50;
-        missCount = -1;
         stickUI.SetActive(true);
         stickUI.GetComponent<Animator>().Play("rSpin");
         stickUI.GetComponent<Animator>().speed = 0.15f;
+        point = 0;
     }
 
     protected override bool Cooking()
@@ -58,6 +60,8 @@ public class Pot : KitchenwareBase
         if (result)
         {
             stickUI.SetActive(false);
+            secondHandFrame.GetComponent<IraIraFrame>().SetStartFlag(false);
+            secondHandFrame.GetComponent<IraIraFrame>().InitRotation();
         }
         return result;
     }
@@ -73,19 +77,23 @@ public class Pot : KitchenwareBase
 
     protected override int CalcEatoyPoint()
     {
-        double missPoint =1;
-        for (int i = 0; i < missCount; i++)
-        {
-            missPoint *= 0.9;
-        }
-        int point = (int)(basePoint * missPoint);
         pointText.GetComponent<PointAnnouce>().DisplayText(point);
         return point;
     }
 
-    public void AddMissCount() => missCount++;
 
     public void JoystickInit(int Id) => joystick.GetComponent<Joystick>().Init(Id);
 
     public void SetIrairaFrameInFlag(bool b) => secondHandFrame.GetComponent<IraIraFrame>().SetInFlag(b);
+
+    public void AddPoint()
+    {
+        point += POINT;
+        pointText.GetComponent<PointAnnouce>().DisplayText(POINT);
+    }
+
+    public void FrameMoveStart()
+    {
+        secondHandFrame.GetComponent<IraIraFrame>().SetStartFlag(true);
+    }
 }

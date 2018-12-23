@@ -27820,7 +27820,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 1
-  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114026516639523820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28033,7 +28032,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 0
-  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114096579275851114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28520,12 +28518,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b097f942aab685b44ba9353c40a10f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player:
+  players:
   - {fileID: 1210042505782184}
   - {fileID: 1099167004886528}
   - {fileID: 1648291586309324}
   - {fileID: 1472459704052766}
   pauseManager: {fileID: 1102859739124382}
+  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114297588344128612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28717,7 +28716,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 2
-  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114407706148517508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29407,6 +29405,7 @@ MonoBehaviour:
   speed: 30
   pot: {fileID: 1405686639299458}
   pointText: {fileID: 1480554339460646}
+  FRAME_COUNT: 10
 --- !u!114 &114709036162226214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30012,7 +30011,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 3
-  timeManager: {fileID: 1213304945201470}
 --- !u!114 &114941576533155602
 MonoBehaviour:
   m_ObjectHideFlags: 1

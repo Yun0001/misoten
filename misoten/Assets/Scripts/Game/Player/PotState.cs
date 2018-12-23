@@ -61,6 +61,7 @@ public class PotState : PlayerStateBase {
 
         player_cs.SetPlayerStatus(Player.PlayerStatus.Pot);
 
+        GetCollisionPot_cs().FrameMoveStart();
         GetCollisionPot_cs().GetAnimationModel().GetComponent<CookingAnimCtrl>().SetIsCooking(true);
         Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Fire), 17);
         Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Boil), true, 13);
