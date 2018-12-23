@@ -19,6 +19,17 @@ public class GameTimeManager : MonoBehaviour {
 
     private Sprite[] sprites;
 
+
+    [SerializeField]
+    private GameObject eventManager;
+
+    private EventManager eventManager_cs;
+
+    private int[] eventOccurrenceTime = { 150, 100, 50 };
+    private readonly int eventTime = 20;
+    private int eventStartTime;
+
+
     // Use this for initialization
     void Start () {
 
@@ -27,7 +38,7 @@ public class GameTimeManager : MonoBehaviour {
 		endSeFlag = false;
 
 		sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
-        countTime = 180;
+        countTime = 181;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
         {
@@ -36,6 +47,8 @@ public class GameTimeManager : MonoBehaviour {
         }
 
         oneSecond = 11;
+
+        eventManager_cs = eventManager.GetComponent<EventManager>();
     }
 	
 	// Update is called once per frame
@@ -46,6 +59,7 @@ public class GameTimeManager : MonoBehaviour {
         if (!isTimeUp)
         {
             GameTimer();
+
             TimeOver();
             UpdateText();
         }
@@ -57,6 +71,37 @@ public class GameTimeManager : MonoBehaviour {
     private void GameTimer()
     {
         countTime -= Time.deltaTime; //スタートしてからの秒数を格納
+
+        // イベントが発生していないとき
+        EventManager.EventState eventState = eventManager_cs.GetState();
+        
+        // イベントエイリアンが出現しているか判定するフラグ
+        // 津野くん側で調整お願いします
+        bool eventAlienFlg = false;
+
+        // イベント中でない&&イベントエイリアンがいないとき
+        if (eventState == EventManager.EventState.Standby && !eventAlienFlg)
+        {
+            // 既定時間になるとイベントエイリアン出現
+            if (countTime <= eventOccurrenceTime[eventManager_cs.GetEventOccurrenceNum()])
+            {
+                eventStartTime = (int)countTime;
+                // ここにイベントエイリアン出現のコード
+                // エイリアン側で記述でもOK
+            }
+        }
+        // イベント中
+        else if (eventState == EventManager.EventState.Now)
+        {
+            // ２０秒経過したか判定
+            if (countTime <= eventStartTime - eventTime)
+            {
+                // イベント終了
+                eventManager_cs.EndEvent();
+            }
+        }
+
+        // 残り１０秒からSE再生
         if (countTime < oneSecond && countTime > 0)
         {
             oneSecond = (int)Mathf.Floor(countTime);
