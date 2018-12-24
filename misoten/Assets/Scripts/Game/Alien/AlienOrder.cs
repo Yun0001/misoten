@@ -75,6 +75,10 @@ public class AlienOrder : MonoBehaviour
 	[SerializeField]
 	private int individualOrderChangeType;
 
+	// プレイヤーオブジェクト設定用
+	[SerializeField]
+	private GameObject[] playerObj = new GameObject[4];
+
 	// ---------------------------------------------
 
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
@@ -226,6 +230,30 @@ public class AlienOrder : MonoBehaviour
 				OrderType(false);
 			}
 
+			if (playerObj[0].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering || playerObj[1].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering
+				|| playerObj[2].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering || playerObj[3].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
+			{
+				// オーダーの種類管理
+				switch (orderType)
+				{
+					case (int)EOrderType.BASE:
+						if (individualOrderBaseType == IsPlayerEatoy(0) || individualOrderBaseType == IsPlayerEatoy(1) || individualOrderBaseType == IsPlayerEatoy(2) || individualOrderBaseType == IsPlayerEatoy(3))
+						{
+							// 注文したものを非アクティブにする(吹き出し)
+							OrderType(false);
+						}
+						break;
+					case (int)EOrderType.CHANGE:
+						if (individualOrderChangeType == IsPlayerEatoy(0) || individualOrderChangeType == IsPlayerEatoy(1) || individualOrderChangeType == IsPlayerEatoy(2) || individualOrderChangeType == IsPlayerEatoy(3))
+						{
+							// 注文したものを非アクティブにする(吹き出し)
+							OrderType(false);
+						}
+						break;
+					default: break;
+				}
+			}
+
 			// エイリアンが席に座って、注文するまでの時間
 			if (orderTimeAdd >= orderTime)
 			{
@@ -283,9 +311,6 @@ public class AlienOrder : MonoBehaviour
 		// 例外処理
 		if (AlienCall.GetExceptionFlag())
 		{
-			// Debug用
-			//Debug.Log(_seatPattern + "例外処理中");
-
 			if (exceptionCount < (int)AlienStatus.EStatus.ORDER) { exceptionCount++; }
 			else
 			{
@@ -298,9 +323,6 @@ public class AlienOrder : MonoBehaviour
 				// 次回も同じ注文が続くようにする
 				if (exceptionOrderType < (int)AlienStatus.EStatus.ORDER) { exceptionOrderType++; }
 				else { exceptionOrderType = 0; }
-
-				// Debug用
-				//Debug.Log(_seatPattern + "例外処理終了");
 			}
 		}
 	}
@@ -408,9 +430,6 @@ public class AlienOrder : MonoBehaviour
 	/// <param name="cuisine"></param>
 	public void EatCuisine(GameObject eatoy)
 	{
-		// Debug用
-		//Debug.Log("うま味" + (float)cuisine.GetComponent<Food>().GetQualityTaste());
-
 		if(!GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && !AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 		{
 			// 当たり判定が消える
@@ -464,6 +483,13 @@ public class AlienOrder : MonoBehaviour
 		// エイリアンがクレームをする
 		GetComponent<AlienClaim>().SetIsClaim(true);
 	}
+
+	/// <summary>
+	/// プレイヤーが現在持っているイートイ判定用
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	private int IsPlayerEatoy(int id) => (int)playerObj[id].GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().GetEatoyColor();
 
 	/// <summary>
 	/// プレイヤーから渡されたイートイの管理用格納
