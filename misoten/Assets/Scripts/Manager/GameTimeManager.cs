@@ -11,6 +11,7 @@ public class GameTimeManager : MonoBehaviour {
 	private int oneSecond = 11;
 
 	static public bool uiGameFinishFlag = false;
+	static public bool eventAlienFlg = false;
 
 	[SerializeField]
     private GameObject[] time;
@@ -36,6 +37,7 @@ public class GameTimeManager : MonoBehaviour {
         isTimeUp = false;
 		uiGameFinishFlag = false;
 		endSeFlag = false;
+		eventAlienFlg = false;
 
 		sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
         countTime = 181;
@@ -77,7 +79,7 @@ public class GameTimeManager : MonoBehaviour {
         
         // イベントエイリアンが出現しているか判定するフラグ
         // 津野くん側で調整お願いします
-        bool eventAlienFlg = false;
+        //bool eventAlienFlg = false;
 
         // イベント中でない&&イベントエイリアンがいないとき
         if (eventState == EventManager.EventState.Standby && !eventAlienFlg)
@@ -85,7 +87,8 @@ public class GameTimeManager : MonoBehaviour {
             // 既定時間になるとイベントエイリアン出現
             if (countTime <= eventOccurrenceTime[eventManager_cs.GetEventOccurrenceNum()])
             {
-                eventStartTime = (int)countTime;
+				eventAlienFlg = true;
+				eventStartTime = (int)countTime;
                 // ここにイベントエイリアン出現のコード
                 // エイリアン側で記述でもOK
             }
@@ -98,7 +101,8 @@ public class GameTimeManager : MonoBehaviour {
             {
                 // イベント終了
                 eventManager_cs.EndEvent();
-            }
+				eventAlienFlg = false;
+			}
         }
 
         // 残り１０秒からSE再生

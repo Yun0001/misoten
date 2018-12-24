@@ -51,6 +51,10 @@ public class AlienOrder : MonoBehaviour
 	[SerializeField]
 	GameObject[] orderBalloon = new GameObject[6];
 
+	// プレイヤー吹き出し描画用
+	[SerializeField]
+	GameObject[] playerBalloon = new GameObject[4];
+
 	// オーダーするまでの時間
 	[SerializeField]
 	private float orderTime;
@@ -75,10 +79,6 @@ public class AlienOrder : MonoBehaviour
 	[SerializeField]
 	private int individualOrderChangeType;
 
-	// プレイヤーオブジェクト設定用
-	[SerializeField]
-	private GameObject[] playerObj = new GameObject[4];
-
 	// ---------------------------------------------
 
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
@@ -97,6 +97,12 @@ public class AlienOrder : MonoBehaviour
 
 	// ローカル変数
 	// ---------------------------------------------
+
+	// プレイヤーへの参照の為
+	private string[] nameObj = { "Player1", "Player2", "Player3", "Player4" };
+
+	// プレイヤーオブジェクト
+	private GameObject[] playerObj = new GameObject[4];
 
 	// プレイヤーから渡されたイートイの管理用
 	private GameObject eatoyObj;
@@ -138,6 +144,12 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
+		// コンポーネント取得
+		for(int i = 0; i < 4 ;i++)
+		{
+			playerObj[i] = GameObject.Find(nameObj[i]).gameObject;
+		}
+
 		// IDの保存
 		setId = AlienCall.GetIdSave();
 
@@ -230,30 +242,6 @@ public class AlienOrder : MonoBehaviour
 				OrderType(false);
 			}
 
-			if (playerObj[0].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering || playerObj[1].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering
-				|| playerObj[2].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering || playerObj[3].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
-			{
-				// オーダーの種類管理
-				switch (orderType)
-				{
-					case (int)EOrderType.BASE:
-						if (individualOrderBaseType == IsPlayerEatoy(0) || individualOrderBaseType == IsPlayerEatoy(1) || individualOrderBaseType == IsPlayerEatoy(2) || individualOrderBaseType == IsPlayerEatoy(3))
-						{
-							// 注文したものを非アクティブにする(吹き出し)
-							OrderType(false);
-						}
-						break;
-					case (int)EOrderType.CHANGE:
-						if (individualOrderChangeType == IsPlayerEatoy(0) || individualOrderChangeType == IsPlayerEatoy(1) || individualOrderChangeType == IsPlayerEatoy(2) || individualOrderChangeType == IsPlayerEatoy(3))
-						{
-							// 注文したものを非アクティブにする(吹き出し)
-							OrderType(false);
-						}
-						break;
-					default: break;
-				}
-			}
-
 			// エイリアンが席に座って、注文するまでの時間
 			if (orderTimeAdd >= orderTime)
 			{
@@ -287,6 +275,9 @@ public class AlienOrder : MonoBehaviour
 				// 毎フレームの時間を加算
 				orderTimeAdd += Time.deltaTime;
 			}
+
+			// プレイヤーの顔の吹き出しを出す為の関数
+			for (int i = 0; i < 4; i++) { CorrespondingToEatoy(i); }
 		}
 
 		// 画面外に向かって歩いている状態の時
@@ -482,6 +473,41 @@ public class AlienOrder : MonoBehaviour
 
 		// エイリアンがクレームをする
 		GetComponent<AlienClaim>().SetIsClaim(true);
+	}
+
+	/// <summary>
+	/// いずれかのプレイヤーが対応したイートイを持っている場合
+	/// そのプレイヤーの顔の吹き出しを出す為の関数
+	/// </summary>
+	private void CorrespondingToEatoy(int id)
+	{
+		if (playerObj[id].GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
+		{
+			// オーダーの種類管理
+			switch (orderType)
+			{
+				case (int)EOrderType.BASE:
+					if (individualOrderBaseType == IsPlayerEatoy(id))
+					{
+						// 注文したものを非アクティブにする(吹き出し)
+						OrderType(false);
+						playerBalloon[id].SetActive(true);
+						Debug.Log("対応したイートイです(ベース)");
+					}
+					break;
+				case (int)EOrderType.CHANGE:
+					if (individualOrderChangeType == IsPlayerEatoy(id))
+					{
+						// 注文したものを非アクティブにする(吹き出し)
+						OrderType(false);
+						playerBalloon[id].SetActive(true);
+						Debug.Log("対応したイートイです(チェンジ)");
+					}
+					break;
+				default: break;
+			}
+		}
+		else { playerBalloon[id].SetActive(false); }
 	}
 
 	/// <summary>

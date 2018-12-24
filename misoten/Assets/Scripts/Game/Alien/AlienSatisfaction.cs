@@ -54,6 +54,9 @@ public class AlienSatisfaction : MonoBehaviour
 	// ローカル変数
 	// ---------------------------------------------
 
+	// イベントマネージャー
+	private EventManager eventManager;
+
 	// 満足フラグ
 	private bool satisfactionFlag = false;
 
@@ -104,7 +107,12 @@ public class AlienSatisfaction : MonoBehaviour
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
 
 					// スコア取得
-					if (chipGetFlag) { chipGetFlag = false; ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+					if (chipGetFlag)
+					{
+						chipGetFlag = false;
+						if (GameTimeManager.eventAlienFlg) { eventManager.StartEvent(); }
+						else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+					}
 
 					// 満足アニメーションになる
 					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
@@ -114,7 +122,7 @@ public class AlienSatisfaction : MonoBehaviour
 
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
-                }
+				}
 
 				// 満足時間が指定時間を超えた場合
 				if (satisfactionTimeAdd >= judgeCount)

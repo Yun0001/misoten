@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour {
         End
     }
 
-    enum FeverPattern
+	public enum FeverPattern
     {
         None,
         RedAlien,
@@ -30,13 +30,11 @@ public class EventManager : MonoBehaviour {
         High
     }
 
-  
-
     EventState eventstate;
     FeverPattern nowPattern;
     FeverPattern[,] pattern=
     {
-        { FeverPattern.RedAlien,FeverPattern.BuleAlien,FeverPattern.YellowAlien,FeverPattern.Cooking},
+		{ FeverPattern.RedAlien,FeverPattern.BuleAlien,FeverPattern.YellowAlien,FeverPattern.Cooking},
         { FeverPattern.RedAlien,FeverPattern.BuleAlien,FeverPattern.YellowAlien,FeverPattern.Mixer}
     };
     int eventOccurrenceNum;
@@ -111,4 +109,6 @@ public class EventManager : MonoBehaviour {
     public EventState GetState() => eventstate;
 
     public int GetEventOccurrenceNum() => eventOccurrenceNum;
+
+	public FeverPattern GetNowPattern() => nowPattern;
 }
