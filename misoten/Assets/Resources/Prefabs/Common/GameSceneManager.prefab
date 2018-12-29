@@ -3582,9 +3582,9 @@ GameObject:
 --- !u!1 &1417354976654688
 GameObject:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4203028395688890}
   - component: {fileID: 114709837424086974}
@@ -7525,9 +7525,9 @@ GameObject:
 --- !u!1 &1810330394763052
 GameObject:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4221121061918456}
   - component: {fileID: 114053998746391382}
@@ -10823,7 +10823,7 @@ Transform:
 --- !u!4 &4203028395688890
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1417354976654688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -10930,7 +10930,7 @@ Transform:
 --- !u!4 &4221121061918456
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810330394763052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -28215,7 +28215,7 @@ MonoBehaviour:
 --- !u!114 &114053998746391382
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810330394763052}
   m_Enabled: 1
@@ -28900,7 +28900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3804d8ff67253e4a84af89a33850f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 0
+  isDebugMode: 1
   isEnd: 0
   miniGameUI: {fileID: 1676299864168382}
   canvasCamera: {fileID: 0}
@@ -29756,7 +29756,7 @@ MonoBehaviour:
 --- !u!114 &114709837424086974
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1417354976654688}
   m_Enabled: 1
@@ -29904,9 +29904,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab:
-  - {fileID: 1439161321163060, guid: e4268bc55bbd61c4894e28b4da391231, type: 2}
-  - {fileID: 1671911101947592, guid: 327b8ecf9a7de7047bd9c0c8c84f6679, type: 2}
-  - {fileID: 1770408782987362, guid: 8510b733dfc472444ae34cf4af599e71, type: 2}
+  - {fileID: 1512998860399286, guid: e4268bc55bbd61c4894e28b4da391231, type: 2}
+  - {fileID: 1437344882894432, guid: 327b8ecf9a7de7047bd9c0c8c84f6679, type: 2}
+  - {fileID: 1547553922895414, guid: 8510b733dfc472444ae34cf4af599e71, type: 2}
   coinFoObj: {fileID: 0}
   counterSeatsMax: 6
   alienMax: 50
