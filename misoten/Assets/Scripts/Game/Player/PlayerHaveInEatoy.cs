@@ -7,6 +7,7 @@ public class PlayerHaveInEatoy : MonoBehaviour
     /// <summary>
     /// イートイ
     /// </summary>
+    [SerializeField]
     GameObject haveInEatoy;
 
     /// <summary>

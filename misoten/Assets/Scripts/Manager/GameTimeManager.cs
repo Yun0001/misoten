@@ -65,8 +65,6 @@ public class GameTimeManager : MonoBehaviour {
             TimeOver();
             UpdateText();
         }
-
-
     }
 
     //時間管理

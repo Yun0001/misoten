@@ -45,6 +45,9 @@ public class EventManager : MonoBehaviour {
         { 5000,1000}
     };
 
+    [SerializeField]
+    private GameObject eventAnnounce;
+
     private void Awake()
     {
         eventstate = EventState.Standby;
@@ -61,7 +64,35 @@ public class EventManager : MonoBehaviour {
     {
         // イベントスタート
         eventstate = EventState.Now;
+        
+        // イベントパターン決定
+        DecisionPattern();
 
+        // イベントの発生回数を加算
+        eventOccurrenceNum++;
+
+        // イベントアナウンスの状態をstartに変更
+        EventAnnounceStart();
+    }
+
+    private ScoreState DecisionScore()
+    {
+        // スコア参照
+        int score = 0;
+
+        // 現在のスコアに応じて状態を返す
+        for (int i = 1; i >= 0; i--)
+        {
+            if (score >= scoreBorder[eventOccurrenceNum, i])
+            {
+                return (ScoreState)Enum.ToObject(typeof(ScoreState), i + 1);
+            }
+        }
+        return ScoreState.Low;
+    }
+
+    private void DecisionPattern()
+    {
         // 乱数宣言
         System.Random r = new System.Random();
         int rand;
@@ -83,32 +114,21 @@ public class EventManager : MonoBehaviour {
                 nowPattern = FeverPattern.Mixer;
                 break;
         }
-
-        // イベントの発生回数を加算
-        eventOccurrenceNum++;
     }
 
-    private ScoreState DecisionScore()
+    public void EndEvent()
     {
-        // スコア参照
-        int score = 0;
-
-        // 現在のスコアに応じて状態を返す
-        for (int i = 1; i >= 0; i--)
-        {
-            if (score >= scoreBorder[eventOccurrenceNum, i])
-            {
-                return (ScoreState)Enum.ToObject(typeof(ScoreState), i + 1);
-            }
-        }
-        return ScoreState.Low;
+        eventstate = EventState.Standby;
+        EventAnnounceEnd();
     }
-
-    public void EndEvent() => eventstate = EventState.Standby;
 
     public EventState GetState() => eventstate;
 
     public int GetEventOccurrenceNum() => eventOccurrenceNum;
 
 	public FeverPattern GetNowPattern() => nowPattern;
+
+    private void EventAnnounceStart() => eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.Start);
+
+    private void EventAnnounceEnd()=> eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.End);
 }
