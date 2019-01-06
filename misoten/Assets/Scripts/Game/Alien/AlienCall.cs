@@ -86,6 +86,9 @@ public class AlienCall : MonoBehaviour
 	// 例外フラグ
 	private static bool exceptionFlag = false;
 
+	// イベントフラグ
+	private bool eventFlg = false;
+
 	// クレーム用ID
 	private static int claimId = 0;
 
@@ -99,13 +102,16 @@ public class AlienCall : MonoBehaviour
 	private static int idSave = 0;
 
 	// 金持ち度
-	private static float[] richDegree = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+	private static float[] richDegree = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
 	// オーダー待ち時間
-	private static float[] orderLatencyAdd = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+	private static float[] orderLatencyAdd = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
 	// 座っているかの判定(カウンター用)
-	private static bool[] orSitting = { false, false, false, false, false, false, false };
+	private static bool[] orSitting = { false, false, false, false, false, false };
+
+	// イベントエイリアン用フラグ
+	private static bool[] eventAlienCallFlag = { false, false, false };
 
 	// ドアのアニメーションフラグ
 	private static bool doorAnimationFlag = true;
@@ -199,6 +205,12 @@ public class AlienCall : MonoBehaviour
 			// 座っているかの判定(カウンター用)
 			orSitting[i] = false;
 		}
+
+		// イベントフラグの初期化
+		eventFlg = false;
+
+		// イベントエイリアン用フラグの初期化
+		eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = false;
 	}
 
 	/// <summary>
@@ -285,6 +297,12 @@ public class AlienCall : MonoBehaviour
 		}
 		// 空いている席のIDになるまでこの処理を続ける
 		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax())); }
+
+		// イベントエイリアンが出現中
+		if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { eventAlienCallFlag[Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX)] = eventFlg = true; } }
+
+		// イベントエイリアンがいないとき
+		else { eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = eventFlg = false; }
 	}
 
 	/// <summary>
@@ -415,7 +433,14 @@ public class AlienCall : MonoBehaviour
 	public int GetAlienNumber() => alienNumber;
 
 	/// <summary>
-	/// エイリアンの金持ち度を取得
+	/// イベントエイリアン用フラグの取得
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public static bool GetEventAlienCallFlag(int id) => eventAlienCallFlag[id];
+
+	/// <summary>
+	/// エイリアンの金持ち度の取得
 	/// </summary>
 	/// <returns></returns>
 	public static float GetRichDegree(int seatId) => richDegree[seatId];
