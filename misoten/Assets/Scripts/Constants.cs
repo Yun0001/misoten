@@ -17,7 +17,8 @@ namespace Constants
         public const int NO_4 = 3;
         public const int NO_5 = 4;
         public const int NO_6 = 5;
-        public const int ERROR = 6;
+        public const int NO_7 = 6;
+        public const int ERROR = 7;
     }
 
     public static class MyColor

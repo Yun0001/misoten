@@ -8,7 +8,7 @@ public class TutorialCtrl : MonoBehaviour
 {
     [SerializeField] bool isDebugMode = false;
     [SerializeField] bool isTestMode = false;
-    [SerializeField, Range(Tutorial.NO_1 + 1, Tutorial.NO_6 + 1)] int DebugTutorialNum = Tutorial.NO_1;
+    [SerializeField, Range(Tutorial.NO_1 + 1, Tutorial.NO_7 + 1)] int DebugTutorialNum = Tutorial.NO_1;
     [SerializeField] bool isNextTutorial = false;
     private bool _isCallNextTutorial = false;
 
@@ -108,6 +108,12 @@ public class TutorialCtrl : MonoBehaviour
         isNextTutorial = true;
     }
 
+    private IEnumerator CallEndTutorial()
+    {
+        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 5.0f);
+        isNextTutorial = true;
+    }
+
     float alpha = 0.0f;
     void TutorialRenderer()
     {
@@ -142,9 +148,17 @@ public class TutorialCtrl : MonoBehaviour
 
     void TutorialState()
     {
-        if (CheckAllPlayerPlayComplete()&&(!_isCallNextTutorial)) {
+
+        if (CheckAllPlayerPlayComplete() && (!_isCallNextTutorial))
+        {
             _isCallNextTutorial = true;
             StartCoroutine(CallNextTutorial());
+        }
+
+        if ((CURRENT_TUTORIAL_STATE==Tutorial.NO_7)&&(!_isCallNextTutorial))
+        {
+            _isCallNextTutorial = true;
+            StartCoroutine(CallEndTutorial());
         }
 
         if (isNextTutorial) NextTutorial();
@@ -158,7 +172,10 @@ public class TutorialCtrl : MonoBehaviour
     {
         foreach (GameObject player in _players)
         {
-            bool isNo = !(player.GetComponent<TutorialPlayer>().IsComplete());
+            bool isSkip = player.GetComponent<TutorialPlayer>().IsSkip();
+            bool isComplete= player.GetComponent<TutorialPlayer>().IsComplete();
+
+            bool isNo = !(isSkip | isComplete);
             if (isNo)
             {
                 return false;
@@ -299,6 +316,13 @@ public class TutorialCtrl : MonoBehaviour
                         player.GetComponent<TutorialPlayer>().OnComplete();
                         Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
+                }
+                break;
+
+            case Tutorial.NO_7: // リリース
+                foreach (GameObject player in _players)
+                {
+                    player.SetActive(false);
                 }
                 break;
 

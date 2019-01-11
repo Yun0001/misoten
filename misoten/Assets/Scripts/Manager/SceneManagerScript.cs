@@ -12,6 +12,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
     public enum SceneName
     {
         Title,
+        SkipMenu,
         Tutorial,
         Game,
         Result,
@@ -21,6 +22,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
     // enumからシーン名を取得するために必要
     private static Dictionary<SceneName, string> m_sceneNameDictionary = new Dictionary<SceneName, string> {
         { SceneName.Title, "Title_heita"},        //"Aseets/Scenes/Title.unity"
+        { SceneName.SkipMenu,"TutorialYN" },  //"Aseets/Scenes/Tutorial.unity"
         { SceneName.Tutorial,"Tutorial" },  //"Aseets/Scenes/Tutorial.unity"
         { SceneName.Game,"Game" },          //"Aseets/Scenes/Game.unity"
         { SceneName.Result,"Result" }       //"Aseets/Scenes/Result.unity"
@@ -41,7 +43,7 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
         switch (currentScene)
         {
             case "Title_heita":
-                SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
+                SceneManager.LoadScene("TutorialYN", LoadSceneMode.Single);
                 break;
             case "Tutorial":
                 SceneManager.LoadScene("Game", LoadSceneMode.Single);
@@ -78,8 +80,8 @@ public class SceneManagerScript : Singleton<SceneManagerScript>
 
     private void _ReloadScene()
     {
-        SoundController.SoundStop();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SoundController.SoundStop();
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 
