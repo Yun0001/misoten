@@ -473,6 +473,9 @@ public class AlienOrder : MonoBehaviour
 
 		// エイリアンがクレームをする
 		GetComponent<AlienClaim>().SetIsClaim(true);
+
+		// イベントエイリアンに間違った料理を渡した時
+		if (GameTimeManager.eventAlienFlg) { GameTimeManager.eventAlienFlg = false; }
 	}
 
 	/// <summary>
