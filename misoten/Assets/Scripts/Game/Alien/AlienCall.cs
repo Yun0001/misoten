@@ -110,6 +110,9 @@ public class AlienCall : MonoBehaviour
 	// 座っているかの判定(カウンター用)
 	private static bool[] orSitting = { false, false, false, false, false, false };
 
+	// オーラフラグの初期化
+	private static bool[] auraFlag = { false, false, false, false, false, false };
+
 	// イベントエイリアン用フラグ
 	private static bool[] eventAlienCallFlag = { false, false, false };
 
@@ -293,16 +296,16 @@ public class AlienCall : MonoBehaviour
 
 				// ステータス初期化
 				GetComponent<AlienStatus>().StatusInit(idSave);
+
+				// イベントエイリアンが出現中
+				if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { Debug.Log("出現した"); eventAlienCallFlag[Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX)] = auraFlag[GetSeatAddId()] = eventFlg = true; } }
 			}
 		}
 		// 空いている席のIDになるまでこの処理を続ける
 		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax())); }
 
-		// イベントエイリアンが出現中
-		if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { Debug.Log("出現した"); eventAlienCallFlag[Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX)] = eventFlg = true; } }
-
 		// イベントエイリアンがいないとき
-		else { eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = eventFlg = false; }
+		if (!GameTimeManager.eventAlienFlg) { eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = eventFlg = false; }
 	}
 
 	/// <summary>
@@ -373,7 +376,7 @@ public class AlienCall : MonoBehaviour
 				// 時間初期化
 				latencyAdd = 0.0f;
 
-				GameTimeManager.eventAlienFlg = false;
+				if (GameTimeManager.eventAlienFlg) { GameTimeManager.eventAlienFlg = false; }
 			}
 		}
 	}
@@ -504,6 +507,21 @@ public class AlienCall : MonoBehaviour
 	/// <param name="seatId"></param>
 	/// <returns></returns>
 	public static float GetOrderLatencyAdd(int seatId) => orderLatencyAdd[seatId];
+
+	/// <summary>
+	/// オーラフラグの取得
+	/// </summary>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool GetAuraFlag(int seatId) => auraFlag[seatId];
+
+	/// <summary>
+	/// オーラフラグの格納
+	/// </summary>
+	/// <param name="_is"></param>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool SetAuraFlag(bool _is, int seatId) => auraFlag[seatId] = _is;
 
 	/// <summary>
 	/// 席の状態を取得

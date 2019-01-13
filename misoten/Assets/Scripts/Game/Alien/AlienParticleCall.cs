@@ -267,16 +267,18 @@ public class AlienParticleCall : MonoBehaviour
 	}
 
 	/// <summary>
-	/// チェンジイートイを注文しているエイリアンのエフェクト呼び出し関数
+	/// イベントエイリアンのエフェクト呼び出し関数
 	/// </summary>
 	void AuraEffectCall()
 	{
 		// 一度しか通らない
 		if (!effectFlag[(int)EParticlePattern.AURA])
 		{
-			// チェンジイートイを注文している時
-			if (GetComponent<AlienOrder>().GetOrderType() == (int)AlienOrder.EOrderType.CHANGE)
+			// イベントエイリアンが出すエフェクト
+			if (AlienCall.GetAuraFlag(GetComponent<AlienOrder>().GetSetId()))
 			{
+				AlienCall.SetAuraFlag(false, GetComponent<AlienOrder>().GetSetId());
+
 				// パーティクル生成
 				particleSystems[(int)EParticlePattern.AURA] = Instantiate(prefab[(int)EParticlePattern.AURA], new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), Quaternion.identity) as ParticleSystem;
 				particleSystems[(int)EParticlePattern.AURA].transform.SetParent(transform);
