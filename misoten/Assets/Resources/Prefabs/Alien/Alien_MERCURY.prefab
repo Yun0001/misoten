@@ -2083,6 +2083,7 @@ MonoBehaviour:
   - 1000
   - 10000
   - 100000
+  eventManager: {fileID: 0}
 --- !u!114 &114124629188202672
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -55,7 +55,8 @@ public class AlienSatisfaction : MonoBehaviour
 	// ---------------------------------------------
 
 	// イベントマネージャー
-	private EventManager eventManager;
+    [SerializeField]
+	private GameObject eventManager;
 
 	// 満足フラグ
 	private bool satisfactionFlag = false;
@@ -81,7 +82,8 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
-	}
+
+    }
 
 	/// <summary>
 	/// 更新関数
@@ -111,27 +113,56 @@ public class AlienSatisfaction : MonoBehaviour
 					{
 						chipGetFlag = false;
 
-						// エイリアンの種類管理()
-						switch ((AlienCall.EAlienPattern)AlienCall.alienCall.GetAlienPattern(GetComponent<AlienOrder>().GetSetId()))
-						{
-							case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
-								if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MARTIAN)) { eventManager.StartEvent(); }
-								else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
-								break;
-							case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
-								if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MERCURY)) { eventManager.StartEvent(); }
-								else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
-								break;
-							case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
-								if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.VENUSIAN)) { eventManager.StartEvent(); }
-								else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
-								break;
-							default: break;
-						}
-					}
+                        //// エイリアンの種類管理()
+                        //switch ((AlienCall.EAlienPattern)AlienCall.alienCall.GetAlienPattern(GetComponent<AlienOrder>().GetSetId()))
+                        //{
+                        //	case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
+                        //		if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MARTIAN))
+                        //                          {
+                        //                              SetEventManager();
+                        //                              eventManager.GetComponent<EventManager>().StartEvent();
+                        //                          }
+                        //		else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+                        //		break;
+                        //	case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
+                        //		if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MERCURY))
+                        //                          {
+                        //                              SetEventManager();
+                        //                              eventManager.GetComponent<EventManager>().StartEvent();
+                        //                          }
+                        //		else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+                        //		break;
+                        //	case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
+                        //		if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.VENUSIAN))
+                        //                          {
+                        //                              SetEventManager();
+                        //                              eventManager.GetComponent<EventManager>().StartEvent();
+                        //                          }
+                        //		else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+                        //		break;
+                        //	default: break;
+                        //}
 
-					// 満足アニメーションになる
-					GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
+                        if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MARTIAN))
+                        {
+                            SetEventManager();
+                            eventManager.GetComponent<EventManager>().StartEvent();
+                        }
+                        if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MERCURY))
+                        {
+                            SetEventManager();
+                            eventManager.GetComponent<EventManager>().StartEvent();
+                        }
+                        if (AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.VENUSIAN))
+                        {
+                            SetEventManager();
+                            eventManager.GetComponent<EventManager>().StartEvent();
+                        }
+                        if (!AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MARTIAN) && !AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.MERCURY) && !AlienCall.GetEventAlienCallFlag((int)AlienCall.EAlienPattern.VENUSIAN)) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+                    }
+
+                    // 満足アニメーションになる
+                    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.SATISFACTION);
 
 					// 満足吹き出しの描画を行う
 					BalloonDraw();
@@ -202,4 +233,6 @@ public class AlienSatisfaction : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static bool GetSatisfactionChipFlag() => satisfactionChipFlag;
+
+    private void SetEventManager() => eventManager = GameObject.Find("EventManager");
 }

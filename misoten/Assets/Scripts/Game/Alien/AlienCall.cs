@@ -298,7 +298,7 @@ public class AlienCall : MonoBehaviour
 				GetComponent<AlienStatus>().StatusInit(idSave);
 
 				// イベントエイリアンが出現中
-				if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { Debug.Log("出現した"); eventAlienCallFlag[Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX)] = auraFlag[GetSeatAddId()] = eventFlg = true; } }
+				if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { Debug.Log("出現した"); eventAlienCallFlag[GetSeatAddId()] = auraFlag[GetSeatAddId()] = eventFlg = true; } }
 			}
 		}
 		// 空いている席のIDになるまでこの処理を続ける
@@ -306,6 +306,8 @@ public class AlienCall : MonoBehaviour
 
 		// イベントエイリアンがいないとき
 		if (!GameTimeManager.eventAlienFlg) { eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = eventFlg = false; }
+
+        Debug.Log(eventAlienCallFlag[0] + "," + eventAlienCallFlag[1] + "," + eventAlienCallFlag[2] + ",");
 	}
 
 	/// <summary>
