@@ -73,6 +73,9 @@ public class EventManager : MonoBehaviour {
 
         // イベントアナウンスの状態をstartに変更
         EventAnnounceStart();
+
+        // アナウンスウインドウのテキストをセット
+        SetEventAnnouceText();
     }
 
     private ScoreState DecisionScore()
@@ -131,4 +134,7 @@ public class EventManager : MonoBehaviour {
     private void EventAnnounceStart() => eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.Start);
 
     private void EventAnnounceEnd()=> eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.End);
+
+    private void SetEventAnnouceText() => eventAnnounce.GetComponent<EventAnnounce>().SetAnnoounceText((int)nowPattern);
+    
 }
