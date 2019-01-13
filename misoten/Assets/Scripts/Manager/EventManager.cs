@@ -67,10 +67,7 @@ public class EventManager : MonoBehaviour {
         
         // イベントパターン決定
         DecisionPattern();
-
-        // イベントの発生回数を加算
-        eventOccurrenceNum++;
-
+  
         // イベントアナウンスの状態をstartに変更
         EventAnnounceStart();
 
@@ -136,5 +133,7 @@ public class EventManager : MonoBehaviour {
     private void EventAnnounceEnd()=> eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.End);
 
     private void SetEventAnnouceText() => eventAnnounce.GetComponent<EventAnnounce>().SetAnnoounceText((int)nowPattern);
-    
+
+
+    public void AddEventOccurrenceNum() => eventOccurrenceNum++;
 }

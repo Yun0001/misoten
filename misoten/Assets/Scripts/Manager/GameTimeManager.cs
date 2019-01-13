@@ -85,7 +85,8 @@ public class GameTimeManager : MonoBehaviour {
             // 既定時間になるとイベントエイリアン出現
             if (countTime <= eventOccurrenceTime[eventManager_cs.GetEventOccurrenceNum()])
             {
-				eventAlienFlg = true;
+                eventManager_cs.AddEventOccurrenceNum();
+                eventAlienFlg = true;
 				eventStartTime = (int)countTime;
 				Debug.Log("開始");
                 // ここにイベントエイリアン出現のコード
