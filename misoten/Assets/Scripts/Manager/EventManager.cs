@@ -48,6 +48,9 @@ public class EventManager : MonoBehaviour {
     [SerializeField]
     private GameObject eventAnnounce;
 
+    [SerializeField]
+    private GameObject gameTimeManager;
+
     private void Awake()
     {
         eventstate = EventState.Standby;
@@ -73,6 +76,9 @@ public class EventManager : MonoBehaviour {
 
         // アナウンスウインドウのテキストをセット
         SetEventAnnouceText();
+
+        // イベント開始時間をセット
+        gameTimeManager.GetComponent<GameTimeManager>().SetEventStartTime();
     }
 
     private ScoreState DecisionScore()

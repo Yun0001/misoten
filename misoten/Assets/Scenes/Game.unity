@@ -422,9 +422,29 @@ Prefab:
       propertyPath: eventManager
       value: 
       objectReference: {fileID: 428448818}
+    - target: {fileID: 114330503888718726, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: isDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114709837424086974, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: eventAnnounce
+      value: 
+      objectReference: {fileID: 989631414}
+    - target: {fileID: 114709837424086974, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: gameTimeManager
+      value: 
+      objectReference: {fileID: 2123734136}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &989631414 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1624147697687730, guid: 923cf92c203a4b340af710fb911c5eff,
+    type: 2}
+  m_PrefabInternal: {fileID: 1785161173}
 --- !u!1 &1573959172 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1102859739124382, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
@@ -620,3 +640,8 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1785161173}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &2123734136 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1213304945201470, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 578081453}

@@ -11,9 +11,13 @@ public class GameTimeManager : MonoBehaviour {
 	private int oneSecond = 11;
 
 	static public bool uiGameFinishFlag = false;
+ 
 	static public bool eventAlienFlg = false;
 
-	[SerializeField]
+    [SerializeField]
+    public bool eventAlienflg2;
+
+    [SerializeField]
     private GameObject[] time;
 
     [SerializeField] bool _tutorialFlg = false;
@@ -74,11 +78,11 @@ public class GameTimeManager : MonoBehaviour {
 
         // イベントが発生していないとき
         EventManager.EventState eventState = eventManager_cs.GetState();
-        
+
         // イベントエイリアンが出現しているか判定するフラグ
         // 津野くん側で調整お願いします
         //bool eventAlienFlg = false;
-
+        eventAlienflg2 = eventAlienFlg;
         // イベント中でない&&イベントエイリアンがいないとき
         if (eventState == EventManager.EventState.Standby && !eventAlienFlg)
         {
@@ -87,8 +91,9 @@ public class GameTimeManager : MonoBehaviour {
             {
                 eventManager_cs.AddEventOccurrenceNum();
                 eventAlienFlg = true;
-				eventStartTime = (int)countTime;
-				Debug.Log("開始");
+
+                //eventStartTime = (int)countTime;
+                Debug.Log("開始");
                 // ここにイベントエイリアン出現のコード
                 // エイリアン側で記述でもOK
             }
@@ -186,4 +191,6 @@ public class GameTimeManager : MonoBehaviour {
     {
         eventAlienFlg = b;
     }
+
+    public void SetEventStartTime()=> eventStartTime = (int)countTime;
 }
