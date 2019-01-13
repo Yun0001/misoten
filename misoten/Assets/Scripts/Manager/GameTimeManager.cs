@@ -178,4 +178,9 @@ public class GameTimeManager : MonoBehaviour {
 	public bool GetIsTimeUp() => isTimeUp;
 
 	public bool IsTimeUp() => countTime <= 0 ? true : false;
+
+    public void SetEventAlienFlg(bool b)
+    {
+        eventAlienFlg = b;
+    }
 }

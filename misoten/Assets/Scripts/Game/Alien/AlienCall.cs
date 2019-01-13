@@ -299,7 +299,7 @@ public class AlienCall : MonoBehaviour
 		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax())); }
 
 		// イベントエイリアンが出現中
-		if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { eventAlienCallFlag[Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX)] = eventFlg = true; } }
+		if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { Debug.Log("出現した"); eventAlienCallFlag[Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX)] = eventFlg = true; } }
 
 		// イベントエイリアンがいないとき
 		else { eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = eventFlg = false; }
