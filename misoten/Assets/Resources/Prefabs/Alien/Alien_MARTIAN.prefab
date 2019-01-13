@@ -2143,7 +2143,7 @@ MonoBehaviour:
   - {fileID: 1721199343839876}
   - {fileID: 1750992305073520}
   orderTime: 1
-  orderPlanDispCount: -0.008547619
+  orderPlanDispCount: 1.5
   eatingCount: 2
   eachAlienOrderTypeValue: 70
   individualOrderBaseType: 0

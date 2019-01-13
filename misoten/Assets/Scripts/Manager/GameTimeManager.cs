@@ -26,7 +26,7 @@ public class GameTimeManager : MonoBehaviour {
 
     private EventManager eventManager_cs;
 
-    private int[] eventOccurrenceTime = { 150, 100, 50 };
+    private int[] eventOccurrenceTime = { 170, 130, 50 };
     private readonly int eventTime = 20;
     private int eventStartTime;
 
@@ -87,6 +87,7 @@ public class GameTimeManager : MonoBehaviour {
             {
 				eventAlienFlg = true;
 				eventStartTime = (int)countTime;
+				Debug.Log("開始");
                 // ここにイベントエイリアン出現のコード
                 // エイリアン側で記述でもOK
             }
@@ -100,6 +101,7 @@ public class GameTimeManager : MonoBehaviour {
                 // イベント終了
                 eventManager_cs.EndEvent();
 				eventAlienFlg = false;
+				Debug.Log("終了");
 			}
         }
 

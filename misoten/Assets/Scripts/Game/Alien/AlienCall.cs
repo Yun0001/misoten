@@ -372,6 +372,8 @@ public class AlienCall : MonoBehaviour
 
 				// 時間初期化
 				latencyAdd = 0.0f;
+
+				GameTimeManager.eventAlienFlg = false;
 			}
 		}
 	}
