@@ -114,7 +114,7 @@ public class AlienCall : MonoBehaviour
 	private static bool[] auraFlag = { false, false, false, false, false, false };
 
 	// イベントエイリアン用フラグ
-	private static bool[] eventAlienCallFlag = { false, false, false };
+	private static bool[] eventAlienCallFlag = { false, false, false, false, false, false };
 
 	// ドアのアニメーションフラグ
 	private static bool doorAnimationFlag = true;
@@ -298,16 +298,18 @@ public class AlienCall : MonoBehaviour
 				GetComponent<AlienStatus>().StatusInit(idSave);
 
 				// イベントエイリアンが出現中
-				if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { Debug.Log("出現した"); eventAlienCallFlag[GetSeatAddId()] = auraFlag[GetSeatAddId()] = eventFlg = true; } }
+				if (GameTimeManager.eventAlienFlg) { if (!eventFlg) { eventAlienCallFlag[GetIdSave()] = auraFlag[GetIdSave()] = eventFlg = true; } }
+
+				// イベントエイリアンがいないとき
+				else
+				{
+					for (int i = 0; i < GetCounterSeatsMax(); i++) { eventAlienCallFlag[i] = auraFlag[i] = false; }
+					eventFlg = false;
+				}
 			}
 		}
 		// 空いている席のIDになるまでこの処理を続ける
 		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax())); }
-
-		// イベントエイリアンがいないとき
-		if (!GameTimeManager.eventAlienFlg) { eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = eventFlg = false; }
-
-        Debug.Log(eventAlienCallFlag[0] + "," + eventAlienCallFlag[1] + "," + eventAlienCallFlag[2] + ",");
 	}
 
 	/// <summary>
@@ -378,7 +380,7 @@ public class AlienCall : MonoBehaviour
 				// 時間初期化
 				latencyAdd = 0.0f;
 
-				if (GameTimeManager.eventAlienFlg) { GameTimeManager.eventAlienFlg = false; }
+				if (GameTimeManager.eventAlienFlg && eventAlienCallFlag[i]) { GameTimeManager.eventAlienFlg = false; }
 			}
 		}
 	}
