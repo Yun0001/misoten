@@ -71,13 +71,34 @@ public class EventAnnounce : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x -= speed;
         transform.position = pos;
-        if (transform.position.x < endPos[(int)state])
+
+        switch (state)
         {
-            state = EventAnnounceState.Normal;
+            case EventAnnounceState.Start:
+                if (transform.position.x < endPos[(int)state])
+                {
+                    state = EventAnnounceState.Normal;
+                }
+                break;
+
+            case EventAnnounceState.End:
+                if (transform.position.x < endPos[(int)state])
+                {
+                    state = EventAnnounceState.Normal;
+                    ResetPoaition();
+                }
+                break;
         }
 	}
 
     public void SetState(EventAnnounceState _state) => state = _state;
 
     public void SetAnnoounceText(int e) => announceText.text = annouceTextArray[e];
+
+    public void ResetPoaition()
+    {
+        Vector3 pos = transform.position;
+        pos.x = startPos;
+        transform.position = pos;
+    }
 }
