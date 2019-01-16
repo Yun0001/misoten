@@ -431,20 +431,33 @@ Prefab:
         type: 2}
       propertyPath: eventAnnounce
       value: 
-      objectReference: {fileID: 989631414}
+      objectReference: {fileID: 1945632032}
     - target: {fileID: 114709837424086974, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
         type: 2}
       propertyPath: gameTimeManager
       value: 
       objectReference: {fileID: 2123734136}
+    - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: prefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 1654945856123380, guid: 1d5a85434fcae434fb523ada267643e2,
+        type: 2}
+    - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: prefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 1274329971436290, guid: 14c27ce28e4f24c49ab85e0254dd803c,
+        type: 2}
+    - target: {fileID: 114755872124425512, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: prefab.Array.data[2]
+      value: 
+      objectReference: {fileID: 1973525631876150, guid: 35c45101a924da4459b9222c65d74a34,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &989631414 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1624147697687730, guid: 923cf92c203a4b340af710fb911c5eff,
-    type: 2}
-  m_PrefabInternal: {fileID: 1785161173}
 --- !u!1 &1573959172 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1102859739124382, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
@@ -634,6 +647,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1029317096598590, guid: 3f5e51f6bd586534086b7da1a587ab31,
     type: 2}
   m_PrefabInternal: {fileID: 1757615990}
+--- !u!1 &1945632032 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1729698282620618, guid: 923cf92c203a4b340af710fb911c5eff,
+    type: 2}
+  m_PrefabInternal: {fileID: 1785161173}
 --- !u!114 &2026311426 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114211373808751452, guid: 923cf92c203a4b340af710fb911c5eff,
