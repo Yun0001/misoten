@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using GamepadInput;
 using Constants;
 
 public class TutorialCtrl : MonoBehaviour
@@ -74,6 +75,11 @@ public class TutorialCtrl : MonoBehaviour
     {
         foreach (GameObject player in _players)
         {
+            if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+            {
+                bool b = player.GetComponent<TutorialPlayer>().IsSkip();
+                player.GetComponent<TutorialPlayer>().SetIsSkip(!b);
+            }
             player.GetComponent<Player>().PlayerUpdate();
         }
         TutorialState();
@@ -236,6 +242,13 @@ public class TutorialCtrl : MonoBehaviour
                     MixerTutorialSetting();
                     break;
 
+                case Tutorial.NO_7:
+                    foreach (GameObject player in _players)
+                    {
+                        player.GetComponent<TutorialPlayer>().UnSkip();
+                    }
+                    break;
+
                 default:
                     DefaultTutorialSetting();
                     break;
@@ -319,7 +332,7 @@ public class TutorialCtrl : MonoBehaviour
                 }
                 break;
 
-            case Tutorial.NO_7: // リリース
+            case Tutorial.NO_7: // 
                 foreach (GameObject player in _players)
                 {
                     player.SetActive(false);
@@ -354,6 +367,8 @@ public class TutorialCtrl : MonoBehaviour
             player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
             player.GetComponent<PlayerAnimCtrl>().SetServing(true);
 
+            player.GetComponent<TutorialPlayer>().UnSkip();
+
             i++;
         }
     }
@@ -375,6 +390,7 @@ public class TutorialCtrl : MonoBehaviour
             player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
             player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
             player.GetComponent<PlayerAnimCtrl>().SetServing(true);
+            player.GetComponent<Player>().GetAccessPossibleAnnounce_cs().HiddenSprite();
         }
     }
 

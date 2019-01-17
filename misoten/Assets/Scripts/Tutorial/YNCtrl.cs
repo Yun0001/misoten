@@ -32,7 +32,12 @@ public class YNCtrl : MonoBehaviour {
             return;
         }
 
+        // 左右入力
         if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            _isLeftChose = !_isLeftChose;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             _isLeftChose = !_isLeftChose;
         }
@@ -68,6 +73,7 @@ public class YNCtrl : MonoBehaviour {
                 SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
             }
         }
+
         if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
         {
             if (_isLeftChose)
