@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Title_heita.unity
     guid: 2106d791be9c55446b7f82c272fafeb3
   - enabled: 1
+    path: Assets/Scenes/TutorialYN.unity
+    guid: 7a5a83acd6f64244ca1537c8fc5607b9
+  - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 007839586f7379f47a47558e60651213
   - enabled: 1

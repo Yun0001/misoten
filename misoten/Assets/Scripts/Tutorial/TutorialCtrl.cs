@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using GamepadInput;
 using Constants;
 
 public class TutorialCtrl : MonoBehaviour
 {
     [SerializeField] bool isDebugMode = false;
     [SerializeField] bool isTestMode = false;
-    [SerializeField, Range(Tutorial.NO_1 + 1, Tutorial.NO_6 + 1)] int DebugTutorialNum = Tutorial.NO_1;
+    [SerializeField, Range(Tutorial.NO_1 + 1, Tutorial.NO_7 + 1)] int DebugTutorialNum = Tutorial.NO_1;
     [SerializeField] bool isNextTutorial = false;
     private bool _isCallNextTutorial = false;
 
@@ -74,6 +75,11 @@ public class TutorialCtrl : MonoBehaviour
     {
         foreach (GameObject player in _players)
         {
+            if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+            {
+                bool b = player.GetComponent<TutorialPlayer>().IsSkip();
+                player.GetComponent<TutorialPlayer>().SetIsSkip(!b);
+            }
             player.GetComponent<Player>().PlayerUpdate();
         }
         TutorialState();
@@ -105,6 +111,12 @@ public class TutorialCtrl : MonoBehaviour
     private IEnumerator CallNextTutorial()
     {
         yield return new WaitForSeconds(Tutorial.WAIT_TIME * 3.0f);
+        isNextTutorial = true;
+    }
+
+    private IEnumerator CallEndTutorial()
+    {
+        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 5.0f);
         isNextTutorial = true;
     }
 
@@ -142,9 +154,17 @@ public class TutorialCtrl : MonoBehaviour
 
     void TutorialState()
     {
-        if (CheckAllPlayerPlayComplete()&&(!_isCallNextTutorial)) {
+
+        if (CheckAllPlayerPlayComplete() && (!_isCallNextTutorial))
+        {
             _isCallNextTutorial = true;
             StartCoroutine(CallNextTutorial());
+        }
+
+        if ((CURRENT_TUTORIAL_STATE==Tutorial.NO_7)&&(!_isCallNextTutorial))
+        {
+            _isCallNextTutorial = true;
+            StartCoroutine(CallEndTutorial());
         }
 
         if (isNextTutorial) NextTutorial();
@@ -158,7 +178,10 @@ public class TutorialCtrl : MonoBehaviour
     {
         foreach (GameObject player in _players)
         {
-            bool isNo = !(player.GetComponent<TutorialPlayer>().IsComplete());
+            bool isSkip = player.GetComponent<TutorialPlayer>().IsSkip();
+            bool isComplete= player.GetComponent<TutorialPlayer>().IsComplete();
+
+            bool isNo = !(isSkip | isComplete);
             if (isNo)
             {
                 return false;
@@ -217,6 +240,13 @@ public class TutorialCtrl : MonoBehaviour
 
                 case Tutorial.NO_5: // ミキサー
                     MixerTutorialSetting();
+                    break;
+
+                case Tutorial.NO_7:
+                    foreach (GameObject player in _players)
+                    {
+                        player.GetComponent<TutorialPlayer>().UnSkip();
+                    }
                     break;
 
                 default:
@@ -302,6 +332,13 @@ public class TutorialCtrl : MonoBehaviour
                 }
                 break;
 
+            case Tutorial.NO_7: // 
+                foreach (GameObject player in _players)
+                {
+                    player.SetActive(false);
+                }
+                break;
+
             default:
                 break;
 
@@ -330,6 +367,8 @@ public class TutorialCtrl : MonoBehaviour
             player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Catering);
             player.GetComponent<PlayerAnimCtrl>().SetServing(true);
 
+            player.GetComponent<TutorialPlayer>().UnSkip();
+
             i++;
         }
     }
@@ -351,6 +390,7 @@ public class TutorialCtrl : MonoBehaviour
             player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
             player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
             player.GetComponent<PlayerAnimCtrl>().SetServing(true);
+            player.GetComponent<Player>().GetAccessPossibleAnnounce_cs().HiddenSprite();
         }
     }
 
