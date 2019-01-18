@@ -81,7 +81,7 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
-
+		SetEventManager();
 	}
 
 	/// <summary>
@@ -122,7 +122,26 @@ public class AlienSatisfaction : MonoBehaviour
 						}
 
 						// 通常のエイリアンに正しい料理を渡した時の処理
-						else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
+						else
+						{
+							// 該当のエイリアンがフィーバー中かそうでないかの判定を行い、フィーバー中なら通常よりも多くのスコア、そうでないなら通常のスコアが貰える
+							switch ((AlienCall.EAlienPattern)AlienCall.alienCall.GetAlienPattern(GetComponent<AlienOrder>().GetSetId()))
+							{
+								case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
+									if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.RedAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
+									else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
+									break;
+								case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
+									if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.BuleAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
+									else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
+									break;
+								case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
+									if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.YellowAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
+									else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
+									break;
+								default: Debug.LogError("何かおかしいぞ?"); break;
+							}
+						}
 					}
 
 					// 満足アニメーションになる
