@@ -19,6 +19,9 @@ public class ScoreManager : Singleton<ScoreManager>
     [SerializeField]
     private float[] rankCoefficient;             // 順位係数
 
+    [SerializeField]
+    private GameObject eventManager;
+
     private int[] playerRank = new int[playerNum];     // プレイヤーの順位
     private Text[] scoreText = new Text[playerNum];   // スコア表示テキスト
 
@@ -39,9 +42,13 @@ public class ScoreManager : Singleton<ScoreManager>
     /// </summary>
     /// <param name="pID">プレイヤーID</param>
     /// <param name="score">加算ポイント</param>
-    public void AddScore(int pID, int score)
+    public void AddScore(int pID, int score, bool eventMatchflag)
     {
         // スコア加算
+        if (eventMatchflag)
+        {
+            score = (int)(score * 1.5f);
+        }
         playerScore.GetComponent<ScoreCount>().AddScore(score);
     }
 
@@ -104,4 +111,6 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         return ScoreCount.GetScore();
     }
+
+
 }

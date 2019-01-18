@@ -29,6 +29,7 @@ public class Flyingpan : KitchenwareBase
     void Awake () {
 		InstanceMiniGameUI();
         grilledGage_cs = miniGameUI.GetComponent<GrilledGage>();
+        SetEventManager();
     }
 	
    /// <summary>
