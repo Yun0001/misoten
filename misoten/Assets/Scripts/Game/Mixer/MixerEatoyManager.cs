@@ -21,7 +21,9 @@ public class MixerEatoyManager : MonoBehaviour
 
     private MixMode mixMode;
 
-    private Mixer mixer_cs; 
+    private Mixer mixer_cs;
+
+    private GameObject eventManager;
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class MixerEatoyManager : MonoBehaviour
         mixMode = MixMode.None;
         // イートイスプライトロード
         eatoySprits = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+        eventManager = GameObject.Find("EventManager");
     }
 
     public GameObject MixEatoy()
@@ -69,7 +72,7 @@ public class MixerEatoyManager : MonoBehaviour
         Eatoy putEatoy_cs = putEatoy.GetComponent<Eatoy>();
         putEatoy_cs.Init(eatoyID - 1, eatoySprits[eatoyID - 1]);
         putEatoy_cs.Thawing();
-        putEatoy_cs.AddPoint(CalcEatoyPoint());
+        putEatoy_cs.AddPoint(ScoreUp(CalcEatoyPoint()));
         putEatoy.GetComponent<SpriteRenderer>().enabled = false;
         return putEatoy;
     }
@@ -230,5 +233,14 @@ public class MixerEatoyManager : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private int ScoreUp(int score)
+    {
+        if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.Mixer)
+        {
+            score = (int)(score * 1.5f);
+        }
+        return score;
     }
 }

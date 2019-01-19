@@ -79,6 +79,16 @@ public class GameTimeManager : MonoBehaviour {
         // イベントが発生していないとき
         EventManager.EventState eventState = eventManager_cs.GetState();
 
+        // 残り１０秒からSE再生
+        if (countTime < oneSecond && countTime > 0)
+        {
+            oneSecond = (int)Mathf.Floor(countTime);
+            Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Countdown), 0.5f, 10);
+            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Countdown), 10);
+        }
+
+        if (eventManager_cs.GetEventOccurrenceNum() == eventOccurrenceTime.Length) return;
+
         // イベントエイリアンが出現しているか判定するフラグ
         // 津野くん側で調整お願いします
         //bool eventAlienFlg = false;
@@ -111,13 +121,7 @@ public class GameTimeManager : MonoBehaviour {
 			}
         }
 
-        // 残り１０秒からSE再生
-        if (countTime < oneSecond && countTime > 0)
-        {
-            oneSecond = (int)Mathf.Floor(countTime);
-            Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Countdown), 0.5f, 10);
-            Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Countdown), 10);
-        }
+
     }
 
 

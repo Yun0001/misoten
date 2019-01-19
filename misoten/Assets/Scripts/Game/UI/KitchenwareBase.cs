@@ -28,6 +28,8 @@ public abstract class KitchenwareBase : MonoBehaviour
     [SerializeField]
     private GameObject animationModel;
 
+    protected GameObject eventManager;
+
     /// <summary>
     /// 調理開始
     /// </summary>
@@ -76,7 +78,7 @@ public abstract class KitchenwareBase : MonoBehaviour
         if (Cooking())
         {
             cuisine.GetComponent<Eatoy>().Thawing();
-            cuisine.GetComponent<Eatoy>().AddPoint(CalcEatoyPoint());
+            cuisine.GetComponent<Eatoy>().AddPoint(ScoreUp(CalcEatoyPoint()));
             ResetMiniGameUI();
             SetIsCooking(false);
             SetIsEnd(true);
@@ -121,4 +123,16 @@ public abstract class KitchenwareBase : MonoBehaviour
     public GameObject GetMiniGameUI() => miniGameUI;
 
     public GameObject GetAnimationModel() => animationModel;
+
+
+    protected void SetEventManager() => eventManager = GameObject.Find("EventManager");
+
+    protected int ScoreUp(int score)
+    {
+        if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.Cooking)
+        {
+            score = (int)(score * 1.5f);
+        }
+        return score;
+    }
 }
