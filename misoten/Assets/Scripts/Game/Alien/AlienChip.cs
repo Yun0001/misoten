@@ -121,6 +121,17 @@ public class AlienChip : MonoBehaviour
 							// チップをプレイヤーに渡した
 							chipOnFlag[chipId] = true;
 						}
+                        //
+                        if (GetComponent<AlienSatisfactionBoss>().GetSatisfactionFlag() && !GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
+						{
+                            //ScoreManager.GetInstance().GetComponent<ScoreManager>().AddScore(opponentID, CalcChipValue());
+                            SetCuisineCame(false);
+							GetComponent<AlienOrder>().SetIsOrder(false);
+
+							// チップをプレイヤーに渡した
+							chipOnFlag[chipId] = true;
+						}
+
 						break;
 					default:
 						// 例外処理

@@ -67,6 +67,8 @@ public class AlienMove : MonoBehaviour
 	// 予定時間を割る用
 	private float rate = 0.0f;
 
+    static public bool LeavingStoreFlag =false;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -121,7 +123,17 @@ public class AlienMove : MonoBehaviour
 			// カウンター席側のエイリアンの退店時移動処理
 			CounterWhenLeavingStoreMove();
 		}
+
+        //ボス時帰る
+        //if(BossFlag.GetBossFlag()&& LeavingStoreFlag == false)
+        //if(BossFlag.GetBossFlag())
+        //{
+            // カウンター席側のエイリアンの退店時移動処理
+			////CounterWhenLeavingStoreMove();
+     
+        //}
 	}
+
 
 	/// <summary>
 	/// カウンター席に移動する為の座標設定関数
@@ -282,8 +294,11 @@ public class AlienMove : MonoBehaviour
 			if (timeAdd > WhenLeavingStoreMoveTime)
 			{
 				counterClosedCompletion[GetComponent<AlienOrder>().GetSetId()] = true;
-			}
-
+		        //Debug.Log("終点ture"); 
+                //フラグ追加　エーリアンコールでエーリアン削除
+                LeavingStoreFlag = true;
+            }
+            // Debug.Log("終点false");       
 			transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 3, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 1, 1], rate);
 		}
 	}
@@ -325,6 +340,7 @@ public class AlienMove : MonoBehaviour
 	/// <param name="_whenLeavingStoreFlag"></param>
 	/// <returns></returns>
 	public bool SetWhenLeavingStoreFlag(bool _whenLeavingStoreFlag) => whenLeavingStoreFlag = _whenLeavingStoreFlag;
+    //大典呼び出してture
 
 	/// <summary>
 	/// 退店時移動状態を取得

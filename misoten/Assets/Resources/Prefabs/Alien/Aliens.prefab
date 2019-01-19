@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4001809297896722}
   - component: {fileID: 114288204586445500}
   - component: {fileID: 114949635093223006}
+  - component: {fileID: 114761001999178314}
   m_Layer: 0
   m_Name: Aliens
   m_TagString: Untagged
@@ -52,19 +53,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6a9712d5f950e44ba7e6aed49d52bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterShop: 5
   prefab:
-  - {fileID: 1495473780175194, guid: e4268bc55bbd61c4894e28b4da391231, type: 2}
-  - {fileID: 1671911101947592, guid: 327b8ecf9a7de7047bd9c0c8c84f6679, type: 2}
-  - {fileID: 1770408782987362, guid: 8510b733dfc472444ae34cf4af599e71, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  coinFoObj: {fileID: 0}
   counterSeatsMax: 7
   alienMax: 50
+  enterShop: 5
   period: 30
   inAlienTime: 0
   theRemainingTime:
   - 20
   - 15
   - 10
+--- !u!114 &114761001999178314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225047108596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c1ef39233dba94b9bca7e32aae2bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114949635093223006
 MonoBehaviour:
   m_ObjectHideFlags: 1

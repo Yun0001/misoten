@@ -108,6 +108,12 @@ public class AlienDisturbance : MonoBehaviour
 				if (!GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
 					&& !GetComponent<AlienClaim>().GetIsClaim())
 				{
+                    if(BossFlag.GetBossFlag())
+                    {
+                        // 怒り状態になる
+						mood[setId] = EAlienMood.ANGER;
+                    }
+
 					// 毎フレームの時間を加算
 					latencyAdd[setId] -= Time.deltaTime;
 

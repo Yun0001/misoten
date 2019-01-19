@@ -59,8 +59,8 @@ public class AlienCall : MonoBehaviour
 	private int counterSeatsMax;
 
 	// エイリアン最大数指定
-	[SerializeField, Range(1, 50)]
-	private int alienMax;
+	[SerializeField, Range(0, 50)]
+	public int alienMax;
 
 	// 入店に遷移する秒数設定
 	[SerializeField]
@@ -158,9 +158,18 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
+        //ToDoボス時コンポーネント切り替え
 		// コンポーネント取得
-		alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
-		scoreCount = GameObject.Find("Score").gameObject.GetComponent<ScoreCount>();
+        if(BossFlag.GetBossFlag())
+        {
+            alienCall = GameObject.Find("BossAlien").gameObject.GetComponent<AlienCall>();	
+        }
+        else
+        {
+            alienCall = GameObject.Find("Aliens").gameObject.GetComponent<AlienCall>();
+        }
+     	
+        scoreCount = GameObject.Find("Score").gameObject.GetComponent<ScoreCount>();
 		gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
 
 		// ゲームが開始してエイリアンが出てくる時間
@@ -236,6 +245,10 @@ public class AlienCall : MonoBehaviour
 
 		// 各エイリアンが帰る(削除)処理
 		Return();
+        //for (int i = 0; i < GetCounterSeatsMax(); i++)
+		//{
+
+        //}
 	}
 
 	/// <summary>
@@ -246,8 +259,13 @@ public class AlienCall : MonoBehaviour
 		// カウンター席が空いている場合
 		if (!GetOrSitting(GetSeatAddId()))
 		{
-			// 毎フレームの時間を加算
-			latencyAdd += Time.deltaTime;
+            //Todo if文ボスフラグfarce追加
+            if( BossFlag.GetBossFlag()==false)
+            {
+			    // 毎フレームの時間を加算
+			    latencyAdd += Time.deltaTime;
+            }
+
 
 			// チップが増える毎にエイリアンが入ってくる頻度が高くなる
 			if(inAlienTime >= 10000.0f) { inAlienTime = enterShop - 0.5f; }
@@ -257,8 +275,9 @@ public class AlienCall : MonoBehaviour
 			else if (inAlienTime >= 5000000.0f) { inAlienTime = enterShop - 2.5f; }
 			else if (inAlienTime >= 10000000.0f) { inAlienTime = enterShop - 3.0f; }
 
+            //Todoボスフラグ追加
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd > inAlienTime)
+			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag()==false)
 			{
 				// ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -382,6 +401,15 @@ public class AlienCall : MonoBehaviour
 
 				if (GameTimeManager.eventAlienFlg && eventAlienCallFlag[i]) { GameTimeManager.eventAlienFlg = false; }
 			}
+
+            //退出削除
+            //if(AlienMove.LeavingStoreFlag&&BossFlag.GetBossFlag())
+            //{
+            //    Debug.Log("エイリアン削除"); 
+            //    // エイリアン削除
+            //    Destroy(counterDesignatedObj[i]);
+            //    //AlienMove.LeavingStoreFlag = false;
+            //}
 		}
 	}
 
@@ -546,4 +574,27 @@ public class AlienCall : MonoBehaviour
 	/// </summary>
 	/// <returns></returns>
 	public static bool GetdoorAnimationFlag() => doorAnimationFlag;
+
+    /// <summary>
+    /// ボス出現時に他のエーリアン待機
+    /// </summary>
+    //public static void AlienLeaving() =>  alienMax = 0;
+    public void AlienLeaving() 
+    {
+        alienMax = 0;
+    }
+
+    public void AliensEntershop() 
+    {
+        if(alienMax<50)
+        {         
+            alienMax += 2;
+        }
+    }
+    
+    public void AliensMaxBefore() 
+    {
+        alienMax =50;
+    }
+
 }

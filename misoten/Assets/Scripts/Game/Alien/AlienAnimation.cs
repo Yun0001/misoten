@@ -12,6 +12,7 @@ public class AlienAnimation : MonoBehaviour
 		MARTIAN = 0,
 		MERCURY,
 		VENUSIAN,
+        BOSS,
 		MAX
 	}
 
@@ -100,6 +101,8 @@ public class AlienAnimation : MonoBehaviour
 				SatisfactionAnimationSpriteLoad3();
 				EatAnimationSpriteLoad3();
 				break;
+                //Todo:ボスアニメーション追加予定
+
 			default: break;
 		}
 	}

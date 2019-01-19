@@ -330,41 +330,43 @@ public class AlienOrder : MonoBehaviour
 		switch ((AlienCall.EAlienPattern)AlienCall.alienCall.GetAlienPattern(GetSetId()))
 		{
 			case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
-				orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
-				//if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
-				//{
-				//	OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE,
-				//	EOrderBaseType.BLUE, EOrderBaseType.YELLOW, EOrderBaseType.RED);
-				//}
-				//if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
-				//{
-				//	ChangeOrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE);
-				//}
+				//orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE,
+					EOrderBaseType.BLUE, EOrderBaseType.YELLOW, EOrderBaseType.RED);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.ORANGE);
+				}
 				break;
 			case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
-				orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
-				//if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
-				//{
-				//	OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN,
-				//	EOrderBaseType.RED, EOrderBaseType.YELLOW, EOrderBaseType.BLUE);
-				//}
-				//if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
-				//{
-				//	ChangeOrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN);
-				//}
+				//orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN,
+					EOrderBaseType.RED, EOrderBaseType.YELLOW, EOrderBaseType.BLUE);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.PURPLE, EOrderChangeType.GREEN);
+				}
 				break;
 			case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
-				orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
-				//if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
-				//{
-				//	OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
-				//	EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
-				//}
-				//if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
-				//{
-				//	ChangeOrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN);
-				//}
+				//orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
+					EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN);
+				}
 				break;
+            //ボスcase orderBaseSave
+
 			default: Debug.LogError("エイリアンの注文傾向が設定されていません！"); break;
 		}
 	}
