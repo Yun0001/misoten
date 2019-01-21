@@ -5,7 +5,7 @@ using UnityEngine;
 public class AliensBoss : MonoBehaviour {
 
 
-    private int bossEatCount = 10;
+    private int bossEatCount =10;
 
     private bool eatCountstartFlag = false;
     private int BossTotalEatScore = 0;
@@ -15,6 +15,7 @@ public class AliensBoss : MonoBehaviour {
     {
         //eatCountFlag = false;
         BossTotalEatScore = 0;
+        bossEatCount = 10;
     }
 
     void Awake()
@@ -40,19 +41,20 @@ public class AliensBoss : MonoBehaviour {
     {
         //ScoreManager.bossEatScore = 0;
 
+        bossEatCount -= 1;
         //ボススコアイートイカウントで帰る処理
-        if(ScoreManager.bossEatScore < 500)
+        if (ScoreManager.bossEatScore < 500)
         {
             BossTotalEatScore += ScoreManager.bossEatScore;
-            ////bossEatCount -= 1;
+            bossEatCount -= 1;
             //if (eatCountstartFlag)
             //{
-                
+
             //}
             //eatCountstartFlag = true;
-            
+
         }
-        else if(ScoreManager.bossEatScore < 1000)
+        else if (ScoreManager.bossEatScore < 1000)
         {
             bossEatCount -= 1;
             BossTotalEatScore = 0;
@@ -67,9 +69,13 @@ public class AliensBoss : MonoBehaviour {
             bossEatCount -= 3;
             BossTotalEatScore = 0;
         }
-        Debug.Log("BossScore" + ScoreManager.bossEatScore);
+        //Debug.Log("BossScore" + ScoreManager.bossEatScore);
         Debug.Log("EatCount" + bossEatCount);
 
+        //if (bossEatCount<=0)
+        //{
+        //    Debug.Log("カウント超えました");
+        //}
     }
 
        

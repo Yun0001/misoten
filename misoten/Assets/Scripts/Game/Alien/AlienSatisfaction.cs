@@ -190,6 +190,7 @@ public class AlienSatisfaction : MonoBehaviour
                                     sta=true;
                                     eatCountFlag=true;
                                     //ToDo スコアカウント管理
+                                    //
 
                                     break;
                                 default: Debug.LogError("何かおかしいぞ?"); break;
@@ -222,10 +223,7 @@ public class AlienSatisfaction : MonoBehaviour
                         // 退店時の移動開始
                         GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
                         //sta=true;
-                    }
-  
-   
-                    
+                    }           
                     
                 }
 
@@ -248,6 +246,7 @@ public class AlienSatisfaction : MonoBehaviour
 		            AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
                     //一度だけ処理
                     //sta=false;
+                    chipGetFlag=true;
                 }
 
 				// 毎フレームの時間を加算
