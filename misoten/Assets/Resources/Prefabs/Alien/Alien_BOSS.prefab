@@ -527,6 +527,7 @@ GameObject:
   - component: {fileID: 114652145019321372}
   - component: {fileID: 65324746086773780}
   - component: {fileID: 54584006225503212}
+  - component: {fileID: 114969585630869502}
   m_Layer: 0
   m_Name: Alien_BOSS
   m_TagString: Alien
@@ -2042,7 +2043,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973525631876150}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: caf6e32be4f0bff459e0febcf5cdc534, type: 3}
   m_Name: 
@@ -2144,7 +2145,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973525631876150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 231557aecae6f744f909a255014b9e5d, type: 3}
   m_Name: 
@@ -2235,6 +2236,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chipPattern: 1
   chipVal: 1000
+--- !u!114 &114969585630869502
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973525631876150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c1ef39233dba94b9bca7e32aae2bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114992599988639060
 MonoBehaviour:
   m_ObjectHideFlags: 1

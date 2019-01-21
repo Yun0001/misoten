@@ -26,12 +26,14 @@ public class NormalState : PlayerStateBase {
             if (accessObjName == PlayerAccessController.AccessObjectName.Alien)
             {
                 OfferCuisine();
+                //Debug.Log("エーリアンに料理渡したい" + accessObjName);
             }
             else
             {
                 // アタッチしているスクリプトを変更
                 player_cs.ChangeAttachComponent((int)accessObjName);
             }
+            //Debug.Log("どれに料理渡したい"+accessObjName);
         }
     }
 

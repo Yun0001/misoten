@@ -25,6 +25,8 @@ public class ScoreManager : Singleton<ScoreManager>
     private int[] playerRank = new int[playerNum];     // プレイヤーの順位
     private Text[] scoreText = new Text[playerNum];   // スコア表示テキスト
 
+    public static int bossEatScore = 0; 
+
     /// <summary>
     /// 初期処理
     /// </summary>
@@ -49,7 +51,14 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             score = (int)(score * 1.5f);
         }
-        Debug.Log("score" + score);
+        
+        //TODOスコア参照　ボス満足度　イートイカウント追加、値参照
+        if (BossFlag.GetBossFlag() == true)
+        {
+            bossEatScore=score;
+            Debug.Log("Bossscore" + score);
+        }
+
         playerScore.GetComponent<ScoreCount>().AddScore(score);
     }
 

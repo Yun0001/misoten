@@ -96,6 +96,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
 		if (GetComponent<AlienOrder>().GetIsOrder()) { Mood(); }
 	}
 
+    //TODO ボスモード
 	/// <summary>
 	/// エイリアンのモード関数
 	/// </summary>
@@ -115,7 +116,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
                     //}
 
 					// 毎フレームの時間を加算
-					latencyAdd[setId] -= Time.deltaTime;
+					//latencyAdd[setId] -= Time.deltaTime;
 
 					// 残存時間の可視化準備完了
 					if (textMeshFlag) { TextMeshBalloon.SetActive(true); textMeshFlag = !textMeshFlag; }
@@ -137,7 +138,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
 						}
 
 						// 当たり判定が消える
-						if (timeFont <= 0) { GetComponent<BoxCollider>().enabled = false; }
+						//if (timeFont <= 0) { GetComponent<BoxCollider>().enabled = false; }
 					}
 				}
 
@@ -157,7 +158,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
 				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 
 				// 退店時の移動開始
-				GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+				//GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 				break;
 			case EAlienMood.FAVORABLE:  // 良好状態
 

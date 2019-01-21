@@ -67,7 +67,7 @@ public class AlienMove : MonoBehaviour
 	// 予定時間を割る用
 	private float rate = 0.0f;
 
-    static public bool LeavingStoreFlag =false;
+    static public bool[] LeavingStoreFlag ={false,false,false,false,false,false};
 
 	// ---------------------------------------------
 
@@ -296,7 +296,10 @@ public class AlienMove : MonoBehaviour
 				counterClosedCompletion[GetComponent<AlienOrder>().GetSetId()] = true;
 		        //Debug.Log("終点ture"); 
                 //フラグ追加　エーリアンコールでエーリアン削除
-                LeavingStoreFlag = true;
+                // エイリアン削除
+				//Destroy(GetComponent<AlienOrder>().counterDesignatedObj[i]);
+                //削除用フラグ
+                LeavingStoreFlag[GetComponent<AlienOrder>().GetSetId()] = true;
             }
             // Debug.Log("終点false");       
 			transform.position = Vector3.Lerp(counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 3, 0], counterSeatsPosition[GetComponent<AlienOrder>().GetSetId(), 1, 1], rate);

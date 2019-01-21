@@ -87,7 +87,7 @@ public class BossFlag : MonoBehaviour {
     private void AliensRestart()
     {
         GetComponent<AlienCall>().AliensEntershop();
-        AlienMove.LeavingStoreFlag = false;
+        //AlienMove.LeavingStoreFlag = false;
     }
 
     private void AliensMax()

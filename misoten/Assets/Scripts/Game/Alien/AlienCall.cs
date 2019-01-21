@@ -337,10 +337,10 @@ public class AlienCall : MonoBehaviour
             //ボス出現
             if( alienNumber < alienMax && BossFlag.GetBossFlag()==true && BossOne==false)
             {
-                 Debug.Log("BossOne"+BossOne);
-
+                
                 //一度しか通らないようにする
                 BossOne =true;
+                Debug.Log("BossOne"+BossOne);
 
                 // ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -460,14 +460,14 @@ public class AlienCall : MonoBehaviour
 				if (GameTimeManager.eventAlienFlg && eventAlienCallFlag[i]) { GameTimeManager.eventAlienFlg = false; }
 			}
 
-            //退出削除
-            //if(AlienMove.LeavingStoreFlag&&BossFlag.GetBossFlag())
-            //{
-            //    Debug.Log("エイリアン削除"); 
-            //    // エイリアン削除
-            //    Destroy(counterDesignatedObj[i]);
-            //    //AlienMove.LeavingStoreFlag = false;
-            //}
+            //TODO退出削除
+            if(AlienMove.LeavingStoreFlag[i]&&BossFlag.GetBossFlag())
+            {
+                //Debug.Log("エイリアン削除"); 
+                // エイリアン削除
+                Destroy(counterDesignatedObj[i]);
+                AlienMove.LeavingStoreFlag[i] = false;
+            }
 		}
 	}
 

@@ -165,7 +165,7 @@ public class AlienParticleCall : MonoBehaviour
                     //GetComponent<BoxCollider>().enabled = true;
      
 				}
-                Debug.Log("EF");
+                //Debug.Log("EF");
 			}
           
 		}

@@ -203,6 +203,14 @@ public class AlienOrder : MonoBehaviour
 			// 注文したものを非アクティブにする(吹き出し)
 			OrderType(false);
 		}
+        //TODO 再注文仮置き
+        if (Input.GetKeyDown("8"))
+        {
+            // EAT状態が「ON」になる
+			 AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+
+             CounterOrder();
+        }
 	}
 
 	/// <summary>
@@ -240,6 +248,8 @@ public class AlienOrder : MonoBehaviour
 			{
 				// 注文したものを非アクティブにする(吹き出し)
 				OrderType(false);
+                //ToDo　ボス料理再注文
+                orderTimeAdd =0;
 			}
 
 			// エイリアンが席に座って、注文するまでの時間
@@ -367,16 +377,16 @@ public class AlienOrder : MonoBehaviour
 				break;
             //ボスcase orderBaseSave
             case AlienCall.EAlienPattern.BOSS:  // ボス
-				//orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
-				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
-				{
-					OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
-					EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
-				}
-				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
-				{
-					ChangeOrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN);
-				}
+				orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
+                //if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+                //{
+                //    OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
+                //    EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
+                //}
+                //if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+                //{
+                //    ChangeOrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN);
+                //}
 				break;
 
 			default: Debug.LogError("エイリアンの注文傾向が設定されていません！"); break;
@@ -416,7 +426,7 @@ public class AlienOrder : MonoBehaviour
 	/// オーダーの種類関数
 	/// </summary>
 	/// <param name="value"></param>
-	void OrderType(bool value)
+	public void OrderType(bool value)
 	{
 		// オーダーの種類管理
 		switch (orderType)
