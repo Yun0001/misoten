@@ -78,6 +78,13 @@ public class AlienParticleCall : MonoBehaviour
 
 		// チェンジイートイを注文しているエイリアンのエフェクト
 		AuraEffectCall();
+
+        //Todo
+        if( (Input.GetKeyDown("i")))
+        {
+            Debug.Log("De");
+            effectFlag[(int)EParticlePattern.SATISFACTION] =false;
+        }
 	}
 
 	/// <summary>
@@ -152,9 +159,19 @@ public class AlienParticleCall : MonoBehaviour
 
 					// 一度しか通らないようにする
 					effectFlag[(int)EParticlePattern.SATISFACTION] = true;
+                    //ToDo　エフェクト　boss 注文時false にする
+                    // 満足「ON」もfalse
+					AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    //GetComponent<BoxCollider>().enabled = true;
+     
 				}
+                Debug.Log("EF");
 			}
+          
 		}
+
+ 
+
 	}
 
 	/// <summary>
@@ -186,10 +203,16 @@ public class AlienParticleCall : MonoBehaviour
 					particleSystems[(int)EParticlePattern.CLAIM].Play();
 
 					// 一度しか通らないようにする
-					effectFlag[(int)EParticlePattern.CLAIM] = true;
+					effectFlag[(int)EParticlePattern.CLAIM] =true;
+                    //ToDo　エフェクト　boss 注文時false にする
+                    // 満足「ON」もfalse
+					AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    //GetComponent<BoxCollider>().enabled = true;
+                    
 				}
 			}
 		}
+
 	}
 
 	/// <summary>

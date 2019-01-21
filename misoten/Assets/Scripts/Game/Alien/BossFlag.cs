@@ -24,7 +24,7 @@ public class BossFlag : MonoBehaviour {
 
    void Awake()
     {
-        Debug.Log("boss"+BossFlag.GetBossFlag());
+        //Debug.Log("boss"+BossFlag.GetBossFlag());
        bossFlag = false;
        offbossFlag =false;
        //CreateAlien_Stop();

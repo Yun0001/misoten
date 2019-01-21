@@ -65,6 +65,7 @@ public class AlienSatisfaction : MonoBehaviour
 
     //一般エーリアン破棄フラグ
     private bool normalFlag  = true;
+    private bool sta =false;
 
 	// ---------------------------------------------
 
@@ -87,6 +88,9 @@ public class AlienSatisfaction : MonoBehaviour
 
 		// 満足時間の初期化
 		satisfactionTimeAdd = 0.0f;
+
+        SetEventManager();
+
 
 	}
 
@@ -190,20 +194,39 @@ public class AlienSatisfaction : MonoBehaviour
 				// 満足時間が指定時間を超えた場合
 				if (satisfactionTimeAdd >= judgeCount)
 				{
-					// 時間の初期化
-					satisfactionTimeAdd = 0.0f;
+                    //// 時間の初期化
+                    //satisfactionTimeAdd = 0.0f;
 
-					// 帰る(良)状態「ON」
-					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
+                    //// 帰る(良)状態「ON」
+                    //AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
 
-					// 退店時の移動開始
-					GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
-				}
+                    //// 退店時の移動開始
+                    //GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+                    //sta=true;
+                }
 
 				// 毎フレームの時間を加算
 				satisfactionTimeAdd += Time.deltaTime;
 			}
 		}
+
+
+            ////仮置き
+            ////ToDo　エフェクト　boss 注文時false にする
+            // // 満足「ON」もfalse
+            // if(sta==true||(Input.GetKeyDown("7")))
+            //{
+            //     Debug.Log("sta");
+            //  // 着席状態「ON」
+            //  AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.GETON);
+            //        // アニメーションになる
+            //        GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
+
+            //    sta=false;
+            // AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+            // GetComponent<BoxCollider>().enabled = true;
+            //}
+
 
 		// Fadeが開始された時
 		if (AlienCall.alienCall.GetCoinFoObj().GetComponent<CoinFO>().GetIsStartingCoinFO())

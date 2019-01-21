@@ -366,6 +366,18 @@ public class AlienOrder : MonoBehaviour
 				}
 				break;
             //ボスcase orderBaseSave
+            case AlienCall.EAlienPattern.BOSS:  // ボス
+				//orderBaseSave = (int)EOrderBaseType.RED; orderType = (int)EOrderType.BASE;
+				if (eachAlienOrderType >= 1 && eachAlienOrderType <= eachAlienOrderTypeValue)
+				{
+					OrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN,
+					EOrderBaseType.RED, EOrderBaseType.BLUE, EOrderBaseType.YELLOW);
+				}
+				if (eachAlienOrderType >= eachAlienOrderTypeValue + 1 && eachAlienOrderType <= 100)
+				{
+					ChangeOrderConfiguration(EOrderChangeType.ORANGE, EOrderChangeType.GREEN);
+				}
+				break;
 
 			default: Debug.LogError("エイリアンの注文傾向が設定されていません！"); break;
 		}
@@ -399,6 +411,7 @@ public class AlienOrder : MonoBehaviour
 		if (orderTrend >= 51 && orderTrend <= 100) { orderChangeSave = (int)change2; orderType = (int)EOrderType.CHANGE; return; }
 	}
 
+    //ToDo ボスオーダーtureでもう一度呼ぶ
 	/// <summary>
 	/// オーダーの種類関数
 	/// </summary>

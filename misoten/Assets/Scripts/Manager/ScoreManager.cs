@@ -49,6 +49,7 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             score = (int)(score * 1.5f);
         }
+        Debug.Log("score" + score);
         playerScore.GetComponent<ScoreCount>().AddScore(score);
     }
 

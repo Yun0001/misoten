@@ -29,6 +29,7 @@ public class AlienCall : MonoBehaviour
 		MARTIAN,	// 火星人
 		MERCURY,	// 水星人
 		VENUSIAN,	// 金星人
+        BOSS,
 		MAX			// 最大
 	}
 
@@ -151,6 +152,9 @@ public class AlienCall : MonoBehaviour
 	// 例外処理用の時間
 	private float exceptionTime = 0.0f;
 
+    //ボス出現フラフ一度だけ
+    private bool BossOne = false;
+
 	// ---------------------------------------------
 
 	/// <summary>
@@ -223,7 +227,9 @@ public class AlienCall : MonoBehaviour
 
 		// イベントエイリアン用フラグの初期化
 		eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = false;
-	}
+	
+        BossOne = false;
+    }
 
 	/// <summary>
 	/// 更新関数
@@ -275,9 +281,10 @@ public class AlienCall : MonoBehaviour
 			else if (inAlienTime >= 5000000.0f) { inAlienTime = enterShop - 2.5f; }
 			else if (inAlienTime >= 10000000.0f) { inAlienTime = enterShop - 3.0f; }
 
+            
             //Todoボスフラグ追加
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag()==false)
+			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossOne==false)
 			{
 				// ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -326,6 +333,57 @@ public class AlienCall : MonoBehaviour
 					eventFlg = false;
 				}
 			}
+
+            //ボス出現
+            if( alienNumber < alienMax && BossFlag.GetBossFlag()==true && BossOne==false)
+            {
+                 Debug.Log("BossOne"+BossOne);
+
+                //一度しか通らないようにする
+                BossOne =true;
+
+                // ドアのアニメーションを行う
+				SetdoorAnimationFlag(true);
+
+				// ドアがオープンした時のSE
+				//Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Open), 0);
+
+				// エイリアンの秒数設定処理
+				TheNumberOfSecondsSet();
+
+				// エイリアンの種類設定
+				alienPattern[GetSeatAddId()] = EAlienPattern.BOSS;
+
+				// エイリアン生成
+				counterDesignatedObj[GetSeatAddId()] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
+				counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
+
+				// 待機状態終了
+				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);
+
+				// 訪問状態を「ON」にする
+				AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId(), (int)AlienStatus.EStatus.VISIT);
+
+				// その席が座られている状態にする
+				orSitting[GetSeatAddId()] = true;
+
+				// 時間初期化
+				latencyAdd = 0.0f;
+
+                // エイリアン数の更新
+                alienNumber++;
+
+				// エイリアンIDの保存
+				idSave = GetSeatAddId();
+
+				// ステータス初期化
+				GetComponent<AlienStatus>().StatusInit(idSave);
+
+                //当たり判定アクティブ
+	    		//GetComponent<BoxCollider>().enabled = true;
+
+            }
+
 		}
 		// 空いている席のIDになるまでこの処理を続ける
 		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax())); }

@@ -516,6 +516,7 @@ GameObject:
   - component: {fileID: 212358233029207464}
   - component: {fileID: 114179082975516320}
   - component: {fileID: 114280764854701312}
+  - component: {fileID: 114591624061506222}
   - component: {fileID: 114916951744284642}
   - component: {fileID: 114992599988639060}
   - component: {fileID: 114792553505385012}
@@ -2118,7 +2119,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973525631876150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52fe494ea9d9a1842a7e69bb4209fc76, type: 3}
   m_Name: 
@@ -2159,6 +2160,21 @@ MonoBehaviour:
   - 1000
   - 10000
   - 100000
+--- !u!114 &114591624061506222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973525631876150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c213760a6534b14288a4649446c5aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  moodChangeTime: 7
+  TextMeshBalloon: {fileID: 1936422643815082, guid: 4ce1b3e8a7a64b7439cd86e4b9dce7b2,
+    type: 2}
 --- !u!114 &114652145019321372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2181,7 +2197,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973525631876150}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d17bc59518203b45aa6d92d9090555b, type: 3}
   m_Name: 
