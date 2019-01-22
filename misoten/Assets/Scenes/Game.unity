@@ -455,6 +455,14 @@ Prefab:
       value: 
       objectReference: {fileID: 1973525631876150, guid: 35c45101a924da4459b9222c65d74a34,
         type: 2}
+    - target: {fileID: 4034418633440534, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543374445559082, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
@@ -614,31 +622,21 @@ Prefab:
       propertyPath: eventManager
       value: 
       objectReference: {fileID: 428448818}
-    - target: {fileID: 114039517385974856, guid: 923cf92c203a4b340af710fb911c5eff,
+    - target: {fileID: 223405214412425378, guid: 923cf92c203a4b340af710fb911c5eff,
         type: 2}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114039517385974856, guid: 923cf92c203a4b340af710fb911c5eff,
-        type: 2}
-      propertyPath: endPos.Array.data[0]
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114039517385974856, guid: 923cf92c203a4b340af710fb911c5eff,
-        type: 2}
-      propertyPath: endPos.Array.data[1]
-      value: -500
-      objectReference: {fileID: 0}
-    - target: {fileID: 224669602490770634, guid: 923cf92c203a4b340af710fb911c5eff,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 114039517385974856, guid: 923cf92c203a4b340af710fb911c5eff,
-        type: 2}
-      propertyPath: announceText
+      propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 2026311426}
+      objectReference: {fileID: 1823510094}
+    - target: {fileID: 114211373808751452, guid: 923cf92c203a4b340af710fb911c5eff,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 47
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211373808751452, guid: 923cf92c203a4b340af710fb911c5eff,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u30DC\u30FC\u30CA\u30B9\u30BF\u30A4\u30E0\uFF01\u300C\u30B0\u30EA\u30EB\u30FB\u30DC\u30A4\u30EB\u30FB\u30EC\u30F3\u30B8\u300D"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 923cf92c203a4b340af710fb911c5eff, type: 2}
   m_IsPrefabParent: 0
@@ -647,17 +645,16 @@ GameObject:
   m_PrefabParentObject: {fileID: 1029317096598590, guid: 3f5e51f6bd586534086b7da1a587ab31,
     type: 2}
   m_PrefabInternal: {fileID: 1757615990}
+--- !u!20 &1823510094 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 20968258506782094, guid: 50292cb25f53b5042938c15b47a45370,
+    type: 2}
+  m_PrefabInternal: {fileID: 430315091}
 --- !u!1 &1945632032 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1729698282620618, guid: 923cf92c203a4b340af710fb911c5eff,
     type: 2}
   m_PrefabInternal: {fileID: 1785161173}
---- !u!114 &2026311426 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114211373808751452, guid: 923cf92c203a4b340af710fb911c5eff,
-    type: 2}
-  m_PrefabInternal: {fileID: 1785161173}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &2123734136 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1213304945201470, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,

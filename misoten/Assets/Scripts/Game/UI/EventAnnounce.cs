@@ -17,18 +17,19 @@ public class EventAnnounce : MonoBehaviour
 
     private string[] annouceTextArray = {
         "イベントなし",
-        "赤エイリアンの得点UP",
-        "青エイリアンの得点UP",
-        "黄エイリアンの得点UP",
-        "ミキサー料理の得点UP",
-        "ミキサー以外の料理の得点UP",
-        "全ての料理の得点UP" };
+        "VIPの火星人来店中",
+        "VIPの水星人来店中",
+        "VIPの土星人来店中",
+        "ボーナスタイム！「ミキサー」",
+        "ボーナスタイム！「グリル・ボイル・レンジ」",
+        "ボーナスタイム！「ALL」" };
 
     //　イベントマネージャ
     [SerializeField]
     GameObject eventManager;
 
     // 状態
+    [SerializeField]
     EventAnnounceState state;
 
     // ウインドウの移動スピード
@@ -63,26 +64,27 @@ public class EventAnnounce : MonoBehaviour
         {
             SetState(EventAnnounceState.End);
         }
+
         //-----------------------------------------
         if (state == EventAnnounceState.Normal) return;
 
 
-
-        Vector3 pos = transform.position;
+        Vector3 pos = gameObject.GetComponent<RectTransform>().anchoredPosition3D;
+       // Vector3 pos = transform.position;
         pos.x -= speed;
-        transform.position = pos;
-
+        //transform.position = pos;
+        gameObject.GetComponent<RectTransform>().anchoredPosition3D = pos;
         switch (state)
         {
             case EventAnnounceState.Start:
-                if (transform.position.x < endPos[(int)state])
+                if (gameObject.GetComponent<RectTransform>().anchoredPosition3D.x < endPos[(int)state])
                 {
                     state = EventAnnounceState.Normal;
                 }
                 break;
 
             case EventAnnounceState.End:
-                if (transform.position.x < endPos[(int)state])
+                if (gameObject.GetComponent<RectTransform>().anchoredPosition3D.x < endPos[(int)state])
                 {
                     state = EventAnnounceState.Normal;
                     ResetPoaition();
@@ -97,8 +99,8 @@ public class EventAnnounce : MonoBehaviour
 
     public void ResetPoaition()
     {
-        Vector3 pos = transform.position;
+        Vector3 pos = gameObject.GetComponent<RectTransform>().anchoredPosition3D;
         pos.x = startPos;
-        transform.position = pos;
+        gameObject.GetComponent<RectTransform>().anchoredPosition3D = pos;
     }
 }
