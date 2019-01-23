@@ -73,15 +73,31 @@ public class TutorialCtrl : MonoBehaviour
 
     void Update()
     {
+        int i = 0;
         foreach (GameObject player in _players)
         {
-            if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+            // ミキサーと最後は以外スキップ可能
+            if ((CURRENT_TUTORIAL_STATE != Tutorial.NO_5) && (CURRENT_TUTORIAL_STATE != Tutorial.NO_7))
             {
                 bool b = player.GetComponent<TutorialPlayer>().IsSkip();
-                player.GetComponent<TutorialPlayer>().SetIsSkip(!b);
+                if (!b)
+                {
+                    if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+                    {
+                        // skip なったら　それ以降　ずっとスキップ              
+                        player.GetComponent<TutorialPlayer>().SetIsSkip(true);
+                    }
+                }
+                else
+                {
+                    player.transform.position = _playerInitPos[i];
+                }
             }
+
             player.GetComponent<Player>().PlayerUpdate();
+            i++;
         }
+
         TutorialState();
         TutorialRenderer();
     }
@@ -116,7 +132,7 @@ public class TutorialCtrl : MonoBehaviour
 
     private IEnumerator CallEndTutorial()
     {
-        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 5.0f);
+        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 12.0f);
         isNextTutorial = true;
     }
 
@@ -335,6 +351,7 @@ public class TutorialCtrl : MonoBehaviour
             case Tutorial.NO_7: // 
                 foreach (GameObject player in _players)
                 {
+                    player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Normal);
                     player.SetActive(false);
                 }
                 break;

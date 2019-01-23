@@ -284,6 +284,11 @@ public class Sound:MonoBehaviour
 
     }
 
+    public static bool IsPlayingSe(string key, int channel = -1)
+    {
+        return GetInstance()._GetAudioSource(eType.Se, channel).isPlaying;
+    }
+
     // BGMのボリュームの変更
     public static bool SetVolumeBgm(string key, float vol)
     {
