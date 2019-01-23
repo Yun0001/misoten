@@ -34,6 +34,7 @@ public class AliensBoss : MonoBehaviour {
             AlienSatisfaction.eatCountFlag = false;
         }
 
+        BossLeaving();
     }
 
 
@@ -76,6 +77,16 @@ public class AliensBoss : MonoBehaviour {
         //{
         //    Debug.Log("カウント超えました");
         //}
+    }
+
+    //TODOボス退避
+    private void BossLeaving()
+    {
+        if (bossEatCount <= 0)
+        {
+            //ToDo数秒後退避　退避フラグ他に立てる
+            GetComponent<BossFlag>().BossSetLeaving();
+        }
     }
 
        

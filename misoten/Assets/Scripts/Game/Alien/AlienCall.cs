@@ -284,7 +284,7 @@ public class AlienCall : MonoBehaviour
             
             //Todoボスフラグ追加
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossOne==false)
+			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag() == false)
 			{
 				// ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -340,7 +340,7 @@ public class AlienCall : MonoBehaviour
                 
                 //一度しか通らないようにする
                 BossOne =true;
-                Debug.Log("BossOne"+BossOne);
+                //Debug.Log("BossOne"+BossOne);
 
                 // ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
@@ -637,22 +637,22 @@ public class AlienCall : MonoBehaviour
     /// ボス出現時に他のエーリアン待機
     /// </summary>
     //public static void AlienLeaving() =>  alienMax = 0;
-    public void AlienLeaving() 
-    {
-        alienMax = 0;
-    }
+    //public void AlienLeaving() 
+    //{
+    //    alienMax = 0;
+    //}
 
-    public void AliensEntershop() 
-    {
-        if(alienMax<50)
-        {         
-            alienMax += 2;
-        }
-    }
+    //public void AliensEntershop() 
+    //{
+    //    if(alienMax<50)
+    //    {         
+    //        alienMax += 2;
+    //    }
+    //}
     
-    public void AliensMaxBefore() 
-    {
-        alienMax =50;
-    }
+    //public void AliensMaxBefore() 
+    //{
+    //    alienMax =50;
+    //}
 
 }

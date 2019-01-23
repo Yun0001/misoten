@@ -46,22 +46,27 @@ public class AlienAnimation : MonoBehaviour
 	private string[] waitTextureName1 = { "Martian/1", "Martian/2", "Martian/1", "Martian/2" };
 	private string[] waitTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/1", "Mercury/2" };
 	private string[] waitTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/1", "Venusian/2" };
+    private string[] waitTextureName4 = { "Boss/1", "Boss/2", "Boss/1", "Boss/2" };
 
 	private string[] workTextureName1 = { "Martian/1", "Martian/2", "Martian/3", "Martian/4" };
 	private string[] workTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/3", "Mercury/4" };
 	private string[] workTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/3", "Venusian/4" };
+    private string[] workTextureName4 = { "Boss/1", "Boss/2", "Boss/1", "Boss/2" };
 
 	private string[] angerTextureName1 = { "Martian/1", "Martian/2", "Martian/1", "Martian/2" };
 	private string[] angerTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/1", "Mercury/2" };
 	private string[] angerTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/1", "Venusian/2" };
+	private string[] angerTextureName4 = { "Boss/1", "Boss/1", "Boss/1", "Boss/1" };
 
 	private string[] satisfactionTextureName1 = { "Martian/1", "Martian/1", "Martian/1", "Martian/1" };
 	private string[] satisfactionTextureName2 = { "Mercury/1", "Mercury/1", "Mercury/1", "Mercury/1" };
 	private string[] satisfactionTextureName3 = { "Venusian/1", "Venusian/1", "Venusian/1", "Venusian/1" };
+    private string[] satisfactionTextureName4 = { "Boss/1", "Boss/1", "Boss/1", "Boss/1" };
 
 	private string[] eatTextureName1 = { "Martian/1", "Martian/2", "Martian/1", "Martian/2" };
 	private string[] eatTextureName2 = { "Mercury/1", "Mercury/2", "Mercury/1", "Mercury/2" };
 	private string[] eatTextureName3 = { "Venusian/1", "Venusian/2", "Venusian/1", "Venusian/2" };
+    private string[] eatTextureName4 = { "Boss/1", "Boss/2", "Boss/1", "Boss/2" };
 
 	// スプライト
 	public Sprite[,,,] sprite = new Sprite[(int)EAlienPattern.MAX, IS_CATERING, 2, ANIMATION_NUM];
@@ -102,7 +107,13 @@ public class AlienAnimation : MonoBehaviour
 				EatAnimationSpriteLoad3();
 				break;
                 //Todo:ボスアニメーション追加予定
-
+            case EAlienPattern.BOSS:
+				WaitAnimationSpriteLoad4();
+				WorkAnimationSpriteLoad4();
+				AngerAnimationSpriteLoad4();
+				SatisfactionAnimationSpriteLoad4();
+				EatAnimationSpriteLoad4();
+				break;
 			default: break;
 		}
 	}
@@ -268,6 +279,62 @@ public class AlienAnimation : MonoBehaviour
 			for (int k = 0; k < 4; k++)
 			{
 				sprite[2, 4, i, k] = Resources.Load<Sprite>(folderPass[4] + eatTextureName3[k]);
+			}
+		}
+	}
+
+    //boss
+    private void WaitAnimationSpriteLoad4()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[3, 0, i, k] = Resources.Load<Sprite>(folderPass[0] + waitTextureName4[k]);
+			}
+		}
+	}
+
+	private void WorkAnimationSpriteLoad4()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[3, 1, i, k] = Resources.Load<Sprite>(folderPass[1] + workTextureName4[k]);
+			}
+		}
+	}
+
+	private void AngerAnimationSpriteLoad4()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[3, 2, i, k] = Resources.Load<Sprite>(folderPass[2] + angerTextureName4[k]);
+			}
+		}
+	}
+
+	private void SatisfactionAnimationSpriteLoad4()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[3, 3, i, k] = Resources.Load<Sprite>(folderPass[3] + satisfactionTextureName4[k]);
+			}
+		}
+	}
+
+	private void EatAnimationSpriteLoad4()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				sprite[3, 4, i, k] = Resources.Load<Sprite>(folderPass[4] + eatTextureName4[k]);
 			}
 		}
 	}

@@ -226,7 +226,7 @@ public class AlienSatisfaction : MonoBehaviour
                     }           
                     
                 }
-
+                //ボス再オーダー設定
                 if(BossFlag.GetBossFlag()==true&&sta ==true)
                 {
                     // エイリアンIDの保存
@@ -247,13 +247,25 @@ public class AlienSatisfaction : MonoBehaviour
                     //一度だけ処理
                     //sta=false;
                     chipGetFlag=true;
-                }
+                }  
 
 				// 毎フレームの時間を加算
 				satisfactionTimeAdd += Time.deltaTime;
 			}
 		}
 
+        //ToDoボス退出
+        if(BossFlag.GetBossFlag()==false&&BossFlag.offbossFlag==true)
+        {
+            // 帰る(良)状態「ON」
+            AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
+
+            // 退店時の移動開始
+            GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
+            //sta=true;
+            //一度だけ通る
+            BossFlag.offbossFlag =false;
+        }  
 
             ////仮置き
             ////ToDo　エフェクト　boss 注文時false にする
@@ -265,7 +277,6 @@ public class AlienSatisfaction : MonoBehaviour
             //  AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.GETON);
             //        // アニメーションになる
             //        GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
-
             //    sta=false;
             // AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
             // GetComponent<BoxCollider>().enabled = true;
