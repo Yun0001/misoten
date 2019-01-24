@@ -42,12 +42,12 @@ public class EventAnnounce : MonoBehaviour
 
     // 停止位置
     [SerializeField]
-    float[] endPos;
+    float endPos;
 
     [SerializeField]
-    private Text announceText;
+    float resetPos;
 
-	// Use this for initialization
+	// Use ths for initialization
 	void Awake () {
         state = EventAnnounceState.Normal;
 	}
@@ -69,38 +69,26 @@ public class EventAnnounce : MonoBehaviour
         if (state == EventAnnounceState.Normal) return;
 
 
-        Vector3 pos = gameObject.GetComponent<RectTransform>().anchoredPosition3D;
-       // Vector3 pos = transform.position;
+        Vector3 pos = transform.position;
         pos.x -= speed;
-        //transform.position = pos;
-        gameObject.GetComponent<RectTransform>().anchoredPosition3D = pos;
-        switch (state)
-        {
-            case EventAnnounceState.Start:
-                if (gameObject.GetComponent<RectTransform>().anchoredPosition3D.x < endPos[(int)state])
-                {
-                    state = EventAnnounceState.Normal;
-                }
-                break;
+        transform.position = pos;
 
-            case EventAnnounceState.End:
-                if (gameObject.GetComponent<RectTransform>().anchoredPosition3D.x < endPos[(int)state])
-                {
-                    state = EventAnnounceState.Normal;
-                    ResetPoaition();
-                }
-                break;
+
+        if (transform.position.x < endPos)
+        {
+           // state = EventAnnounceState.Normal;
+            ResetPoaition();
         }
+     
 	}
 
     public void SetState(EventAnnounceState _state) => state = _state;
 
-    public void SetAnnoounceText(int e) => announceText.text = annouceTextArray[e];
 
     public void ResetPoaition()
     {
-        Vector3 pos = gameObject.GetComponent<RectTransform>().anchoredPosition3D;
-        pos.x = startPos;
-        gameObject.GetComponent<RectTransform>().anchoredPosition3D = pos;
+        Vector3 pos = transform.position;
+        pos.x = resetPos;
+        transform.position = pos;
     }
 }
