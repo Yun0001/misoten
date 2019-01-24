@@ -8457,6 +8457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3485ba2c09a649c4c851f1b0182cceeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  haveInEatoy: {fileID: 0}
 --- !u!114 &88288149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28649,7 +28650,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 1130784249}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 1521268562}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 1693992854}
   basePoint: 1
 --- !u!65 &296487259
@@ -69986,7 +69988,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 1908115189}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 981799275}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 1606701913}
   basePoint: 1
 --- !u!65 &875932240
@@ -70133,22 +70136,22 @@ Prefab:
     - target: {fileID: 212133669947525022, guid: b96e5f4edb449b241a42f21d31afe635,
         type: 2}
       propertyPath: m_SortingOrder
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 212767563709843610, guid: b96e5f4edb449b241a42f21d31afe635,
         type: 2}
       propertyPath: m_SortingOrder
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 212319140872629508, guid: b96e5f4edb449b241a42f21d31afe635,
         type: 2}
       propertyPath: m_SortingOrder
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 212355160743074204, guid: b96e5f4edb449b241a42f21d31afe635,
         type: 2}
       propertyPath: m_SortingOrder
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b96e5f4edb449b241a42f21d31afe635, type: 2}
@@ -95801,6 +95804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3485ba2c09a649c4c851f1b0182cceeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  haveInEatoy: {fileID: 0}
 --- !u!114 &1194465417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96378,6 +96382,12 @@ Prefab:
       propertyPath: _tutorialFlg
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114745811852848552, guid: 522770742dbc96d4095c93b1a8971d02,
+        type: 2}
+      propertyPath: eventManager
+      value: 
+      objectReference: {fileID: 1161093729570128, guid: 86d34539dda365b41a51350813575e38,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 522770742dbc96d4095c93b1a8971d02, type: 2}
   m_IsPrefabParent: 0
@@ -96878,7 +96888,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 1437028344}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 1087411201}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 89356256}
   basePoint: 1
 --- !u!65 &1239617409
@@ -105757,7 +105768,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 510788381}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 1001229417}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 1433686125}
   basePoint: 1
 --- !u!65 &1373024689
@@ -106152,6 +106164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3485ba2c09a649c4c851f1b0182cceeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  haveInEatoy: {fileID: 0}
 --- !u!114 &1393124070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131678,6 +131691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3485ba2c09a649c4c851f1b0182cceeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  haveInEatoy: {fileID: 0}
 --- !u!114 &1936927958
 MonoBehaviour:
   m_ObjectHideFlags: 0

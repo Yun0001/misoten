@@ -13,14 +13,30 @@ public class YNCtrl : MonoBehaviour {
 
     private AnimatorStateInfo _animState;
 
+    private GameObject[] _players;
+
     private bool _isLeftChose = true;
     private float _logoScale = 0.5f;
- 
+
+    private bool _isNextScene = false;
+
+    void Awake()
+    {
+        if (!SoundController.Loadflg)
+        {
+            SoundController.SoundLoad();
+        }
+        Sound.PlayBgm(SoundController.GetBGMName(SoundController.BGM.Menu));
+    }
+
     void Start () {
         _skipLogo.SetActive(false);
+
+        _players = GameObject.FindGameObjectsWithTag("Player");
     }
 	
 	void Update () {
+
         _animState = _symbol.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
 
         if (_animState.IsName("Base Layer.move"))
@@ -32,6 +48,52 @@ public class YNCtrl : MonoBehaviour {
             return;
         }
 
+        if (_isNextScene) {
+            if(Sound.IsPlayingSe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 12))
+            {
+                return;
+            }
+
+            if (_isLeftChose)
+            {
+                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Tutorial);
+            }
+            else
+            {
+                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
+            }
+            return;
+        }
+
+        foreach (GameObject player in _players)
+        {
+            // 1pのみ
+            if (player.GetComponent<Player>().GetPlayerID() != 0)
+            {
+                continue;
+            }
+            if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+            {
+                _isLeftChose = !_isLeftChose;
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.textslide_share), 11);
+            }
+            else if (player.GetComponent<Player>().InputDownButton(GamePad.Button.LeftShoulder))
+            {
+                _isLeftChose = !_isLeftChose;
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.textslide_share), 11);
+            }
+            player.GetComponent<Player>().PlayerUpdate();
+        }
+
+        //if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+        //{
+        //    _isLeftChose = !_isLeftChose;
+        //}
+        //else if (player.GetComponent<Player>().InputDownButton(GamePad.Button.LeftShoulder))
+        //{
+        //    _isLeftChose = !_isLeftChose;
+        //}
+
         // 左右入力
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -41,6 +103,27 @@ public class YNCtrl : MonoBehaviour {
         {
             _isLeftChose = !_isLeftChose;
         }
+
+        // 入力
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (_isLeftChose)
+            {
+                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Tutorial);
+            }
+            else
+            {
+                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
+            }
+        }
+
+        if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
+        {
+            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 12);
+
+            _isNextScene = true;
+        }
+
 
         // 大小表示
         if (_isLeftChose)
@@ -59,31 +142,6 @@ public class YNCtrl : MonoBehaviour {
 
             _no.GetComponent<SpriteRenderer>().color = Color.black;
             _no.transform.localScale = new Vector3(1, 1, 1);
-        }
-
-        // 入力
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (_isLeftChose)
-            {
-                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Tutorial);
-            }
-            else
-            {
-                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
-            }
-        }
-
-        if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
-        {
-            if (_isLeftChose)
-            {
-                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Tutorial);
-            }
-            else
-            {
-                SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
-            }
         }
 
     }

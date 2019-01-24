@@ -237,6 +237,11 @@ public class MixerEatoyManager : MonoBehaviour
 
     private int ScoreUp(int score)
     {
+        if (eventManager == null)
+        {
+            return score;
+        }
+
         if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.Mixer)
         {
             score = (int)(score * 1.5f);
