@@ -129,6 +129,11 @@ public abstract class KitchenwareBase : MonoBehaviour
 
     protected int ScoreUp(int score)
     {
+        if (eventManager == null)
+        {
+            return score;
+        }
+
         if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.Cooking)
         {
             score = (int)(score * 1.5f);

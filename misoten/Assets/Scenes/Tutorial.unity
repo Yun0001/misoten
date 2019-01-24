@@ -28650,7 +28650,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 1130784249}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 1521268562}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 1693992854}
   basePoint: 1
 --- !u!65 &296487259
@@ -69987,7 +69988,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 1908115189}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 981799275}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 1606701913}
   basePoint: 1
 --- !u!65 &875932240
@@ -96886,7 +96888,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 1437028344}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 1087411201}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 89356256}
   basePoint: 1
 --- !u!65 &1239617409
@@ -105765,7 +105768,8 @@ MonoBehaviour:
   miniGameUI: {fileID: 510788381}
   canvasCamera: {fileID: 1812643025}
   animationModel: {fileID: 1001229417}
-  microwaveEffect: {fileID: 0}
+  microwaveEffect: {fileID: 198829396651865136, guid: de73562036308b54d824a320a67632c7,
+    type: 2}
   UIButton: {fileID: 1433686125}
   basePoint: 1
 --- !u!65 &1373024689
