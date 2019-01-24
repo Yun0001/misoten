@@ -61,6 +61,7 @@ public class PlayerAccessController : MonoBehaviour
         // アイスイートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
 
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Microwave).GetComponent<CookWareMw>().IsCooking()) return false;
         return true;
     }
 
@@ -76,6 +77,8 @@ public class PlayerAccessController : MonoBehaviour
         // アイスイートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
 
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.Pot).GetComponent<Pot>().IsCooking()) return false;
+
         return true;
     }
 
@@ -90,6 +93,8 @@ public class PlayerAccessController : MonoBehaviour
 
         // アイスイートイを持っていなければfalse
         if (player_cs.GetPlayerStatus() != Player.PlayerStatus.CateringIceEatoy) return false;
+
+        if (player_cs.IsObjectCollision(PlayerCollision.hitObjName.GrilledTable).GetComponent<Flyingpan>().IsCooking()) return false;
 
         return true;
     }

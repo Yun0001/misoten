@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 164542942}
   - component: {fileID: 164542943}
   - component: {fileID: 164542944}
+  - component: {fileID: 164542945}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -219,6 +220,17 @@ MonoBehaviour:
   startPos: 10
   endPos: -10
   resetPos: 10
+--- !u!114 &164542945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 164542941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda5ef7da11deef41b608d5cce3cfb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &174734492
 Prefab:
   m_ObjectHideFlags: 0
@@ -277,6 +289,7 @@ GameObject:
   - component: {fileID: 221584391}
   - component: {fileID: 221584393}
   - component: {fileID: 221584392}
+  - component: {fileID: 221584394}
   m_Layer: 0
   m_Name: Image2
   m_TagString: Untagged
@@ -361,6 +374,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &221584394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 221584390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda5ef7da11deef41b608d5cce3cfb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &240486328
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +557,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114709837424086974, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: AnnouceImage.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4538774773285586, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -657,6 +686,16 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114709837424086974, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: AnnouceImage.Array.data[0]
+      value: 
+      objectReference: {fileID: 164542941}
+    - target: {fileID: 114709837424086974, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: AnnouceImage.Array.data[1]
+      value: 
+      objectReference: {fileID: 221584390}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
