@@ -82,6 +82,13 @@ public class YNCtrl : MonoBehaviour {
                 _isLeftChose = !_isLeftChose;
                 Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.textslide_share), 11);
             }
+            if (player.GetComponent<Player>().InputDownButton(GamePad.Button.B))
+            {
+                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 12);
+
+                _isNextScene = true;
+            }
+
             player.GetComponent<Player>().PlayerUpdate();
         }
 
@@ -115,13 +122,6 @@ public class YNCtrl : MonoBehaviour {
             {
                 SceneManagerScript.LoadScene(SceneManagerScript.SceneName.Game);
             }
-        }
-
-        if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Any))
-        {
-            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.decisionkey_share), 12);
-
-            _isNextScene = true;
         }
 
 
