@@ -20,7 +20,7 @@ public class SpriteAnimation : MonoBehaviour
 
 
     private string folderpass = "Textures/EventAnnouce";
-    private string[] textureName = { "All_Fever","All_Fever_Text","Mixer_Bonus","SoloPlay_Bonus", "TextWindow_Blue", "TextWindow_Red", "TextWindow_Yellow" };
+    private string[] textureName = { "TextWindow_Red", "TextWindow_Blue", "TextWindow_Yellow", "Mixer_Bonus", "SoloPlay_Bonus", "All_Fever_" };
     private Sprite[] sprites = new Sprite[(int)EventAnnouceUI.MAX];
     // Use this for initialization
     void Awake () {
@@ -33,4 +33,5 @@ public class SpriteAnimation : MonoBehaviour
 
     public void ChangeSprite(int i) => GetComponent<SpriteRenderer>().sprite = sprites[i];
     
+
 }

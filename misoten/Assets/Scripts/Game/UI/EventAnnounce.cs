@@ -67,7 +67,14 @@ public class EventAnnounce : MonoBehaviour
 
         //-----------------------------------------
         if (state == EventAnnounceState.Normal) return;
-
+        if (state == EventAnnounceState.End)
+        {
+            Vector3 Pos = transform.position;
+            Pos.x = startPos;
+            transform.position = Pos;
+            state = EventAnnounceState.Normal;
+            return;
+        }
 
         Vector3 pos = transform.position;
         pos.x -= speed;
