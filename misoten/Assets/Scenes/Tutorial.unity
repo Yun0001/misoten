@@ -139147,7 +139147,7 @@ Prefab:
     - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
         type: 2}
       propertyPath: isDebugMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
         type: 2}
@@ -139157,7 +139157,7 @@ Prefab:
     - target: {fileID: 114793366576683054, guid: 38b998f74566c7840943d375ccc86dff,
         type: 2}
       propertyPath: DebugTutorialNum
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1826169986223474, guid: 38b998f74566c7840943d375ccc86dff, type: 2}
       propertyPath: m_IsActive
