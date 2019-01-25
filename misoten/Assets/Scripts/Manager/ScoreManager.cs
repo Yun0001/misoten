@@ -56,7 +56,7 @@ public class ScoreManager : Singleton<ScoreManager>
         if (BossFlag.GetBossFlag() == true)
         {
             bossEatScore=score;
-            Debug.Log("Bossscore" + score);
+            //Debug.Log("Bossscore" + score);
         }
 
         playerScore.GetComponent<ScoreCount>().AddScore(score);

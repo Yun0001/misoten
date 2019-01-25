@@ -243,6 +243,7 @@ public class AlienSatisfaction : MonoBehaviour
                 //ボス再オーダー設定
                 if(BossFlag.GetBossFlag()==true&&sta ==true　)//&& satisfactionTimeAdd >= judgeCountBoss
                 {
+                    Debug.Log("ス再オーダー設定" );
                     //満足度の吹き出し(OFF)
                     for(int i = 0; i < 4; i++) { satisfactionBalloon[i].SetActive(false); }
 
@@ -255,12 +256,12 @@ public class AlienSatisfaction : MonoBehaviour
                     // エイリアンが満足初期化
 		            GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
 
-                    //GetComponent<AlienOrder>().OrderType(true);
-                    AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
-                    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
-                    GetComponent<BoxCollider>().enabled = true;
-                    // EAT状態が「OFF」になる
-		            AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
+                    GetComponent<AlienOrder>().OrderTypeBoss(true);
+                    //AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    //GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
+                    //GetComponent<BoxCollider>().enabled = true;
+                    //// EAT状態が「OFF」になる
+                    //AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
                     //一度だけ処理
                     //sta=false;
                     chipGetFlag=true;

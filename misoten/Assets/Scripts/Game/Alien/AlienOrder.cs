@@ -372,11 +372,11 @@ public class AlienOrder : MonoBehaviour
                 //OrderType(true);
                 if(BossFlag.GetBossFlag()==true)
                 {
-                    OrderTypeBoss(false);
+                    OrderTypeBoss(true);
                 }
                 else
                 {
-                     OrderType(false);   
+                     OrderType(true);   
                 } 
                  
                 orderPlanDispCount -= Time.deltaTime; 

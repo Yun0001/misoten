@@ -147,6 +147,9 @@ public class AlienDisturbanceBoss : MonoBehaviour
 				{
 					// テキストメッシュが消える
 					TextMeshBalloon.SetActive(false);
+                    
+				    // イートイオブジェクトを削除
+				    Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 				}
 				break;
 			case EAlienMood.ANGER:  // 怒り状態

@@ -345,6 +345,7 @@ public class AlienAnimation : MonoBehaviour
 
 	public void SetAlienRLDirection(AlienMove.EDirection direction)
 	{
+        //TODO ボスサイズ変更
 		if (direction == AlienMove.EDirection.Right)
 		{
 			Vector3 scale = transform.localScale;

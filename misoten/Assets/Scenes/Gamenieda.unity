@@ -36439,6 +36439,11 @@ Prefab:
       propertyPath: coinFoObj
       value: 
       objectReference: {fileID: 1813441639}
+    - target: {fileID: 114100289857546128, guid: c3441501a72237341b35649322efa609,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c3441501a72237341b35649322efa609, type: 2}
   m_IsPrefabParent: 0
@@ -62356,6 +62361,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1573959173}
     m_Modifications:
+    - target: {fileID: 114288204586445500, guid: 59f093799205bf542a84ec5ca550b520,
+        type: 2}
+      propertyPath: prefab.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4001809297896722, guid: 59f093799205bf542a84ec5ca550b520, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -62401,8 +62411,14 @@ Prefab:
     - target: {fileID: 114274843090449450, guid: 59f093799205bf542a84ec5ca550b520,
         type: 2}
       propertyPath: bossActiveTime
-      value: 178
+      value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 114288204586445500, guid: 59f093799205bf542a84ec5ca550b520,
+        type: 2}
+      propertyPath: prefab.Array.data[3]
+      value: 
+      objectReference: {fileID: 1973525631876150, guid: 64e549cf7922a354287d0d708e8e78db,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 59f093799205bf542a84ec5ca550b520, type: 2}
   m_IsPrefabParent: 0

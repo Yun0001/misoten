@@ -567,12 +567,11 @@ GameObject:
   - component: {fileID: 212358233029207464}
   - component: {fileID: 114179082975516320}
   - component: {fileID: 114280764854701312}
-  - component: {fileID: 114591624061506222}
+  - component: {fileID: 114315253443860422}
   - component: {fileID: 114916951744284642}
   - component: {fileID: 114992599988639060}
   - component: {fileID: 114792553505385012}
   - component: {fileID: 114150629204201048}
-  - component: {fileID: 114465625623400900}
   - component: {fileID: 114899179580440340}
   - component: {fileID: 114195584534409372}
   - component: {fileID: 114652145019321372}
@@ -2349,40 +2348,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   moodChangeTime: 7
   TextMeshBalloon: {fileID: 1359683023318684}
---- !u!114 &114371831894687270
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1359683023318684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7503b147a6208e5458560a09258ce74e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114465625623400900
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1973525631876150}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231557aecae6f744f909a255014b9e5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  satisfactionBalloon:
-  - {fileID: 1514488432645862}
-  - {fileID: 1883834723759584}
-  - {fileID: 1188659386756940}
-  - {fileID: 1963335189483704}
-  judgeCount: 2
-  happyPoint:
-  - 100
-  - 1000
-  - 10000
-  - 100000
---- !u!114 &114591624061506222
+--- !u!114 &114315253443860422
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2397,6 +2363,17 @@ MonoBehaviour:
   moodChangeTime: 7
   TextMeshBalloon: {fileID: 1936422643815082, guid: 4ce1b3e8a7a64b7439cd86e4b9dce7b2,
     type: 2}
+--- !u!114 &114371831894687270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1359683023318684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7503b147a6208e5458560a09258ce74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114652145019321372
 MonoBehaviour:
   m_ObjectHideFlags: 1

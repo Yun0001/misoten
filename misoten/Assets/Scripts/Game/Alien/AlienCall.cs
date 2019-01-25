@@ -60,7 +60,7 @@ public class AlienCall : MonoBehaviour
 	private int counterSeatsMax;
 
 	// エイリアン最大数指定
-	[SerializeField, Range(0, 50)]
+	[SerializeField, Range(1, 50)]
 	public int alienMax;
 
 	// 入店に遷移する秒数設定
@@ -317,12 +317,14 @@ public class AlienCall : MonoBehaviour
 				TheNumberOfSecondsSet();
 
 				// エイリアンの種類設定
-				alienPattern[GetSeatAddId()] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.MAX);
+				alienPattern[GetSeatAddId()] = (EAlienPattern)Random.Range((int)EAlienPattern.MARTIAN, (int)EAlienPattern.BOSS);
 
+               if( BossFlag.GetBossFlag()==false && BossOne==false)
+                 {
 				// エイリアン生成
 				counterDesignatedObj[GetSeatAddId()] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
 				counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
-
+               }
 				// 待機状態終了
 				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);
 
@@ -360,78 +362,69 @@ public class AlienCall : MonoBehaviour
             //ボス出現
             if( BossFlag.GetBossFlag()==true && BossOne==false)
             {
-                 //Debug.Log("BBBB");
+                 Debug.Log("BBBB");
                 //一度しか通らないようにする
                 BossOne =true;
                 //Debug.Log("BossOne"+BossOne);
 
                 // ドアのアニメーションを行う
-				//SetdoorAnimationFlag(true);
+                //SetdoorAnimationFlag(true);
 
-				// ドアがオープンした時のSE
-				//Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Open), 0);
+                // ドアがオープンした時のSE
+                //Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Open), 0);
 
-				// エイリアンの秒数設定処理
-				TheNumberOfSecondsSet();
+                // エイリアンの秒数設定処理
+                TheNumberOfSecondsSet();
 
-				// エイリアンの種類設定
-                alienPattern[GetSeatAddId()] = EAlienPattern.BOSS;
-				//alienPattern[0] = EAlienPattern.BOSS;
+                // エイリアンの種類設定
+                alienPattern[GetSeatAddId()] = (EAlienPattern)Random.Range((int)EAlienPattern.BOSS, (int)EAlienPattern.BOSS);
+                //alienPattern[0] = EAlienPattern.BOSS;
 
-				// エイリアン生成
-				counterDesignatedObj[GetSeatAddId()] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
-				counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
-                //ToDoボス生成
+                //// エイリアン生成
+                counterDesignatedObj[GetSeatAddId()] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
+                counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
+                ////ToDoボス生成
                 //counterDesignatedObjBoss[0] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
-				//counterDesignatedObjBoss[0].transform.SetParent(transform);
+                //counterDesignatedObjBoss[0].transform.SetParent(transform);
                 
 
-				// 待機状態終了
-				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);
+                //// 待機状態終了
+                AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);
                 //AlienStatus.SetCounterStatusChangeFlag(false, 0, (int)AlienStatus.EStatus.STAND);
 
 
-				// 訪問状態を「ON」にする
-				AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId(), (int)AlienStatus.EStatus.VISIT);
+                //// 訪問状態を「ON」にする
+                AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId(), (int)AlienStatus.EStatus.VISIT);
                 //AlienStatus.SetCounterStatusChangeFlag(true, 0, (int)AlienStatus.EStatus.VISIT);
 
 
-				// その席が座られている状態にする
-				orSitting[0] = true;
+                //// その席が座られている状態にする
+                orSitting[0] = true;
 
-				// 時間初期化
-				latencyAdd = 0.0f;
+                //// 時間初期化
+                latencyAdd = 0.0f;
 
-                // エイリアン数の更新
-                // alienNumber++;
+                //// エイリアン数の更新
+                 alienNumber++;
 
-				// エイリアンIDの保存
-				idSave = GetSeatAddId();
-				//idSave = 0;
+                //// エイリアンIDの保存
+                idSave = GetSeatAddId();
+                //idSave = 0;
 
-				// ステータス初期化
-				GetComponent<AlienStatus>().StatusInit(idSave);
+                // ステータス初期化
+                GetComponent<AlienStatus>().StatusInit(idSave);
 
                 //当たり判定アクティブ
 	    		//GetComponent<BoxCollider>().enabled = true;
 
-                bossAuraFlag[0] = true;
-                bossAuraFlag[1] = true;
-                bossAuraFlag[2] = true;
-                bossAuraFlag[3] = true;
-                bossAuraFlag[4] = true;
-                bossAuraFlag[5] = true;
-                //if(BossFlag.GetBossFlag()==true
-                //    && BossFlag.GetNormalAlientime()>2)
-                //{
-                //    bossAuraFlag[0] = true;
-                //    bossAuraFlag[1] = true;
-                //    bossAuraFlag[2] = true;
-                //    bossAuraFlag[3] = true;
-                //    bossAuraFlag[4] = true;
-                //    bossAuraFlag[5] = true;
-                //    Debug.Log("ボスオーラ");
-                //}
+                bossAuraFlag[GetIdSave()] = true;
+                //bossAuraFlag[0] = true;
+                //bossAuraFlag[1] = true;
+                //bossAuraFlag[2] = true;
+                //bossAuraFlag[3] = true;
+                //bossAuraFlag[4] = true;
+                //bossAuraFlag[5] = true;
+    
             }
             
 
