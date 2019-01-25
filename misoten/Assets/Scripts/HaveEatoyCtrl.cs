@@ -173,4 +173,6 @@ public class HaveEatoyCtrl : MonoBehaviour {
         }
     }
 
+    public void HidenEatoy() => _eatoyRenderer.enabled = false;
+
 }

@@ -19,7 +19,7 @@ public class SpriteAnimation : MonoBehaviour
 
 
 
-    private string folderpass = "Textures/EventAnnouce";
+    private string folderpass = "Textures/EventAnnouce/";
     private string[] textureName = { "TextWindow_Red", "TextWindow_Blue", "TextWindow_Yellow", "Mixer_Bonus", "SoloPlay_Bonus", "All_Fever_" };
     private Sprite[] sprites = new Sprite[(int)EventAnnouceUI.MAX];
     // Use this for initialization
