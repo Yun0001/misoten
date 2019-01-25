@@ -29,6 +29,7 @@ public abstract class KitchenwareBase : MonoBehaviour
     private GameObject animationModel;
 
     protected GameObject eventManager;
+    protected EventManager eventManager_cs;
 
     /// <summary>
     /// 調理開始
@@ -126,6 +127,8 @@ public abstract class KitchenwareBase : MonoBehaviour
 
 
     protected void SetEventManager() => eventManager = GameObject.Find("EventManager");
+
+    protected void SetEventManager_cs() => eventManager_cs = eventManager.GetComponent<EventManager>();
 
     protected int ScoreUp(int score)
     {

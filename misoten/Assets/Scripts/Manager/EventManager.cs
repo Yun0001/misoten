@@ -140,7 +140,14 @@ public class EventManager : MonoBehaviour {
 
     private void EventAnnounceEnd()=> eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.End);
 
-    public void AddEventOccurrenceNum() => eventOccurrenceNum++;
+    public void AddEventOccurrenceNum()
+    {
+        eventOccurrenceNum++;
+        if (eventOccurrenceNum > 2)
+        {
+            eventOccurrenceNum = 2;
+        }
+    }
 
     private void SetAnnouceImage(int e)
     {

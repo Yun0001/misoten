@@ -29,18 +29,24 @@ public class Eatoy : MonoBehaviour
     [SerializeField]
     private bool isIcing;
 
+    private Sprite mazuSprite;
+    private Sprite kusomazuSprite;
 
-    public void Init(int colorID, Sprite eatoySprite)
+
+    public void Init(int colorID, Sprite eatoySprite, Sprite mazu, Sprite kusomazu)
     {
         eatoyPoint = 0;
         isIcing = true;
-        
+
         // enum設定
         eatoyColor = (EEatoyColor)Enum.ToObject(typeof(EEatoyColor), colorID + 1);
 
         // スプライト設定
         GetComponent<SpriteRenderer>().sprite = eatoySprite;
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+
+        mazuSprite = mazu;
+        kusomazuSprite = kusomazu;
     }
 
     /// <summary>
@@ -52,7 +58,19 @@ public class Eatoy : MonoBehaviour
         GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    public int AddPoint(int p) => eatoyPoint += p;
+    public int AddPoint(int p)
+    {
+        eatoyPoint += p;
+        if (eatoyPoint >= 24)
+        {
+            GetComponent<SpriteRenderer>().sprite = kusomazuSprite;
+        }
+        else if (eatoyPoint >= 14)
+        {
+            GetComponent<SpriteRenderer>().sprite = mazuSprite;
+        }
+        return eatoyPoint;
+    }
 
     public void SubPoint(int p) => eatoyPoint = Mathf.Max(0, eatoyPoint - p);
 

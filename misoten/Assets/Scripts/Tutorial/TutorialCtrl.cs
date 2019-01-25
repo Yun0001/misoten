@@ -29,10 +29,14 @@ public class TutorialCtrl : MonoBehaviour
 
     //private GameObject[]    _eatoys;
     private Sprite[]        _eatoySprites;
+    private Sprite[] _mazuEatoySprites;
+    private Sprite[] _kusomazuEatoySprites;
 
     private void Awake()
     {
         _eatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+        _mazuEatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/MazuEatoy_BitMap");
+        _kusomazuEatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/KusoMazuEatoy_BitMap");
     }
 
     void Start()
@@ -375,7 +379,7 @@ public class TutorialCtrl : MonoBehaviour
                 player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
             }
             player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
-            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(nums[i], _eatoySprites[nums[i]]);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(nums[i], _eatoySprites[nums[i]], _mazuEatoySprites[nums[i]], _kusomazuEatoySprites[nums[i]]);
             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
             player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
 
@@ -402,7 +406,7 @@ public class TutorialCtrl : MonoBehaviour
             }
             player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
             int num = Random.Range(0, 4);
-            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num]);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num], _mazuEatoySprites[num], _kusomazuEatoySprites[num]);
             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
             player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
             player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);

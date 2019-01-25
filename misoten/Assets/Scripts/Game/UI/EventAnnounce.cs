@@ -15,15 +15,6 @@ public class EventAnnounce : MonoBehaviour
         Normal,
     }
 
-    private string[] annouceTextArray = {
-        "イベントなし",
-        "VIPの火星人来店中",
-        "VIPの水星人来店中",
-        "VIPの土星人来店中",
-        "ボーナスタイム！「ミキサー」",
-        "ボーナスタイム！「グリル・ボイル・レンジ」",
-        "ボーナスタイム！「ALL」" };
-
     //　イベントマネージャ
     [SerializeField]
     GameObject eventManager;
@@ -47,13 +38,17 @@ public class EventAnnounce : MonoBehaviour
     [SerializeField]
     float resetPos;
 
-	// Use ths for initialization
-	void Awake () {
+    [SerializeField]
+    private Sprite[] eventAnnouceImage;
+
+    // Use ths for initialization
+    void Awake()
+    {
         state = EventAnnounceState.Normal;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         // -------------------テスト-----------------
         if (Input.GetKeyDown(KeyCode.A))
@@ -83,11 +78,11 @@ public class EventAnnounce : MonoBehaviour
 
         if (transform.position.x < endPos)
         {
-           // state = EventAnnounceState.Normal;
+            // state = EventAnnounceState.Normal;
             ResetPoaition();
         }
-     
-	}
+
+    }
 
     public void SetState(EventAnnounceState _state) => state = _state;
 
@@ -98,4 +93,5 @@ public class EventAnnounce : MonoBehaviour
         pos.x = resetPos;
         transform.position = pos;
     }
+
 }

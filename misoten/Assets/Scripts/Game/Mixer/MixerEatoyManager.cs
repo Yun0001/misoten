@@ -15,6 +15,8 @@ public class MixerEatoyManager : MonoBehaviour
     private GameObject eatoyPrefab;
 
     private Sprite[] eatoySprits;
+    private Sprite[] mazuEatoySprite;
+    private Sprite[] kusomazuEatoySprite;
 
     [SerializeField]
     private GameObject[] eatoies;
@@ -31,6 +33,8 @@ public class MixerEatoyManager : MonoBehaviour
         mixMode = MixMode.None;
         // イートイスプライトロード
         eatoySprits = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+        mazuEatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/MazuEatoy_BitMap");
+        kusomazuEatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/KusoMazuEatoy_BitMap");
         eventManager = GameObject.Find("EventManager");
     }
 
@@ -70,7 +74,7 @@ public class MixerEatoyManager : MonoBehaviour
         }
 
         Eatoy putEatoy_cs = putEatoy.GetComponent<Eatoy>();
-        putEatoy_cs.Init(eatoyID - 1, eatoySprits[eatoyID - 1]);
+        putEatoy_cs.Init(eatoyID - 1, eatoySprits[eatoyID - 1], mazuEatoySprite[eatoyID - 1], kusomazuEatoySprite[eatoyID - 1]);
         putEatoy_cs.Thawing();
         putEatoy_cs.AddPoint(ScoreUp(CalcEatoyPoint()));
         putEatoy.GetComponent<SpriteRenderer>().enabled = false;

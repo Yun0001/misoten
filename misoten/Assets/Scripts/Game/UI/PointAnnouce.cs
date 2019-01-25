@@ -39,11 +39,11 @@ public class PointAnnouce : MonoBehaviour {
         }
     }
 
-    public void DisplayText(int point)
+    public void DisplayText(string text)
     {
         transform.position = InitPos;
         gameObject.SetActive(true);
-        pointText.text = point.ToString();
+        pointText.text = text;
     
     }
 

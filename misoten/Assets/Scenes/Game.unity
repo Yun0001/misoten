@@ -220,6 +220,13 @@ MonoBehaviour:
   startPos: 10
   endPos: -10
   resetPos: 10
+  eventAnnouceImage:
+  - {fileID: 21300000, guid: 42f7d7224c6b1e140a6be7d1a79cf63c, type: 3}
+  - {fileID: 21300000, guid: 84b49f1c449437a42a55af7be4a469d1, type: 3}
+  - {fileID: 21300000, guid: 2782fc0d53a33b2439fb1722ae67cef7, type: 3}
+  - {fileID: 21300000, guid: c6c3db30350458b43aabe031b615dbb7, type: 3}
+  - {fileID: 21300000, guid: 94bf96ec2f7dcdf4393b6c92a2751a4a, type: 3}
+  - {fileID: 21300000, guid: 0530b337146f96a419fc7227cbc8bc29, type: 3}
 --- !u!114 &164542945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +336,13 @@ MonoBehaviour:
   startPos: 20
   endPos: -10
   resetPos: 10
+  eventAnnouceImage:
+  - {fileID: 21300000, guid: 42f7d7224c6b1e140a6be7d1a79cf63c, type: 3}
+  - {fileID: 21300000, guid: 84b49f1c449437a42a55af7be4a469d1, type: 3}
+  - {fileID: 21300000, guid: 2782fc0d53a33b2439fb1722ae67cef7, type: 3}
+  - {fileID: 21300000, guid: c6c3db30350458b43aabe031b615dbb7, type: 3}
+  - {fileID: 21300000, guid: 94bf96ec2f7dcdf4393b6c92a2751a4a, type: 3}
+  - {fileID: 21300000, guid: 0530b337146f96a419fc7227cbc8bc29, type: 3}
 --- !u!212 &221584393
 SpriteRenderer:
   m_ObjectHideFlags: 0

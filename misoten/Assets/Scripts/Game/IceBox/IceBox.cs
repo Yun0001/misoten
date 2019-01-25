@@ -34,6 +34,8 @@ public class IceBox : MonoBehaviour {
     private GameObject MiniGameUI;
 
     private Sprite[] eatoySprite;
+    private Sprite[] mazuEatoySprite;
+    private Sprite[] kusomazuEatoySprite;
 
     [SerializeField]
     int val;
@@ -70,6 +72,8 @@ public class IceBox : MonoBehaviour {
     {
         // テクスチャロード
         eatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+        mazuEatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/MazuEatoy_BitMap");
+        kusomazuEatoySprite = Resources.LoadAll<Sprite>("Textures/Eatoy/KusoMazuEatoy_BitMap");
         emissionRateID = 0;
     }
 
@@ -264,7 +268,7 @@ public class IceBox : MonoBehaviour {
         
         // イートイを初期化
         int eatoyID = DecisionPutEatoyElement();
-        putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID]);
+        putEatoy.GetComponent<Eatoy>().Init(eatoyID, eatoySprite[eatoyID], mazuEatoySprite[eatoyID], kusomazuEatoySprite[eatoyID]); ;
         putEatoy.GetComponent<SpriteRenderer>().enabled = false;
     }
 
