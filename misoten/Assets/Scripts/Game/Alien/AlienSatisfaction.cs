@@ -257,11 +257,11 @@ public class AlienSatisfaction : MonoBehaviour
 		            GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
 
                     GetComponent<AlienOrder>().OrderTypeBoss(true);
-                    //AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
-                    //GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
-                    //GetComponent<BoxCollider>().enabled = true;
-                    //// EAT状態が「OFF」になる
-                    //AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
+                    AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
+                    GetComponent<BoxCollider>().enabled = true;
+                    // EAT状態が「OFF」になる
+                    AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
                     //一度だけ処理
                     //sta=false;
                     chipGetFlag=true;
