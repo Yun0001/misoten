@@ -33,7 +33,14 @@ public class GameTimeManager : MonoBehaviour {
     private int[] eventOccurrenceTime = { 170, 130, 50 };
     private readonly int eventTime = 20;
     private int eventStartTime;
+    private bool bossKnockDownFlag;
 
+    [SerializeField]
+    private GameObject scoreManager;
+
+    private ScoreManager scoreManager_cs;
+
+    private int bossKnockDownScore = 10000 / 60;
 
     // Use this for initialization
     void Start () {
@@ -42,8 +49,9 @@ public class GameTimeManager : MonoBehaviour {
 		uiGameFinishFlag = false;
 		endSeFlag = false;
 		eventAlienFlg = false;
+        bossKnockDownFlag = false;
 
-		sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
+        sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
         countTime = 181;
         int suu = (int)countTime;
         for (int i = 0; i < 3; i++)
@@ -55,6 +63,10 @@ public class GameTimeManager : MonoBehaviour {
         oneSecond = 11;
 
         eventManager_cs = eventManager.GetComponent<EventManager>();
+
+        if (scoreManager == null) return;
+
+        scoreManager_cs = scoreManager.GetComponent<ScoreManager>();
     }
 	
 	// Update is called once per frame
@@ -68,6 +80,16 @@ public class GameTimeManager : MonoBehaviour {
 
             TimeOver();
             UpdateText();
+
+            // BOSSを倒した場合の処理
+            if (bossKnockDownFlag && countTime > 0)
+            {
+                scoreManager_cs.AddScore(0, bossKnockDownScore, false);
+                GameTimer();
+                TimeOver();
+                UpdateText();
+                scoreManager_cs.AddScore(0, bossKnockDownScore, false);
+            }
         }
     }
 
@@ -199,4 +221,6 @@ public class GameTimeManager : MonoBehaviour {
     }
 
     public void SetEventStartTime()=> eventStartTime = (int)countTime;
+
+    public void SetBossKnockDownFlag() => bossKnockDownFlag = true;
 }

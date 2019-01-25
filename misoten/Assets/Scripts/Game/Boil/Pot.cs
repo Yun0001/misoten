@@ -29,6 +29,7 @@ public class Pot : KitchenwareBase
         InstanceMiniGameUI();
         point = 0;
         SetEventManager();
+        SetEventManager_cs();
     }
 
     protected override void InstanceMiniGameUI()

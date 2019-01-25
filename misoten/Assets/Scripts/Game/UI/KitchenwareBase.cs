@@ -128,7 +128,12 @@ public abstract class KitchenwareBase : MonoBehaviour
 
     protected void SetEventManager() => eventManager = GameObject.Find("EventManager");
 
-    protected void SetEventManager_cs() => eventManager_cs = eventManager.GetComponent<EventManager>();
+    protected void SetEventManager_cs()
+    {
+        if (eventManager == null) return;
+            
+        eventManager_cs = eventManager.GetComponent<EventManager>();
+    }
 
     protected int ScoreUp(int score)
     {

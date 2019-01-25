@@ -710,9 +710,19 @@ Prefab:
       propertyPath: AnnouceImage.Array.data[1]
       value: 
       objectReference: {fileID: 221584390}
+    - target: {fileID: 114865947342663256, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+        type: 2}
+      propertyPath: scoreManager
+      value: 
+      objectReference: {fileID: 578081454}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99c964d3a78ed941bc18cb3e3a5ecb6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &578081454 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1423321259973024, guid: e99c964d3a78ed941bc18cb3e3a5ecb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 578081453}
 --- !u!1 &788953776
 GameObject:
   m_ObjectHideFlags: 0

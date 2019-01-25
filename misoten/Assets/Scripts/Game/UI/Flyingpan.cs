@@ -25,17 +25,13 @@ public class Flyingpan : KitchenwareBase
     [SerializeField]
     private GameObject buttonUI;
 
-    [SerializeField]
-    private GameObject eventManager;
-
-    EventManager eventManager_cs;
-
+    
 
     void Awake () {
 		InstanceMiniGameUI();
         grilledGage_cs = miniGameUI.GetComponent<GrilledGage>();
         SetEventManager();
-        eventManager_cs = eventManager.GetComponent<EventManager>();
+        SetEventManager_cs();
     }
 	
    /// <summary>
