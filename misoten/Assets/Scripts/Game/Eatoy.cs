@@ -31,11 +31,13 @@ public class Eatoy : MonoBehaviour
 
     private Sprite mazuSprite;
     private Sprite kusomazuSprite;
+    private int spriteState;
 
 
     public void Init(int colorID, Sprite eatoySprite, Sprite mazu, Sprite kusomazu)
     {
         eatoyPoint = 0;
+        spriteState = 0;
         isIcing = true;
 
         // enum設定
@@ -64,10 +66,12 @@ public class Eatoy : MonoBehaviour
         if (eatoyPoint >= 24)
         {
             GetComponent<SpriteRenderer>().sprite = kusomazuSprite;
+            spriteState = 2;
         }
         else if (eatoyPoint >= 14)
         {
             GetComponent<SpriteRenderer>().sprite = mazuSprite;
+            spriteState = 1;
         }
         return eatoyPoint;
     }
@@ -97,4 +101,6 @@ public class Eatoy : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().enabled = true;
     }
+
+    public int GetSpriteState() => spriteState;
 }

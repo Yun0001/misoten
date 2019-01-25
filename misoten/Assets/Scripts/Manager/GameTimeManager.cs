@@ -24,6 +24,8 @@ public class GameTimeManager : MonoBehaviour {
 
     private Sprite[] sprites;
 
+    private int spd;
+
 
     [SerializeField]
     private GameObject eventManager;
@@ -50,6 +52,7 @@ public class GameTimeManager : MonoBehaviour {
 		endSeFlag = false;
 		eventAlienFlg = false;
         bossKnockDownFlag = false;
+        spd = 0;
 
         sprites = Resources.LoadAll<Sprite>("Textures/Time/UI_Digital_Custom");
         countTime = 181;
@@ -85,10 +88,13 @@ public class GameTimeManager : MonoBehaviour {
             if (bossKnockDownFlag && countTime > 0)
             {
                 scoreManager_cs.AddScore(0, bossKnockDownScore, false);
-                GameTimer();
-                TimeOver();
-                UpdateText();
-                scoreManager_cs.AddScore(0, bossKnockDownScore, false);
+                for (int i = 0; i < spd; i++)
+                {
+                    GameTimer();
+                    TimeOver();
+                    UpdateText();
+                    scoreManager_cs.AddScore(0, bossKnockDownScore, false);
+                }
             }
         }
     }
@@ -223,4 +229,9 @@ public class GameTimeManager : MonoBehaviour {
     public void SetEventStartTime()=> eventStartTime = (int)countTime;
 
     public void SetBossKnockDownFlag() => bossKnockDownFlag = true;
+
+    public void SetTimeSpeed(int _spd)
+    {
+        spd = _spd;
+    }
 }
