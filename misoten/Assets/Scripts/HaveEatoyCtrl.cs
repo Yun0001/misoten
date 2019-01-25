@@ -11,6 +11,9 @@ public class HaveEatoyCtrl : MonoBehaviour {
     private PlayerAnimCtrl _playerAnim;
 
     private Sprite[] _eatoyMaps;
+    private Sprite[] _mazuMaps;
+    private Sprite[] _kusomazuMaps;
+
     private GameObject _haveEatoy;
     private SpriteRenderer _eatoyRenderer;
 
@@ -37,6 +40,8 @@ public class HaveEatoyCtrl : MonoBehaviour {
     private void Awake()
     {
         _eatoyMaps = Resources.LoadAll<Sprite>("Textures/Eatoy/eatoymap");
+        _mazuMaps = Resources.LoadAll<Sprite>("Textures/Eatoy/mazu");
+        _kusomazuMaps = Resources.LoadAll<Sprite>("Textures/Eatoy/kusomazu");
     }
 
     void Start()
@@ -62,9 +67,21 @@ public class HaveEatoyCtrl : MonoBehaviour {
 
     }
 
-    public void HaveEatoy()
+    public void HaveEatoy(int sts)
     {
-        SetEatoy(_eatoyNum * 2);
+        switch (sts)
+        {
+            case 0:
+                SetEatoy(_eatoyNum * 2);
+                break;
+            case 1:
+                SetMazuEatoy(_eatoyNum * 2);
+                break;
+            case 2:
+                SetKusomazuEatoy(_eatoyNum * 2);
+                break;
+        }
+
         OnTrun();
 
         //  プレイヤーが非表示なら非表示
@@ -131,6 +148,8 @@ public class HaveEatoyCtrl : MonoBehaviour {
     void DownHand() => _haveEatoy.transform.localPosition = new Vector3(0, 0, _renderingZ * -1.0f);
 
     void SetEatoy(int num) => _eatoyRenderer.sprite = _eatoyMaps[num];
+    void SetMazuEatoy(int num) => _eatoyRenderer.sprite = _mazuMaps[num];
+    void SetKusomazuEatoy(int num) => _eatoyRenderer.sprite = _kusomazuMaps[num];
 
     public void SetEatoyNum(int num) => _eatoyNum = num - 1;
 

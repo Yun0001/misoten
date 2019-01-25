@@ -15,20 +15,12 @@ public class EventAnnounce : MonoBehaviour
         Normal,
     }
 
-    private string[] annouceTextArray = {
-        "イベントなし",
-        "赤エイリアンの得点UP",
-        "青エイリアンの得点UP",
-        "黄エイリアンの得点UP",
-        "ミキサー料理の得点UP",
-        "ミキサー以外の料理の得点UP",
-        "全ての料理の得点UP" };
-
     //　イベントマネージャ
     [SerializeField]
     GameObject eventManager;
 
     // 状態
+    [SerializeField]
     EventAnnounceState state;
 
     // ウインドウの移動スピード
@@ -41,18 +33,22 @@ public class EventAnnounce : MonoBehaviour
 
     // 停止位置
     [SerializeField]
-    float[] endPos;
+    float endPos;
 
     [SerializeField]
-    private Text announceText;
+    float resetPos;
 
-	// Use this for initialization
-	void Awake () {
+    [SerializeField]
+    private Sprite[] eventAnnouceImage;
+
+    // Use ths for initialization
+    void Awake()
+    {
         state = EventAnnounceState.Normal;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         // -------------------テスト-----------------
         if (Input.GetKeyDown(KeyCode.A))
@@ -63,42 +59,39 @@ public class EventAnnounce : MonoBehaviour
         {
             SetState(EventAnnounceState.End);
         }
+
         //-----------------------------------------
         if (state == EventAnnounceState.Normal) return;
-
-
+        if (state == EventAnnounceState.End)
+        {
+            Vector3 Pos = transform.position;
+            Pos.x = startPos;
+            transform.position = Pos;
+            state = EventAnnounceState.Normal;
+            return;
+        }
 
         Vector3 pos = transform.position;
         pos.x -= speed;
         transform.position = pos;
 
-        switch (state)
-        {
-            case EventAnnounceState.Start:
-                if (transform.position.x < endPos[(int)state])
-                {
-                    state = EventAnnounceState.Normal;
-                }
-                break;
 
-            case EventAnnounceState.End:
-                if (transform.position.x < endPos[(int)state])
-                {
-                    state = EventAnnounceState.Normal;
-                    ResetPoaition();
-                }
-                break;
+        if (transform.position.x < endPos)
+        {
+            // state = EventAnnounceState.Normal;
+            ResetPoaition();
         }
-	}
+
+    }
 
     public void SetState(EventAnnounceState _state) => state = _state;
 
-    public void SetAnnoounceText(int e) => announceText.text = annouceTextArray[e];
 
     public void ResetPoaition()
     {
         Vector3 pos = transform.position;
-        pos.x = startPos;
+        pos.x = resetPos;
         transform.position = pos;
     }
+
 }

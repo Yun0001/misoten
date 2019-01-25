@@ -20,7 +20,7 @@ public class EventManager : MonoBehaviour {
         YellowAlien,
         Mixer,
         Cooking,
-        All,
+        All
     }
 
     enum ScoreState
@@ -51,6 +51,9 @@ public class EventManager : MonoBehaviour {
     [SerializeField]
     private GameObject gameTimeManager;
 
+    [SerializeField]
+    private GameObject[] AnnouceImage;
+
     private void Awake()
     {
         eventstate = EventState.Standby;
@@ -74,8 +77,7 @@ public class EventManager : MonoBehaviour {
         // イベントアナウンスの状態をstartに変更
         EventAnnounceStart();
 
-        // アナウンスウインドウのテキストをセット
-        SetEventAnnouceText();
+        SetAnnouceImage((int)nowPattern);
 
         // イベント開始時間をセット
         gameTimeManager.GetComponent<GameTimeManager>().SetEventStartTime();
@@ -138,8 +140,20 @@ public class EventManager : MonoBehaviour {
 
     private void EventAnnounceEnd()=> eventAnnounce.GetComponent<EventAnnounce>().SetState(EventAnnounce.EventAnnounceState.End);
 
-    private void SetEventAnnouceText() => eventAnnounce.GetComponent<EventAnnounce>().SetAnnoounceText((int)nowPattern);
+    public void AddEventOccurrenceNum()
+    {
+        eventOccurrenceNum++;
+        if (eventOccurrenceNum > 2)
+        {
+            eventOccurrenceNum = 2;
+        }
+    }
 
-
-    public void AddEventOccurrenceNum() => eventOccurrenceNum++;
+    private void SetAnnouceImage(int e)
+    {
+        for (int i = 0; i < AnnouceImage.Length; i++)
+        {
+            AnnouceImage[i].GetComponent<SpriteAnimation>().ChangeSprite(e);
+        }
+    }
 }

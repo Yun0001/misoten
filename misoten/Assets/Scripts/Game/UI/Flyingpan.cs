@@ -25,11 +25,13 @@ public class Flyingpan : KitchenwareBase
     [SerializeField]
     private GameObject buttonUI;
 
+    
 
     void Awake () {
 		InstanceMiniGameUI();
         grilledGage_cs = miniGameUI.GetComponent<GrilledGage>();
         SetEventManager();
+        SetEventManager_cs();
     }
 	
    /// <summary>
@@ -153,7 +155,24 @@ public class Flyingpan : KitchenwareBase
                 point = 3;
                 break;
         }
-        pointText.GetComponent<PointAnnouce>().DisplayText(point);
+
+        // チュートリアル用
+        if (eventManager == null)
+        {
+            pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString());
+        }
+        else
+        {
+            if (eventManager_cs.GetNowPattern() == global::EventManager.FeverPattern.Cooking)
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString()+"×1.5倍");
+            }
+            else
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString());
+            }
+        }
+
         chain++;
 		effectFlag = true;
 	}

@@ -29,6 +29,7 @@ public class Pot : KitchenwareBase
         InstanceMiniGameUI();
         point = 0;
         SetEventManager();
+        SetEventManager_cs();
     }
 
     protected override void InstanceMiniGameUI()
@@ -78,7 +79,22 @@ public class Pot : KitchenwareBase
 
     protected override int CalcEatoyPoint()
     {
-        pointText.GetComponent<PointAnnouce>().DisplayText(point);
+        // チュートリアル用
+        if (eventManager == null)
+        {
+            pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString());
+        }
+        else
+        {
+            if (eventManager_cs.GetNowPattern() == global::EventManager.FeverPattern.Cooking)
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString() + "×1.5倍");
+            }
+            else
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString());
+            }
+        }
         return point;
     }
 
@@ -90,7 +106,22 @@ public class Pot : KitchenwareBase
     public void AddPoint()
     {
         point += POINT;
-        pointText.GetComponent<PointAnnouce>().DisplayText(POINT);
+        // チュートリアル用
+        if (eventManager == null)
+        {
+            pointText.GetComponent<PointAnnouce>().DisplayText(POINT.ToString());
+        }
+        else
+        {
+            if (eventManager_cs.GetNowPattern() == global::EventManager.FeverPattern.Cooking)
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(POINT.ToString() + "×1.5倍");
+            }
+            else
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(POINT.ToString());
+            }
+        }
     }
 
     public void FrameMoveStart()

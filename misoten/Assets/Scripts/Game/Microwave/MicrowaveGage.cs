@@ -54,6 +54,9 @@ public class MicrowaveGage : MonoBehaviour
     [SerializeField]
     private GameObject pointText;
 
+    private GameObject eventManager;
+    private EventManager eventManager_cs;
+
     // Use this for initialization
     void Awake()
     {
@@ -71,6 +74,11 @@ public class MicrowaveGage : MonoBehaviour
         gameObject.SetActive(true);
         checkClock.SetActive(false);
         successAreaParent.SetActive(false);
+
+        eventManager = GameObject.Find("EventManager");
+        if (eventManager == null) return;
+        eventManager_cs = eventManager.GetComponent<EventManager>();
+
     }
 
     // Update is called once per frame
@@ -217,7 +225,22 @@ public class MicrowaveGage : MonoBehaviour
 
     public void DisplayPoint(int point)
     {
-        pointText.GetComponent<PointAnnouce>().DisplayText(point);
+        // チュートリアル用
+        if (eventManager == null)
+        {
+            pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString());
+        }
+        else
+        {
+            if (eventManager_cs.GetNowPattern() == global::EventManager.FeverPattern.Cooking)
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString() + "×1.5倍");
+            }
+            else
+            {
+                pointText.GetComponent<PointAnnouce>().DisplayText(point.ToString());
+            }
+        }
     }
 
     public void HiddenText()

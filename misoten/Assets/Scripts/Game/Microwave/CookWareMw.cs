@@ -29,6 +29,7 @@ public class CookWareMw : KitchenwareBase
         miniGameUI.GetComponent<MicrowaveGage>().SetCheckClockInMicrowave_cs(GetComponent<CookWareMw>());
         miniGameUI.SetActive(false);
         SetEventManager();
+        SetEventManager_cs();
     }
 
     protected override void InstanceMiniGameUI()

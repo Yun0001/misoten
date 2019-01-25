@@ -29,10 +29,14 @@ public class TutorialCtrl : MonoBehaviour
 
     //private GameObject[]    _eatoys;
     private Sprite[]        _eatoySprites;
+    private Sprite[] _mazuEatoySprites;
+    private Sprite[] _kusomazuEatoySprites;
 
     private void Awake()
     {
         _eatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/Eatoy_OneMap");
+        _mazuEatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/MazuEatoy_BitMap");
+        _kusomazuEatoySprites = Resources.LoadAll<Sprite>("Textures/Eatoy/KusoMazuEatoy_BitMap");
     }
 
     void Start()
@@ -73,15 +77,31 @@ public class TutorialCtrl : MonoBehaviour
 
     void Update()
     {
+        int i = 0;
         foreach (GameObject player in _players)
         {
-            if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+            // ミキサーと最後は以外スキップ可能
+            if ((CURRENT_TUTORIAL_STATE != Tutorial.NO_5) && (CURRENT_TUTORIAL_STATE != Tutorial.NO_7))
             {
                 bool b = player.GetComponent<TutorialPlayer>().IsSkip();
-                player.GetComponent<TutorialPlayer>().SetIsSkip(!b);
+                if (!b)
+                {
+                    if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+                    {
+                        // skip なったら　それ以降　ずっとスキップ              
+                        player.GetComponent<TutorialPlayer>().SetIsSkip(true);
+                    }
+                }
+                else
+                {
+                    player.transform.position = _playerInitPos[i];
+                }
             }
+
             player.GetComponent<Player>().PlayerUpdate();
+            i++;
         }
+
         TutorialState();
         TutorialRenderer();
     }
@@ -116,7 +136,7 @@ public class TutorialCtrl : MonoBehaviour
 
     private IEnumerator CallEndTutorial()
     {
-        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 5.0f);
+        yield return new WaitForSeconds(Tutorial.WAIT_TIME * 12.0f);
         isNextTutorial = true;
     }
 
@@ -268,8 +288,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success),12);
                     }
                 }
                 break;
@@ -279,8 +302,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -290,8 +316,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -301,8 +330,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -314,8 +346,11 @@ public class TutorialCtrl : MonoBehaviour
                     {
                         if (player.GetComponent<Player>().IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
                         {
+                            if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                            {
+                                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                            }
                             player.GetComponent<TutorialPlayer>().OnComplete();
-                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                         }
                     }
                 }
@@ -326,8 +361,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Normal)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -335,6 +373,7 @@ public class TutorialCtrl : MonoBehaviour
             case Tutorial.NO_7: // 
                 foreach (GameObject player in _players)
                 {
+                    player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Normal);
                     player.SetActive(false);
                 }
                 break;
@@ -358,7 +397,7 @@ public class TutorialCtrl : MonoBehaviour
                 player.GetComponent<PlayerHaveInEatoy>().RevocationHaveInEatoy(true);
             }
             player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
-            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(nums[i], _eatoySprites[nums[i]]);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(nums[i], _eatoySprites[nums[i]], _mazuEatoySprites[nums[i]], _kusomazuEatoySprites[nums[i]]);
             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
             player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
 
@@ -385,7 +424,7 @@ public class TutorialCtrl : MonoBehaviour
             }
             player.GetComponent<PlayerHaveInEatoy>().SetEatoy(Instantiate(Resources.Load("Prefabs/Eatoy/Eatoy") as GameObject));
             int num = Random.Range(0, 4);
-            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num]);
+            player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().GetComponent<Eatoy>().Init(num, _eatoySprites[num], _mazuEatoySprites[num], _kusomazuEatoySprites[num]);
             Vector3 scale = new Vector3(0.15f, 0.15f, 0.15f);
             player.GetComponent<PlayerHaveInEatoy>().GetHaveInEatoy().transform.localScale = scale;
             player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.CateringIceEatoy);
