@@ -368,7 +368,7 @@ public class AlienCall : MonoBehaviour
                 //Debug.Log("BossOne"+BossOne);
 
                 // ドアのアニメーションを行う
-                //SetdoorAnimationFlag(true);
+                SetdoorAnimationFlag(true);
 
                 // ドアがオープンした時のSE
                 //Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Open), 0);

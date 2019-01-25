@@ -74,6 +74,7 @@ MonoBehaviour:
   - {fileID: 1654945856123380, guid: 1d5a85434fcae434fb523ada267643e2, type: 2}
   - {fileID: 1274329971436290, guid: 14c27ce28e4f24c49ab85e0254dd803c, type: 2}
   - {fileID: 1973525631876150, guid: 35c45101a924da4459b9222c65d74a34, type: 2}
+  - {fileID: 1973525631876150, guid: 64e549cf7922a354287d0d708e8e78db, type: 2}
   coinFoObj: {fileID: 1029317096598590, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
   counterSeatsMax: 6
   alienMax: 50
