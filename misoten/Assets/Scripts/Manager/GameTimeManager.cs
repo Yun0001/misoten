@@ -154,6 +154,8 @@ public class GameTimeManager : MonoBehaviour {
 
 		if(UI_GameFinish.gameEndFlag)
 		{
+            SoundController.StopAllSE();
+
 			isTimeUp = true;
 			Sound.SetVolumeSe(SoundController.GetGameSEName(SoundController.GameSE.Endannouncement), 0.5f, 10);
 			Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Endannouncement), 10);

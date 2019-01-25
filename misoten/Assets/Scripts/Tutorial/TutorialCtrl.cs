@@ -288,8 +288,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success),12);
                     }
                 }
                 break;
@@ -299,8 +302,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -310,8 +316,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -321,8 +330,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Catering)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;
@@ -334,8 +346,11 @@ public class TutorialCtrl : MonoBehaviour
                     {
                         if (player.GetComponent<Player>().IsObjectCollision(PlayerCollision.hitObjName.Mixer).GetComponent<Mixer>().GetStatus() == Mixer.Status.End)
                         {
+                            if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                            {
+                                Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                            }
                             player.GetComponent<TutorialPlayer>().OnComplete();
-                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                         }
                     }
                 }
@@ -346,8 +361,11 @@ public class TutorialCtrl : MonoBehaviour
                 {
                     if (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Normal)
                     {
+                        if (!(player.GetComponent<TutorialPlayer>().IsComplete()))
+                        {
+                            Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
+                        }
                         player.GetComponent<TutorialPlayer>().OnComplete();
-                        Sound.PlaySe(SoundController.GetMenuSEName(SoundController.MenuSE.tutorial_success), 12);
                     }
                 }
                 break;

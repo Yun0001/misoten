@@ -153,10 +153,24 @@ public class GrilledGage : MonoBehaviour {
 
     public void ResetPosition()
     {
-        for (int i = 0; i < successAreaGroup.Length; i++)
+        Vector3 pos = new Vector3(0, 0, 0);
+
+        if (_isTutorialMode == true)
         {
-            Vector3 pos = transform.position;
-            successAreaGroup[i].transform.position= pos;
+            for (int i = 0; i < successAreaGroup.Length; i++)
+            {
+                pos = this.transform.GetChild(0).position;
+                pos.z -= 0.1f;
+                successAreaGroup[i].transform.position = pos;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < successAreaGroup.Length; i++)
+            {
+                pos = transform.position;
+                successAreaGroup[i].transform.position = pos;
+            }
         }
     }
     
