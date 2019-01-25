@@ -62,7 +62,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
         foreach (Transform effect in _haveEatoy.transform)
         {
             effect.gameObject.GetComponent<ParticleSystem>().Play();
-            effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = true;
+            effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = false;
         }
 
     }

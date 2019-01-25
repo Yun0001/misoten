@@ -108,7 +108,12 @@ public class Player : MonoBehaviour
     {
         scriptStructure.GetState().InputState();
         scriptStructure.GetState().UpdateState();
-        scriptStructure.GetHaveEatoyCtrl().HaveEatoy(0);
+
+
+        if (scriptStructure.GetHaveInEatoy().GetHaveInEatoy() != null)
+        {
+            scriptStructure.GetHaveEatoyCtrl().HaveEatoy(scriptStructure.GetHaveInEatoy().GetHaveInEatoy().GetComponent<Eatoy>().GetSpriteState());
+        }
 
         // 移動量セット
         scriptStructure.GetMove().SetMove(new Vector3(Input.GetAxis(controllerInformation.XAxis), 0, -(Input.GetAxis(controllerInformation.YAxis))));
