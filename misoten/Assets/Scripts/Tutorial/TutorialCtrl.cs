@@ -83,18 +83,23 @@ public class TutorialCtrl : MonoBehaviour
             // ミキサーと最後は以外スキップ可能
             if ((CURRENT_TUTORIAL_STATE != Tutorial.NO_5) && (CURRENT_TUTORIAL_STATE != Tutorial.NO_7))
             {
-                bool b = player.GetComponent<TutorialPlayer>().IsSkip();
-                if (!b)
+                // 調理中以外のみスキップ可能
+                if ((player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.Normal) ||
+                    (player.GetComponent<Player>().GetPlayerStatus() == Player.PlayerStatus.CateringIceEatoy))
                 {
-                    if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+                    bool b = player.GetComponent<TutorialPlayer>().IsSkip();
+                    if (!b)
                     {
-                        // skip なったら　それ以降　ずっとスキップ              
-                        player.GetComponent<TutorialPlayer>().SetIsSkip(true);
+                        if (player.GetComponent<Player>().InputDownButton(GamePad.Button.RightShoulder))
+                        {
+                            // skip なったら　それ以降　ずっとスキップ              
+                            player.GetComponent<TutorialPlayer>().SetIsSkip(true);
+                        }
                     }
-                }
-                else
-                {
-                    player.transform.position = _playerInitPos[i];
+                    else
+                    {
+                        player.transform.position = _playerInitPos[i];
+                    }
                 }
             }
 
@@ -441,6 +446,8 @@ public class TutorialCtrl : MonoBehaviour
         {
             foreach (GameObject player in _players)
             {
+                player.GetComponent<Player>().SetPlayerStatus(Player.PlayerStatus.Normal);
+                player.GetComponent<TutorialPlayer>().UnSkip();
                 player.GetComponent<TutorialPlayer>().OnComplete();
             }
         }
