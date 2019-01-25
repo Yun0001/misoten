@@ -2054,6 +2054,7 @@ MonoBehaviour:
   - {fileID: 1188659386756940}
   - {fileID: 1963335189483704}
   judgeCount: 2
+  judgeCountBoss: 0.5
   happyPoint:
   - 100
   - 1000

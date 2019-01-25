@@ -295,7 +295,8 @@ public class AlienCall : MonoBehaviour
             //Debug.Log("latencyAdd"+inAlienTime);
             //Debug.Log("BossFlag"+BossFlag.GetBossFlag());
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag() == false && BossFlag.GetNormalAlientime()>2)
+			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag() == false 
+                && BossFlag.GetNormalAlientime()>2 && BossFlag.GetBossInFlag()==false)
 			{
                 //Debug.Log("NNNN");
 				// ドアのアニメーションを行う

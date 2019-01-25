@@ -648,14 +648,14 @@ public class AlienOrder : MonoBehaviour
                         //OrderType(false);
                          if(BossFlag.GetBossFlag()==true)
                         {
-                            OrderTypeBoss(false);
+                            //OrderTypeBoss(false);
                         }
                         else
                         {
-                             OrderType(false);   
+                            OrderType(false);                            
+					        playerBalloon[id].SetActive(true);
                         } 
 						
-						playerBalloon[id].SetActive(true);
 					}
 					break;
 				case (int)EOrderType.CHANGE:
@@ -665,13 +665,13 @@ public class AlienOrder : MonoBehaviour
 						//OrderType(false);
                         if(BossFlag.GetBossFlag()==true)
                         {
-                            OrderTypeBoss(false);
+                            //OrderTypeBoss(false);
                         }
                         else
                         {
-                             OrderType(false);   
+                            OrderType(false);   
+					    	playerBalloon[id].SetActive(true);
                         } 
-						playerBalloon[id].SetActive(true);
 					}
 					break;
 				default: break;

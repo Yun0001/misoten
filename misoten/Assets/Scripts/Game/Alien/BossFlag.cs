@@ -9,10 +9,13 @@ public class BossFlag : MonoBehaviour {
     float count;
     static float countMax =5;
     private static bool bossFlag = false;
+    private static bool bossInFlag = false;
+
     public static bool offbossFlag =false; //ボス終了退避フラグ
+    private bool bossVibrationFlag =false;
     
     static bool bossActiveTimeFlag = false;
-    public static float normalAlientime = 3;
+    public static float normalAlientime = 5;
     static bool oneActiveSelf =false;
 
     [SerializeField]
@@ -30,12 +33,12 @@ public class BossFlag : MonoBehaviour {
     [SerializeField]
     private int bossActiveDifferece ;
 
-    float height=2; //落下高さ
-    float g =1.0f; //加速度
-    float damping=0.5f;  //減衰
+    [SerializeField] float height=0.8f; //落下高さ
+    [SerializeField] float g =0.8f; //加速度
+    [SerializeField] float damping=0.99f;  //減衰
     float dy; //y方向の速度
     int r = 0; // 円の半径
-    float timeleft;
+    float timeleft=0;
 
 	// Use this for initialization
 	void Start () {
@@ -54,7 +57,9 @@ public class BossFlag : MonoBehaviour {
     {
        //Debug.Log("boss"+BossFlag.GetBossFlag());
        bossFlag = false;
+       bossInFlag =false;
        offbossFlag =false;
+       bossVibrationFlag =false;
        //CreateAlien_Stop();
     }
 	
@@ -106,6 +111,8 @@ public class BossFlag : MonoBehaviour {
         BossActiveTime();
         BossActive();
         //BossSetLeaving();//ToDo　退避仮置き
+        
+        //画面揺らす処理
         //BossVibration();
 
         //if (aliensRestartFlag)
@@ -149,10 +156,6 @@ public class BossFlag : MonoBehaviour {
         //GetComponent<AlienCall>().AliensMaxBefore();
     }
 
-    //ボスフラグ
-    public static bool GetBossFlag() => bossFlag;
-
-    public static float GetNormalAlientime() =>normalAlientime;
 
    //ボス出現開始時間
     private void BossActiveTime()
@@ -163,6 +166,8 @@ public class BossFlag : MonoBehaviour {
         if(gameTimeManager.GetCountTime()<=bossActiveTime && bossActiveTimeFlag ==false)
         {
             bossFlag = true;
+            bossInFlag =true;
+            bossVibrationFlag =true;
             //ToDo　演出追加
             //Debug.Log("ボス出現開始" );
 
@@ -184,6 +189,8 @@ public class BossFlag : MonoBehaviour {
             {
                 BossAlien.SetActive(true);
                 oneActiveSelf =true;
+                
+                //GetComponent<AlienCall>().BossOne=false;
             }
         }
 
@@ -228,7 +235,7 @@ public class BossFlag : MonoBehaviour {
 
     public void BossVibration()
     {
-        if(bossFlag==true)
+        if(bossFlag==true &&bossVibrationFlag ==true)//&&bossVibrationFlag ==true
         {
             //カメラ揺らす
             //CameraObjTransform.position.y +=1.0f ;
@@ -242,24 +249,51 @@ public class BossFlag : MonoBehaviour {
                 pos = CameraObj.transform.position;
 
                 dy = dy + g; //加速度による速度の変化を計算
-                pos.y= pos.y + dy;     //ｙ座標を動かす
-                Debug.Log("dy"+dy);
-                if (pos.y>height-r) { //下の壁
-                pos.y = height-r;  //めり込み調整
+                pos.y= pos.y + dy;     //ｙ座標を動かす                
+                if (pos.y>height) { //下の壁
+                pos.y = height-0.2f;  //めり込み調整
                 dy = -dy * damping;
-                    if (System.Math.Abs(dy)<=g/2) { //ほぼ止まった
+                Debug.Log("dy"+dy);                    
+                //Debug.Log("g/2:"+(g/2+0.2f));
+                    if (System.Math.Abs(dy)<=(0.2843f)) { //ほぼ止まった
                         dy=0; 
                         pos.y=0;
                         //ToDoフラグ立てる
+                        //一度だけ通る
+                        bossVibrationFlag =false;                     
+                        
                     }
                 }
+                CameraObj.transform.position = pos;
+             
+            }
+            else
+            {                
+                //CameraObj.transform.position = pos;
+                //Debug.Log("pos.y"+pos.y);
             }
 
-            CameraObj.transform.position = pos;
-            Debug.Log("pos.y"+pos.y);
         }
+       
+        if(bossVibrationFlag == false)
+        {
+            //pos= CameraObj.transform.position;           
+            pos.y= 0;
+            CameraObj.transform.position = pos;
+            
+        }
+        //Debug.Log("pos.y"+pos.y);
+        Debug.Log("bossVibrationFlag"+bossVibrationFlag);
       
     }
+
+    
+    //ボスフラグ
+    public static bool GetBossFlag() => bossFlag;
+
+    public static float GetNormalAlientime() =>normalAlientime;
+
+    public static bool GetBossInFlag() => bossInFlag;
 
     public static bool SetBossFlag() => bossFlag = !bossFlag;
 }
