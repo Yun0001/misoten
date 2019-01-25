@@ -67,7 +67,7 @@ MonoBehaviour:
   - 20
   - 15
   - 10
-  BossAlien: {fileID: 1028604962992686}
+  BossAlien: {fileID: 0}
 --- !u!114 &114987319750724858
 MonoBehaviour:
   m_ObjectHideFlags: 1

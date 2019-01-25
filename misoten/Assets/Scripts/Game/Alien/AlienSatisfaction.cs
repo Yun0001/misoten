@@ -42,6 +42,9 @@ public class AlienSatisfaction : MonoBehaviour
 	[SerializeField]
 	private float[] happyPoint = new float[4];
 
+        [SerializeField]
+    private GameObject gameTimeManager;
+
 	// ---------------------------------------------
 
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
@@ -280,7 +283,8 @@ public class AlienSatisfaction : MonoBehaviour
             //sta=true;
             //一度だけ通る
             BossFlag.offbossFlag =false;
-        }  
+           
+           }  
 
             ////仮置き
             ////ToDo　エフェクト　boss 注文時false にする

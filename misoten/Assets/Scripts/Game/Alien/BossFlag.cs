@@ -80,20 +80,12 @@ public class BossFlag : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //デバッグ用
-        //if (Input.GetKeyDown("0"))
-        //{
-        //    bossFlag = true;
-            
-        //}
-        //if (Input.GetKeyDown("9"))
-        //{
-
-        //    bossFlag = false;  
-        //}
-
-
-
-        
+        if (Input.GetKeyDown("0"))
+        {
+            bossFlag = true;
+                   
+        }
+        BossKnockDown();
         BossActiveTime();
         BossActive();
         //BossSetLeaving();//ToDo　退避仮置き
@@ -106,10 +98,17 @@ public class BossFlag : MonoBehaviour {
 
  
 
-    private void CreateAlien_Stop()
+    public void BossKnockDown()
     {
+        if(bossFlag ==false 
+            && bossActiveTimeFlag == true 
+            && offbossFlag == false
+            && AliensBoss.bossEatCount<=0)
+        {
+              gameTimeManager.GetComponent<GameTimeManager>().SetBossKnockDownFlag();
+        }
         //GetComponent<AlienCall>().AlienLeaving();    
-
+   
     }
 
     //ToDo　ノーマル再出現　修正箇所
@@ -117,15 +116,8 @@ public class BossFlag : MonoBehaviour {
     {
 
         normalAlientime += Time.deltaTime;
-        bossFlag =false;
-
-       
+        bossFlag =false; 
         
-    }
-
-    private void AliensMax()
-    {
-        //GetComponent<AlienCall>().AliensMaxBefore();
     }
 
 
@@ -184,7 +176,7 @@ public class BossFlag : MonoBehaviour {
     }
 
     //ボス終了処理
-    public static void BossSetLeaving()
+    static public void BossSetLeaving()
     {
         if(bossFlag ==false 
             && bossActiveTimeFlag == true 
@@ -195,6 +187,7 @@ public class BossFlag : MonoBehaviour {
             offbossFlag=true;
             //AlienCall.BossOne = false;
             Debug.Log("退避" );
+                       
         }
         //Debug.Log("bossFlag" +bossFlag);
         //Debug.Log("bossActiveTimeFlag" +bossActiveTimeFlag);

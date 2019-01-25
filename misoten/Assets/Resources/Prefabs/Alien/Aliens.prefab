@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4001809297896722}
   - component: {fileID: 114288204586445500}
   - component: {fileID: 114949635093223006}
-  - component: {fileID: 114761001999178314}
+  - component: {fileID: 114274843090449450}
   m_Layer: 0
   m_Name: Aliens
   m_TagString: Untagged
@@ -42,6 +42,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114274843090449450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225047108596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c480cc798735bdb4a91c2b45533825b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossAlien: {fileID: 0}
+  bossActiveTime: 178
+  bossActiveDifferece: 10
+  height: 0.8
+  g: 0.8
+  damping: 0.99
 --- !u!114 &114288204586445500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -57,8 +74,8 @@ MonoBehaviour:
   - {fileID: 1654945856123380, guid: 1d5a85434fcae434fb523ada267643e2, type: 2}
   - {fileID: 1274329971436290, guid: 14c27ce28e4f24c49ab85e0254dd803c, type: 2}
   - {fileID: 1973525631876150, guid: 35c45101a924da4459b9222c65d74a34, type: 2}
-  coinFoObj: {fileID: 0}
-  counterSeatsMax: 7
+  coinFoObj: {fileID: 1029317096598590, guid: 3f5e51f6bd586534086b7da1a587ab31, type: 2}
+  counterSeatsMax: 6
   alienMax: 50
   enterShop: 5
   period: 30
@@ -67,18 +84,6 @@ MonoBehaviour:
   - 20
   - 15
   - 10
-  BossAlien: {fileID: 1028604962992686, guid: c3441501a72237341b35649322efa609, type: 2}
---- !u!114 &114761001999178314
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1225047108596162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c1ef39233dba94b9bca7e32aae2bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   BossAlien: {fileID: 0}
 --- !u!114 &114949635093223006
 MonoBehaviour:

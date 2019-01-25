@@ -2060,6 +2060,8 @@ MonoBehaviour:
   - 1000
   - 10000
   - 100000
+  gameTimeManager: {fileID: 1553323503464946, guid: 522770742dbc96d4095c93b1a8971d02,
+    type: 2}
 --- !u!114 &114179082975516320
 MonoBehaviour:
   m_ObjectHideFlags: 1
