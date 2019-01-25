@@ -120,6 +120,9 @@ public class AlienCall : MonoBehaviour
 	// イベントエイリアン用フラグ
 	private static bool[] eventAlienCallFlag = { false, false, false, false, false, false };
 
+    // オーラフラグの初期化
+	private static bool[] bossAuraFlag = { false, false, false, false, false, false };
+
 	// ドアのアニメーションフラグ
 	private static bool doorAnimationFlag = true;
 
@@ -410,6 +413,13 @@ public class AlienCall : MonoBehaviour
 
             }
 
+            if(BossFlag.GetBossFlag()==true
+                && BossFlag.GetNormalAlientime()>2)
+            {
+                 bossAuraFlag[0] = true;
+                Debug.Log("ボスオーラ");
+            }
+
 		}
 		// 空いている席のIDになるまでこの処理を続ける
 		else { SetSeatAddId(Random.Range(0, GetCounterSeatsMax())); }
@@ -641,6 +651,21 @@ public class AlienCall : MonoBehaviour
 	/// <param name="seatId"></param>
 	/// <returns></returns>
 	public static bool SetAuraFlag(bool _is, int seatId) => auraFlag[seatId] = _is;
+
+    /// <summary>
+	/// ボスオーラフラグの取得
+	/// </summary>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool GetBossAuraFlag(int seatId) => bossAuraFlag[seatId];
+
+	/// <summary>
+	/// ボスオーラフラグの格納
+	/// </summary>
+	/// <param name="_is"></param>
+	/// <param name="seatId"></param>
+	/// <returns></returns>
+	public static bool SetBossAuraFlag(bool _is, int seatId) => bossAuraFlag[seatId] = _is;
 
 	/// <summary>
 	/// 席の状態を取得

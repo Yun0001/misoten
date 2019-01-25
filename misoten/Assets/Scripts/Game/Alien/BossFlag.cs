@@ -47,20 +47,23 @@ public class BossFlag : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+   
+       
+        gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
+        CameraObj = GameObject.Find("Camera");
+        CameraObjTransform = GameObject.Find("Camera").gameObject.GetComponent<Transform>(); 
+    }
+
+   void Awake()
+    {
+        //BossAlien = GameObject.Find("BossAlien");
+
         aliensRestartFlag = false;
         restartTime = 5;
         count =5;
         bossActiveTimeFlag = false;
         oneActiveSelf =false;
-       
-        gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
-        CameraObj = GameObject.Find("Camera");
-        CameraObjTransform = GameObject.Find("Camera").gameObject.GetComponent<Transform>(); 
-        BossAlien = GameObject.Find("BossAlien");
-    }
 
-   void Awake()
-    {
        //Debug.Log("boss"+BossFlag.GetBossFlag());
        bossFlag = false;
        bossInFlag =false;

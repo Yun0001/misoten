@@ -21,6 +21,7 @@ public class AlienParticleCall : MonoBehaviour
 		EAT,			// イート時
 		CHIPHANDOVER,	// チップを渡した時
 		AURA,			// オーラ
+        BOSSAURA,       // ボスオーラ
 		MAX				// 最大
 	}
 
@@ -78,6 +79,8 @@ public class AlienParticleCall : MonoBehaviour
 
 		// チェンジイートイを注文しているエイリアンのエフェクト
 		AuraEffectCall();
+
+        BossAuraEffectCall();
 
         //Todo
         if( (Input.GetKeyDown("i")))
@@ -314,6 +317,35 @@ public class AlienParticleCall : MonoBehaviour
 
 				// 一度しか通らないようにする
 				effectFlag[(int)EParticlePattern.AURA] = true;
+			}
+		}
+	}
+
+    /// <summary>
+	/// ボスエイリアンのエフェクト呼び出し関数
+	/// </summary>
+	void BossAuraEffectCall()
+	{
+		// 一度しか通らない
+		if (!effectFlag[(int)EParticlePattern.BOSSAURA])
+		{
+			// イベントエイリアンが出すエフェクト
+			if (AlienCall.GetBossAuraFlag(GetComponent<AlienOrder>().GetSetId()))
+			{
+				AlienCall.SetBossAuraFlag(false, GetComponent<AlienOrder>().GetSetId());
+
+				// パーティクル生成
+				particleSystems[(int)EParticlePattern.BOSSAURA] = Instantiate(prefab[(int)EParticlePattern.BOSSAURA], new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), Quaternion.identity) as ParticleSystem;
+				particleSystems[(int)EParticlePattern.BOSSAURA].transform.SetParent(transform);
+
+				// 拡縮設定
+				ScaleConfiguration(EParticlePattern.BOSSAURA, new Vector3(1.0f, 1.0f, 1.0f));
+
+				// パーティクル再生
+				particleSystems[(int)EParticlePattern.BOSSAURA].Play();
+
+				// 一度しか通らないようにする
+				effectFlag[(int)EParticlePattern.BOSSAURA] = true;
 			}
 		}
 	}
