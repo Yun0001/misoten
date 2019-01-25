@@ -213,11 +213,11 @@ public class AlienSatisfaction : MonoBehaviour
 					BalloonDraw();
 
                     //満足後の時間差
-                    if(BossFlag.GetBossFlag()==true)
-                    {
-                        // 時間の初期化
-                        satisfactionTimeAdd = 0.0f;
-                    }
+                    //if(BossFlag.GetBossFlag()==true)
+                    //{
+                    //    // 時間の初期化
+                    //    satisfactionTimeAdd = 0.0f;
+                    //}
 
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
@@ -265,7 +265,7 @@ public class AlienSatisfaction : MonoBehaviour
                     //sta=false;
                     chipGetFlag=true;
                 }  
-                Debug.Log("satisfactionTimeAdd" +satisfactionTimeAdd);
+                //Debug.Log("satisfactionTimeAdd" +satisfactionTimeAdd);
 
 				// 毎フレームの時間を加算
 				satisfactionTimeAdd += Time.deltaTime;

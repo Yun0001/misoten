@@ -229,6 +229,9 @@ public class AlienCall : MonoBehaviour
 
 			// 座っているかの判定(カウンター用)
 			orSitting[i] = false;
+            
+            //ボスオーラ初期化
+            bossAuraFlag[i] = false;
 		}
 
 		// イベントフラグの初期化
@@ -352,6 +355,7 @@ public class AlienCall : MonoBehaviour
 				}
 			}
             
+            
              //Debug.Log("BossOne" +BossOne);
             //ボス出現
             if( BossFlag.GetBossFlag()==true && BossOne==false)
@@ -429,7 +433,7 @@ public class AlienCall : MonoBehaviour
                 //    Debug.Log("ボスオーラ");
                 //}
             }
-
+            
 
 		}
 		// 空いている席のIDになるまでこの処理を続ける
