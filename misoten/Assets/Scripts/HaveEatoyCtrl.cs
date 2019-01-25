@@ -82,6 +82,11 @@ public class HaveEatoyCtrl : MonoBehaviour {
                 break;
         }
 
+        HaveEatoyRenderer();    // プレイヤーの状態によって、HaveEatoyの表示切替をするため、この関数をプレイヤーのアップデートで必ず呼び出してほしい。
+    }
+
+    public void HaveEatoyRenderer()
+    {
         OnTrun();
 
         //  プレイヤーが非表示なら非表示
@@ -108,7 +113,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
             return;
         }
 
-        
+
         _eatoyRenderer.enabled = true;
 
         // プレイヤーが持っているイートイが凍っているか判定
@@ -116,7 +121,7 @@ public class HaveEatoyCtrl : MonoBehaviour {
         {
             foreach (Transform effect in _haveEatoy.transform)
             {
-               
+
                 effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = true;
             }
         }
@@ -127,10 +132,8 @@ public class HaveEatoyCtrl : MonoBehaviour {
                 effect.gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer>().enabled = false;
             }
         }
-
-
-
     }
+
 
     void OnTrun()
     {

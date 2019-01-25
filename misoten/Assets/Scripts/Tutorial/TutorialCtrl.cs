@@ -101,6 +101,7 @@ public class TutorialCtrl : MonoBehaviour
             player.GetComponent<Player>().PlayerUpdate();
             i++;
         }
+        DebugKey();
 
         TutorialState();
         TutorialRenderer();
@@ -431,6 +432,19 @@ public class TutorialCtrl : MonoBehaviour
             player.GetComponent<PlayerAnimCtrl>().SetServing(true);
             player.GetComponent<Player>().GetAccessPossibleAnnounce_cs().HiddenSprite();
         }
+    }
+
+    void DebugKey()
+    {
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            foreach (GameObject player in _players)
+            {
+                player.GetComponent<TutorialPlayer>().OnComplete();
+            }
+        }
+
     }
 
 
