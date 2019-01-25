@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BossAlien: {fileID: 0}
-  bossActiveTime: 178
+  bossActiveTime: 70
   bossActiveDifferece: 10
   height: 0.8
   g: 0.8

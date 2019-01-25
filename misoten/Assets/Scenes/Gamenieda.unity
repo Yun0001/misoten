@@ -62398,6 +62398,11 @@ Prefab:
       propertyPath: BossAlien
       value: 
       objectReference: {fileID: 1334188529}
+    - target: {fileID: 114274843090449450, guid: 59f093799205bf542a84ec5ca550b520,
+        type: 2}
+      propertyPath: bossActiveTime
+      value: 70
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 59f093799205bf542a84ec5ca550b520, type: 2}
   m_IsPrefabParent: 0

@@ -55,8 +55,9 @@ public class BossFlag : MonoBehaviour {
        
         gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
         CameraObj = GameObject.Find("Camera");
-        CameraObjTransform = GameObject.Find("Camera").gameObject.GetComponent<Transform>();
-	}
+        CameraObjTransform = GameObject.Find("Camera").gameObject.GetComponent<Transform>(); 
+        BossAlien = GameObject.Find("BossAlien");
+    }
 
    void Awake()
     {

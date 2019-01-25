@@ -235,6 +235,8 @@ public class AlienCall : MonoBehaviour
 		eventAlienCallFlag[0] = eventAlienCallFlag[1] = eventAlienCallFlag[2] = false;
 	
         BossOne = false;
+
+        BossAlien = GameObject.Find("BossAlien");
     }
 
 	/// <summary>
