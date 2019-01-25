@@ -43,6 +43,8 @@ public class BossFlag : MonoBehaviour {
     int r; // 円の半径
     float timeleft;
 
+    private int Speed = 0;
+
 	// Use this for initialization
 	void Start () {
         aliensRestartFlag = false;
@@ -73,6 +75,8 @@ public class BossFlag : MonoBehaviour {
        dyCount=0;
        r = 0;
        timeleft=0;
+
+       Speed=1;
     }
 	
 
@@ -80,11 +84,18 @@ public class BossFlag : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //デバッグ用
-        if (Input.GetKeyDown("0"))
+        //if (Input.GetKeyDown("0"))
+        //{
+        //    bossFlag = true;
+                   
+        //}
+        if (Input.GetKeyDown("9"))
         {
-            bossFlag = true;
+            
+              Speed +=1;
                    
         }
+
         BossKnockDown();
         BossActiveTime();
         BossActive();
@@ -97,7 +108,7 @@ public class BossFlag : MonoBehaviour {
 	}
 
  
-
+    //残りスコア加算
     public void BossKnockDown()
     {
         if(bossFlag ==false 
@@ -105,6 +116,8 @@ public class BossFlag : MonoBehaviour {
             && offbossFlag == false
             && AliensBoss.bossEatCount<=0)
         {
+              Speed =5;
+              gameTimeManager.GetComponent<GameTimeManager>().SetTimeSpeed(Speed);
               gameTimeManager.GetComponent<GameTimeManager>().SetBossKnockDownFlag();
         }
         //GetComponent<AlienCall>().AlienLeaving();    
