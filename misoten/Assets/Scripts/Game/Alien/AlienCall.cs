@@ -79,6 +79,9 @@ public class AlienCall : MonoBehaviour
 	[SerializeField]
 	private float[] theRemainingTime = new float[3];
 
+    [SerializeField]
+    private GameObject BossAlien;
+
 	// ---------------------------------------------
 
 	// 他のスクリプトから関数越しで参照可能。一つしか存在しない
@@ -133,6 +136,9 @@ public class AlienCall : MonoBehaviour
 
 	// カウンター専用オブジェ
 	private GameObject[] counterDesignatedObj = new GameObject[6];
+
+    // カウンター専用オブジェ
+	private GameObject[] counterDesignatedObjBoss = new GameObject[0];
 
 	// スコアカウント
 	private ScoreCount scoreCount;
@@ -282,10 +288,16 @@ public class AlienCall : MonoBehaviour
 			else if (inAlienTime >= 10000000.0f) { inAlienTime = enterShop - 3.0f; }
 
             
-            //Todoボスフラグ追加
+            //Todo再登場フラグ追加
+            // Debug.Log("Normaltime()" +BossFlag.GetNormalAlientime());
+            //Debug.Log("alienNumber"+alienNumber);
+            //Debug.Log("alienMax"+alienMax);
+            //Debug.Log("latencyAdd"+inAlienTime);
+            //Debug.Log("BossFlag"+BossFlag.GetBossFlag());
 			// エイリアン数が指定最大数体以下及び、呼び出し時間を超えた場合、エイリアンが出現する
-			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag() == false)
+			if (alienNumber < alienMax && latencyAdd > inAlienTime && BossFlag.GetBossFlag() == false && BossFlag.GetNormalAlientime()>2)
 			{
+                //Debug.Log("NNNN");
 				// ドアのアニメーションを行う
 				SetdoorAnimationFlag(true);
 
@@ -333,17 +345,18 @@ public class AlienCall : MonoBehaviour
 					eventFlg = false;
 				}
 			}
-
+            
+             //Debug.Log("BossOne" +BossOne);
             //ボス出現
-            if( alienNumber < alienMax && BossFlag.GetBossFlag()==true && BossOne==false)
+            if( BossFlag.GetBossFlag()==true && BossOne==false)
             {
-                
+                 //Debug.Log("BBBB");
                 //一度しか通らないようにする
                 BossOne =true;
                 //Debug.Log("BossOne"+BossOne);
 
                 // ドアのアニメーションを行う
-				SetdoorAnimationFlag(true);
+				//SetdoorAnimationFlag(true);
 
 				// ドアがオープンした時のSE
 				//Sound.PlaySe(SoundController.GetGameSEName(SoundController.GameSE.Open), 0);
@@ -352,29 +365,39 @@ public class AlienCall : MonoBehaviour
 				TheNumberOfSecondsSet();
 
 				// エイリアンの種類設定
-				alienPattern[GetSeatAddId()] = EAlienPattern.BOSS;
+                alienPattern[GetSeatAddId()] = EAlienPattern.BOSS;
+				//alienPattern[0] = EAlienPattern.BOSS;
 
 				// エイリアン生成
 				counterDesignatedObj[GetSeatAddId()] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
 				counterDesignatedObj[GetSeatAddId()].transform.SetParent(transform);
+                //ToDoボス生成
+                //counterDesignatedObjBoss[0] = Instantiate(prefab[(int)alienPattern[GetSeatAddId()]], new Vector3(0.0f, 0.8f, 7.0f), Quaternion.identity) as GameObject;
+				//counterDesignatedObjBoss[0].transform.SetParent(transform);
+                
 
 				// 待機状態終了
 				AlienStatus.SetCounterStatusChangeFlag(false, GetSeatAddId(), (int)AlienStatus.EStatus.STAND);
+                //AlienStatus.SetCounterStatusChangeFlag(false, 0, (int)AlienStatus.EStatus.STAND);
+
 
 				// 訪問状態を「ON」にする
 				AlienStatus.SetCounterStatusChangeFlag(true, GetSeatAddId(), (int)AlienStatus.EStatus.VISIT);
+                //AlienStatus.SetCounterStatusChangeFlag(true, 0, (int)AlienStatus.EStatus.VISIT);
+
 
 				// その席が座られている状態にする
-				orSitting[GetSeatAddId()] = true;
+				orSitting[0] = true;
 
 				// 時間初期化
 				latencyAdd = 0.0f;
 
                 // エイリアン数の更新
-                alienNumber++;
+                // alienNumber++;
 
 				// エイリアンIDの保存
 				idSave = GetSeatAddId();
+				//idSave = 0;
 
 				// ステータス初期化
 				GetComponent<AlienStatus>().StatusInit(idSave);
@@ -460,13 +483,16 @@ public class AlienCall : MonoBehaviour
 				if (GameTimeManager.eventAlienFlg && eventAlienCallFlag[i]) { GameTimeManager.eventAlienFlg = false; }
 			}
 
+            //Debug.Log("counterDesi" +counterDesignatedObj[i]);
             //TODO退出削除
-            if(AlienMove.LeavingStoreFlag[i]&&BossFlag.GetBossFlag())
+            //AlienMove.LeavingStoreFlag[i]
+            if(AlienMove.GetCounterClosedCompletion(i)&&BossFlag.GetBossFlag())
             {
-                //Debug.Log("エイリアン削除"); 
+                Debug.Log("エイリアン削除"); 
                 // エイリアン削除
                 Destroy(counterDesignatedObj[i]);
                 AlienMove.LeavingStoreFlag[i] = false;
+
             }
 		}
 	}

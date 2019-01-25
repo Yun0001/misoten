@@ -34,6 +34,10 @@ public class AlienSatisfaction : MonoBehaviour
 	[SerializeField, Range(1.0f, 10.0f)]
 	private float judgeCount;
 
+    // ボス満足後を行う時間
+	[SerializeField, Range(0.5f, 10.0f)]
+	private float judgeCountBoss;
+
 	// 各満足時のポイント設定
 	[SerializeField]
 	private float[] happyPoint = new float[4];
@@ -205,6 +209,13 @@ public class AlienSatisfaction : MonoBehaviour
 					// 満足吹き出しの描画を行う
 					BalloonDraw();
 
+                    //満足後の時間差
+                    if(BossFlag.GetBossFlag()==true)
+                    {
+                        // 時間の初期化
+                        satisfactionTimeAdd = 0.0f;
+                    }
+
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
 				}
@@ -227,10 +238,13 @@ public class AlienSatisfaction : MonoBehaviour
                     
                 }
                 //ボス再オーダー設定
-                if(BossFlag.GetBossFlag()==true&&sta ==true)
+                if(BossFlag.GetBossFlag()==true&&sta ==true　)//&& satisfactionTimeAdd >= judgeCountBoss
                 {
+                    //満足度の吹き出し(OFF)
+                    for(int i = 0; i < 4; i++) { satisfactionBalloon[i].SetActive(false); }
+
                     // エイリアンIDの保存
-		        	idBoss = AlienCall.GetSeatAddId();
+		        	//idBoss = AlienCall.GetSeatAddId();
                     //Debug.Log("idBoss"+idBoss);
                     // ステータス初期化
 			        //GetComponent<AlienStatus>().StatusInit(idBoss);
@@ -238,7 +252,7 @@ public class AlienSatisfaction : MonoBehaviour
                     // エイリアンが満足初期化
 		            GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
 
-                    GetComponent<AlienOrder>().OrderType(true);
+                    //GetComponent<AlienOrder>().OrderType(true);
                     AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
                     GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
                     GetComponent<BoxCollider>().enabled = true;
@@ -248,6 +262,7 @@ public class AlienSatisfaction : MonoBehaviour
                     //sta=false;
                     chipGetFlag=true;
                 }  
+                Debug.Log("satisfactionTimeAdd" +satisfactionTimeAdd);
 
 				// 毎フレームの時間を加算
 				satisfactionTimeAdd += Time.deltaTime;

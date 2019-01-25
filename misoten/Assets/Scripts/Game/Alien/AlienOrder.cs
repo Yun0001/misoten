@@ -67,6 +67,8 @@ public class AlienOrder : MonoBehaviour
 	[SerializeField]
 	private float eatingCount;
 
+    private float originEatingCount;
+
 	// 各エイリアンの注文タイプの確率用
 	[SerializeField, Range(2, 99)]
 	private int eachAlienOrderTypeValue = 0;
@@ -167,6 +169,8 @@ public class AlienOrder : MonoBehaviour
 
 		// 注文するまでの時間の初期化
 		orderTimeAdd = 0.0f;
+
+        originEatingCount =eatingCount;
 }
 
 	/// <summary>
@@ -179,6 +183,8 @@ public class AlienOrder : MonoBehaviour
 		{
 			// イートアニメーションになる
 			GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
+            //Debug.Log ("食べてる");
+
 
 			// 当たり判定が消える
 			GetComponent<BoxCollider>().enabled = false;
@@ -190,7 +196,13 @@ public class AlienOrder : MonoBehaviour
 				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 				statusMoveFlag = true;
 				AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
-			}
+			
+                if(BossFlag.GetBossFlag()==true)
+                {
+                    eatingCount = originEatingCount;
+                }
+                
+            }
 			else { eatingCount -= Time.deltaTime; }
 		}
 
@@ -201,16 +213,31 @@ public class AlienOrder : MonoBehaviour
 		if (AlienCall.alienCall.GetCoinFoObj().GetComponent<CoinFO>().GetIsStartingCoinFO())
 		{
 			// 注文したものを非アクティブにする(吹き出し)
-			OrderType(false);
+			if(BossFlag.GetBossFlag()==true)
+            {
+                OrderTypeBoss(false);
+            }
+            else
+            {
+                 OrderType(false);   
+            }         
+                           
 		}
         //TODO 再注文仮置き
-        if (Input.GetKeyDown("8"))
-        {
-            // EAT状態が「ON」になる
-			 AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+        //if (Input.GetKeyDown("8"))
+        //{
+        //    // EAT状態が「ON」になる
+        //     AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
 
-             CounterOrder();
-        }
+        //     CounterOrder();
+        //}
+
+        //if (Input.GetKeyDown("8"))
+        //{
+        //    // イートアニメーションになる
+        //    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
+
+        //}
 	}
 
 	/// <summary>
@@ -228,7 +255,15 @@ public class AlienOrder : MonoBehaviour
 				|| GetComponent<AlienMove>().GetWhenLeavingStoreFlag())
 			{
 				// 注文したものを非アクティブにする(吹き出し)
-				OrderType(false);
+				//OrderType(false);
+                 if(BossFlag.GetBossFlag()==true)
+                {
+                     OrderTypeBoss(false);
+                }
+                else
+                {
+                     OrderType(false);   
+                }     
 			}
 
 			// エイリアンがクレームを終えて、既に注文をしているエイリアンの注文内容を
@@ -240,14 +275,30 @@ public class AlienOrder : MonoBehaviour
 				&& !AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.CLAIM))
 			{
 				// 注文したものをアクティブにする(吹き出し)
-				OrderType(true);
+				//OrderType(true);
+                if(BossFlag.GetBossFlag()==true)
+                {
+                    OrderTypeBoss(true);
+                }
+                else
+                {
+                     OrderType(true);   
+                }     
 			}
 
 			// 食べる状態の時
 			if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 			{
 				// 注文したものを非アクティブにする(吹き出し)
-				OrderType(false);
+				//OrderType(false);
+                     if(BossFlag.GetBossFlag()==true)
+                    {
+                        OrderTypeBoss(false);
+                    }
+                    else
+                    {
+                         OrderType(false);   
+                    } 
                 //ToDo　ボス料理再注文
                 orderTimeAdd =0;
 			}
@@ -263,7 +314,15 @@ public class AlienOrder : MonoBehaviour
 					OrderSet();
 
 					// 注文したものをアクティブにする(吹き出し)
-					OrderType(true);
+					//OrderType(true);
+                    if(BossFlag.GetBossFlag()==true)
+                    {
+                        OrderTypeBoss(true);
+                    }
+                    else
+                    {
+                         OrderType(true);   
+                    } 
 
 					// 注文状態「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.ORDER);
@@ -296,11 +355,32 @@ public class AlienOrder : MonoBehaviour
 			// 「0」になるまで、注文内容を描画する
 			if (orderPlanDispCount <= 0.0f)
 			{
-				OrderType(false);
+				//OrderType(false);
+                if(BossFlag.GetBossFlag()==true)
+                {
+                    OrderTypeBoss(false);
+                }
+                else
+                {
+                     OrderType(false);   
+                } 
 				AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.SCREEN_OUT);
 				AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.GETON);
 			}
-			else { OrderType(true); orderPlanDispCount -= Time.deltaTime; }
+			else 
+            {
+                //OrderType(true);
+                if(BossFlag.GetBossFlag()==true)
+                {
+                    OrderTypeBoss(false);
+                }
+                else
+                {
+                     OrderType(false);   
+                } 
+                 
+                orderPlanDispCount -= Time.deltaTime; 
+            }
 		}
 	}
 
@@ -421,7 +501,7 @@ public class AlienOrder : MonoBehaviour
 		if (orderTrend >= 51 && orderTrend <= 100) { orderChangeSave = (int)change2; orderType = (int)EOrderType.CHANGE; return; }
 	}
 
-    //ToDo ボスオーダーtureでもう一度呼ぶ
+    
 	/// <summary>
 	/// オーダーの種類関数
 	/// </summary>
@@ -441,6 +521,34 @@ public class AlienOrder : MonoBehaviour
 				break;
 			default: break;
 		}
+	}
+
+    //ToDo ボスオーダーtureでもう一度呼ぶ
+	/// <summary>
+	/// ボスオーダーの種類関数
+	/// </summary>
+	/// <param name="value"></param>
+	public void OrderTypeBoss(bool value)
+	{
+		// オーダーの種類管理
+        //switch (orderType)
+        //{
+        //    case (int)EOrderType.BASE:
+        //        // 注文内容を描画・非描画する(ベース用)
+        //        orderBalloon[orderBaseSave].SetActive(value);
+        //        break;
+        //    case (int)EOrderType.CHANGE:
+        //        // 注文内容を描画・非描画する(チェンジ用)
+        //        orderBalloon[orderChangeSave].SetActive(value);
+        //        break;
+        //    default: break;
+        //}
+        for(int i=1 ;i<=6;i++)
+        {
+            // 注文内容を描画・非描画する(全て)
+	    	orderBalloon[i].SetActive(value);
+
+        }
 	}
 
 	/// <summary>
@@ -464,12 +572,28 @@ public class AlienOrder : MonoBehaviour
 			switch (orderType)
 			{
 				case (int)EOrderType.BASE:
-					if (individualOrderBaseType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
-					else { Claim(eatoy); }
+                    //ボスフラグ中、必ず満足する
+                    if(BossFlag.GetBossFlag()==false)
+                    {
+		                if (individualOrderBaseType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+					    else { Claim(eatoy); }
+                    }else{
+                         if (individualOrderBaseType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+                         else { Satisfaction(eatoy);  }
+                    }
+			
 					break;
 				case (int)EOrderType.CHANGE:
-					if (individualOrderChangeType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
-					else { Claim(eatoy); }
+                    //ボスフラグ中、必ず満足する
+                    if(BossFlag.GetBossFlag()==false)
+                    {
+					    if (individualOrderChangeType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+					    else { Claim(eatoy); }
+                     }else{
+                        if (individualOrderChangeType == (int)eatoy.GetComponent<Eatoy>().GetEatoyColor()) { Satisfaction(eatoy); }
+					    else {  Satisfaction(eatoy); }
+                     }
+
 					break;
 				default: break;
 			}
@@ -521,7 +645,16 @@ public class AlienOrder : MonoBehaviour
 					if (individualOrderBaseType == IsPlayerEatoy(id))
 					{
 						// 注文したものを非アクティブにする(吹き出し)
-						OrderType(false);
+                        //OrderType(false);
+                         if(BossFlag.GetBossFlag()==true)
+                        {
+                            OrderTypeBoss(false);
+                        }
+                        else
+                        {
+                             OrderType(false);   
+                        } 
+						
 						playerBalloon[id].SetActive(true);
 					}
 					break;
@@ -529,7 +662,15 @@ public class AlienOrder : MonoBehaviour
 					if (individualOrderChangeType == IsPlayerEatoy(id))
 					{
 						// 注文したものを非アクティブにする(吹き出し)
-						OrderType(false);
+						//OrderType(false);
+                        if(BossFlag.GetBossFlag()==true)
+                        {
+                            OrderTypeBoss(false);
+                        }
+                        else
+                        {
+                             OrderType(false);   
+                        } 
 						playerBalloon[id].SetActive(true);
 					}
 					break;

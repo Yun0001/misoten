@@ -12,6 +12,7 @@ public class AlienResultAnimation : MonoBehaviour
 		MARTIAN = 0,
 		MERCURY,
 		VENUSIAN,
+        Boss,
 		MAX
 	}
 
@@ -30,6 +31,8 @@ public class AlienResultAnimation : MonoBehaviour
 	private string[] textureName1 = { "Textures/Alien/Wait/Martian/1", "Textures/Alien/Satisfaction/Martian/1", "Textures/Alien/Wait/Martian/1", "Textures/Alien/Satisfaction/Martian/1" };
 	private string[] textureName2 = { "Textures/Alien/Wait/Mercury/1", "Textures/Alien/Satisfaction/Mercury/1", "Textures/Alien/Wait/Mercury/1", "Textures/Alien/Satisfaction/Mercury/1" };
 	private string[] textureName3 = { "Textures/Alien/Wait/Venusian/1", "Textures/Alien/Satisfaction/Venusian/1", "Textures/Alien/Wait/Venusian/1", "Textures/Alien/Satisfaction/Venusian/1" };
+    private string[] textureName4 = { "Textures/Alien/Wait/Boss/1", "Textures/Alien/Satisfaction/Boss/1", "Textures/Alien/Wait/Boss/1", "Textures/Alien/Satisfaction/Boss/1" };
+
 
 	// スプライト
 	public Sprite[,,] sprite = new Sprite[(int)EAlienPattern.MAX, 2, ANIMATION_NUM];
@@ -51,6 +54,9 @@ public class AlienResultAnimation : MonoBehaviour
 				break;
 			case EAlienPattern.VENUSIAN:
 				AnimationSpriteLoad(2, textureName3);
+				break;
+            case EAlienPattern.Boss:
+				AnimationSpriteLoad(3, textureName4);
 				break;
 			default: break;
 		}

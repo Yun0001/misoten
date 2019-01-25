@@ -12,17 +12,30 @@ public class BossFlag : MonoBehaviour {
     public static bool offbossFlag =false; //ボス終了退避フラグ
     
     static bool bossActiveTimeFlag = false;
+    public static float normalAlientime = 3;
+    static bool oneActiveSelf =false;
 
     [SerializeField]
     private GameObject BossAlien;
+
+    private GameObject CameraObj;
+    private Transform CameraObjTransform;
+    private Vector3 pos;
 
     // ゲーム制限時間スクリプト変数
 	GameTimeManager gameTimeManager;
 
     [SerializeField]
-    private int bossActiveTime = 176;
+    private int bossActiveTime ;
     [SerializeField]
-    private int bossActiveDifferece = 3;
+    private int bossActiveDifferece ;
+
+    float height=2; //落下高さ
+    float g =1.0f; //加速度
+    float damping=0.5f;  //減衰
+    float dy; //y方向の速度
+    int r = 0; // 円の半径
+    float timeleft;
 
 	// Use this for initialization
 	void Start () {
@@ -30,9 +43,11 @@ public class BossFlag : MonoBehaviour {
         restartTime = 5;
         count =5;
         bossActiveTimeFlag = false;
+        oneActiveSelf =false;
        
         gameTimeManager = GameObject.Find("TimeManager").gameObject.GetComponent<GameTimeManager>();
-
+        CameraObj = GameObject.Find("Camera");
+        CameraObjTransform = GameObject.Find("Camera").gameObject.GetComponent<Transform>();
 	}
 
    void Awake()
@@ -61,6 +76,20 @@ public class BossFlag : MonoBehaviour {
             bossFlag = false;  
             //offbossFlag =true;
         }
+
+        //if (Input.GetKeyDown("6"))
+        //{
+        //    //非アクティブ化
+        //    if (BossAlien.gameObject.activeSelf == true)
+        //    {
+        //        BossAlien.SetActive(false);
+        //    }
+        //    BossAlien.SetActive(false);
+        //    Debug.Log("BossAlien");
+        //}
+
+
+
         //Debug.Log("bossFlag"+bossFlag);
 
         //if(bossFlag = true)
@@ -76,8 +105,8 @@ public class BossFlag : MonoBehaviour {
         
         BossActiveTime();
         BossActive();
-        BossSetLeaving();//ToDo　退避仮置き
-
+        //BossSetLeaving();//ToDo　退避仮置き
+        //BossVibration();
 
         //if (aliensRestartFlag)
         //{
@@ -104,10 +133,15 @@ public class BossFlag : MonoBehaviour {
     }
 
     //ToDo　ノーマル再出現　修正箇所
-    private void AliensRestart()
+    public static void AliensRestart()
     {
         //GetComponent<AlienCall>().AliensEntershop();
         //AlienMove.LeavingStoreFlag = false;
+        normalAlientime += Time.deltaTime;
+        bossFlag =false;
+
+       
+        
     }
 
     private void AliensMax()
@@ -117,6 +151,8 @@ public class BossFlag : MonoBehaviour {
 
     //ボスフラグ
     public static bool GetBossFlag() => bossFlag;
+
+    public static float GetNormalAlientime() =>normalAlientime;
 
    //ボス出現開始時間
     private void BossActiveTime()
@@ -128,7 +164,7 @@ public class BossFlag : MonoBehaviour {
         {
             bossFlag = true;
             //ToDo　演出追加
-            Debug.Log("ボス出現開始" );
+            //Debug.Log("ボス出現開始" );
 
             //一度だけ通るフラグ
             bossActiveTimeFlag = true;
@@ -144,27 +180,86 @@ public class BossFlag : MonoBehaviour {
             && bossFlag ==true)
         {
             //アクティブ化
-            if (BossAlien.gameObject.activeSelf == false)
+            if (BossAlien.gameObject.activeSelf == false && oneActiveSelf == false)
             {
                 BossAlien.SetActive(true);
+                oneActiveSelf =true;
             }
         }
+
+
+        //Debug.Log("bossActiveTimeFlag" +bossActiveTimeFlag);
+        //Debug.Log("offbossFlag" +offbossFlag);
+        if(  normalAlientime >1 
+            && bossActiveTimeFlag == false && offbossFlag ==true)
+        {
+            ////非アクティブ化
+            //if (BossAlien.gameObject.activeSelf == true)
+            //{
+            //    BossAlien.SetActive(false);
+            //}
+            //Debug.Log("ボス非アクティブ関数");
+
+            GetComponent<AliensBoss>().BossDestroy();
+        }
+
+
     }
 
     //ボス終了処理
-    public void BossSetLeaving()
+    public static void BossSetLeaving()
     {
-        if(bossFlag ==false && bossActiveTimeFlag == true && offbossFlag == false)
+        if(bossFlag ==false 
+            && bossActiveTimeFlag == true 
+            && offbossFlag == false
+            && AliensBoss.bossEatCount<=0)
         {
             bossActiveTimeFlag =false;
             offbossFlag=true;
             //AlienCall.BossOne = false;
             Debug.Log("退避" );
         }
+        //Debug.Log("bossFlag" +bossFlag);
+        //Debug.Log("bossActiveTimeFlag" +bossActiveTimeFlag);
+        //Debug.Log("offbossFlag" +offbossFlag);
+        //Debug.Log("bossEatCount" +AliensBoss.bossEatCount);
 
     }
 
-    
+    public void BossVibration()
+    {
+        if(bossFlag==true)
+        {
+            //カメラ揺らす
+            //CameraObjTransform.position.y +=1.0f ;
+            //CameraObj.transform.position.y+=1.0f;
 
+            //時間ごとに計算
+            timeleft -= Time.deltaTime;
+            if (timeleft <= 0.98) {
+            timeleft = 1.0f;
 
+                pos = CameraObj.transform.position;
+
+                dy = dy + g; //加速度による速度の変化を計算
+                pos.y= pos.y + dy;     //ｙ座標を動かす
+                Debug.Log("dy"+dy);
+                if (pos.y>height-r) { //下の壁
+                pos.y = height-r;  //めり込み調整
+                dy = -dy * damping;
+                    if (System.Math.Abs(dy)<=g/2) { //ほぼ止まった
+                        dy=0; 
+                        pos.y=0;
+                        //ToDoフラグ立てる
+                    }
+                }
+            }
+
+            CameraObj.transform.position = pos;
+            Debug.Log("pos.y"+pos.y);
+        }
+      
+    }
+
+    public static bool SetBossFlag() => bossFlag = !bossFlag;
 }

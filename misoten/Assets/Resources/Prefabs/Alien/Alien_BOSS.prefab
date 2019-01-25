@@ -605,7 +605,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1020258669301248}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.23, y: 1.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906084699141770}
@@ -742,7 +742,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987512105310084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.423, y: 1.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906084699141770}
@@ -808,7 +808,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1641692523549040}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.89, y: 0.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906084699141770}
@@ -934,7 +934,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1670698007265866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.31, y: 1.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906084699141770}
@@ -979,7 +979,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1703243496814938}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.877, y: 0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906084699141770}
@@ -2220,7 +2220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c13e79045eeda34fb5df9d4490e5500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alienPattern: 2
+  alienPattern: 3
   oneAnimPatternSwitchTime: 35
   animID: 0
 --- !u!114 &114916951744284642
@@ -2247,6 +2247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c1ef39233dba94b9bca7e32aae2bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BossAlien: {fileID: 1973525631876150}
 --- !u!114 &114992599988639060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16139,7 +16140,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 849099292ad4b184cbfeeae40e1b1528, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f489aa0f5ad17a44da875755d851145d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

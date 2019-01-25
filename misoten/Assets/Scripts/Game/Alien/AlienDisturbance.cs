@@ -165,6 +165,15 @@ public class AlienDisturbance : MonoBehaviour
 			default:
 				// 例外処理
 				break;
+
+                //ToDo　
+                //if()
+                //{
+                //    // イートイオブジェクトを削除
+                //    Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+
+                //}
+
 		}
 	}
 
