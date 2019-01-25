@@ -54,9 +54,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1654945856123380, guid: 1d5a85434fcae434fb523ada267643e2, type: 2}
+  - {fileID: 1274329971436290, guid: 14c27ce28e4f24c49ab85e0254dd803c, type: 2}
+  - {fileID: 1973525631876150, guid: 35c45101a924da4459b9222c65d74a34, type: 2}
   coinFoObj: {fileID: 0}
   counterSeatsMax: 7
   alienMax: 50
@@ -67,6 +67,7 @@ MonoBehaviour:
   - 20
   - 15
   - 10
+  BossAlien: {fileID: 1028604962992686, guid: c3441501a72237341b35649322efa609, type: 2}
 --- !u!114 &114761001999178314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c1ef39233dba94b9bca7e32aae2bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BossAlien: {fileID: 0}
 --- !u!114 &114949635093223006
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -7,7 +7,7 @@ public class AliensBoss : MonoBehaviour {
 
     public static int bossEatCount =10;
 
-    private bool eatCountstartFlag = false;
+    private bool eatCountstartFlag;
     private int BossTotalEatScore = 0;
     
     [SerializeField]
@@ -25,6 +25,7 @@ public class AliensBoss : MonoBehaviour {
     void Awake()
     {
         BossFlag.normalAlientime = 0;
+        eatCountstartFlag = false;
       
     }
 
@@ -47,20 +48,20 @@ public class AliensBoss : MonoBehaviour {
             //Debug.Log("EatCount" + bossEatCount);
         }
 
-        if (Input.GetKeyDown("6"))
-        {
-            Debug.Log("activeSelf" + BossAlien.gameObject.activeSelf);
+        //if (Input.GetKeyDown("6"))
+        //{
+        //    Debug.Log("activeSelf" + BossAlien.gameObject.activeSelf);
 
-            //非アクティブ化
-            if (BossAlien.gameObject.activeSelf == true)
-            {
-                BossAlien.SetActive(false);
-                Destroy(BossAlien);
-                Debug.Log("ボスDestroy");
-            }
+        //    //非アクティブ化
+        //    if (BossAlien.gameObject.activeSelf == true)
+        //    {
+        //        BossAlien.SetActive(false);
+        //        Destroy(BossAlien);
+        //        Debug.Log("ボスDestroy");
+        //    }
            
-            //Debug.Log("BossAlien");
-        }
+        //    //Debug.Log("BossAlien");
+        //}
     }
 
 

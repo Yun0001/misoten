@@ -707,10 +707,9 @@ MonoBehaviour:
   BossAlien: {fileID: 1061740834}
   bossActiveTime: 178
   bossActiveDifferece: 10
-  height: 0.8
+  height: 0.4
   g: 0.1
-  damping: 0.8
-  timeleft: 0
+  damping: 0.9
 --- !u!1001 &2110005690
 Prefab:
   m_ObjectHideFlags: 0
@@ -755,24 +754,6 @@ Prefab:
       propertyPath: coinFoObj
       value: 
       objectReference: {fileID: 1813441639}
-    - target: {fileID: 114100289857546128, guid: c3441501a72237341b35649322efa609,
-        type: 2}
-      propertyPath: prefab.Array.data[0]
-      value: 
-      objectReference: {fileID: 1973525631876150, guid: 64e549cf7922a354287d0d708e8e78db,
-        type: 2}
-    - target: {fileID: 114100289857546128, guid: c3441501a72237341b35649322efa609,
-        type: 2}
-      propertyPath: prefab.Array.data[1]
-      value: 
-      objectReference: {fileID: 1973525631876150, guid: 64e549cf7922a354287d0d708e8e78db,
-        type: 2}
-    - target: {fileID: 114100289857546128, guid: c3441501a72237341b35649322efa609,
-        type: 2}
-      propertyPath: prefab.Array.data[2]
-      value: 
-      objectReference: {fileID: 1973525631876150, guid: 64e549cf7922a354287d0d708e8e78db,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c3441501a72237341b35649322efa609, type: 2}
   m_IsPrefabParent: 0
