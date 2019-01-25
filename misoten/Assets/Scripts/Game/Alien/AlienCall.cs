@@ -411,14 +411,25 @@ public class AlienCall : MonoBehaviour
                 //当たり判定アクティブ
 	    		//GetComponent<BoxCollider>().enabled = true;
 
+                bossAuraFlag[0] = true;
+                bossAuraFlag[1] = true;
+                bossAuraFlag[2] = true;
+                bossAuraFlag[3] = true;
+                bossAuraFlag[4] = true;
+                bossAuraFlag[5] = true;
+                //if(BossFlag.GetBossFlag()==true
+                //    && BossFlag.GetNormalAlientime()>2)
+                //{
+                //    bossAuraFlag[0] = true;
+                //    bossAuraFlag[1] = true;
+                //    bossAuraFlag[2] = true;
+                //    bossAuraFlag[3] = true;
+                //    bossAuraFlag[4] = true;
+                //    bossAuraFlag[5] = true;
+                //    Debug.Log("ボスオーラ");
+                //}
             }
 
-            if(BossFlag.GetBossFlag()==true
-                && BossFlag.GetNormalAlientime()>2)
-            {
-                 bossAuraFlag[0] = true;
-                Debug.Log("ボスオーラ");
-            }
 
 		}
 		// 空いている席のIDになるまでこの処理を続ける

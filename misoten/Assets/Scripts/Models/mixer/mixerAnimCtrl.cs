@@ -31,7 +31,7 @@ public class mixerAnimCtrl : MonoBehaviour
         _animator.SetBool("isComplete", isComplete);
 
         if (GetAnimationMoment()) {
-            Debug.Log(true);
+        //    Debug.Log(true);
         }
 
         // 現在のアニメーションステートを取得
