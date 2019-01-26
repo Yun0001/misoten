@@ -2304,6 +2304,7 @@ MonoBehaviour:
   orderTime: 1
   orderPlanDispCount: 1.5
   eatingCount: 2
+  originEatingCount: 2
   eachAlienOrderTypeValue: 70
   individualOrderBaseType: 0
   individualOrderChangeType: 0

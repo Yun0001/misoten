@@ -110,29 +110,17 @@ public class AlienSatisfaction : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-        //ToDoボス用Flagで回数分満足処理追加
-         //Debug.Log("boss"+BossFlag.GetBossFlag());
 
-
-        //ボス時通常エーリアン退出　ToDo：バグ中
-        //if(BossFlag.GetBossFlag())
-        //{
-        //    if(normalFlag)
-        //    {
-        //        // 時間の初期化
-        //        satisfactionTimeAdd = 0.0f;
-
-        //        // 帰る(良)状態「ON」
-        //        AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
-
-        //        // 退店時の移動開始
-        //        GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);     
-        //    }
-
-        //    normalFlag =false;
-        //}
-
-
+        //満足後の時間差
+        if(BossFlag.GetBossFlag()==true)
+        {
+            // 時間の初期化
+            //satisfactionTimeAdd = 0.0f;     
+                        
+            idBoss = AlienCall.idSaveBoss;
+             //Debug.Log("idBoss"+idBoss);
+             //Debug.Log("GetSetId"+GetComponent<AlienOrder>().GetSetId());
+        }
 
 		// 満足した場合
 		if (GetSatisfactionFlag())
@@ -143,6 +131,7 @@ public class AlienSatisfaction : MonoBehaviour
 			    GetComponent<BoxCollider>().enabled = false;
             }
 
+
 			// 状態移行フラグが「ON」の時
 			if (GetComponent<AlienOrder>().GetStatusMoveFlag())
 			{
@@ -152,9 +141,12 @@ public class AlienSatisfaction : MonoBehaviour
 					// イートイオブジェクトを削除
 					Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 
-					// 満足「ON」
-					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    
+                    // 満足「ON」
+				    AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
 
+                    
+					
                     //ボスで別に作る
 					// スコア取得
 					if (chipGetFlag)
@@ -168,7 +160,10 @@ public class AlienSatisfaction : MonoBehaviour
 							Debug.Log("イベントエイリアンに正しい料理を渡した");
 							SetEventManager();
 							eventManager.GetComponent<EventManager>().StartEvent();
-						}
+						     // 退店時の移動開始
+                             if(BossFlag.GetBossFlag()==true){GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);}
+
+                        }
 
 						// 通常のエイリアンに正しい料理を渡した時の処理
 						//else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue()); }
@@ -180,19 +175,25 @@ public class AlienSatisfaction : MonoBehaviour
                                 case AlienCall.EAlienPattern.MARTIAN:   // 火星人(赤)
                                     if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.RedAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
                                     else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
+                                     // 退店時の移動開始
+                                    if(BossFlag.GetBossFlag()==true){GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);}
                                     break;
                                 case AlienCall.EAlienPattern.MERCURY:   // 水星人(青)
                                     if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.BuleAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
                                     else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
+                                  // 退店時の移動開始
+                                    if(BossFlag.GetBossFlag()==true){GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);}
                                     break;
                                 case AlienCall.EAlienPattern.VENUSIAN:  // 金星人(黄)
                                     if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.YellowAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
                                     else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
+                                    // 退店時の移動開始
+                                    if(BossFlag.GetBossFlag()==true){GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);}
                                     break;
                                 case AlienCall.EAlienPattern.BOSS:  // ToDo BossScore追加　未調整
                                     if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.YellowAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
                                     else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
-                                    Debug.Log("ボスに正しい料理を渡した");
+                                    //Debug.Log("ボスに正しい料理を渡した");
                                     //GetComponent<AlienOrder>().OrderType(true);
                                     sta=true;
                                     eatCountFlag=true;
@@ -213,11 +214,15 @@ public class AlienSatisfaction : MonoBehaviour
 					BalloonDraw();
 
                     //満足後の時間差
-                    //if(BossFlag.GetBossFlag()==true)
-                    //{
-                    //    // 時間の初期化
-                    //    satisfactionTimeAdd = 0.0f;
-                    //}
+                    if(BossFlag.GetBossFlag()==true &&eatCountFlag==true)
+                    {
+                        eatCountFlag=false;
+                        // 時間の初期化
+                        satisfactionTimeAdd = 0.0f;     
+                        
+                        //idBoss = AlienCall.idSaveBoss;
+                        //AlienStatus.SetCounterStatusChangeFlag(true, idBoss, (int)AlienStatus.EStatus.EAT);
+                    }
 
 					// 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag = true;
@@ -225,12 +230,12 @@ public class AlienSatisfaction : MonoBehaviour
 
 				// 満足時間が指定時間を超えた場合
 				if (satisfactionTimeAdd >= judgeCount)
-				{
-                    // 時間の初期化
-                    satisfactionTimeAdd = 0.0f;
+				{                   
 
                     if(BossFlag.GetBossFlag()==false)
                     {
+                        // 時間の初期化
+                        satisfactionTimeAdd = 0.0f;
                         // 帰る(良)状態「ON」
                         AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.RETURN_GOOD);
 
@@ -239,33 +244,46 @@ public class AlienSatisfaction : MonoBehaviour
                         //sta=true;
                     }           
                     
-                }
+                
                 //ボス再オーダー設定
                 if(BossFlag.GetBossFlag()==true&&sta ==true　)//&& satisfactionTimeAdd >= judgeCountBoss
                 {
-                    Debug.Log("ス再オーダー設定" );
+                    //Debug.Log("ス再オーダー設定" );
                     //満足度の吹き出し(OFF)
                     for(int i = 0; i < 4; i++) { satisfactionBalloon[i].SetActive(false); }
 
                     //// エイリアンIDの保存
-                    idBoss = AlienCall.idSaveBoss;
-                    //Debug.Log("boss"+AlienCall.GetSeatAddId());
-                    Debug.Log("idBoss"+idBoss);
+      
+                    //Debug.Log("idBoss"+idBoss);
+
+                    // 満足アニメーション「OFF」
+					AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    
+                    // 「On」
+					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.ORDER);
+                    AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.STAY);
+
+                     // EAT状態が「OFF」になる
+                    AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT);        
+              
+                    
+                    //エフェクト初期化
+                    GetComponent<AlienParticleCall>().InitEffectBoss();
+
                     //// ステータス初期化
                     /////////GetComponent<AlienStatus>().StatusInit(idBoss);
                     //ToDoどれかばぐってる
                     //BossResetStats(idBoss);
-                    //GetComponent<AlienOrder>().OrderTypeBoss(true);
-                    //AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
-                    
-                    //AlienStatus.SetCounterStatusChangeFlag(true, idBoss, (int)AlienStatus.EStatus.ORDER);
-                    //GetComponent<BoxCollider>().enabled = true;
+                    GetComponent<AlienOrder>().OrderTypeBoss(true);
+                     
+                    //再オーダーGetComponent<BoxCollider>().enabled = true;
+                    //AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.ORDER);
+                    //
 
-                    //// EAT状態が「OFF」になる
-                    //AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
-                    
+                             // 料理が来た判定
+	        		GetComponent<AlienChip>().SetCuisineCame(false);
                     // エイリアンが満足初期化
-                    //GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
+                    GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
                     GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
                     // 満足フラグ(チップ取得時用)をON
 					satisfactionChipFlag =false;
@@ -274,7 +292,8 @@ public class AlienSatisfaction : MonoBehaviour
                     chipGetFlag=true;
                 }  
                 //Debug.Log("satisfactionTimeAdd" +satisfactionTimeAdd);
-
+                
+                }
 				// 毎フレームの時間を加算
 				satisfactionTimeAdd += Time.deltaTime;
 			}

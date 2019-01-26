@@ -94,6 +94,10 @@ public class AlienDisturbance : MonoBehaviour
 	{
 		// エイリアンが注文している時
 		if (GetComponent<AlienOrder>().GetIsOrder()) { Mood(); }
+         if(BossFlag.GetBossFlag())
+        {
+            GetComponent<BoxCollider>().enabled = false;
+        }
 	}
 
 	/// <summary>

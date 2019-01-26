@@ -109,7 +109,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
 				if (!GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
 					&& !GetComponent<AlienClaim>().GetIsClaim())
 				{
-                    Debug.Log("通常");
+                    //Debug.Log("通常");
                     //if(BossFlag.GetBossFlag())
                     //{
                     //    // 怒り状態になる
@@ -120,7 +120,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
 					//latencyAdd[setId] -= Time.deltaTime;
 
 					// 残存時間の可視化準備完了
-					if (textMeshFlag) { TextMeshBalloon.SetActive(true); textMeshFlag = !textMeshFlag; }
+					//if (textMeshFlag) { TextMeshBalloon.SetActive(true); textMeshFlag = !textMeshFlag; }
 
 					// 残存時間更新
 					//timeFont = (int)latencyAdd[setId];

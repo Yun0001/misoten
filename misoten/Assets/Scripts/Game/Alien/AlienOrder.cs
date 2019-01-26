@@ -66,7 +66,8 @@ public class AlienOrder : MonoBehaviour
 	// イート行動を行う時間
 	[SerializeField]
 	private float eatingCount;
-
+    // イート行動を行う時間
+	[SerializeField]
     private float originEatingCount;
 
 	// 各エイリアンの注文タイプの確率用
@@ -178,34 +179,78 @@ public class AlienOrder : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
-		// 食べる状態の時
-		if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
-		{
-			// イートアニメーションになる
-			GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
-            //Debug.Log ("食べてる");
+        if(BossFlag.GetBossFlag()==true)
+        {       
+            // 食べる状態の時
+            if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
+            {
+                // イートアニメーションになる
+                GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
+                //Debug.Log ("ボス食べてる");
 
-
-			// 当たり判定が消える
-			GetComponent<BoxCollider>().enabled = false;
-
-			// 「0」になると、クレーム状態or満足状態に移行
-			if (eatingCount <= 0.0f)
-			{
-				// イートイオブジェクトを削除
-				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
-				statusMoveFlag = true;
-				AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
-			
-                if(BossFlag.GetBossFlag()==true)
-                {
-                    eatingCount = originEatingCount;
+                if(BossFlag.GetBossFlag()==false)
+                {               
+                    // 当たり判定が消える
+                    GetComponent<BoxCollider>().enabled = false;
                 }
-                
-            }
-			else { eatingCount -= Time.deltaTime; }
-		}
 
+                // 「0」になると、クレーム状態or満足状態に移行
+                if (eatingCount <= 0.0f)
+                {
+                    // イートイオブジェクトを削除
+                    Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+                    statusMoveFlag = true;
+                    //if(BossFlag.GetBossFlag()==false)
+                    //{
+                    //   AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+                    
+                    //    //Debug.Log("初期化通っている");
+                    //}
+                    AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+			    
+                    eatingCount = originEatingCount;
+                
+                }
+                eatingCount -= Time.deltaTime;
+            }
+        }else{
+
+        //Debug.Log("食べる状態"+AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT));
+            // 食べる状態の時
+		    if (AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
+		    {
+			    // イートアニメーションになる
+			    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
+                //Debug.Log ("食べてる");
+
+                if(BossFlag.GetBossFlag()==false)
+                {               
+			        // 当たり判定が消える
+			        GetComponent<BoxCollider>().enabled = false;
+                }
+
+			    // 「0」になると、クレーム状態or満足状態に移行
+			    if (eatingCount <= 0.0f)
+			    {
+				    // イートイオブジェクトを削除
+				    Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+				    statusMoveFlag = true;
+                    //if(BossFlag.GetBossFlag()==false)
+                    //{
+                    //   AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+                    
+                    //    //Debug.Log("初期化通っている");
+                    //}
+				    AlienStatus.SetCounterStatusChangeFlag(false, setId, (int)AlienStatus.EStatus.EAT);
+			    
+                    eatingCount = originEatingCount;
+                
+                }
+			    else { eatingCount -= Time.deltaTime; }
+		    }
+        }
+
+        //Debug.Log("eatingCount"+eatingCount);
 		// カウンター席に座っているエイリアンからの注文処理
 		CounterOrder();
 
@@ -300,16 +345,20 @@ public class AlienOrder : MonoBehaviour
                          OrderType(false);   
                     } 
                 //ToDo　ボス料理再注文
-                orderTimeAdd =0;
+                //orderTimeAdd =0;
 			}
-
+            
+            //Debug.Log("orderTimeAdd"+orderTimeAdd);
 			// エイリアンが席に座って、注文するまでの時間
 			if (orderTimeAdd >= orderTime)
 			{
+                
+            //Debug.Log("超えた");
 				// エイリアンが注文していない時
 				if (!GetIsOrder() && !GetComponent<AlienMove>().GetWhenEnteringStoreMoveFlag() && !GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
 					&& !GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && !AlienClaim.GetClaimFlag())
 				{
+                    //Debug.Log("注文する");
 					// オーダーセット
 					OrderSet();
 
@@ -559,8 +608,13 @@ public class AlienOrder : MonoBehaviour
 	{
 		if(!GetComponent<AlienMove>().GetWhenLeavingStoreFlag() && !AlienStatus.GetCounterStatusChangeFlag(setId, (int)AlienStatus.EStatus.EAT))
 		{
-			// 当たり判定が消える
-			GetComponent<BoxCollider>().enabled = false;
+			 if(BossFlag.GetBossFlag()==false)
+            {    
+			    // 当たり判定が消える
+			    GetComponent<BoxCollider>().enabled = false;
+            }
+			//Debug.Log("注文した料理が来た");;
+
 
 			// EAT状態が「ON」になる
 			AlienStatus.SetCounterStatusChangeFlag(true, setId, (int)AlienStatus.EStatus.EAT);

@@ -376,5 +376,11 @@ public class AlienAnimation : MonoBehaviour
 			if (animID > ANIMATION_NUM - 1) animID = 0;
 			ChangeSprite();
 		}
+        //Debug.Log("countAnimTime"+countAnimTime);
+        //Debug.Log("oneAnimPatternTime"+oneAnimPatternTime);
+        //Debug.Log("animID"+animID);
+        //Debug.Log("ANIMATION_NUM"+ANIMATION_NUM);
+        //Debug.Log(""+);
+
 	}
 }

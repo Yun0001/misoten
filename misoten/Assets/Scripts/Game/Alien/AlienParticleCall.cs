@@ -82,12 +82,7 @@ public class AlienParticleCall : MonoBehaviour
 
         BossAuraEffectCall();
 
-        //Todo
-        if( (Input.GetKeyDown("i")))
-        {
-            Debug.Log("De");
-            effectFlag[(int)EParticlePattern.SATISFACTION] =false;
-        }
+
 	}
 
 	/// <summary>
@@ -164,7 +159,7 @@ public class AlienParticleCall : MonoBehaviour
 					effectFlag[(int)EParticlePattern.SATISFACTION] = true;
                     //ToDo　エフェクト　boss 注文時false にする
                     // 満足「ON」もfalse
-					AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+					//AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
                     //GetComponent<BoxCollider>().enabled = true;
      
 				}
@@ -247,9 +242,9 @@ public class AlienParticleCall : MonoBehaviour
 				// 一度しか通らないようにする
 				effectFlag[(int)EParticlePattern.EAT] = true;
 			}
-		}
-		else
-		{
+        }
+        else
+        {
 			// イート状態ではない時
 			if (!AlienStatus.GetCounterStatusChangeFlag(GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.EAT))
 			{
@@ -361,4 +356,22 @@ public class AlienParticleCall : MonoBehaviour
 	/// パーティクルの拡縮設定関数
 	/// </summary>
 	void ScaleConfiguration(EParticlePattern pattern, Vector3 scale) => particleSystems[(int)pattern].transform.localScale = scale;
+
+    public void InitEffectBoss()
+    {       
+        // パーティクル停止
+        particleSystems[(int)EParticlePattern.SATISFACTION].Stop();        
+        particleSystems[(int)EParticlePattern.EAT].Stop();
+        
+        // 一度しか通らないようにする
+        effectFlag[(int)EParticlePattern.SATISFACTION] = false;
+        // 一度しか通らないようにする
+		effectFlag[(int)EParticlePattern.EAT] = false;
+        Sound.SetLoopFlgSe(SoundController.GetGameSEName(SoundController.GameSE.Eat_success), false, 2);
+
+        // 一度しか通らないようにする
+		//effectFlag[(int)EParticlePattern.CHIPHANDOVER] = false;
+      
+    }
+
 }

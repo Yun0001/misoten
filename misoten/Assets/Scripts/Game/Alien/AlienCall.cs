@@ -362,7 +362,7 @@ public class AlienCall : MonoBehaviour
             //ボス出現
             if( BossFlag.GetBossFlag()==true && BossOne==false)
             {
-                 Debug.Log("BBBB");
+                // Debug.Log("BBBB");
                 //一度しか通らないようにする
                 BossOne =true;
                 //Debug.Log("BossOne"+BossOne);
@@ -415,7 +415,7 @@ public class AlienCall : MonoBehaviour
                 // ステータス初期化
                 GetComponent<AlienStatus>().StatusInit(idSave);
                 
-                 Debug.Log("bossIN"+GetSeatAddId());
+                // Debug.Log("bossIN"+GetSeatAddId());
                 //当たり判定アクティブ
 	    		//GetComponent<BoxCollider>().enabled = true;
 

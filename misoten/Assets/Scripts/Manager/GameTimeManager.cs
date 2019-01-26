@@ -131,7 +131,7 @@ public class GameTimeManager : MonoBehaviour {
                 eventAlienFlg = true;
 
                 //eventStartTime = (int)countTime;
-                Debug.Log("開始");
+                //Debug.Log("開始");
                 // ここにイベントエイリアン出現のコード
                 // エイリアン側で記述でもOK
             }

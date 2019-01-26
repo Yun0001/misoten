@@ -136,6 +136,11 @@ public class AlienSatisfactionBoss : MonoBehaviour
 
 					// 満足「ON」
 					AlienStatus.SetCounterStatusChangeFlag(true, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    
+                    // イートアニメーションになる
+                   GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.EAT);
+
+
                     Debug.Log("ボスに料理を渡した");
 					// スコア取得
 					if (chipGetFlag)
@@ -173,7 +178,7 @@ public class AlienSatisfactionBoss : MonoBehaviour
                                 case AlienCall.EAlienPattern.BOSS:  // ToDo BossScore追加　未調整
                                     if (eventManager.GetComponent<EventManager>().GetNowPattern() == EventManager.FeverPattern.YellowAlien) { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), true); }
                                     else { ScoreManager.Instance.GetComponent<ScoreManager>().AddScore(GetComponent<AlienChip>().GetOpponentID(), GetComponent<AlienChip>().CalcChipValue(), false); }
-                                    Debug.Log("ボスに正しい料理を渡した");
+                                    Debug.Log("aaaaaボスに正しい料理を渡した");
                                     GetComponent<AlienOrder>().OrderType(true);
                                     break;
                                 default: Debug.LogError("何かおかしいぞ?"); break;
