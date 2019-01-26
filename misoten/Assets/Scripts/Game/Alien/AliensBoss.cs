@@ -98,7 +98,7 @@ public class AliensBoss : MonoBehaviour {
             BossTotalEatScore = 0;
         }
         //Debug.Log("BossScore" + ScoreManager.bossEatScore);
-        Debug.Log("EatCount" + bossEatCount);
+        //Debug.Log("EatCount" + bossEatCount);
 
         if (bossEatCount <= 0)
         {

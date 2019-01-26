@@ -161,6 +161,9 @@ public class AlienDisturbance : MonoBehaviour
 				break;
 			case EAlienMood.FAVORABLE:  // 良好状態
 
+                // イートイオブジェクトを削除
+				Destroy(GetComponent<AlienOrder>().GetEatoyObj());
+
 				break;
 			default:
 				// 例外処理

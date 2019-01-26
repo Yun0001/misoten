@@ -109,6 +109,7 @@ public class AlienDisturbanceBoss : MonoBehaviour
 				if (!GetComponent<AlienSatisfaction>().GetSatisfactionFlag()
 					&& !GetComponent<AlienClaim>().GetIsClaim())
 				{
+                    Debug.Log("通常");
                     //if(BossFlag.GetBossFlag())
                     //{
                     //    // 怒り状態になる
@@ -164,6 +165,9 @@ public class AlienDisturbanceBoss : MonoBehaviour
 				//GetComponent<AlienMove>().SetWhenLeavingStoreFlag(true);
 				break;
 			case EAlienMood.FAVORABLE:  // 良好状態
+
+                // イートイオブジェクトを削除
+				//Destroy(GetComponent<AlienOrder>().GetEatoyObj());
 
 				break;
 			default:

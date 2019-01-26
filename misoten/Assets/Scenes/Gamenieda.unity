@@ -62411,7 +62411,7 @@ Prefab:
     - target: {fileID: 114274843090449450, guid: 59f093799205bf542a84ec5ca550b520,
         type: 2}
       propertyPath: bossActiveTime
-      value: 150
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 114288204586445500, guid: 59f093799205bf542a84ec5ca550b520,
         type: 2}

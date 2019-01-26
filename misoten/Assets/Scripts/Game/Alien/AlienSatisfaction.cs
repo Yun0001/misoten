@@ -247,23 +247,30 @@ public class AlienSatisfaction : MonoBehaviour
                     //満足度の吹き出し(OFF)
                     for(int i = 0; i < 4; i++) { satisfactionBalloon[i].SetActive(false); }
 
-                    // エイリアンIDの保存
-		        	//idBoss = AlienCall.GetSeatAddId();
-                    //Debug.Log("idBoss"+idBoss);
-                    // ステータス初期化
-			        //GetComponent<AlienStatus>().StatusInit(idBoss);
-                    BossResetStats();
-                    // エイリアンが満足初期化
-		            GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
-
-                    GetComponent<AlienOrder>().OrderTypeBoss(true);
-                    AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
-                    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
+                    //// エイリアンIDの保存
+                    idBoss = AlienCall.idSaveBoss;
+                    //Debug.Log("boss"+AlienCall.GetSeatAddId());
+                    Debug.Log("idBoss"+idBoss);
+                    //// ステータス初期化
+                    /////////GetComponent<AlienStatus>().StatusInit(idBoss);
+                    //ToDoどれかばぐってる
+                    //BossResetStats(idBoss);
+                    //GetComponent<AlienOrder>().OrderTypeBoss(true);
+                    //AlienStatus.SetCounterStatusChangeFlag(false, GetComponent<AlienOrder>().GetSetId(), (int)AlienStatus.EStatus.SATISFACTION);
+                    
+                    //AlienStatus.SetCounterStatusChangeFlag(true, idBoss, (int)AlienStatus.EStatus.ORDER);
                     //GetComponent<BoxCollider>().enabled = true;
-                    // EAT状態が「OFF」になる
-                    AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
+
+                    //// EAT状態が「OFF」になる
+                    //AlienStatus.SetCounterStatusChangeFlag(false, idBoss, (int)AlienStatus.EStatus.EAT);
+                    
+                    // エイリアンが満足初期化
+                    //GetComponent<AlienSatisfaction>().SetSatisfactionFlag(false);
+                    GetComponent<AlienAnimation>().SetIsCatering((int)AlienAnimation.EAlienAnimation.WAIT);
+                    // 満足フラグ(チップ取得時用)をON
+					satisfactionChipFlag =false;
                     //一度だけ処理
-                    //sta=false;
+                    sta=false;
                     chipGetFlag=true;
                 }  
                 //Debug.Log("satisfactionTimeAdd" +satisfactionTimeAdd);
@@ -350,7 +357,7 @@ public class AlienSatisfaction : MonoBehaviour
 
     private void SetEventManager() => eventManager = GameObject.Find("EventManager");
 
-    private void BossResetStats()
+    private void BossResetStats(int idBoss)
     {
         for(int numStats=0;numStats<(int)AlienStatus.EStatus.MAX ;numStats++){
               AlienStatus.SetCounterStatusChangeFlag(false, idBoss, numStats);

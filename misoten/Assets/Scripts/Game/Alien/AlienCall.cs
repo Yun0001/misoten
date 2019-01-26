@@ -104,7 +104,7 @@ public class AlienCall : MonoBehaviour
 
 	// エイリアンIDの保存用
 	private static int idSave = 0;
-
+    static public int idSaveBoss = 0;
 	// 金持ち度
 	private static float[] richDegree = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
@@ -211,7 +211,7 @@ public class AlienCall : MonoBehaviour
 
 		// エイリアンIDの保存用の初期化
 		idSave = 0;
-
+        idSaveBoss = 0;
 		// 最初にエイリアンが入ったかのフラグの初期化
 		inAlienFlag = false;
 
@@ -409,11 +409,13 @@ public class AlienCall : MonoBehaviour
 
                 //// エイリアンIDの保存
                 idSave = GetSeatAddId();
+                idSaveBoss =idSave;
                 //idSave = 0;
 
                 // ステータス初期化
                 GetComponent<AlienStatus>().StatusInit(idSave);
-
+                
+                 Debug.Log("bossIN"+GetSeatAddId());
                 //当たり判定アクティブ
 	    		//GetComponent<BoxCollider>().enabled = true;
 
