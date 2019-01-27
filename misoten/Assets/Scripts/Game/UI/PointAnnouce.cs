@@ -9,10 +9,12 @@ public class PointAnnouce : MonoBehaviour {
     [SerializeField]
     private Vector3 InitPos;
 
+    [SerializeField]
+    private GameObject canvas;
+
     private void Awake()
     {
         pointText = GetComponent<TextMesh>();
- 
         activeFrame = 0;
     }
 
